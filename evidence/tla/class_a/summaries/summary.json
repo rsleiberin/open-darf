@@ -1,0 +1,331 @@
+{
+  "count": 28,
+  "tallies": {
+    "pos": {
+      "PASS": 0,
+      "FAIL": 19
+    },
+    "neg": {
+      "PASS": 9,
+      "FAIL": 0
+    },
+    "quick": {
+      "PASS": 0,
+      "FAIL": 0
+    },
+    "other": {
+      "PASS": 0,
+      "FAIL": 0
+    }
+  },
+  "results": [
+    {
+      "id": "CA_AnchorToEmbedIntegrity__CA_AnchorToEmbedIntegrity_neg__20250927T215019Z",
+      "status": "PASS",
+      "module": "CA_AnchorToEmbedIntegrity",
+      "cfg": "CA_AnchorToEmbedIntegrity_neg",
+      "label": "neg",
+      "exit_code": "255",
+      "[time] wall": "0:00.24 cpu=234% mem=74512KB",
+      "log_sha256": "5a83aaf9b8b62b542bac97c3906488f086ee9cc6357368aaa1b552fd425752f0",
+      "log_file": "CA_AnchorToEmbedIntegrity__CA_AnchorToEmbedIntegrity_neg__20250927T215019Z.out"
+    },
+    {
+      "id": "CA_AnchorToEmbedIntegrity__CA_AnchorToEmbedIntegrity_pos__20250927T215017Z",
+      "status": "FAIL",
+      "module": "CA_AnchorToEmbedIntegrity",
+      "cfg": "CA_AnchorToEmbedIntegrity_pos",
+      "label": "pos",
+      "exit_code": "255",
+      "[time] wall": "0:00.21 cpu=249% mem=73436KB",
+      "log_sha256": "e05a5b19826bfb8882737ef588b2dc16a3635aef98ede7a495abf144433298fc",
+      "log_file": "CA_AnchorToEmbedIntegrity__CA_AnchorToEmbedIntegrity_pos__20250927T215017Z.out"
+    },
+    {
+      "id": "CA_AnchorToEmbedIntegrity__CA_AnchorToEmbedIntegrity_pos__20250927T220317Z",
+      "status": "FAIL",
+      "module": "CA_AnchorToEmbedIntegrity",
+      "cfg": "CA_AnchorToEmbedIntegrity_pos",
+      "label": "pos",
+      "exit_code": "255",
+      "[time] wall": "0:00.32 cpu=173% mem=74592KB",
+      "log_sha256": "ed0cce0db816497cd60ba128de8794c32efded7ab217b031a8eb9b0cedf0c904",
+      "log_file": "CA_AnchorToEmbedIntegrity__CA_AnchorToEmbedIntegrity_pos__20250927T220317Z.out"
+    },
+    {
+      "id": "CA_AuditTrailIntegrity__CA_AuditTrailIntegrity__20250927T215018Z",
+      "status": "FAIL",
+      "module": "CA_AuditTrailIntegrity",
+      "cfg": "CA_AuditTrailIntegrity",
+      "label": "pos",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=182% mem=53200KB",
+      "log_sha256": "353140320edcf65ea8bf5edc42be76cd1b71f1c5fd4d7398c43a9b62280e92d3",
+      "log_file": "CA_AuditTrailIntegrity__CA_AuditTrailIntegrity__20250927T215018Z.out"
+    },
+    {
+      "id": "CA_AuditTrailIntegrity__CA_AuditTrailIntegrity__20250927T215020Z",
+      "status": "PASS",
+      "module": "CA_AuditTrailIntegrity",
+      "cfg": "CA_AuditTrailIntegrity",
+      "label": "neg",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=178% mem=53080KB",
+      "log_sha256": "fad9a417b523e1eefd0dc7f6ab64316fece3c3cafc315e3d919ea958623a73c9",
+      "log_file": "CA_AuditTrailIntegrity__CA_AuditTrailIntegrity__20250927T215020Z.out"
+    },
+    {
+      "id": "CA_AuditTrailIntegrity__CA_AuditTrailIntegrity__20250927T220318Z",
+      "status": "FAIL",
+      "module": "CA_AuditTrailIntegrity",
+      "cfg": "CA_AuditTrailIntegrity",
+      "label": "pos",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=181% mem=53308KB",
+      "log_sha256": "fe360e1057497b4db80ad2c2be19383a2ac084af87104d3cf0e30d1e58597f1d",
+      "log_file": "CA_AuditTrailIntegrity__CA_AuditTrailIntegrity__20250927T220318Z.out"
+    },
+    {
+      "id": "CA_DenyPrecedence__CA_DenyPrecedence__20250927T215018Z",
+      "status": "FAIL",
+      "module": "CA_DenyPrecedence",
+      "cfg": "CA_DenyPrecedence",
+      "label": "pos",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=181% mem=53316KB",
+      "log_sha256": "483857554dac4ba4b273e9c7f99ba41d5dee87e2d1efbf9260f6816f38d4f37a",
+      "log_file": "CA_DenyPrecedence__CA_DenyPrecedence__20250927T215018Z.out"
+    },
+    {
+      "id": "CA_DenyPrecedence__CA_DenyPrecedence__20250927T215020Z",
+      "status": "PASS",
+      "module": "CA_DenyPrecedence",
+      "cfg": "CA_DenyPrecedence",
+      "label": "neg",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=182% mem=53884KB",
+      "log_sha256": "64ab17418e8c5bf17f8040a50468a2781344593aa7e8f815e1b7ec3c36afa41d",
+      "log_file": "CA_DenyPrecedence__CA_DenyPrecedence__20250927T215020Z.out"
+    },
+    {
+      "id": "CA_DenyPrecedence__CA_DenyPrecedence__20250927T220318Z",
+      "status": "FAIL",
+      "module": "CA_DenyPrecedence",
+      "cfg": "CA_DenyPrecedence",
+      "label": "pos",
+      "exit_code": "1",
+      "[time] wall": "0:00.06 cpu=181% mem=53072KB",
+      "log_sha256": "224d88a0a6c32a896e301bc16826cc85c9b0209583d12bbff599273482ef6fa6",
+      "log_file": "CA_DenyPrecedence__CA_DenyPrecedence__20250927T220318Z.out"
+    },
+    {
+      "id": "CA_Neo4jConstraintSchema__CA_Neo4jConstraintSchema_neg__20250927T215019Z",
+      "status": "PASS",
+      "module": "CA_Neo4jConstraintSchema",
+      "cfg": "CA_Neo4jConstraintSchema_neg",
+      "label": "neg",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=177% mem=53412KB",
+      "log_sha256": "7c6e7b1281a492ad55bed3426856cb9622663fb4a78bb8d7ab173e3e23d25684",
+      "log_file": "CA_Neo4jConstraintSchema__CA_Neo4jConstraintSchema_neg__20250927T215019Z.out"
+    },
+    {
+      "id": "CA_Neo4jConstraintSchema__CA_Neo4jConstraintSchema_pos__20250927T215017Z",
+      "status": "FAIL",
+      "module": "CA_Neo4jConstraintSchema",
+      "cfg": "CA_Neo4jConstraintSchema_pos",
+      "label": "pos",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=174% mem=53376KB",
+      "log_sha256": "dd8cbd9b9eafc4c77515f1a205c1a9553335c8566b71c7b42c5ee0f3d01743d0",
+      "log_file": "CA_Neo4jConstraintSchema__CA_Neo4jConstraintSchema_pos__20250927T215017Z.out"
+    },
+    {
+      "id": "CA_Neo4jConstraintSchema__CA_Neo4jConstraintSchema_pos__20250927T220317Z",
+      "status": "FAIL",
+      "module": "CA_Neo4jConstraintSchema",
+      "cfg": "CA_Neo4jConstraintSchema_pos",
+      "label": "pos",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=177% mem=53248KB",
+      "log_sha256": "07aa3b6c24386e45ee505e27272f15f163cb92c13127655daa64453bd2f93d48",
+      "log_file": "CA_Neo4jConstraintSchema__CA_Neo4jConstraintSchema_pos__20250927T220317Z.out"
+    },
+    {
+      "id": "CA_ProvenanceChainValidity__CA_ProvenanceChainValidity__20250927T215018Z",
+      "status": "FAIL",
+      "module": "CA_ProvenanceChainValidity",
+      "cfg": "CA_ProvenanceChainValidity",
+      "label": "pos",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=182% mem=53096KB",
+      "log_sha256": "c4ec3c99c347f562fa23122395e8bbd24fe327134779d3d2870e519890db3214",
+      "log_file": "CA_ProvenanceChainValidity__CA_ProvenanceChainValidity__20250927T215018Z.out"
+    },
+    {
+      "id": "CA_ProvenanceChainValidity__CA_ProvenanceChainValidity__20250927T215020Z",
+      "status": "PASS",
+      "module": "CA_ProvenanceChainValidity",
+      "cfg": "CA_ProvenanceChainValidity",
+      "label": "neg",
+      "exit_code": "1",
+      "[time] wall": "0:00.08 cpu=203% mem=53084KB",
+      "log_sha256": "9f698d891a8a05ef8a136c479c66e5ceb7e9dd40d04155b5298b59959cdb01aa",
+      "log_file": "CA_ProvenanceChainValidity__CA_ProvenanceChainValidity__20250927T215020Z.out"
+    },
+    {
+      "id": "CA_ProvenanceChainValidity__CA_ProvenanceChainValidity__20250927T220318Z",
+      "status": "FAIL",
+      "module": "CA_ProvenanceChainValidity",
+      "cfg": "CA_ProvenanceChainValidity",
+      "label": "pos",
+      "exit_code": "1",
+      "[time] wall": "0:00.06 cpu=181% mem=53172KB",
+      "log_sha256": "4110dfb8f54a9bdc094aa68882bd877712223713ebd3248572356f332ab5a4f3",
+      "log_file": "CA_ProvenanceChainValidity__CA_ProvenanceChainValidity__20250927T220318Z.out"
+    },
+    {
+      "id": "CA_Smoke__CA_Smoke_neg__20250927T215019Z",
+      "status": "PASS",
+      "module": "CA_Smoke",
+      "cfg": "CA_Smoke_neg",
+      "label": "neg",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=183% mem=53428KB",
+      "log_sha256": "10437cbed8741153f57bc584879da116520b943db760e6875d791f16e8d0ef07",
+      "log_file": "CA_Smoke__CA_Smoke_neg__20250927T215019Z.out"
+    },
+    {
+      "id": "CA_Smoke__CA_Smoke_pos__20250927T215018Z",
+      "status": "FAIL",
+      "module": "CA_Smoke",
+      "cfg": "CA_Smoke_pos",
+      "label": "pos",
+      "exit_code": "255",
+      "[time] wall": "0:00.22 cpu=241% mem=74272KB",
+      "log_sha256": "9d97f9f99f67b0d00f93f44e8b479380bb11b7acdb09176af5c59774300b8cb6",
+      "log_file": "CA_Smoke__CA_Smoke_pos__20250927T215018Z.out"
+    },
+    {
+      "id": "CA_Smoke__CA_Smoke_pos__20250927T220317Z",
+      "status": "FAIL",
+      "module": "CA_Smoke",
+      "cfg": "CA_Smoke_pos",
+      "label": "pos",
+      "exit_code": "255",
+      "[time] wall": "0:00.21 cpu=251% mem=71632KB",
+      "log_sha256": "f7f64b992390062f0d53af48a8f246df47a52dff3378c800e49551d17b0a89dd",
+      "log_file": "CA_Smoke__CA_Smoke_pos__20250927T220317Z.out"
+    },
+    {
+      "id": "CA_SpanAuthorization__CA_SpanAuthorization_neg__20250927T215020Z",
+      "status": "PASS",
+      "module": "CA_SpanAuthorization",
+      "cfg": "CA_SpanAuthorization_neg",
+      "label": "neg",
+      "exit_code": "255",
+      "[time] wall": "0:00.22 cpu=244% mem=72956KB",
+      "log_sha256": "c8b5e5e385f410c81f94df1d23ec364bb5bd640ba6d4aaf226ea74aa86baa93f",
+      "log_file": "CA_SpanAuthorization__CA_SpanAuthorization_neg__20250927T215020Z.out"
+    },
+    {
+      "id": "CA_SpanAuthorization__CA_SpanAuthorization_pos__20250927T215018Z",
+      "status": "FAIL",
+      "module": "CA_SpanAuthorization",
+      "cfg": "CA_SpanAuthorization_pos",
+      "label": "pos",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=180% mem=53300KB",
+      "log_sha256": "549c25f390c2c7d6c221d0ac87cb51f0b6ca2d041012063f1a3858fb06ad6185",
+      "log_file": "CA_SpanAuthorization__CA_SpanAuthorization_pos__20250927T215018Z.out"
+    },
+    {
+      "id": "CA_SpanAuthorization__CA_SpanAuthorization_pos__20250927T220318Z",
+      "status": "FAIL",
+      "module": "CA_SpanAuthorization",
+      "cfg": "CA_SpanAuthorization_pos",
+      "label": "pos",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=182% mem=53216KB",
+      "log_sha256": "e6caee70d000a0a48fe40af603043042fb66d73d22bab119594a37a42591670b",
+      "log_file": "CA_SpanAuthorization__CA_SpanAuthorization_pos__20250927T220318Z.out"
+    },
+    {
+      "id": "CA_SpanPreservesConstraints__CA_SpanPreservesConstraints_neg__20250927T215020Z",
+      "status": "PASS",
+      "module": "CA_SpanPreservesConstraints",
+      "cfg": "CA_SpanPreservesConstraints_neg",
+      "label": "neg",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=178% mem=52776KB",
+      "log_sha256": "61c04d250f1382a6b381bf202144899998087c3bffc64fc0bdcae61948691469",
+      "log_file": "CA_SpanPreservesConstraints__CA_SpanPreservesConstraints_neg__20250927T215020Z.out"
+    },
+    {
+      "id": "CA_SpanPreservesConstraints__CA_SpanPreservesConstraints_pos__20250927T215018Z",
+      "status": "FAIL",
+      "module": "CA_SpanPreservesConstraints",
+      "cfg": "CA_SpanPreservesConstraints_pos",
+      "label": "pos",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=180% mem=52896KB",
+      "log_sha256": "1c94757a9ad6903218c6e2265162af8dd800cb79ac3a01a467584eace27cdade",
+      "log_file": "CA_SpanPreservesConstraints__CA_SpanPreservesConstraints_pos__20250927T215018Z.out"
+    },
+    {
+      "id": "CA_SpanPreservesConstraints__CA_SpanPreservesConstraints_pos__20250927T220318Z",
+      "status": "FAIL",
+      "module": "CA_SpanPreservesConstraints",
+      "cfg": "CA_SpanPreservesConstraints_pos",
+      "label": "pos",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=183% mem=55060KB",
+      "log_sha256": "5630df33d3e0dcdcaf2839c24010282ffb31da70cbfc337bcf7e5b4e939c0432",
+      "log_file": "CA_SpanPreservesConstraints__CA_SpanPreservesConstraints_pos__20250927T220318Z.out"
+    },
+    {
+      "id": "CA_TriStateCompleteness__CA_TriStateCompleteness__20250927T215018Z",
+      "status": "FAIL",
+      "module": "CA_TriStateCompleteness",
+      "cfg": "CA_TriStateCompleteness",
+      "label": "pos",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=179% mem=53156KB",
+      "log_sha256": "24da3efd77d6edefe14dbcf7f01eb3768c024e8442c170778e0085b6c4dbdd6d",
+      "log_file": "CA_TriStateCompleteness__CA_TriStateCompleteness__20250927T215018Z.out"
+    },
+    {
+      "id": "CA_TriStateCompleteness__CA_TriStateCompleteness__20250927T215020Z",
+      "status": "PASS",
+      "module": "CA_TriStateCompleteness",
+      "cfg": "CA_TriStateCompleteness",
+      "label": "neg",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=182% mem=53376KB",
+      "log_sha256": "7d7004d86f11e3735492d3d7c2be51fc97e8e2be08516ae38b3a950d0155cedc",
+      "log_file": "CA_TriStateCompleteness__CA_TriStateCompleteness__20250927T215020Z.out"
+    },
+    {
+      "id": "CA_TriStateCompleteness__CA_TriStateCompleteness__20250927T220318Z",
+      "status": "FAIL",
+      "module": "CA_TriStateCompleteness",
+      "cfg": "CA_TriStateCompleteness",
+      "label": "pos",
+      "exit_code": "1",
+      "[time] wall": "0:00.07 cpu=180% mem=53288KB",
+      "log_sha256": "ec2a4d61453122fa008c5ea3bee5a63ee769744a8c6cdef2a4458e37311a0d02",
+      "log_file": "CA_TriStateCompleteness__CA_TriStateCompleteness__20250927T220318Z.out"
+    },
+    {
+      "id": "CC_A_cc__CC_A_cc.quick__20250927T215018Z",
+      "status": "FAIL",
+      "module": "CC_A_cc",
+      "cfg": "CC_A_cc.quick",
+      "label": "pos",
+      "exit_code": "75",
+      "[time] wall": "0:00.85 cpu=156% mem=153988KB",
+      "log_sha256": "159a2c63df90ee180254459746559faad214275048f636f466b4ac029b082c58",
+      "log_file": "CC_A_cc__CC_A_cc.quick__20250927T215018Z.out"
+    }
+  ]
+}

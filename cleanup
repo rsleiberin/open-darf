@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Open-DARF Cleanup Entry Point
+# Delegates to scripts/core/cleanup.sh
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Execute core cleanup
+exec "$SCRIPT_DIR/scripts/core/cleanup.sh" "$@"

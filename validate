@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Open-DARF Validation Entry Point
+# Delegates to scripts/core/validate.sh
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Execute core validation
+exec "$SCRIPT_DIR/scripts/core/validate.sh" "$@"

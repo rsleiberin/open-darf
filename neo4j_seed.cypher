@@ -1,0 +1,2 @@
+CREATE CONSTRAINT principle_id IF NOT EXISTS FOR (p:Principle) REQUIRE p.id IS UNIQUE;
+MERGE (p:Principle {id:'DENY_PRECEDENCE'});

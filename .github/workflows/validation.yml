@@ -1,0 +1,22 @@
+name: Cross-Platform Validation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run validation
+      run: |
+        ./install
+        ./validate
+        ./cleanup
