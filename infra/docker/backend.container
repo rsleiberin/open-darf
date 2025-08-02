@@ -1,0 +1,10 @@
+[Container]
+Image=localhost/darf-backend:latest
+# Rebuild the image automatically when the unit starts
+Build=type=oci,\
+context=../..,\
+dockerfile=infra/docker/Dockerfile,\
+tag=localhost/darf-backend:latest
+# Keep host UID inside the container for volume writes
+UserNS=keep-id
+Restart=on-failure
