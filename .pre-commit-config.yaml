@@ -1,0 +1,21 @@
+repos:
+  - repo: local
+    hooks:
+      - id: ruff
+        name: ruff
+        entry: ruff
+        language: system
+        types: [python]
+        args: [--fix]
+      - id: bandit
+        name: bandit
+        entry: bandit
+        language: system
+        types: [python]
+        args: [-ll]
+        files: ^(apps/backend|packages)/.*\.py$
+      - id: safety
+        name: safety
+        entry: safety
+        language: system
+        types: [python]
