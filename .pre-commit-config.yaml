@@ -6,7 +6,7 @@ repos:
         entry: ruff
         language: system
         types: [python]
-        args: [--fix]
+        args: ["check", "--fix"]
       - id: bandit
         name: bandit
         entry: bandit
@@ -18,4 +18,5 @@ repos:
         name: safety
         entry: safety
         language: system
-        types: [python]
+        args: ["check"]
+        pass_filenames: false
