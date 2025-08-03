@@ -1,22 +1,26 @@
 repos:
-  - repo: local
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.3.7
     hooks:
       - id: ruff
-        name: ruff
-        entry: ruff
-        language: system
-        types: [python]
-        args: ["check", "--fix"]
+        args: [check, --fix]
+
+  - repo: local
+    hooks:
       - id: bandit
         name: bandit
         entry: bandit
         language: system
-        types: [python]
         args: [-ll]
         files: ^(apps/backend|packages)/.*\.py$
+
+  - repo: local
+    hooks:
       - id: safety
         name: safety
         entry: safety
-        language: system
-        args: ["check"]
+        language: python
         pass_filenames: false
+        additional_dependencies:
+          - safety==2.3.5
+        args: [check, --full-report]
