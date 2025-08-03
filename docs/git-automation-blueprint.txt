@@ -1,0 +1,64 @@
+erDiagram
+    REPOS ||--o{ COMMITS : contains
+    AUTHORS ||--o{ COMMITS : "authored by"
+    COMMITS ||--|{ PARENTS : parent
+    COMMITS ||--|{ FOOTERS : trailers
+    COMMITS ||--o{ COMMIT_ISSUES : links
+    ISSUES  ||--o{ COMMIT_ISSUES
+    COMMITS }o--|| COMMIT_TYPES : type
+    COMMITS }o--|| SCOPES : scope
+    COMMITS ||--|| BRANCHES : head
+
+    REPOS { string repo_id PK
+            string name
+            string url }
+    AUTHORS { string author_id PK
+              string name
+              string email }
+    COMMITS { string sha PK
+              string repo_id FK
+              string author_id FK
+              string committer_id FK
+              datetime authored_at
+              datetime committed_at
+              string subject  "≤50 chars"
+              text   body     "wrap 72"
+              bool   breaking_change
+              string type_code FK
+              string scope_code FK
+              text   raw_message }
+    COMMIT_TYPES { string code PK  "feat|fix|docs…"
+                   string desc
+                   string semver  "major|minor|patch|none"
+                   string emoji? }
+    SCOPES { string code PK  "ui|api|auth…"
+             string desc }
+    FOOTERS { int id PK
+              string commit_sha FK
+              string key
+              text value }
+    ISSUES { string issue_id PK
+             string repo_id FK
+             int number
+             string title
+             string state
+             datetime opened_at
+             datetime closed_at }
+    COMMIT_ISSUES { string commit_sha FK
+                    string issue_id  FK
+                    string relation }
+    PARENTS { string sha PK FK
+              string parent_sha PK }
+    BRANCHES { string branch_name PK
+               string repo_id FK
+               string head_sha FK }
+
+Notes
+
+subject ≤ 50 chars; imperative; no trailing period.
+
+body wrap ≈ 72 chars/line for terminal readability.
+
+breaking_change flag set if ! in header or BREAKING CHANGE: trailer.
+
+type_code + scope_code join to small dimension tables → easily extended by agents.
