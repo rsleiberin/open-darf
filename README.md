@@ -1,216 +1,77 @@
-# Darf-Tech Frontend
+# Darf Intelligence Stack (monorepo)
 
-Welcome to the **Darf-Tech Frontend** project! This repository is designed to be a **scalable, modern** frontend solution using **Next.js v15.1.6**, **React v19**, **Tailwind CSS v4**, and **shadcn/UI** for component management.
+A self-hosted, off-grid-capable AI platform that runs on a single fan-less PC yet can scale out to a LAN or cloud cluster when needed.
 
-We follow **best practices for UI, accessibility, performance, and developer experience** with a well-structured approach to testing, CI/CD, and automation.
-
----
-
-## 🚀 Overview
-
-### **Tech Stack**
-
-- **Next.js 15+** (App Router inside `src/app`)
-- **React 19+** (Concurrent Mode, RSC support)
-- **Tailwind CSS 4+** (Utility-first styling, contrast-aware themes)
-- **shadcn/UI** (Composable UI components)
-- **TypeScript** (Static typing and safety)
-- **ESLint & Prettier** (Code quality enforcement)
-- **Jest & Vitest** (Unit & component testing)
-- **Husky & Lint-Staged** (Pre-commit and pre-push validation)
-- **GitHub Actions** (Automated CI/CD workflows)
+| Slot / Concern         | Locked-in Tech                                      |
+|------------------------|-----------------------------------------------------|
+| **Backend language**   | Python 3.12 (Poetry 2.1.3)                          |
+| **Frontend language**  | TypeScript 5 (Pnpm 8)                               |
+| **Frontend framework** | Next 15 · React 19 · Tailwind 4 · shadcn/UI         |
+| **Message broker**     | RabbitMQ 3                                          |
+| **Task queue**         | Dramatiq + Redis                                    |
+| **Relational DB**      | PostgreSQL 15                                       |
+| **Knowledge graph**    | Neo4j 5 (Community)                                 |
+| **Vector store**       | Qdrant v1                                           |
+| **Object store**       | MinIO (S3-compatible)                               |
+| **Cache / Pub-sub**    | Redis 7                                             |
+| **Container runtime**  | Podman 4 + Quadlet                                  |
+| **CI**                 | GitHub Actions (pre-commit status check)            |
 
 ---
 
-## 📚 Directory Structure
+## Repository layout
 
-```
-frontend/
-├─ .github/workflows/       (CI/CD automation)
-├─ .husky/                  (Git hooks for linting & testing)
-├─ archive/                 (Legacy documentation & references)
-├─ components.json          (shadcn UI config for component generation)
-├─ dist/                    (Compiled Tailwind artifacts via CLI)
-├─ public/                  (Static assets, SVGs, fonts)
-├─ src/
-├── README.md                            # Documentation
-│
-├── archive/                             # Research and documentation archive
-│   ├── README.md
-│                                        # Index for archived research
-├─ tailwind.config.js       (Tailwind setup, theme customization)
-├─ tsconfig.json            (TypeScript configuration)
-├─ jest.config.ts           (Jest configuration for unit testing)
-├─ jest.setup.ts            (Jest setup file for test environment)
-├─ package.json             (Project dependencies & scripts)
-└─ README.md                (This file)
-```
-
-### 📖 **Documentation Plan**
-Each key directory should contain **its own README.md** to explain its purpose:
-- `src/components/ui/README.md`: shadcn UI component customization & best practices.
-- `src/app/ui-preview/README.md`: Usage guide for previewing components.
-- `src/lib/README.md`: Explanation of reusable utilities.
-- `__tests__/README.md`: How to write and structure tests.
+    apps/
+      backend/        # runnable Python services
+      frontend/       # Next 15 full-stack app
+    packages/
+      shared/         # reusable Python modules
+    infra/
+      docker/         # Containerfile & Quadlet units
+    docs/             # architecture, ADRs, research, process
+    .github/          # CI workflows
+    Makefile          # lint · fix · test · scan targets
 
 ---
 
-## 🏠 Getting Started
+## Quick start
 
-### **1️⃣ Installation**
+### Backend service
 
-```sh
-npm install
-```
+    git clone https://github.com/rsleiberin/darf-source.git
+    cd darf-source
+    poetry install --no-interaction
+    make lint             # Ruff lint
+    make fix              # auto-fix style issues
+    python apps/backend/main.py
 
-### **2️⃣ Development Mode**
+### Frontend app
 
-```sh
-npm run dev
-```
-- The app will run on **`localhost:3000`** (or next available port).
-
-### **3️⃣ Production Build**
-
-```sh
-npm run build
-npm run start
-```
-- Generates an optimized build for deployment.
+    cd apps/frontend
+    pnpm install
+    pnpm dev              # http://localhost:3000
 
 ---
 
-## 🧙‍♂️ shadcn/UI Integration
+## Roadmap & planned slots
 
-**shadcn/UI** provides flexible, composable components. To generate a new component:
+See `docs/architecture/rar-system.md` and `docs/content/architecture/00-roadmap.md` for upcoming services and research milestones.
 
-```sh
-npx shadcn add button
-```
+Immediate next tasks:
 
-### **Best Practices:**
-- All components are stored in **`src/components/ui/`**.
-- Customize via `tailwind.config.js` and `globals.css`.
-- Uses Tailwind tokens (`hsl(var(--background))`) for consistent theming.
-- Supports **dark mode** out of the box.
-
-🔗 **Reference:** [shadcn UI Docs](https://ui.shadcn.com)
+1. PostgreSQL Quadlet unit  
+2. FastAPI health endpoint + pytest  
+3. CONTRIBUTING · LICENSE · CODE_OF_CONDUCT docs cleanup
 
 ---
 
-## 🎨 Tailwind CSS 4+ Theming
+## Contributing
 
-### **Key Features in Tailwind 4:**
-- **Contrast-Based Theming:** Dynamic `hsl(var(--background))` colors.
-- **Optimized `@apply` Usage:** Improved utility class composition.
-- **Built-in Performance Optimizations:** Automatic tree-shaking.
-
-#### **Example: Custom Theme (Defined in `globals.css`)**
-
-```css
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-  }
-  .dark {
-    --background: 222 84% 4.9%;
-  }
-}
-
-@layer utilities {
-  .bg-background {
-    background-color: hsl(var(--background));
-  }
-}
-```
+We follow **Conventional Commits**, local **pre-commit** hooks, and a **PR-first** workflow even while the repo is private.  
+See `CONTRIBUTING.md` for full guidelines.
 
 ---
 
-## 🧑‍🔧 Testing Setup
+## License
 
-We use **Jest** & **Vitest** for unit and component testing.
-
-```sh
-npm test
-```
-
-### **Planned Test Coverage:**
-🗳 UI snapshots (shadcn components)  
-🗳 Unit tests (`lib/utils.ts`)  
-🗳 Integration tests (User interactions)
-
-#### **Enable Code Coverage Reports**
-Modify `jest.config.ts`:
-```ts
-export default {
-  preset: "ts-jest",
-  testEnvironment: "jsdom",
-  collectCoverage: true,
-  coverageDirectory: "coverage",
-};
-```
-Run tests with coverage:
-```sh
-npm test -- --coverage
-```
-
----
-
-## ⚡ Automation & CI/CD
-
-### **Pre-Commit & Pre-Push Hooks**
-- **Husky:** Ensures linting & tests **before pushing**.
-- **Lint-Staged:** Runs only on staged files to speed up validation.
-
-#### **Manual Trigger**
-```sh
-npm run precheck
-```
-
-### **GitHub Actions CI/CD**
-- Every push triggers:
-  - **ESLint & Prettier validation**
-  - **Jest tests**
-
----
-
-## 📌 Atomic Design & Component Architecture
-
-We are reviewing whether to fully adopt **Atomic Design** alongside **shadcn/UI**.
-
-👉 **Current Approach:**
-- **shadcn UI** in `components/ui/`
-- **Core utilities** in `lib/utils.ts`
-- **Potential** full atomic structure in future
-
-📚 _See `archive/` for older atomic design research._
-
----
-
-## 🤮 Future Enhancements
-
-1. **Expand shadcn/UI components & theming**
-2. **Refine Tailwind contrast-based theming**
-3. **Enhance Jest/Vitest test coverage**
-4. **Decide on final Atomic vs. Standard component organization**
-5. **Performance optimizations (e.g. Framer Motion for animations)**
-
----
-
-## 🤝 Contributing
-
-1. **Branch from `main`** for new features.
-2. **Ensure tests & linting pass** before PRs.
-3. **Submit PRs with screenshots (for UI changes).**
-4. **Merge after review.**
-
----
-
-## 🐟 License
-
-_(TBD—specify open-source or proprietary licensing here.)_
-
----
-
-Thank you for contributing to **Darf-Tech Frontend**! This project is designed for **scalability, automation, and developer experience**. As we refine our architecture, this README will evolve to reflect best practices. 🚀
-
+To be decided – likely MIT or Apache-2.0.
