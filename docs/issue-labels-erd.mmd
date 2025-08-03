@@ -1,0 +1,22 @@
+erDiagram
+    ISSUE ||--o{ STATUS_LABEL : has
+    ISSUE ||--o{ TYPE_LABEL   : has
+    ISSUE ||--o{ PRIORITY_LABEL : has
+    ISSUE ||--o{ AREA_LABEL   : has
+
+    STATUS_LABEL {
+      string name PK "status:*"
+      string color
+    }
+    TYPE_LABEL {
+      string name PK "type:*"
+      string color
+    }
+    PRIORITY_LABEL {
+      string name PK "priority:*"
+      string color
+    }
+    AREA_LABEL {
+      string name PK "area:*"
+      string color
+    }
