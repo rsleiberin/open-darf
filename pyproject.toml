@@ -1,20 +1,15 @@
-[project]
+[tool.poetry]
 name = "darf-core"
 version = "0.1.0"
 description = "Backend core platform for the Darf intelligence stack"
-authors = [
+authors = ["darf"]
     {name = "darf"}
 ]
 readme = "README.md"
-requires-python = "^3.12"
-dependencies = [
-]
+[tool.poetry.dependencies]
 
 
 [build-system]
-requires = ["poetry-core>=2.0.0,<3.0.0"]
-build-backend = "poetry.core.masonry.api"
-
 [tool.poetry.group.dev.dependencies]
 ruff = "0.3.7"
 mypy = "^1.17.1"
@@ -24,3 +19,5 @@ safety = "^3.6.0"
 pre-commit = "^4.2.0"
 safety-cli = "^0.0.4"
 
+[tool.poetry.dependencies]
+python = "^3.12"

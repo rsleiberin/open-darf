@@ -15,12 +15,12 @@ This repository **requires** the following conventions for every contributor.
 
 | Step | Command |
 |------|---------|
-| Install pre-commit hooks | `poetry run pre-commit install --overwrite` |
+| Install pre-commit hooks | poetry run pre-commit install --overwrite |
 | Block pushes to `main`   | (provided by `.git/hooks/pre-push` created during bootstrap) |
-| Sync Sane labels         | `./tools/sync-labels.sh` |
-| Clean Zone Identifiers (if cloning from Windows) | `./tools/remove-zone-identifiers.sh` |
+| Sync Sane labels         | ./tools/sync-labels.sh |
+| Clean Zone Identifiers (if cloning from Windows) | ./tools/remove-zone-identifiers.sh |
 
-> **Why label sync?**  
+> **Why label sync?**
 > GitHub’s default labels are removed and the canonical 23 Sane labels are created/updated
 > so that PR boards, automations and reports remain predictable across all Darf repos.
 
@@ -28,9 +28,9 @@ This repository **requires** the following conventions for every contributor.
 
 ## 2. Branching & naming
 
-* **Feature / fix**   `feat/<slug>`, `fix/<slug>`  
-* **Docs only**       `docs/<slug>`  
-* **Chore / infra**   `chore/<slug>`  
+* **Feature / fix**   `feat/<slug>`, `fix/<slug>`
+* **Docs only**       `docs/<slug>`
+* **Chore / infra**   `chore/<slug>`
 
 Always branch from the latest `main`.
 
@@ -40,11 +40,11 @@ Always branch from the latest `main`.
 
 | Type | When to use | Example |
 |------|-------------|---------|
-| `feat`   | new user-visible functionality | `feat(api): add healthcheck endpoint` |
-| `fix`    | bug or regression               | `fix(auth): correct JWT expiry`       |
-| `docs`   | docs only                       | `docs(readme): clarify setup`         |
-| `chore`  | tooling / infra, no prod code   | `chore(ci): upgrade ruff`             |
-| `refactor` | internal code change, no behaviour | `refactor(db): split repo layer` |
+| `feat`   | new user-visible functionality | feat(api): add healthcheck endpoint |
+| `fix`    | bug or regression               | fix(auth): correct JWT expiry       |
+| `docs`   | docs only                       | docs(readme): clarify setup         |
+| `chore`  | tooling / infra, no prod code   | chore(ci): upgrade ruff             |
+| `refactor` | internal code change, no behaviour | refactor(db): split repo layer |
 
 Conventional Commit scope (text in parentheses) should follow ✨**Sane label areas**✨ (`backend`, `devops`, `docs`, `ui`, …) when practical.
 
@@ -52,10 +52,10 @@ Conventional Commit scope (text in parentheses) should follow ✨**Sane label ar
 
 ## 4. Pull-request checklist
 
-* ✅ CI (pre-commit) passes  
-* ✅ Conventional title & description  
-* ✅ Relevant labels applied (at minimum: **type:** ×1, **area:** ×1, **status:in-progress → status:review**)  
-* ✅ PR linked to an Issue if the change fixes or implements one (`Fixes #42`)  
+* ✅ CI (pre-commit) passes
+* ✅ Conventional title & description
+* ✅ Relevant labels applied (at minimum: **type:** ×1, **area:** ×1, **status:in-progress → status:review**)
+* ✅ PR linked to an Issue if the change fixes or implements one (Fixes #42)
 
 After squash-merge GitHub auto-deletes the feature branch.
 
@@ -63,10 +63,10 @@ After squash-merge GitHub auto-deletes the feature branch.
 
 ## 5. Maintaining the label set
 
-* Script: `tools/sync-labels.sh`  
-  * idempotent — safe to rerun any time  
-  * creates/updates **only** the canonical labels  
-  * deletes default GitHub labels we don’t use (`bug`, `enhancement`, …)
+* Script: tools/sync-labels.sh
+  * idempotent — safe to rerun any time
+  * creates/updates **only** the canonical labels
+  * deletes default GitHub labels we don’t use (bug, enhancement, …)
 
 > Run it after forking or enabling Discussions/Issues on a fresh clone.
 
@@ -78,8 +78,7 @@ Some `.pdf` and `.md` files transferred from Windows may include **Zone.Identifi
 
 Use this helper script to remove them safely:
 
-```bash
 ./tools/remove-zone-identifiers.sh
-```
-Only needed if you’re cloning or editing the repo from a Windows-based editor or terminal.
+
+Only needed if you’re cloning or editing the repo from a Windows-based editor or terminal.  
 Last updated: 2025-08-03
