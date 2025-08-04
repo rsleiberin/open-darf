@@ -18,6 +18,7 @@ This repository **requires** the following conventions for every contributor.
 | Install pre-commit hooks | `poetry run pre-commit install --overwrite` |
 | Block pushes to `main`   | (provided by `.git/hooks/pre-push` created during bootstrap) |
 | Sync Sane labels         | `./tools/sync-labels.sh` |
+| Clean Zone Identifiers (if cloning from Windows) | `./tools/remove-zone-identifiers.sh` |
 
 > **Why label sync?**  
 > GitHub’s default labels are removed and the canonical 23 Sane labels are created/updated
@@ -63,12 +64,22 @@ After squash-merge GitHub auto-deletes the feature branch.
 ## 5. Maintaining the label set
 
 * Script: `tools/sync-labels.sh`  
-  * idempotent — safe to rerun any time
-  * creates/updates **only** the canonical labels
+  * idempotent — safe to rerun any time  
+  * creates/updates **only** the canonical labels  
   * deletes default GitHub labels we don’t use (`bug`, `enhancement`, …)
 
 > Run it after forking or enabling Discussions/Issues on a fresh clone.
 
 ---
 
-_Last updated: {{DATE}}_
+## 6. Zone Identifier Cleanup (WSL + Windows)
+
+Some `.pdf` and `.md` files transferred from Windows may include **Zone.Identifier** metadata streams which can interfere with GitHub Actions and LLM ingestion.
+
+Use this helper script to remove them safely:
+
+```bash
+./tools/remove-zone-identifiers.sh
+```
+Only needed if you’re cloning or editing the repo from a Windows-based editor or terminal.
+Last updated: 2025-08-03
