@@ -1,6 +1,6 @@
 # ADR-YYMM-ARC-NNN: [System Architecture Decision Title]
 
-```yaml
+yaml
 ---
 id: ADR-YYMM-ARC-NNN
 type: ARC
@@ -27,7 +27,6 @@ linked_evidence:
 
 tags: [architecture-pattern, system-design, [domain-area]]
 ---
-```
 
 ## Context
 

@@ -1,6 +1,6 @@
 # ADR-YYMM-CON-NNN: [Conceptual Requirement Title]
 
-```yaml
+yaml
 ---
 id: ADR-YYMM-CON-NNN
 type: CON
@@ -27,7 +27,6 @@ linked_evidence:
 
 tags: [architecture, requirements, [domain-area]]
 ---
-```
 
 ## Context
 

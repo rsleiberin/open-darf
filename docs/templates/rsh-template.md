@@ -1,6 +1,6 @@
 # ADR-YYMM-RSH-NNN: [Research Topic Title]
 
-```yaml
+yaml
 ---
 id: ADR-YYMM-RSH-NNN
 type: RSH
@@ -27,7 +27,6 @@ linked_evidence:
 
 tags: [research-domain, methodology, key-concepts]
 ---
-```
 
 ## Context
 

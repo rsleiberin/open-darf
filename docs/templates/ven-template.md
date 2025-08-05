@@ -1,6 +1,6 @@
 # ADR-YYMM-VEN-NNN: [Vendor/Technology Selection Title]
 
-```yaml
+yaml
 ---
 id: ADR-YYMM-VEN-NNN
 type: VEN
@@ -27,7 +27,6 @@ linked_evidence:
 
 tags: [vendor-name, technology-category, [implementation-domain]]
 ---
-```
 
 ## Context
 
