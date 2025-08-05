@@ -2,11 +2,11 @@
 
 ## Overview
 
-This document defines the Architecture Decision Record (ADR) type system for the RAG research stack monorepo. The system supports research fraud detection, educational research evaluation, and agent swarm orchestration while maintaining clear separation between conceptual decisions and vendor implementations.
+This document defines the Architecture Decision Record (ADR) type system for the RAG research stack monorepo. The system supports research fraud detection, educational research evaluation, and agent swarm orchestration while maintaining clear separation between conceptual decisions and vendor implementations. The expanded type system enables comprehensive omni-domain research ingestion for knowledge graph construction and automated research processing at scale.
 
 ## Type System Architecture
 
-### Core Technical Types
+### Core Technical Types (4)
 
 | Code | Name | Purpose | Example Use Case |
 |------|------|---------|------------------|
@@ -15,7 +15,7 @@ This document defines the Architecture Decision Record (ADR) type system for the
 | `ARC` | Architecture | System-wide structural decisions | Multi-agent system design |
 | `INT` | Integration | Inter-component connections | API gateway patterns |
 
-### Research & Knowledge Types
+### Research & Knowledge Types (8)
 
 | Code | Name | Purpose | Example Use Case |
 |------|------|---------|------------------|
@@ -23,8 +23,12 @@ This document defines the Architecture Decision Record (ADR) type system for the
 | `KNO` | Knowledge | Graph schema, ontology, data models | Research paper entity relationship schema |
 | `ALG` | Algorithm | ML models, processing pipelines | Fraud detection classifier architecture |
 | `VAL` | Validation | Testing approaches, evaluation metrics | Model performance benchmarking strategy |
+| `SYN` | Synthesis | Multi-research consolidation | Backend architecture summary |
+| `DAT` | Data | Schema design, modeling, migrations | Knowledge graph structure |
+| `PER` | Performance | Benchmarking, optimization, scaling | Query performance analysis |
+| `API` | API Design | Interface contracts, versioning | REST API specification |
 
-### Domain-Specific Types
+### Domain-Specific Types (4)
 
 | Code | Name | Purpose | Example Use Case |
 |------|------|---------|------------------|
@@ -33,7 +37,7 @@ This document defines the Architecture Decision Record (ADR) type system for the
 | `FRD` | Fraud Detection | Domain-specific detection logic | Research fraud pattern recognition |
 | `EDU` | Education | Homeschool curriculum, learning paths | Off-grid education framework design |
 
-### User Experience & Interface Types
+### User Experience & Interface Types (3)
 
 | Code | Name | Purpose | Example Use Case |
 |------|------|---------|------------------|
@@ -41,7 +45,16 @@ This document defines the Architecture Decision Record (ADR) type system for the
 | `UI` | User Interface | Visual design, interaction patterns | Design token system |
 | `ACC` | Accessibility | Accessibility compliance decisions | Screen reader compatibility |
 
-### Operational & Governance Types
+### Business & Legal Types (4)
+
+| Code | Name | Purpose | Example Use Case |
+|------|------|---------|------------------|
+| `BIZ` | Business | Revenue models, monetization | Agent-as-a-Service pricing |
+| `LEG` | Legal | Compliance, licensing, regulatory | GDPR data handling requirements |
+| `ETH` | Ethics | AI ethics, research integrity | Bias prevention in fraud detection |
+| `LIC` | Licensing | Open source, IP management | Apache 2.0 vs MIT selection |
+
+### Operational & Governance Types (6)
 
 | Code | Name | Purpose | Example Use Case |
 |------|------|---------|------------------|
@@ -49,14 +62,27 @@ This document defines the Architecture Decision Record (ADR) type system for the
 | `OPS` | Operations | Deployment, monitoring, scaling | Container orchestration approach |
 | `GOV` | Governance | Data policies, ethical guidelines | Open source distribution strategy |
 | `PRC` | Process | Development workflow, methodology | Research paper ingestion workflow |
+| `QUA` | Quality | Code quality, testing strategies | Automated testing pipeline |
+| `DOC` | Documentation | Information architecture, standards | API documentation strategy |
 
-### Meta & Evolution Types
+### Meta & Evolution Types (4)
 
 | Code | Name | Purpose | Example Use Case |
 |------|------|---------|------------------|
 | `META` | Meta | ADR system itself, knowledge management | This type system definition |
 | `EVO` | Evolution | Migration paths, technical debt | Database migration strategy |
 | `EXP` | Experimental | Proof-of-concepts, research spikes | Novel agent architecture exploration |
+| `FUT` | Future | Forward-looking analysis, trends | AI regulation trend analysis |
+
+## Total: 33 ADR Types
+
+### Benefits of Expanded Type System
+
+**✅ Omni-Domain Coverage**: Handles any research domain without gaps  
+**✅ One-Pass Ingestion**: No need to re-process documents for missing types  
+**✅ Graph-Ready**: Rich typing enables sophisticated knowledge graph partitioning  
+**✅ Agent-Scalable**: Types support both generalist and specialist agent development  
+**✅ Future-Proof**: Comprehensive enough for research scaling and automation  
 
 ## ADR Naming Convention
 
@@ -78,6 +104,8 @@ ADR-2508-VEN-001        # Vendor: Qdrant implementation
 ADR-2508-RSH-001        # Research: Vector DB comparison study
 ADR-2508-AGT-001        # Agent: Literature review specialist
 ADR-2508-UX-001         # UX: Component design patterns
+ADR-2508-BIZ-001        # Business: Monetization strategy
+ADR-2508-LEG-001        # Legal: GDPR compliance framework
 ADR-2508-CON-001-v2.0.0 # Major revision to Vector Store concept
 ```
 
@@ -137,30 +165,47 @@ SWM ADR (Swarm Coordination)
 ARC ADR (System Architecture)
 ```
 
+### Business & Legal Integration
+```
+LEG ADR (Regulatory Requirements)
+    ↓ constrains
+ETH ADR (Ethical Guidelines)
+    ↓ guides
+BIZ ADR (Business Strategy)
+    ↓ drives
+GOV ADR (Governance Framework)
+```
+
 ## Implementation Phases
 
 ### Phase 1: Foundation (Current)
-**Priority Types**: `CON`, `VEN`, `RSH`, `KNO`, `UX`, `META`
+**Priority Types**: `CON`, `VEN`, `RSH`, `KNO`, `UX`, `META`, `LEG`, `ETH`
 
-- [x] Define type system (this document)
-- [ ] Migrate existing 16 ADRs to new format
-- [ ] Process reference documents into RSH ADRs
+- [x] Define expanded type system (this document)
+- [ ] Update validation scripts for 33 types
+- [ ] Process reference documents into RSH ADRs with full type coverage
 - [ ] Establish vendor selections with research backing
+- [ ] Document GDPR compliance and AI ethics frameworks
 
 ### Phase 2: Intelligence (6 months)
-**Priority Types**: `ALG`, `AGT`, `SWM`, `FRD`
+**Priority Types**: `ALG`, `AGT`, `SWM`, `FRD`, `DAT`, `PER`, `API`
 
 - [ ] Implement ML models based on research
 - [ ] Design specialized agent architectures  
 - [ ] Build fraud detection algorithms
 - [ ] Create swarm coordination protocols
+- [ ] Establish knowledge graph schemas
+- [ ] Define API contracts and performance benchmarks
 
 ### Phase 3: Distribution (12 months)
-**Priority Types**: `EDU`, `GOV`, `EVO`
+**Priority Types**: `EDU`, `GOV`, `BIZ`, `LIC`, `EVO`, `FUT`
 
 - [ ] Educational curriculum integration
+- [ ] Business model implementation
+- [ ] Open source licensing strategy
 - [ ] Governance frameworks for distribution
 - [ ] Migration and evolution tooling
+- [ ] Future trend analysis and adaptation
 
 ## Directory Structure Integration
 
@@ -171,26 +216,33 @@ docs/
 │   ├── branching-strategy.md   # Git workflow
 │   └── github-standards.md     # Development standards
 ├── decisions/
-│   ├── 0001-favicon-gradient.md          # Legacy format
-│   ├── ADR-2508-META-001-type-system.md  # New format
-│   └── ADR-2508-VEN-001-qdrant.md        # New format
-└── reference/
-    ├── research_document.pdf    # Source for RSH ADRs
-    └── vendor_analysis.pdf      # Source for VEN ADRs
+│   ├── ADR-2506-UX-001.md               # Enhanced format
+│   ├── ADR-2508-RSH-001.md              # Research ADRs
+│   ├── ADR-2508-VEN-007.md              # Vendor selections
+│   ├── ADR-2508-LEG-001.md              # Legal compliance (future)
+│   └── legacy-backup-*/                 # Legacy format preserved
+├── reference/
+│   ├── [21 research PDFs]               # Source for RSH ADRs
+│   └── research_synthesis.pdf           # Source for SYN ADRs
+└── automation/
+    └── ingestion_output/                # Processing tracking
 ```
 
 ## Validation Requirements
 
 ### Automated Checks
-- Type codes must exist in approved system
+- Type codes must exist in approved 33-type system
 - Sequential numbering unique within type
 - Required metadata fields present
 - Evidence links point to existing files
+- Cross-references between ADRs are valid
 
 ### Quality Assurance
 - All VEN ADRs must reference a CON ADR
 - Research claims must link to evidence
 - Vendor decisions must justify concept alignment
+- Legal and ethical considerations documented for AI decisions
+- Business impact assessed for major architectural choices
 - Relationship mappings must be bidirectional
 
 ## Migration Strategy
@@ -200,6 +252,7 @@ docs/
 2. **Cross-Reference**: Link old and new formats bidirectionally  
 3. **Gradual Migration**: Update high-impact decisions first
 4. **No Breaking Changes**: Existing links continue to work
+5. **Type Assignment**: Assign appropriate types from 33-type system to legacy ADRs
 
 ### Example Migration
 ```yaml
@@ -209,31 +262,24 @@ legacy_id: 0001-favicon-gradient
 supersedes: 0001-favicon-gradient.md
 ```
 
+### Validation Script Updates
+Update automation scripts to handle all 33 types:
+```bash
+# Update validation to accept expanded type system
+./tools/validate-fixed-adrs.sh  # Now supports all 33 types
+```
+
 ## Success Metrics
 
 - **Research Traceability**: Every technical decision traces to academic literature
 - **Concept Clarity**: Clear separation between architectural concepts and implementations
 - **Distribution Readiness**: External teams can understand and adopt the system
 - **Evolution Support**: Changes don't lose institutional knowledge
+- **Omni-Domain Coverage**: System handles all research domains without gaps
+- **One-Pass Efficiency**: Documents processed once with complete type coverage
+- **Graph Readiness**: Rich metadata enables sophisticated knowledge partitioning
+- **Compliance Integration**: Legal and ethical considerations embedded in decision process
 
 ---
 
-*This type system enables research-driven, modular architecture decisions that scale from solo development to distributed teams while maintaining academic rigor and institutional memory.*
-```
-ADR-YYMM-TYPE-NNN[-vM.m.p]
-```
-
-### Examples
-```
-ADR-2508-CON-001        # Concept: Vector Store
-ADR-2508-VEN-001        # Vendor: Qdrant implementation
-ADR-2508-RSH-001        # Research: Vector DB comparison
-ADR-2508-AGT-001        # Agent: Literature review specialist
-```
-
-## Enhanced Metadata Structure
-
-All ADRs now include:
-
----
-*Migration completed successfully. All 16 ADRs now follow the enhanced format with valid YAML and research-tracking metadata.*
+*This expanded type system enables comprehensive research-driven, modular architecture decisions that scale from solo development to distributed teams while maintaining academic rigor, legal compliance, and institutional memory. The 33-type system supports omni-domain research ingestion for knowledge graph construction and automated research processing at scale.*

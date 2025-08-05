@@ -1,0 +1,2 @@
+pdf_filename	rsh_adr_id	status	processing_date	key_findings	validates_vendors
+Janus Backend Architecture – Onboarding Brief.pdf	N/A	complete	2025-08-04	Vendor analysis for 9 tech stack components	ADR-2508-VEN-002,ADR-2508-VEN-003,ADR-2508-VEN-004,ADR-2508-VEN-005,ADR-2508-VEN-006,ADR-2508-VEN-007,ADR-2508-VEN-008,ADR-2508-VEN-013
