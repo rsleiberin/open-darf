@@ -1,0 +1,17 @@
+ADR Rename Log - Mon Aug  4 22:50:24 CDT 2025
+===========================
+Renamed: 0002-backend-language.md -> ADR-2508-VEN-002.md
+Renamed: 0003-frontend-framework.md -> ADR-2508-VEN-003.md
+Renamed: 0004-message-broker.md -> ADR-2508-VEN-004.md
+Renamed: 0005-task-queue.md -> ADR-2508-VEN-005.md
+Renamed: 0006-relational-db.md -> ADR-2508-VEN-006.md
+Renamed: 0007-vector-store.md -> ADR-2508-VEN-007.md
+Renamed: 0008-knowledge-graph.md -> ADR-2508-VEN-000.md
+Renamed: 0009-container-runtime.md -> ADR-2508-VEN-000.md
+Renamed: 0010-object-store.md -> ADR-2508-VEN-008.md
+Renamed: 0011-github-workflow.md -> ADR-2508-PRC-009.md
+Renamed: 0012-label-taxonomy.md -> ADR-2508-PRC-010.md
+Renamed: 0013-commit-style.md -> ADR-2508-PRC-011.md
+Renamed: 0014-ci-pre-commit.md -> ADR-2508-PRC-012.md
+Renamed: 0015-in-memory-cache.md -> ADR-2508-VEN-013.md
+Renamed: 0016-rag-orchestration.md -> ADR-2508-ARC-014.md

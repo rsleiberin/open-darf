@@ -1,0 +1,19 @@
+ADR Validation Report - Mon Aug  4 22:33:35 CDT 2025
+=========================================
+❌ 0002-backend-language.md: Invalid YAML syntax
+❌ 0003-frontend-framework.md: Invalid YAML syntax
+❌ 0004-message-broker.md: Invalid YAML syntax
+❌ 0005-task-queue.md: Invalid YAML syntax
+❌ 0006-relational-db.md: Invalid YAML syntax
+❌ 0007-vector-store.md: Invalid YAML syntax
+❌ 0008-knowledge-graph.md: Invalid YAML syntax
+❌ 0009-container-runtime.md: Invalid YAML syntax
+❌ 0010-object-store.md: Invalid YAML syntax
+❌ 0011-github-workflow.md: Invalid YAML syntax
+❌ 0012-label-taxonomy.md: Invalid YAML syntax
+❌ 0013-commit-style.md: Invalid YAML syntax
+❌ 0014-ci-pre-commit.md: Invalid YAML syntax
+❌ 0015-in-memory-cache.md: Invalid YAML syntax
+❌ 0016-rag-orchestration.md: Invalid YAML syntax
+❌ ADR-2506-UX-001(Favicon Gradient).md: Invalid YAML syntax
+⚠️  ADR-2506-UX-001(Favicon Gradient).md: Broken evidence links: browser_compatibility_testing_results

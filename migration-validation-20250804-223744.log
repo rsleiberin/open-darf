@@ -1,0 +1,18 @@
+Migration Validation Report - Mon Aug  4 22:37:44 CDT 2025
+=====================================
+⚠️  0002-backend-language.md: Issues: invalid_yaml_syntax
+⚠️  0003-frontend-framework.md: Issues: invalid_yaml_syntax
+⚠️  0004-message-broker.md: Issues: invalid_yaml_syntax
+⚠️  0005-task-queue.md: Issues: invalid_yaml_syntax
+⚠️  0006-relational-db.md: Issues: invalid_yaml_syntax
+⚠️  0007-vector-store.md: Issues: invalid_yaml_syntax
+⚠️  0008-knowledge-graph.md: Issues: invalid_yaml_syntax
+⚠️  0009-container-runtime.md: Issues: invalid_yaml_syntax
+⚠️  0010-object-store.md: Issues: invalid_yaml_syntax
+⚠️  0011-github-workflow.md: Issues: invalid_yaml_syntax
+⚠️  0012-label-taxonomy.md: Issues: invalid_yaml_syntax
+⚠️  0013-commit-style.md: Issues: invalid_yaml_syntax
+⚠️  0014-ci-pre-commit.md: Issues: invalid_yaml_syntax
+⚠️  0015-in-memory-cache.md: Issues: invalid_yaml_syntax
+⚠️  0016-rag-orchestration.md: Issues: invalid_yaml_syntax
+⚠️  ADR-2506-UX-001(Favicon Gradient).md: Issues: invalid_yaml_syntax
