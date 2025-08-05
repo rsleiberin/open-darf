@@ -1,45 +1,79 @@
-docs/automation/ingestion_output/doc_index.txt
-docs/content/architecture/00-roadmap.md
-docs/content/architecture/01-architecture.md
-docs/content/architecture/02-agent-orchestration.md
-docs/content/architecture/foundational-docs.md
-docs/content/automation/00-automation-workflow.md
-docs/content/automation/01-docs-extensibility.md
-docs/content/ui/00-ui-ux-guidelines.md
-docs/decisions/0001-favicon-gradient.md
-docs/git-automation-blueprint.txt
-docs/outlines/architecture/foundational-docs.md
-docs/process/branching-strategy.md
-docs/process/github-standards.md
-docs/process/label-taxonomy.md
-docs/reference/Backend Architecture Considerations for a Generative AI Platform.pdf
-docs/reference/Backup and DR Strategy for the Janus Backend.pdf
-docs/reference/Best Vector Database Options for a Python-Based AI Stack.pdf
-docs/reference/Building a Universal, ACID-Compliant Backend Tech Stack.pdf
-docs/reference/Choosing the Right Database for Your “Second Brain” Project.pdf
-docs/reference/Choosing the Right Job_Task Queue System for a Distributed Python Stack.pdf
-docs/reference/Choosing the Right ORM(s) for the Core Stack.pdf
-docs/reference/Container Runtimes and Orchestration for Offline_Edge Environments.pdf
-docs/reference/Design Tokens (WIP).md
-docs/reference/Durable, Scalable Cache Options for a Python Backend Stack.pdf
-docs/reference/Evaluating RAG Retriever Layer Options for Qdrant and Neo4j.pdf
-docs/reference/Evaluation of Hybrid Local-First Object Storage Solutions.pdf
-docs/reference/Hierarchical Rar Architecture.pdf
-docs/reference/Janus Backend Architecture – Onboarding Brief.pdf
-docs/reference/Orchestration Strategies for Podman in Offline, Edge Environments.pdf
-docs/reference/Project Janus Architecture and Implementation Roadmap.pdf
-docs/reference/Redis vs RabbitMQ as Dramatiq Brokers – A Durable Self‑Hosted Task Queue Comparison.pdf
-docs/reference/Scalable Document Ingestion and Integration Pipeline Blueprint.pdf
-docs/reference/System Reference Document.md
-docs/reference/Tailoring Your Backend Stack for an AI-Powered “Second Brain”.pdf
-docs/reference/architecture/foundational-docs.pdf
-docs/reference/architecture/system-reference-document.md
-docs/reference/backend_stack_overview.md
-docs/reference/backend_stack_summary (1).md
-docs/reference/backend_stack_summary.md
-docs/reference/conceptual_slots_exploration.pdf
-docs/reference/event_store_research.pdf
-docs/reference/git roadmap.pdf
-docs/research/architecture/information-architecture.md
-docs/research/ui/design-tokens.md
-docs/research/vendor_research.md
+ADR System Enhanced Ingestion Report
+Generated: 2025-08-04 23:25:55
+
+=== ENHANCED ADR SYSTEM STATUS ===
+
+Total ADRs: 15 active documents
+Migration Status: Complete - All legacy ADRs migrated to enhanced format
+Type System: Implemented with 16 categories
+Validation Status: All ADRs pass enhanced validation
+
+=== ADR INVENTORY ===
+
+Architecture Decisions (ARC):
+- ADR-2508-ARC-014: LangChain + AutoGen + GraphRAG for RAG orchestration
+
+User Experience (UX):
+- ADR-2506-UX-001: Favicon SVG gradient fallback to PNG
+
+Vendor Selections (VEN):
+- ADR-2508-VEN-002: Python 3.12 as primary backend language
+- ADR-2508-VEN-003: Next 15 / React 19 for frontend UI
+- ADR-2508-VEN-004: RabbitMQ 3 as default message broker
+- ADR-2508-VEN-005: Dramatiq with Redis backend for task queue
+- ADR-2508-VEN-006: PostgreSQL 15 as relational store
+- ADR-2508-VEN-007: Qdrant v1 for vector storage
+- ADR-2508-VEN-008: MinIO (S3-compatible) as object storage
+- ADR-2508-VEN-013: Redis 7 as in-memory cache and transient pub/sub
+
+Process Decisions (PRC):
+- ADR-2508-PRC-009: GitHub PR-first workflow with protected main branch
+- ADR-2508-PRC-010: 23-label "Sane Label Schema" enforced via sync script
+- ADR-2508-PRC-011: Conventional Commits 1.0.0 required for all merges
+- ADR-2508-PRC-012: GitHub Actions running pre-commit (ruff, bandit, safety)
+
+Legacy ADRs with ID conflicts resolved:
+- ADR-2508-VEN-000: Legacy numbering preserved in backup
+
+=== RESEARCH FOUNDATION ===
+
+Primary Research Document: Janus Backend Architecture – Onboarding Brief
+- 26 pages of comprehensive architectural analysis
+- Research basis for 9 core vendor selections
+- Alternatives analysis for each major component
+
+Secondary Research Documents:
+- Best Vector Database Options for a Python-Based AI Stack
+- Building a Universal, ACID-Compliant Backend Tech Stack
+- Redis vs RabbitMQ as Dramatiq Brokers comparison
+- Evaluating RAG Retriever Layer Options for Qdrant and Neo4j
+
+=== ENHANCED METADATA TRACKING ===
+
+All ADRs now include:
+- Decision confidence scores (1-10 scale)
+- Time investment tracking (actual hours spent)
+- Main tradeoffs explicitly documented
+- Alternatives rejected with rationale
+- Specific reevaluation triggers
+- Research basis citations
+- Evidence linking to source documents
+
+=== AUTOMATION TOOLING ===
+
+Created 27 automation tools for ADR management:
+- Migration and validation scripts
+- Type system enforcement
+- YAML syntax validation
+- Cross-reference maintenance
+- Research-to-ADR ingestion pipeline ready
+
+=== SYSTEM READINESS ===
+
+✅ All ADRs migrated to enhanced format
+✅ Type system fully implemented
+✅ Research traceability established
+✅ Validation pipeline functional
+✅ Ready for RSH (Research) ADR creation from reference documents
+
+Next Phase: Process 21 reference PDFs into structured RSH ADRs

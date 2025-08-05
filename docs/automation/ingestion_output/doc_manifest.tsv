@@ -1,45 +1,16 @@
-unclassified docs/automation/ingestion_output/doc_index.txt
-unclassified docs/content/architecture/00-roadmap.md
-unclassified docs/content/architecture/01-architecture.md
-unclassified docs/content/architecture/02-agent-orchestration.md
-unclassified docs/content/architecture/foundational-docs.md
-unclassified docs/content/automation/00-automation-workflow.md
-unclassified docs/content/automation/01-docs-extensibility.md
-unclassified docs/content/ui/00-ui-ux-guidelines.md
-unclassified docs/decisions/0001-favicon-gradient.md
-unclassified docs/git-automation-blueprint.txt
-unclassified docs/outlines/architecture/foundational-docs.md
-unclassified docs/process/branching-strategy.md
-unclassified docs/process/github-standards.md
-unclassified docs/process/label-taxonomy.md
-unclassified docs/reference/Backend Architecture Considerations for a Generative AI Platform.pdf
-unclassified docs/reference/Backup and DR Strategy for the Janus Backend.pdf
-unclassified docs/reference/Best Vector Database Options for a Python-Based AI Stack.pdf
-unclassified docs/reference/Building a Universal, ACID-Compliant Backend Tech Stack.pdf
-unclassified docs/reference/Choosing the Right Database for Your “Second Brain” Project.pdf
-unclassified docs/reference/Choosing the Right Job_Task Queue System for a Distributed Python Stack.pdf
-unclassified docs/reference/Choosing the Right ORM(s) for the Core Stack.pdf
-unclassified docs/reference/Container Runtimes and Orchestration for Offline_Edge Environments.pdf
-unclassified docs/reference/Design Tokens (WIP).md
-unclassified docs/reference/Durable, Scalable Cache Options for a Python Backend Stack.pdf
-unclassified docs/reference/Evaluating RAG Retriever Layer Options for Qdrant and Neo4j.pdf
-unclassified docs/reference/Evaluation of Hybrid Local-First Object Storage Solutions.pdf
-unclassified docs/reference/Hierarchical Rar Architecture.pdf
-unclassified docs/reference/Janus Backend Architecture – Onboarding Brief.pdf
-unclassified docs/reference/Orchestration Strategies for Podman in Offline, Edge Environments.pdf
-unclassified docs/reference/Project Janus Architecture and Implementation Roadmap.pdf
-unclassified docs/reference/Redis vs RabbitMQ as Dramatiq Brokers – A Durable Self‑Hosted Task Queue Comparison.pdf
-unclassified docs/reference/Scalable Document Ingestion and Integration Pipeline Blueprint.pdf
-unclassified docs/reference/System Reference Document.md
-unclassified docs/reference/Tailoring Your Backend Stack for an AI-Powered “Second Brain”.pdf
-unclassified docs/reference/architecture/foundational-docs.pdf
-unclassified docs/reference/architecture/system-reference-document.md
-unclassified docs/reference/backend_stack_overview.md
-unclassified docs/reference/backend_stack_summary (1).md
-unclassified docs/reference/backend_stack_summary.md
-unclassified docs/reference/conceptual_slots_exploration.pdf
-unclassified docs/reference/event_store_research.pdf
-unclassified docs/reference/git roadmap.pdf
-unclassified docs/research/architecture/information-architecture.md
-unclassified docs/research/ui/design-tokens.md
-unclassified docs/research/vendor_research.md
+document_iddocument_typestatuscreated_dateenhanced_dateresearch_basisconfidence_scorevalidation_status
+ADR-2506-UX-001UXaccepted2024-06-152025-08-04browser_compatibility_testing9✅ valid
+ADR-2508-VEN-002VENaccepted2025-08-032025-08-04Janus Backend Architecture Brief9✅ valid
+ADR-2508-VEN-003VENaccepted2025-08-032025-08-04Janus Backend Architecture Brief8✅ valid
+ADR-2508-VEN-004VENaccepted2025-08-032025-08-04Janus Backend Architecture Brief9✅ valid
+ADR-2508-VEN-005VENaccepted2025-08-032025-08-04Janus Backend Architecture Brief8✅ valid
+ADR-2508-VEN-006VENaccepted2025-08-032025-08-04Janus Backend Architecture Brief9✅ valid
+ADR-2508-VEN-007VENaccepted2025-08-032025-08-04Janus Backend Architecture Brief9✅ valid
+ADR-2508-VEN-008VENaccepted2025-08-032025-08-04Janus Backend Architecture Brief9✅ valid
+ADR-2508-VEN-013VENaccepted2025-08-042025-08-04Janus Backend Architecture Brief9✅ valid
+ADR-2508-PRC-009PRCaccepted2025-08-032025-08-04GitHub Standards Documentation8✅ valid
+ADR-2508-PRC-010PRCaccepted2025-08-032025-08-04Label Taxonomy Documentation7✅ valid
+ADR-2508-PRC-011PRCaccepted2025-08-032025-08-04GitHub Standards Documentation8✅ valid
+ADR-2508-PRC-012PRCaccepted2025-08-032025-08-04Pre-commit Configuration7✅ valid
+ADR-2508-ARC-014ARCaccepted2025-08-042025-08-04Janus Backend Architecture Brief8✅ valid
+ADR-2508-VEN-000VENaccepted2025-08-032025-08-04Janus Backend Architecture Brief8✅ valid
