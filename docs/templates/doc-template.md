@@ -1,6 +1,3 @@
-# ADR-YYMM-DOC-NNN: [Documentation Strategy Title]
-
-yaml
 ---
 id: ADR-YYMM-DOC-NNN
 type: DOC
@@ -184,5 +181,7 @@ Brief description of the documentation challenge being addressed and why a struc
 - [Agent capabilities that enable new automation opportunities]
 
 ---
+# ADR-YYMM-DOC-NNN: [Documentation Strategy Title]
+
 
 *This documentation strategy establishes sustainable practices for creating, maintaining, and evolving project documentation while enabling AI agent integration and supporting long-term project growth and community development.*

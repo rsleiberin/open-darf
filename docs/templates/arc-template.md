@@ -1,6 +1,3 @@
-# ADR-YYMM-ARC-NNN: [System Architecture Decision Title]
-
-yaml
 ---
 id: ADR-YYMM-ARC-NNN
 type: ARC
@@ -199,5 +196,7 @@ Brief description of the system-wide architectural decision being made and the b
 - [Technology ecosystem changes that would affect component choices]
 
 ---
+# ADR-YYMM-ARC-NNN: [System Architecture Decision Title]
+
 
 *This architecture implements the conceptual requirements from [CON-XXX] using vendor selections from [VEN-XXX], providing [key architectural benefit] while managing [key architectural tradeoff] for sustainable system evolution.*

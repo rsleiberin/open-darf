@@ -1,6 +1,3 @@
-# ADR-YYMM-RSH-NNN: [Research Topic Title]
-
-yaml
 ---
 id: ADR-YYMM-RSH-NNN
 type: RSH
@@ -131,5 +128,7 @@ Brief description of what research question this ADR addresses and why the resea
 4. [Community resources or studies]
 
 ---
+# ADR-YYMM-RSH-NNN: [Research Topic Title]
+
 
 *This research provides the analytical foundation for [specific decisions], enabling informed architectural choices while maintaining flexibility for future evolution.*

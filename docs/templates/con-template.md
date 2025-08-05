@@ -1,6 +1,3 @@
-# ADR-YYMM-CON-NNN: [Conceptual Requirement Title]
-
-yaml
 ---
 id: ADR-YYMM-CON-NNN
 type: CON
@@ -133,5 +130,7 @@ Brief description of the architectural slot or conceptual requirement this ADR d
 - [Performance threshold breaches that would trigger reconsideration]
 
 ---
+# ADR-YYMM-CON-NNN: [Conceptual Requirement Title]
+
 
 *This concept definition provides vendor-agnostic requirements that guide implementation selection while maintaining architectural flexibility and long-term evolution capability.*

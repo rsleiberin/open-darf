@@ -14,3 +14,6 @@ ADR-2508-PRC-011PRCaccepted2025-08-032025-08-04GitHub Standards Documentation8�
 ADR-2508-PRC-012PRCaccepted2025-08-032025-08-04Pre-commit Configuration7✅ valid
 ADR-2508-ARC-014ARCaccepted2025-08-042025-08-04Janus Backend Architecture Brief8✅ valid
 ADR-2508-VEN-000VENaccepted2025-08-032025-08-04Janus Backend Architecture Brief8✅ valid
+ADR-2508-RSH-001	RSH	accepted	2025-08-04	2025-08-05	Best Vector Database Options PDF	9	✅ valid
+ADR-2508-DOC-001	DOC	accepted	2025-08-05	2025-08-05	Foundational Documentation Architecture PDF	9	✅ valid
+ADR-2508-RSH-002	RSH	accepted	2025-08-05	2025-08-05	Backend Architecture Considerations PDF	9	✅ valid

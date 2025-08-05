@@ -1,6 +1,3 @@
-# ADR-YYMM-VEN-NNN: [Vendor/Technology Selection Title]
-
-yaml
 ---
 id: ADR-YYMM-VEN-NNN
 type: VEN
@@ -150,5 +147,7 @@ Based on concept requirements from [CON-XXX] and research from [RSH-XXX]:
 - [Business requirement changes that would invalidate this selection]
 
 ---
+# ADR-YYMM-VEN-NNN: [Vendor/Technology Selection Title]
+
 
 *This vendor selection implements the requirements defined in [CON-XXX] based on research findings from [RSH-XXX], providing [key benefit] while acknowledging [key tradeoff] for long-term architectural flexibility.*
