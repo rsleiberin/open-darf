@@ -18,6 +18,7 @@
 - [ ] Replace all placeholder text in square brackets `[like this]`
 
 ## After ADR Creation
+- [ ] `git pull --rebase origin main`  # required
 - [ ] Run validation: `./tools/validate-fixed-adrs.sh`
 - [ ] Update tracking files: `docs/automation/ingestion_output/doc_manifest.tsv`
 - [ ] Commit with descriptive message
