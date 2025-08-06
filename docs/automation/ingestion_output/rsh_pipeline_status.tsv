@@ -1,5 +1,5 @@
-pdf_filename	rsh_adr_id	status	processing_date	key_findings	validates_vendors
-Janus Backend Architecture – Onboarding Brief.pdf	N/A	complete	2025-08-04	Vendor analysis for 9 tech stack components	ADR-2508-VEN-002,ADR-2508-VEN-003,ADR-2508-VEN-004,ADR-2508-VEN-005,ADR-2508-VEN-006,ADR-2508-VEN-007,ADR-2508-VEN-008,ADR-2508-VEN-013
-Best Vector Database Options for a Python-Based AI Stack.pdf	ADR-2508-RSH-001	complete	2025-08-04	Comprehensive vector database evaluation for Python AI stack	ADR-2508-VEN-007
-Backend Architecture Considerations for a Generative AI Platform.pdf	ADR-2508-RSH-002	complete	2025-08-05	Storage strategy, hybrid architecture, AI security patterns	ADR-2508-VEN-006,ADR-2508-VEN-007,ADR-2508-VEN-008
-Foundational Documentation Architecture for a Solo Developer Studio.pdf	ADR-2508-DOC-001	complete	2025-08-05	Comprehensive documentation strategy for solo developer studios	N/A
+pdf_filenamersh_adr_idstatusprocessing_datekey_findingsvalidates_vendorsgenerated_adrs
+Janus Backend Architecture – Onboarding Brief.pdfN/Acomplete2025-08-04Vendor analysis for 9 tech stack componentsADR-2508-VEN-002,ADR-2508-VEN-003,ADR-2508-VEN-004,ADR-2508-VEN-005,ADR-2508-VEN-006,ADR-2508-VEN-007,ADR-2508-VEN-008,ADR-2508-VEN-013N/A
+Best Vector Database Options for a Python-Based AI Stack.pdfADR-2508-RSH-001complete2025-08-05Comprehensive vector database evaluation for Python AI stackADR-2508-VEN-007ADR-2508-CON-001
+Backend Architecture Considerations for a Generative AI Platform.pdfADR-2508-RSH-002complete2025-08-05Storage strategy, hybrid architecture, AI security patternsADR-2508-VEN-006,ADR-2508-VEN-007,ADR-2508-VEN-008ADR-2508-CON-002,ADR-2508-SEC-003,ADR-2508-ARC-015
+Foundational Documentation Architecture for a Solo Developer Studio.pdfADR-2508-RSH-003complete2025-08-05Comprehensive documentation strategy for solo developer studiosN/AADR-2508-DOC-001,ADR-2508-PRC-013,ADR-2508-AGT-001
