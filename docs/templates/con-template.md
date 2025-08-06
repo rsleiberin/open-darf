@@ -128,9 +128,3 @@ Brief description of the architectural slot or conceptual requirement this ADR d
 - [Business requirement changes that would affect this concept]
 - [Technical constraint changes that would require review]
 - [Performance threshold breaches that would trigger reconsideration]
-
----
-# ADR-YYMM-CON-NNN: [Conceptual Requirement Title]
-
-
-*This concept definition provides vendor-agnostic requirements that guide implementation selection while maintaining architectural flexibility and long-term evolution capability.*

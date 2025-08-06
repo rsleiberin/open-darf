@@ -126,9 +126,3 @@ Brief description of what research question this ADR addresses and why the resea
 2. [Additional academic sources]
 3. [Vendor documentation or benchmarks]
 4. [Community resources or studies]
-
----
-# ADR-YYMM-RSH-NNN: [Research Topic Title]
-
-
-*This research provides the analytical foundation for [specific decisions], enabling informed architectural choices while maintaining flexibility for future evolution.*

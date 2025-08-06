@@ -145,9 +145,3 @@ Based on concept requirements from [CON-XXX] and research from [RSH-XXX]:
 - [Cost or licensing changes that would require review]
 - [Technology ecosystem changes that would affect this choice]
 - [Business requirement changes that would invalidate this selection]
-
----
-# ADR-YYMM-VEN-NNN: [Vendor/Technology Selection Title]
-
-
-*This vendor selection implements the requirements defined in [CON-XXX] based on research findings from [RSH-XXX], providing [key benefit] while acknowledging [key tradeoff] for long-term architectural flexibility.*

@@ -48,19 +48,17 @@ Brief description of the system-wide architectural decision being made and the b
 
 **Key Components**:
 - **[Component 1]**: [Role and responsibility]
-- **[Component 2]**: [Role and responsibility]  
+- **[Component 2]**: [Role and responsibility]
 - **[Component 3]**: [Role and responsibility]
 
 ### System Structure
 
-```
 [ASCII diagram or description of component relationships]
 
 [Component A] <--> [Component B]
       |                |
       v                v
 [Component C] <--> [Component D]
-```
 
 ### Data Flow Architecture
 1. **[Flow 1]**: [Description of primary data/control flow]
@@ -71,7 +69,7 @@ Brief description of the system-wide architectural decision being made and the b
 
 ### [Component 1 Name]
 **Purpose**: [What this component does in the architecture]
-**Responsibilities**: 
+**Responsibilities**:
 - [Primary responsibility]
 - [Secondary responsibility]
 **Interfaces**: [How other components interact with this one]
@@ -194,9 +192,3 @@ Brief description of the system-wide architectural decision being made and the b
 - [Performance degradation patterns that would trigger redesign]
 - [Business requirement changes that would invalidate design assumptions]
 - [Technology ecosystem changes that would affect component choices]
-
----
-# ADR-YYMM-ARC-NNN: [System Architecture Decision Title]
-
-
-*This architecture implements the conceptual requirements from [CON-XXX] using vendor selections from [VEN-XXX], providing [key architectural benefit] while managing [key architectural tradeoff] for sustainable system evolution.*
