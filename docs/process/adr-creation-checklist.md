@@ -5,6 +5,12 @@
 - [ ] Ensure you have the source research/evidence
 - [ ] Choose the appropriate template
 
+### Research-First Rule  (2025-08-06)
+
+- [ ] If the work involves a new research document (PDF), create its **RSH** ADR first.  
+      Reference that ADR’s ID (e.g. `ADR-YYYY-RSH-NNN`) in every `research_basis` field—do **not** use free-text.
+- [ ] Non-RSH ADRs must **not** include `linked_evidence:`; evidence belongs only in the RSH ADR.
+
 ## During ADR Creation
 - [ ] Copy template content **EXCLUDING the final `---`**
 - [ ] Fill in all YAML frontmatter fields

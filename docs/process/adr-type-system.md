@@ -143,6 +143,11 @@ tags: [tag1, tag2, tag3]
 ---
 ```
 
+**Field hygiene**  
+• `research_basis` must list ADR IDs only (no free-text).  
+• Only RSH ADRs may contain `linked_evidence:`; downstream ADRs point to research via `research_basis`.
+
+
 ## Relationship Patterns
 
 ### Research → Concept → Vendor Chain
