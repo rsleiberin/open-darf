@@ -75,3 +75,4 @@ document_iddocument_typestatuscreated_dateenhanced_dateresearch_basisconfidence_
 ||||||| parent of e6f6348 (fix: restore proper TSV formatting with tab separators)
 ||||||| parent of f2d1088 (fix(tracking): rebuild doc_manifest.tsv with proper formatting)
 ||||||| parent of f6cf493 (feat(adrs): create RSH-003 Documentation Architecture Research)
+ADR-2508-RSH-004	RSH	accepted	2025-08-06	2025-08-06	Janus Backend Architecture Brief	8	✅ valid
