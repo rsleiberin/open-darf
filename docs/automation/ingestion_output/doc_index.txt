@@ -77,3 +77,4 @@ Created 27 automation tools for ADR management:
 ✅ Ready for RSH (Research) ADR creation from reference documents
 
 Next Phase: Process 21 reference PDFs into structured RSH ADRs
+- Backend Architecture Considerations for a Generative AI Platform
