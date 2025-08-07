@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  # Define database containers here. Example (disabled initially):
+  # postgres:
+  #   image: docker.io/library/postgres:15
+  #   environment:
+  #     POSTGRES_DB: janus
+  #     POSTGRES_USER: janus
+  #     POSTGRES_PASSWORD: januspass
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+  #   ports: ["5432:5432"]
+
+volumes:
+  # pgdata:
