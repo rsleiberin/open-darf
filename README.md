@@ -115,3 +115,24 @@ python apps/backend/main.py
 * The “Local Containers (Podman)” section points contributors to `infra/podman/` for compose files and install docs—aligning with your new branch.
 
 Commit this updated README on `infra-podman-init` (or a fresh branch) before opening the PR.
+
+---
+
+## 🚀 Project Status
+
+### Phase 0: Foundation ✅ COMPLETE
+- [x] Issue #40: PostgreSQL setup in Podman
+- [x] Issue #41: SQLAlchemy smoke test passing  
+- [x] Issue #42: Fixed pyproject.toml parse error
+- [x] Issue #43: Research artifact retained in docs/reference
+- [ ] Issue #44: PR for db-postgres-standup branch (pending)
+
+### Recent Achievements
+- **PostgreSQL 15** running in Podman on port 5432
+- **SQLAlchemy** connection verified with CRUD operations
+- **Project structure** fixed - all linting passing
+- **38 GitHub issues** created covering complete ADR modernization roadmap
+
+---
+
+*Last updated: 2025-08-07*
