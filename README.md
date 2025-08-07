@@ -2,71 +2,116 @@
 
 **A perfect day is completing each moment of that day perfectly.**
 
-A constitutional AI platform that operates as your digital self - making decisions within formal constraints, managing budgets autonomously, and maintaining perfect memory of every choice through a structured Architecture Decision Record (ADR) system.
+A constitutional AI platform that operates as your digital self—making decisions within formal constraints, managing budgets autonomously, and maintaining perfect memory of every choice through a structured Architecture Decision Record (ADR) system.
+
+---
 
 ## Philosophy
 
-This system embodies digital sovereignty: an AI agent that represents you with the same intentionality you bring to each decision, operating within constitutional bounds you define, with full audit trails and fraud detection capabilities.
+This system embodies **digital sovereignty**: an AI agent that represents you with the same intentionality you bring to each decision, operating within the constitutional bounds you define, with full audit trails and fraud-detection capabilities.
+
+---
 
 ## Architecture Decision Records (ADRs)
 
-The system's intelligence comes from its decision architecture - every capability, integration, and constraint is formally documented in ADRs that create an executable knowledge graph:
+The system's intelligence comes from its decision architecture—every capability, integration, and constraint is formally documented in ADRs that create an executable knowledge graph:
 
 - **25+ interconnected ADRs** with full research traceability  
-- **Research → Concept → Implementation** chain for all technical decisions
-- **Constitutional framework** for agent behavior and budget constraints
-- **Self-documenting evolution** as capabilities expand
+- **Research → Concept → Implementation** chain for all technical decisions  
+- **Constitutional framework** for agent behaviour and budget constraints  
+- **Self-documenting evolution** as capabilities expand  
 
-See `docs/decisions/` for the complete decision corpus.
+Browse the corpus in `docs/decisions/`.
+
+---
 
 ## Technical Stack
 
 | Concern                | Technology                                           |
-|------------------------|-----------------------------------------------------|
-| **Decision Engine**    | ADR-driven workflows with confidence scoring        |
-| **Backend Language**   | Python 3.12 (Poetry 2.1.3)                        |
-| **Frontend Framework** | Next 15 · React 19 · Tailwind 4 · shadcn/UI       |
-| **Message Broker**     | RabbitMQ 3                                          |
-| **Task Queue**         | Dramatiq + Redis                                    |
-| **Relational DB**      | PostgreSQL 15                                       |
-| **Knowledge Graph**    | Neo4j 5 (Community)                                |
-| **Vector Store**       | Qdrant v1                                           |
-| **Object Store**       | MinIO (S3-compatible)                               |
-| **Cache/Pub-sub**      | Redis 7                                             |
-| **Container Runtime**  | Podman 4 + Quadlet                                 |
+|------------------------|------------------------------------------------------|
+| **Decision Engine**    | ADR-driven workflows with confidence scoring         |
+| **Backend Language**   | Python 3.12 · Poetry 2.1.3                           |
+| **Frontend Framework** | Next 15 · React 19 · Tailwind 4 · shadcn/UI          |
+| **Message Broker**     | RabbitMQ 3                                           |
+| **Task Queue**         | Dramatiq + Redis                                     |
+| **Relational DB**      | PostgreSQL 15                                        |
+| **Knowledge Graph**    | Neo4j 5 (Community)                                  |
+| **Vector Store**       | Qdrant v1                                            |
+| **Object Store**       | MinIO (S3-compatible)                                |
+| **Cache / Pub-sub**    | Redis 7                                              |
+| **Container Runtime**  | Podman 3.4+ · Quadlet                                |
+
+---
 
 ## Repository Structure
-apps/            # Application services
-backend/         # AI agent services & decision engine
-frontend/        # Constitutional AI interface
-packages/        # Shared libraries
-shared/          # ADR parsing & workflow execution
-infra/           # Infrastructure as code
-docker/          # Self-hosted infrastructure
-docs/            # Documentation & decisions
-decisions/       # ADR corpus (authoritative)
-templates/       # ADR templates
-reference/       # Research materials (19 PDFs)
+
+apps/       # Application services
+backend/    # AI agent services & decision engine
+frontend/   # Constitutional AI interface
+packages/   # Shared libraries
+shared/     # ADR parsing & workflow execution
+infra/      # Infrastructure as code
+└─ podman/  # Local containers (compose & docs)
+docker/     # Build files for CI/CD images
+docs/       # Documentation & ADR type system
+decisions/  # ADR corpus (authoritative)
+templates/  # ADR templates
+reference/  # Research materials (PDFs, CSVs)
+
+---
 
 ## Core Capabilities
 
 ### Decision Architecture
-- **Formal reasoning** through structured ADR workflows
-- **Evidence-based decisions** with research traceability  
-- **Confidence scoring** and uncertainty acknowledgment
-- **Constitutional constraints** preventing unauthorized actions
+* Formal reasoning through structured ADR workflows  
+* Evidence-based decisions with research traceability  
+* Confidence scoring and uncertainty acknowledgement  
+* Constitutional constraints preventing unauthorised actions  
 
 ### Agent Operations
-- **Budget management** with crypto wallet integration
-- **Authentication gating** for major decisions via phone/biometric
-- **Perfect memory** of all decisions and their rationale
-- **Fraud detection** through behavioral pattern analysis
+* Budget management with crypto-wallet integration  
+* Authentication gating for major decisions (phone / biometric)  
+* Perfect memory of all decisions and their rationale  
+* Fraud detection via behavioural-pattern analysis  
+
+---
+
+## Local Containers (Podman)
+
+We run local services (PostgreSQL, Neo4j, Qdrant, etc.) with **Podman**.  
+Follow the instructions in `infra/podman/README_podman.md` to install Podman 3.4+ on Ubuntu 20.04 and start the compose file.
+
+```bash
+# example (once Podman is installed and compose file filled in)
+cd infra/podman
+podman-compose up -d   # start databases
+```
+
+---
 
 ## Quick Start
 
 ```bash
 git clone https://github.com/rsleiberin/darf-source.git
 cd darf-source
+
+# install Python deps
 poetry install --no-interaction
+
+# lint & test
 make lint test
+
+# run backend (draft)
 python apps/backend/main.py
+```
+
+---
+
+*Empowering individuals with sovereign, auditable AI—one perfectly-documented decision at a time.*
+
+**Notes**
+
+* The stack table lists Podman **3.4+** because that’s what installs cleanly on Ubuntu 20.04; you can bump the version when you upgrade the OS or move to Snap builds.
+* The “Local Containers (Podman)” section points contributors to `infra/podman/` for compose files and install docs—aligning with your new branch.
+
+Commit this updated README on `infra-podman-init` (or a fresh branch) before opening the PR.
