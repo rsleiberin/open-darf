@@ -136,3 +136,17 @@ Commit this updated README on `infra-podman-init` (or a fresh branch) before ope
 ---
 
 *Last updated: 2025-08-07*
+
+## RAG Foundation Sprint Overview
+
+During the RAG Foundation sprint, the team completed a series of improvements to both the backend and developer environment:
+
+- Refactored `apps/backend/main.py` to remove inline class fields and one‑line function bodies, satisfying Ruff’s E701/E702 lint rules.
+- Migrated to the new `langchain_community` packages and replaced deprecated `Qdrant` and `OpenAIEmbeddings` imports with `QdrantClient` and their community equivalents.
+- Expanded `rag_query` with robust exception handling and return type annotations.
+- Installed missing dependencies (`langchain-community`, `qdrant-client`, `tiktoken`, `psycopg2-binary`) and updated the lockfile to reflect these.
+- Added CI-friendly behavior for the PostgreSQL connection test by skipping it when the `CI` environment variable is set.
+- Added a `.env.example` file and updated `.gitignore` to exclude `node_modules/` and `.turbo/` directories.
+- Removed Podman-specific artefacts and updated container documentation for Qdrant and Neo4j services.
+- Ensured that all tests pass (`pytest`), type checks succeed (`mypy`), and lint issues are resolved (`ruff`) before merging.
+
