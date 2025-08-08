@@ -20,12 +20,17 @@
 
 ## 2 · Communication Pattern
 
+**Virtual-env prompt**
+
+The “(.venv)” prefix appears when the agent activates the Python virtual
+environment (`source .venv/bin/activate`). Use `deactivate` to exit.
+
 1. Status / answer (1 sentence)
 2. Commands / code block
 3. 3-bullet recap + next step
 
-Always finish with
-`✦END_OF_LOG✦ { "summary": true }`
+Always finish with ✦END_OF_LOG✦ { "summary": true } only in the very last hand-off message of the day. The User will tell you to "END LOG"
+
 
 ---
 

@@ -1,0 +1,9 @@
+*** Begin Patch
+*** Update File: apps/backend/main.py
+@@
+-    async def rag_query(payload: Query):
+-        try: return retriever.query(payload.question)
++    async def rag_query(payload: Query):
++        try:
++            return retriever.query(payload.question)
+*** End Patch

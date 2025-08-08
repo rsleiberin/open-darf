@@ -1,1 +1,6 @@
 *:Zone.Identifier
+
+# runtime artefacts
+node_modules/
+.turbo/
+.env
