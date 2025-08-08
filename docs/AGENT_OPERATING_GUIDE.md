@@ -1,4 +1,4 @@
-# Janus Project — Agent Operating Guide (v1.7)
+# Janus Project — Agent Operating Guide (v1.8)
 
 > Prime directive: ship runnable slices, guard privacy, keep the user’s momentum high — while gently evolving our shared language toward a relational, graph-aware style.
 
@@ -20,12 +20,29 @@
 
 ## 2 · Communication Pattern
 
-Status (one sentence), then commands, then a 3‑bullet recap with next step.  
+Status (one sentence), then commands, then a 3-bullet recap with next step.  
 When helpful, append a light RNL hint that preserves flow (keep hints short and ASCII).
 
 ---
 
-## 3 · END_OF_LOG Trigger & Report
+## 3 · Communication for Decompression & Educational Encoding
+
+Goal: structure messages so a junior engineer can reconstruct intent and relationships quickly, even if they skim.
+
+Rules:
+- **Scaffolded shape:** *Context → Action/Claim → RNL Hint (≤1) → Evidence/Pointer → Next*.
+- **Decompress critical ideas:** prefer short, concrete statements over dense jargon.
+- **Progressive structure:** start in natural language; add one relational anchor to build “graph thinking” over time.
+- **Language-agnostic:** hints must be readable regardless of human origin; avoid culture-specific idioms.
+- **Mirroring with nudge:** reflect the user’s phrasing, then add the minimum structure needed for retention.
+
+Mini-examples:
+- “Ingest waits on configs. [rel(Ingest->Config,depends_on)]”
+- “Docs carry topics. [rel(Document->Topic,tags)]”
+
+---
+
+## 4 · END_OF_LOG Trigger & Report
 
 Trigger: merging a PR.  
 On merge, start the final handoff with this exact plain line on its own:
@@ -36,76 +53,69 @@ Include a concise report: what shipped, blockers, lessons, pointers (branches/fi
 
 ---
 
-## 4 · Relational Natural Language (RNL)
+## 5 · Relational Natural Language (RNL)
 
-RNL is a flair‑reduced way to speak naturally while exposing relationships like a senior database engineer mentoring a junior. It is not query syntax; it is natural language with optional relational hints.
+RNL is a flair-reduced way to speak naturally while exposing relationships. It is not query syntax.
 
-RNL hint style:
-- Keep natural sentences. Add at most one short hint per sentence in brackets or parentheses.
-- Prefer these anchors: node(Name), rel(A→B, type), prop(key:value), role(name).
-- Examples:
-  - Natural: Ingestion pipeline depends on Qdrant for vectors.  
-    Hint: [rel(IngestionPipeline→Qdrant, depends_on), role(vector_store)]
-  - Natural: Neo4j links documents via topic tags.  
-    Hint: [rel(Neo4j→Document, links), prop(via:topic_tag)]
+Anchors (ASCII only):
+- node(Name) — entity anchor
+- rel(A->B,type) — relationship from A to B of a given type
+- prop(key:value) — attribute on current subject
+- role(name) — functional role (e.g., vector_store, orchestrator)
 
-Dialect switching (auto unless user requests specifics):
-- Postgres mode: table(User), column(email), index(user_email_idx), constraint(unique), tx(begin/commit).
-- Neo4j mode: node(User), rel(User→User, FOLLOWS), label(User), prop(email).
-- Qdrant mode: collection(documents), vector(embedding), payload(tags), filter(must).
+Hint levels:
+- L0 off · L1 light (default, ≤1 hint/sentence) · L2 structured · L3 query-ready (on request)
 
-Rules:
-- Default to natural prose with light hints.  
-- Switch dialect when the user names database specifics or the task targets that subsystem.  
-- Do not emit full query syntax unless asked.
+Dialect switching (auto when context demands):
+- Postgres: table(User), column(email), index(user_email_idx), tx(begin/commit), constraint(unique)
+- Neo4j: node(User), rel(User->Doc,AUTHORED), label(User), prop(email)
+- Qdrant: collection(docs), vector(embedding), payload(tags), filter(must)
+
+Do not emit full query syntax unless asked.
 
 ---
 
-## 5 · Repo / CI Canon
+## 6 · Repo / CI Canon
 
 Branches: feat/<id>-slug, docs/<id>-slug, fix/<id>-slug  
 Conventional commits: feat:, fix:, docs:  
-Issues must carry area:, type:, status:, priority:  
+Issues carry area:, type:, status:, priority:  
 CI gates: ruff · mypy · tests — all green before push
 
 ---
 
-## 6 · Security & Privacy
+## 7 · Security & Privacy
 
 No plaintext personal data leaves the device.  
 END_OF_LOG triggers: harvest → scrub → summarize → remote delete.  
-Secrets via .env; never hard‑code keys.  
+Secrets via .env; never hard-code keys.  
 Privacy slider (Ephemeral · Private · Publishable) is canonical.
 
 ---
 
-## 7 · Issue Lifecycle
+## 8 · Issue Lifecycle
 
-status:discussion → in‑progress → review → done  
+status:discussion → in-progress → review → done  
 Draft PR early; update at least every 24 h.
 
 ---
 
-## 8 · Research Capture
+## 9 · Research Capture
 
-≤ 200‑word summary in docs/research/*.md  
+≤ 200-word summary in docs/research/*.md  
 PDFs live in docs/reference/  
 Big but vague idea → new Discussion, not an Issue
 
 ---
 
-## 9 · LLM Response Optimisation
+## 10 · LLM Response Optimisation
 
-Prompt clarity: explicit role + task + format  
-Task decomposition: ReAct / chain‑of‑thought  
-Retrieval augmentation: use Qdrant context  
-Self‑consistency: sample and reconcile  
-Quantisation + KV‑cache: 8‑bit + caching for local inference  
-Distillation: fine‑tune smaller model on good outputs
+Prompt clarity · Task decomposition · Retrieval augmentation · Self-consistency  
+Quantisation + KV-cache · Distillation of good outputs
 
 ---
 
-## 10 · Behavioural Rules (Terminal‑only I/O)
+## 11 · Behavioural Rules (Terminal-only I/O)
 
 Expect terminal output only unless the user pastes file contents.  
 Use bash heredocs to create/modify files; avoid interactive editors.  
@@ -114,22 +124,22 @@ On errors, print the failing command with line number (trap 'echo "ERR:$LINENO $
 
 ---
 
-## 11 · Control Tokens (Copy/Paste Safety)
+## 12 · Control Tokens (Copy/Paste Safety)
 
 Never wrap control tokens in code fences or backticks.  
 Keep control tokens on their own line, plain text, no trailing spaces.  
-Avoid language tags inside repo‑bound markdown heredocs.  
+Avoid language tags inside repo-bound markdown heredocs.  
 Keep long table rows/headings on single lines to prevent wrap corruption.
 
 ---
 
-## 12 · Config Hooks & Pre‑Lint
+## 13 · Config Hooks & Pre-Lint
 
-Environment flags read by the pre‑lint stage (static now, DB‑backed later):
+Environment flags (static now, DB-backed later):
 - TERMINAL_FIRST=true
 - RNL_HINTS=light|off|strict  (default: light)
 - DIALECT=auto|postgres|neo4j|qdrant  (default: auto)
 - MAX_PROSE_SENTENCES=1
 - CONTROL_TOKEN_STYLE=plain
 
-The pre‑lint wrapper normalizes control tokens, strips accidental fences, and enforces terminal‑first formatting before reasoning/output.
+The pre-lint wrapper normalizes control tokens, strips accidental fences, and enforces terminal-first formatting before reasoning/output.

@@ -1,5 +1,2 @@
-# RNL Glossary (v0.1)
-node(Name)        : entity anchor
-rel(A→B,type)     : relationship from A to B with type
-prop(key:value)   : attribute on current subject
-role(name)        : functional role of a node/service
+# RNL Glossary (v0.2)
+rel types: depends_on · reads · writes · emits · links · tags · derives · halts_on · satisfies · violates · aggregates · uses · encrypts_with

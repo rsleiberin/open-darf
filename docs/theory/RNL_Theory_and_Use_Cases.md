@@ -1,45 +1,38 @@
-# Relational Natural Language (RNL) — Theory and Use Cases (v1.0)
+# Relational Natural Language (RNL) — Theory & Use Cases (v1.1)
 
-Purpose
-- Speak like a senior DB engineer mentoring a junior: natural sentences with light relational hints.
-- Bridge free text ↔ graph/query structure without forcing syntax.
+## Purpose
+A human-first way to speak like a senior DB engineer mentoring a junior: natural sentences with one light relational hint, so conversations translate into queries later without forcing syntax now.
 
-Core Idea
-- Natural first; add brief hints in brackets: node(Name), rel(A→B,type), prop(k:v), role(name).
-- Dialect auto-switch when discussing a specific store:
-  - Postgres: table(User), column(email), index(user_email_idx), tx(begin/commit)
-  - Neo4j: node(User), rel(User→User,FOLLOWS), label(User), prop(email)
-  - Qdrant: collection(docs), vector(embedding), payload(tags), filter(must)
+## Core primitives (ASCII, v0.1)
+node(Name) · rel(A->B,type) · prop(key:value) · role(name)
 
-Why Now
-- Teaches graph thinking by use, not by lecture.
-- Reduces translation loss across agents.
-- Prepares for later auto-translation to formal queries.
+## Hint levels
+L0 off · L1 light (default, ≤1 hint/sentence) · L2 structured · L3 query-ready (on request)
 
-Primary Use Cases
-- Schema co-design in English with hints → later render to DDL/Cypher.
-- Decision traceability: “why” encoded as relationships.
-- Query prototyping from narrated steps.
-- Agent moderation: consistent anchors across tools.
-- Math-friendly: reuse anchors for sets, transforms, and constraints.
+## Dialect switching (auto when named or implied)
+Postgres: table(User), column(email), index(user_email_idx), tx(begin/commit), constraint(unique)  
+Neo4j: node(User), rel(User->Doc,AUTHORED), label(User), prop(email)  
+Qdrant: collection(docs), vector(embedding), payload(tags), filter(must)
 
-Patterns (quick)
-- Depends: A depends on B. [rel(A→B,depends_on)]
-- Owns: A owns B. [rel(A→B,owns)]
-- Emits: A emits E(event). [rel(A→E,emits), prop(kind:k)]
-- Reads/Writes: S reads R; S writes W. [rel(S→R,reads)] [rel(S→W,writes)]
-- Versioning: M vN derives from vN-1. [rel(M:N→M:N-1,derives)]
+## Utterance shape (for decompression/learning)
+Context → Action/Claim → RNL Hint → Evidence/Pointer → Next
 
-Anti-Patterns
-- Full query dumps in normal convo.
-- Over-tagging every sentence.
-- Mixed stores in one hint without naming the dialect.
+## Why now
+- Teaches graph thinking by use, not lecture.
+- Reduces ambiguity across agents.
+- Sets up later auto-translation to queries/tests.
 
-Success Metrics
-- Faster onboarding (junior→productive).
-- Fewer ambiguity loops in reviews.
-- Higher hit-rate for auto-generated queries/tests.
+## Primary use cases
+- PR descriptions/reviews, ADRs, end-of-PR reports
+- Schema co-design in English with hints → DDL/Cypher later
+- Decision traceability (“why” as relations)
+- Query prototyping from narrated steps
 
-Next
-- Small glossary file for anchors.
-- Toggle levels via env: RNL_HINTS=off|light|strict (default: light).
+## Anti-patterns
+Over-tagging; mixed stores in one hint without naming the dialect; dumping full query syntax unasked; wrapping control tokens in fences.
+
+## Success metrics
+Faster onboarding; fewer ambiguity loops; higher hit-rate for auto-generated queries/tests.
+
+## Parking lot (future v0.2)
+event(), version(), set(), map(), constraint() — keep them out of v0.1 until patterns stabilize.
