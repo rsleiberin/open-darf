@@ -1,0 +1,19 @@
+name: adr-guard
+on: [pull_request]
+jobs:
+  path_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - name: Block ADRs outside docs/decisions
+        run: |
+          set -euo pipefail
+          git fetch origin "${{ github.base_ref }}" --depth=1
+          bad=$(git diff --name-only "origin/${{ github.base_ref }}"...HEAD | \
+                grep -E '^docs/(?!decisions/).*ADR-.*\.md' || true)
+          if [ -n "$bad" ]; then
+            echo "Found ADRs outside docs/decisions:"
+            echo "$bad"
+            exit 1
+          fi
