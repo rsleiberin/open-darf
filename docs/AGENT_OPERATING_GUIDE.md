@@ -1,3 +1,40 @@
+## Addendum v2.1 — Transport & Fencing Discipline (2025-08-10)
+
+### 0) Transport model (single source of truth)
+- Two lanes only:
+  - **Chat lane** = prose, RNL hints, control tokens, references.
+  - **Shell lane** = strictly runnable Bash.
+- **Never mix lanes.** Anything not meant to execute stays in Chat lane.
+
+### 0.1) Fencing & quoting discipline (ChatGPT UI rule)
+- The UI reserves **triple-backtick code fences** for top-level export blocks the user will copy.
+- **Rule A — Reservation:** Use the triple-backtick fence **only** for a top-level export block.  
+  Do **not** place triple-backticks **inside** an already-fenced payload.
+- **Rule B — No nesting:** Never nest code fences. If multiple code blocks are required, send them as **separate top-level blocks**.
+- **Rule C — Inner examples:** For lower-level examples/snippets within prose, use **4-space indentation**, or one of these non-exec fences: `text`, `example`, `pseudo`, `console`.  
+  _Do not_ use `bash`, `sh`, `zsh`, `python`, `js`, `ts` inside narrative docs.
+- **Rule D — Docs policy:** In `docs/reference` and `docs/theory`, all fenced blocks must use **non-exec** fences (`text/example/pseudo/console`) or 4-space indents. Include a header:  
+  `> ⚠️ Examples only — not runnable`
+- **Rule E — Control tokens:** Live in Chat lane. If a literal must appear in shell logs, print it: `printf 'END_OF_LOG\n'`.
+
+### 1) Mode switch (explicit)
+- **Default: Chat mode.**
+- **Terminal mode (on request):** reply with **one** fenced `bash` block **only** (no preface/epilogue).  
+  Notes appear as `#` comments inside the block.
+
+### 2) Shell lane contract (when Terminal mode is on)
+- Start with: `set -Eeuo pipefail` and a safe `trap`.
+- Guard checks: `if ! …; then …; fi`.
+- Use heredocs for file writes.
+- **Forbidden:** plain text labels (e.g., `sanity:`), mixed languages, placeholders, bare control tokens, RNL outside `#` comments.
+
+### 3) Chat lane contract
+- RNL hints allowed (≤1 per sentence) in prose; never leak into executable context.
+- Long explanations and research summaries stay in Chat lane (or are written to files via heredoc).
+
+
+---
+
 DARF — Agent Operating Guide (v2.1 · transport-safe & fence-safe)
 
 0) Transport model
