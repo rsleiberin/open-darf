@@ -1,8 +1,11 @@
+> ⚠️ Examples only — not runnable
+> This document contains illustrative/math/pseudo code. Do not execute in production.
+
 ## Updated Repository Structure for Janus ADR System
 
 Based on your locked-in backend stack and monorepo requirements, here's the evolved architecture:
 
-```bash
+```text
 janus-source/                           # Turborepo root
 ├── turbo.json                         # Turborepo configuration
 ├── package.json                       # Root package.json with workspaces
@@ -234,7 +237,7 @@ You're implementing an **intelligent ADR (Architecture Decision Record) system**
 ### Implementation Phases
 
 #### Phase 1: Core Infrastructure (Week 1-2)
-```python
+```text
 # 1. Set up Dramatiq actors for ADR processing
 # packages/adr-dramatiq/src/actors/decision_actor.py
 import dramatiq
@@ -276,7 +279,7 @@ end
 ```
 
 #### Phase 2: AutoGen Integration (Week 3-4)
-```python
+```text
 # apps/adr-orchestrator/agents/decision_agent.py
 from autogen import AssistantAgent, UserProxyAgent
 from langchain.tools import Tool
@@ -310,7 +313,7 @@ class ADRDecisionAgent:
 ```
 
 #### Phase 3: GraphRAG Enhancement (Week 5-6)
-```python
+```text
 # packages/adr-graphrag/src/retriever.py
 from neo4j import GraphDatabase
 from qdrant_client import QdrantClient
@@ -341,7 +344,7 @@ class HybridADRRetriever:
 ```
 
 #### Phase 4: Migration & Testing (Week 7-8)
-```python
+```text
 # scripts/migrate_legacy_adrs.py
 async def migrate_legacy_adrs():
     """Migrate 25 existing ADRs to new system"""

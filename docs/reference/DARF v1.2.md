@@ -1,3 +1,6 @@
+> ⚠️ Examples only — not runnable
+> This document contains illustrative/math/pseudo code. Do not execute in production.
+
 # DARF Constitutional AI Framework Research Packet v1.2
 
 ## Executive Summary
@@ -119,7 +122,7 @@ WebAuthn assertions include DID references with platform authenticator integrati
 - **Egress breadth**: Minimum 3 independent pathways with no wildcard domains
 
 **Joint operational validation:**
-```python
+```text
 def evaluate_constraints(system_state):
     violations = []
     if system_state.timeout < 3 * system_state.failure_threshold:
@@ -213,7 +216,7 @@ Implementation includes real-time percentile calculation, alerting at 70%/85% th
 ### Ordered Fallback Hierarchies with Budget Constraints
 
 **Resource-aware constitutional decision making:**
-```python
+```text
 def budget_constrained_constitutional_decision():
     available_budget = get_current_computational_budget()
     risk_level = assess_decision_risk(input)

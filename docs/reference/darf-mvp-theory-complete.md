@@ -1,3 +1,6 @@
+> ⚠️ Examples only — not runnable
+> This document contains illustrative/math/pseudo code. Do not execute in production.
+
 # DARF Constitutional AI: Complete MVP Theory & Experimental Framework
 
 ## Executive Summary
@@ -198,7 +201,7 @@ DEGRADED → NORMAL: manual_override with constitutional_revalidation
 ### 4.1 LegalRuleML → DDL Pipeline
 
 **Transformation Algorithm**:
-```python
+```text
 def transform_legalruleml_to_ddl(legalruleml_doc):
     """Convert LegalRuleML to Defeasible Deontic Logic"""
     
