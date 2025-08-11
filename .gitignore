@@ -6,3 +6,7 @@ node_modules/
 .env
 node_modules/
 .turbo/
+__pycache__/
+*.py[cod]
+*.bak
+.DS_Store
