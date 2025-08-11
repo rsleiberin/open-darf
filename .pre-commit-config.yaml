@@ -24,3 +24,11 @@ repos:
        additional_dependencies:
          - safety==3.2.8
        args: [check, --full-report, --ignore=76752, --ignore=77744, --ignore=77745]
+
+  - repo: local
+    hooks:
+      - id: rnl-validate
+        name: RNL fence validator (reference/theory)
+        entry: scripts/validate-rnl.sh
+        language: system
+        files: ^docs/(reference|theory)/.*\.md$
