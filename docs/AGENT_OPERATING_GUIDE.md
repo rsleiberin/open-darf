@@ -60,3 +60,26 @@ DARF — Agent Operating Guide (v2.2 · transport + fence + paste hygiene)
 
 Appendix — RCA (why these rules exist)
 - Two failures were traced to prompt text and line wraps interleaving with long pastes, corrupting heredocs, splitting `trap`/function lines, and tearing tokens like `< <(`. With bracketed paste off and long multi-line payloads, Bash reported downstream syntax errors (e.g., “unexpected token '('”). The policies above remove those failure modes by reserving fences, separating lanes, hardening paste technique, and limiting executable fence types in documentation.
+
+0.2) Known environment quirks (WSL/Podman/RVM) — paste- & DB-friendly defaults
+- **Avoid `set -u` in long multi-line pastes.** RVM shells can hook nounset (`rvm_bash_nounset`) and crash blocks.  
+  - Default to: `set -Ee -o pipefail`  
+  - If `-u` is required, briefly disable around engine/exec calls:  
+        set +u; podman start ... || true; set -u
+- **NUL-safe pipelines.** When consuming `git ls-files -z`, never stuff NULs into a plain var. Use arrays:  
+        mapfile -d '' -t FILES < <(git ls-files -z -- '*.bak')
+- **Guard empty arrays.** Before operations like `git rm --cached -- "${arr[@]}"`, check length:  
+        ((${#arr[@]})) && git rm --cached -- "${arr[@]}"
+- **Echo/export safety with unset vars.** When printing example commands that include `${VARS}`, single-quote the line to avoid expansion or `-u` failures:  
+        printf '%s\n' 'export DATABASE_URL="postgresql://.../${POSTGRES_DB}"'
+- **Heredoc safety.** Ensure the closing token is alone on its own line (no spaces). If a heredoc hangs, press Ctrl+C and rewrite the file in a fresh heredoc.
+- **Bracketed paste must be enabled** on operator machines (Section 3). This prevents torn lines like `-Eeuo pipefail` splitting across paste boundaries.
+- **IPv4 for localhost.** Prefer `127.0.0.1` over `localhost` to dodge IPv6 oddities in some WSL/container combos.
+- **Compose & secrets.** Use `${POSTGRES_PASSWORD}` interpolation in compose; keep `.env` untracked; integration tests must read from env and may skip if unset.
+- **psql UX.** Cancel partial input with Ctrl+C; exit with `\q`. To clear the screen inside `psql`: `\! clear`.
+- **Dev DB helpers.** Use the Make targets instead of pasting:  
+      make db-up      # start db (podman/docker)  
+      make db-psql    # open psql (\q to exit)  
+      make test-db    # run integration test  
+      make db-logs    # tail logs  
+      make db-down    # stop db
