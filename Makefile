@@ -51,3 +51,9 @@ clean-zone:
 docs-full:
 	@bash tools/document-ingestion.sh
 	@bash tools/generate-adrs.sh
+# Dev DB helpers
+db-up:      ; @tools/dev/pg-dev.sh db-up
+db-psql:    ; @tools/dev/pg-dev.sh db-psql
+db-down:    ; @tools/dev/pg-dev.sh db-down
+db-logs:    ; @tools/dev/pg-dev.sh db-logs
+test-db:    ; @tools/dev/pg-dev.sh test-db
