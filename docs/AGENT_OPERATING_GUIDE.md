@@ -83,3 +83,33 @@ Appendix — RCA (why these rules exist)
       make test-db    # run integration test  
       make db-logs    # tail logs  
       make db-down    # stop db
+---
+
+## Addendum: Paste Hygiene, Podman-on-WSL, and Progress Checklists
+
+**Paste Hygiene**
+    Enable bracketed paste:
+        set enable-bracketed-paste on
+    Prefer one-liners for ops; for long scripts use two-step heredocs:
+        1) write file via heredoc (opener/closer on their own lines)
+        2) bash -n file && bash file
+    Avoid “smart quotes”; keep ASCII quotes only.
+
+**Podman on WSL/Linux**
+    Use Podman directly (no `podman machine`). Expose ports 9000/9001 for MinIO.
+    For macOS/Windows hosts (no WSL), `podman machine` is required.
+
+**MinIO Dev Pattern**
+    Buckets: darf-originals, darf-derived, darf-reports (private + versioned).
+    Access: service user `darf-ingester` with darf-ingest-rw policy (RW, no delete).
+    Encryption: SSE-S3 deferred until KMS (KES or Vault) is configured.
+
+**Progress Checklists (icon units)**
+    ✅ = completed unit, ⬜ = pending unit, use counts for effort
+    Example:
+        ✅ 1× prereqs
+        ✅ 1× service user
+        ⬜ 2× ingestion tasks (EE, anchoring)
+
+**PR Discipline**
+    Do not push to main. Create a branch, push, and open a PR.
