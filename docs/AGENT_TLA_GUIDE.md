@@ -199,4 +199,14 @@ Ensure `Next` contains `\/ AggregateResults`.
 - Recovery is reliable if `vars.chkpt` exists and liveness is cleaned when corrupt.
 - Use this guide to keep runs reproducible and avoid the known foot-guns.
 
+# Background verification is running detached.
+
+- Session: tmux `tlc_verify`
+- Safety run dir: latest `runs/states_valid_n5-safety-*/`
+- Liveness run dir: will appear as `runs/states_valid_n5-live-*/` after safety completes
+- Logs: `run.log` inside each run dir
+- Status: `scripts/tlc_status.sh` prints session state + recent progress lines
+- Ticket: see `runs/_tickets/tlc-verify-<timestamp>.yml` for parameters
+
+
 (End of file)
