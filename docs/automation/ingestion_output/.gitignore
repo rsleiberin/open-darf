@@ -1,0 +1,4 @@
+# Ignore future heavy/aux outputs from ingestion runs
+*.tmp
+*.cache
+states_*/

@@ -18,3 +18,6 @@
 
 The ADRs in `decisions/` contain the authoritative technical decisions.
 All other documentation should derive from or support those decisions.
+
+## Maintenance
+- Reference dedupe report: [docs/reference/_dedupe_report.md](reference/_dedupe_report.md)

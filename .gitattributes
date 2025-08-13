@@ -14,3 +14,5 @@
 *.mov -text
 *.woff -text
 *.woff2 -text
+*.pdf -diff
+docs/reference/_dedupe/** linguist-generated
