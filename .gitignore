@@ -23,3 +23,29 @@ docs/darf/spec/tla/states/
 docs/darf/spec/tla/**/*.log
 docs/darf/spec/tla/**/*.st
 docs/darf/spec/tla/**/*.fp
+# TLA verification outputs
+verification/tla/runs/
+verification/tla/**/*.chkpt
+verification/tla/**/*.st.chkpt
+verification/tla/**/*.out
+verification/tla/**/*.log
+# TLA verification outputs
+verification/tla/runs/
+verification/tla/**/*.chkpt
+verification/tla/**/*.st.chkpt
+verification/tla/**/*.out
+verification/tla/**/*.log
+# Legacy TLA outputs still under docs (frozen)
+docs/darf/spec/tla/runs/
+docs/darf/spec/tla/**/*.chkpt
+docs/darf/spec/tla/**/*.st
+docs/darf/spec/tla/**/nodes_*
+docs/darf/spec/tla/**/ptrs_*
+docs/darf/spec/tla/**/*.fp
+docs/darf/spec/tla/**/*.log
+# legacy TLC outputs (frozen)
+docs/darf/spec/tla/runs/
+docs/darf/spec/tla/**/*.chkpt
+docs/darf/spec/tla/**/*.st.chkpt
+docs/darf/spec/tla/**/*.out
+docs/darf/spec/tla/**/*.log

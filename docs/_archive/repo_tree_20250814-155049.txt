@@ -1,0 +1,299 @@
+.
+├── .editorconfig
+├── .env
+├── .env.bak.20250812-115936
+├── .env.bak.20250812-131830
+├── .env.example
+├── .env.example.bak.20250812-115936
+├── .env.sample
+├── .gitattributes
+├── .gitconfig.example
+├── .githooks
+│   └── pre-push
+├── .github
+│   └── workflows
+│       ├── adr-guard.yml
+│       └── end_of_log.yml
+├── .gitignore
+├── .pre-commit-config.yaml
+├── .pytest_cache
+│   ├── .gitignore
+│   ├── CACHEDIR.TAG
+│   ├── README.md
+│   └── v
+│       └── cache
+│           ├── lastfailed
+│           ├── nodeids
+│           └── stepwise
+├── CHANGELOG.md
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── LICENSE
+├── Makefile
+├── README.md
+├── SECURITY.md
+├── SUPPORT.md
+├── apps
+│   ├── __init__.py
+│   └── backend
+│       └── main.py
+├── automation
+│   └── reports
+│       └── generate_end_of_log.sh
+├── create_issues.sh
+├── create_issues.sh.bak
+├── docs
+│   ├── README.md
+│   ├── ROADMAP.md
+│   ├── _archive
+│   │   ├── 20250812-230503
+│   │   │   └── AGENT_OPERATING_GUIDE.md.bak
+│   │   ├── ROADMAP_2025.md
+│   │   ├── repo_tree_20250814-154838.txt
+│   │   ├── repo_tree_20250814-155049.txt
+│   │   └── tla_logs
+│   │       └── states_valid_n5-safetyView-2025-08-14-094338-run.log
+│   ├── agent
+│   │   ├── AGENT_OPERATING_GUIDE.md
+│   │   ├── AGENT_RESEARCH_GUIDE.md
+│   │   └── AGENT_TLA_GUIDE.md
+│   ├── api
+│   │   └── README.md
+│   ├── architecture
+│   │   ├── .gitkeep
+│   │   └── README.md
+│   ├── automation
+│   │   └── ingestion_output
+│   │       ├── .gitignore
+│   │       ├── doc_index.txt
+│   │       ├── doc_manifest.tsv
+│   │       ├── ingestion.log
+│   │       └── rsh_pipeline_status.tsv
+│   ├── automation_progression.md
+│   ├── darf
+│   │   ├── DARF Constitutional AI_ Complete Formal Validation Catalog.pdf
+│   │   ├── DARF.pdf
+│   │   ├── darf_documentation_requirements.md
+│   │   ├── formal_validation_catalog.md
+│   │   ├── spec
+│   │   │   └── tla
+│   │   │       ├── .gitignore
+│   │   │       ├── DARFHeterogeneousByzantine.tla
+│   │   │       ├── DARFProcessConformance.tla
+│   │   │       ├── README.md
+│   │   │       ├── _attic
+│   │   │       │   └── 2025-08-14-103716
+│   │   │       │       ├── DARFHeterogeneousByzantine.tla.bak
+│   │   │       │       ├── DARFHeterogeneousByzantine.tla.prebangfix
+│   │   │       │       ├── DARFProcessConformance.tla.bak
+│   │   │       │       ├── DARFProcessConformance.tla.bak.1755058779
+│   │   │       │       ├── DARFProcessConformance.tla.pre-localfix
+│   │   │       │       └── states-archived
+│   │   │       │           ├── 25-08-12-17-42-19
+│   │   │       │           ├── 25-08-12-17-42-20
+│   │   │       │           └── 25-08-12-18-00-12
+│   │   │       ├── models
+│   │   │       │   ├── DARFHeterogeneousByzantine.tla -> ../DARFHeterogeneousByzantine.tla
+│   │   │       │   ├── DARFProcessConformance.tla -> ../DARFProcessConformance.tla
+│   │   │       │   ├── Model_invalid_boundary_f.cfg
+│   │   │       │   ├── Model_invalid_boundary_f.tla
+│   │   │       │   ├── Model_invalid_group_edge.cfg
+│   │   │       │   ├── Model_invalid_group_edge.tla
+│   │   │       │   ├── Model_valid_n5.cfg
+│   │   │       │   ├── Model_valid_n5.tla
+│   │   │       │   ├── Model_valid_n5_liveness.cfg
+│   │   │       │   ├── Model_valid_n5_safety.cfg
+│   │   │       │   ├── Model_valid_n5_safety_pure.cfg
+│   │   │       │   ├── Model_valid_n5_safety_view.cfg
+│   │   │       │   ├── Model_valid_n7.cfg
+│   │   │       │   └── Model_valid_n7.tla
+│   │   │       └── scripts
+│   │   │           ├── recover_from_chkpt.sh
+│   │   │           ├── run_verify_detached.sh
+│   │   │           └── tlc_status.sh
+│   │   ├── supplement-a-bqs
+│   │   │   └── DARF Byzantine Quorum System Proofs - Complete Supplementary Document.pdf
+│   │   └── supplement-b-process-conformance
+│   │       ├── Crosswalk README - Paper to Specification Mapping.pdf
+│   │       └── darf_crosswalk_readme.md
+│   ├── decisions
+│   │   ├── .gitkeep
+│   │   ├── ADR-2506-UX-001(Favicon Gradient).md
+│   │   ├── ADR-2508-AGT-001.md
+│   │   ├── ADR-2508-ARC-014.md
+│   │   ├── ADR-2508-ARC-015.md
+│   │   ├── ADR-2508-CON-001.md
+│   │   ├── ADR-2508-CON-002.md
+│   │   ├── ADR-2508-DOC-001.md
+│   │   ├── ADR-2508-GOV-001.md
+│   │   ├── ADR-2508-PRC-009.md
+│   │   ├── ADR-2508-PRC-010.md
+│   │   ├── ADR-2508-PRC-011.md
+│   │   ├── ADR-2508-PRC-012.md
+│   │   ├── ADR-2508-PRC-013.md
+│   │   ├── ADR-2508-RSH-001.md
+│   │   ├── ADR-2508-RSH-002.md
+│   │   ├── ADR-2508-RSH-003.md
+│   │   ├── ADR-2508-RSH-004.md
+│   │   ├── ADR-2508-SEC-003.md
+│   │   ├── ADR-2508-VEN-000.md
+│   │   ├── ADR-2508-VEN-002.md
+│   │   ├── ADR-2508-VEN-003.md
+│   │   ├── ADR-2508-VEN-004.md
+│   │   ├── ADR-2508-VEN-005.md
+│   │   ├── ADR-2508-VEN-006.md
+│   │   ├── ADR-2508-VEN-007.md
+│   │   ├── ADR-2508-VEN-008.md
+│   │   ├── ADR-2508-VEN-013.md
+│   │   └── legacy-backup-20250804-223310
+│   │       ├── 0002-backend-language.md
+│   │       ├── 0003-frontend-framework.md
+│   │       ├── 0004-message-broker.md
+│   │       ├── 0005-task-queue.md
+│   │       ├── 0006-relational-db.md
+│   │       ├── 0007-vector-store.md
+│   │       ├── 0008-knowledge-graph.md
+│   │       ├── 0009-container-runtime.md
+│   │       ├── 0010-object-store.md
+│   │       ├── 0011-github-workflow.md
+│   │       ├── 0012-label-taxonomy.md
+│   │       ├── 0013-commit-style.md
+│   │       ├── 0014-ci-pre-commit.md
+│   │       ├── 0015-in-memory-cache.md
+│   │       └── 0016-rag-orchestration.md
+│   ├── deployment
+│   │   ├── LOCAL_DEV_DB.md
+│   │   ├── MINIO_DEV.md
+│   │   └── README.md
+│   ├── process
+│   │   ├── adr-creation-checklist.md
+│   │   ├── adr-type-system.md
+│   │   ├── branching-strategy.md
+│   │   ├── github-standards.md
+│   │   └── label-taxonomy.md
+│   ├── protocols
+│   │   └── END_OF_LOG_SPEC.md
+│   ├── reference
+│   │   ├── Backend Architecture Considerations for a Generative AI Platform.pdf
+│   │   ├── Backup and DR Strategy for the Janus Backend.pdf
+│   │   ├── Best Vector Database Options for a Python-Based AI Stack.pdf
+│   │   ├── Building a Universal, ACID-Compliant Backend Tech Stack.pdf
+│   │   ├── Choosing the Right Database for Your “Second Brain” Project.pdf
+│   │   ├── Choosing the Right Job_Task Queue System for a Distributed Python Stack.pdf
+│   │   ├── Choosing the Right ORM(s) for the Core Stack.pdf
+│   │   ├── Container Runtimes and Orchestration for Offline_Edge Environments.pdf
+│   │   ├── DARF Architecture Onboarding & Re.md
+│   │   ├── DARF v1.2.md
+│   │   ├── DARF v4.md
+│   │   ├── Database setup and tasks.pdf
+│   │   ├── Design Tokens (WIP).md
+│   │   ├── Durable, Scalable Cache Options for a Python Backend Stack.pdf
+│   │   ├── Evaluating RAG Retriever Layer Options for Qdrant and Neo4j.pdf
+│   │   ├── Evaluation of Hybrid Local-First Object Storage Solutions.pdf
+│   │   ├── Foundational Documentation Architecture for a Solo Developer Studio.pdf
+│   │   ├── Hierarchical Rar Architecture.pdf
+│   │   ├── Improve ADR workflow.pdf
+│   │   ├── Janus Backend Architecture – Onboarding Brief.pdf
+│   │   ├── Orchestration Strategies for Podman in Offline, Edge Environments.pdf
+│   │   ├── Project Janus Architecture and Implementation Roadmap.pdf
+│   │   ├── Redis vs RabbitMQ as Dramatiq Brokers – A Durable Self‑Hosted Task Queue Comparison.pdf
+│   │   ├── Scalable Document Ingestion and Integration Pipeline Blueprint.pdf
+│   │   ├── System Reference Document.md
+│   │   ├── Tailoring Your Backend Stack for an AI-Powered “Second Brain”.pdf
+│   │   ├── Updated_Backend_Architecture_Plan__Expanded_.csv
+│   │   ├── _dedupe
+│   │   ├── _dedupe_report.md
+│   │   ├── backend_stack_overview.md
+│   │   ├── backend_stack_summary (1).md
+│   │   ├── backend_stack_summary.md
+│   │   ├── compass_artifact_wf-a333b190-ce85-49a8-9dbe-18ca0b9c7c79_text_markdown.md
+│   │   ├── conceptual_slots_exploration.pdf
+│   │   ├── darf-mvp-theory-complete.md
+│   │   ├── event_store_research.pdf
+│   │   ├── git roadmap.pdf
+│   │   ├── system-reference-document.md
+│   │   ├── theoretical_foundation.md
+│   │   └── updated_repository_structure_for_janus_adr_system.md
+│   ├── reports
+│   │   ├── 2025-08-08-eol-draft.md
+│   │   └── 2025-08-09-architect-triage.md
+│   ├── templates
+│   │   ├── agt-template.md
+│   │   ├── arc-template.md
+│   │   ├── con-template.md
+│   │   ├── doc-template.md
+│   │   ├── rsh-template.md
+│   │   ├── sec-template.md
+│   │   └── ven-template.md
+│   └── theory
+│       ├── RNL_Examples_Cookbook.md
+│       ├── RNL_Fencing_Case_Study.md
+│       ├── RNL_Glossary.md
+│       └── RNL_Theory_and_Use_Cases.md
+├── fix-rag-query.patch
+├── fix.patch
+├── infra
+│   └── podman
+│       ├── README_podman.md
+│       └── podman-compose.yml
+├── mypy.ini
+├── package.json
+├── packages
+│   ├── __init__.py
+│   ├── adr-generator
+│   │   ├── adr-structure-analyzer.sh
+│   │   └── validate-fixed-adrs.sh
+│   ├── governance-poc
+│   │   └── memory_tile.py
+│   └── ingestion
+│       └── document-ingestion.sh
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+├── poetry.lock
+├── pyproject.toml
+├── pytest.ini
+├── ruff.toml
+├── scripts
+│   ├── validate-doc-fences.sh
+│   └── validate-rnl.sh
+├── tests
+│   └── integration
+│       └── test_postgres_connection.py
+├── tools
+│   ├── adr-audit.sh
+│   ├── batch_create_remaining.sh
+│   ├── cleanup-toml-backups.sh
+│   ├── convert-project-to-poetry.sh
+│   ├── create-missing-scripts.sh
+│   ├── debug-validation.sh
+│   ├── dev
+│   │   └── pg-dev.sh
+│   ├── diagnose-yaml-issues.sh
+│   ├── fix-authors-and-python.sh
+│   ├── fix-invalid-dependencies-block.sh
+│   ├── fix-migration-printf.sh
+│   ├── fix-toml-poetry-duplicate.sh
+│   ├── fix-yaml-delimiters.sh
+│   ├── fix-yaml-extraction.sh
+│   ├── fix-yaml-syntax.sh
+│   ├── ingest_adrs.py
+│   ├── lib
+│   │   └── adr_parse.sh
+│   ├── migration-summary.sh
+│   ├── patch-tool-poetry-block.sh
+│   ├── remove-invalid-packages-field.sh
+│   ├── rename-adrs-to-new-format.sh
+│   ├── roadmap_upsert_v3.sh
+│   ├── safe-poetry-package-fix.sh
+│   ├── test-yaml-parsing.sh
+│   ├── tla2tools.jar
+│   ├── update_issues_m1.sh
+│   └── validate-migrated-adrs.sh
+├── turbo.json
+└── verification
+    └── tla
+        ├── archive
+        ├── models
+        └── scripts
+
+59 directories, 237 files
