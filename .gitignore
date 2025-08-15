@@ -24,13 +24,13 @@ docs/darf/spec/tla/**/*.log
 docs/darf/spec/tla/**/*.st
 docs/darf/spec/tla/**/*.fp
 # TLA verification outputs
-verification/tla/runs/
+verification/tla/runs/*
 verification/tla/**/*.chkpt
 verification/tla/**/*.st.chkpt
 verification/tla/**/*.out
 verification/tla/**/*.log
 # TLA verification outputs
-verification/tla/runs/
+verification/tla/runs/*
 verification/tla/**/*.chkpt
 verification/tla/**/*.st.chkpt
 verification/tla/**/*.out
@@ -49,3 +49,8 @@ docs/darf/spec/tla/**/*.chkpt
 docs/darf/spec/tla/**/*.st.chkpt
 docs/darf/spec/tla/**/*.out
 docs/darf/spec/tla/**/*.log
+
+# Keep TLA run artifacts ignored, but track markdown reports
+verification/tla/runs/*
+!verification/tla/runs/_reports/
+!verification/tla/runs/_reports/*.md
