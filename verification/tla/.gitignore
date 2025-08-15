@@ -1,5 +1,4 @@
-# Ignore all run artifacts in this subtree…
+# Ignore run artifacts here, but keep human-readable reports
 runs/*
-# …but keep human-readable reports
 !runs/_reports/
 !runs/_reports/*.md
