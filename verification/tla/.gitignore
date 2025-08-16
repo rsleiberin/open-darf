@@ -1,4 +1,0 @@
-# Ignore run artifacts here, but keep human-readable reports
-runs/*
-!runs/_reports/
-!runs/_reports/*.md
