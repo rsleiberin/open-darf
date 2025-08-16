@@ -1,0 +1,33 @@
+{
+  "draft_id": "311ab660-cf34-4d62-987a-0fa1363db80a",
+  "status": "ready_for_review",
+  "user_id": "ryan",
+  "origin": {
+    "file": "/tmp/sovereignty.txt",
+    "bytes": 47,
+    "intent_anchor": null
+  },
+  "cas": {
+    "digest": "af918d493b53b465b59716a326bcfdc671ab9f44f340612ff73ffc32af23c6a1",
+    "key": "sha256/af/91/af918d493b53b465b59716a326bcfdc671ab9f44f340612ff73ffc32af23c6a1"
+  },
+  "qdrant": {
+    "point_id": 1718119714,
+    "collection": "anchors"
+  },
+  "created_at_ms": 1755323871122,
+  "explain": {
+    "method": "anchors",
+    "embedding_dim": 3
+  },
+  "validated_at_ms": 1755324332877,
+  "validation": {
+    "status": "pass",
+    "messages": [],
+    "latency_ms": 219.22,
+    "engine": "neo4j-lite-audit"
+  },
+  "manifest": {
+    "digest": "d63ff8737fc1814babe5e2b6f8632833432a5e131dc64136c9c9b94fd515fda3"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "draft_id": "075b7ce4-3d4b-440d-9b5e-619cfdc03bac",
+  "status": "ready_for_review",
+  "user_id": "ryan",
+  "origin": {
+    "file": "/tmp/sample.txt",
+    "bytes": 25,
+    "intent_anchor": null
+  },
+  "cas": {
+    "digest": "1b18c6f3b39b516079d9f81acd6529437d7cc6a7e9d88ce80a486a5046a1b49c",
+    "key": "sha256/1b/18/1b18c6f3b39b516079d9f81acd6529437d7cc6a7e9d88ce80a486a5046a1b49c"
+  },
+  "qdrant": {
+    "point_id": 1475289526,
+    "collection": "anchors"
+  },
+  "created_at_ms": 1755293413049,
+  "explain": {
+    "method": "anchors",
+    "embedding_dim": 3
+  },
+  "validated_at_ms": 1755293414090,
+  "validation": {
+    "status": "pass",
+    "by": "placeholder",
+    "notes": "validator wiring to follow (#204)"
+  }
+}

@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# tiny CLI front for the pipeline (argparse in inline python)
+PYTHONPATH=. python3 - "$@" <<'PY'
+import argparse, json, sys
+from apps.transform.pipeline import ingest, validate_neo4j as validate, search
+from apps.transform.chunker import chunk_linebreaks, make_manifest_v1
+from apps.storage.minio_cas import MinioCAS
+
+ap=argparse.ArgumentParser(prog="smg")
+sp=ap.add_subparsers(dest="cmd", required=True)
+
+p_show=sp.add_parser("show"); p_show.add_argument("--draft", required=True)
+
+p_m=sp.add_parser("manifest"); p_m.add_argument("--file", required=True); p_m.add_argument("--user", required=True)
+
+p_ing=sp.add_parser("ingest"); p_ing.add_argument("--file", required=True); p_ing.add_argument("--user", required=True); p_ing.add_argument("--intent-anchor")
+p_val=sp.add_parser("validate"); p_val.add_argument("--draft", required=True)
+p_sch=sp.add_parser("search"); p_sch.add_argument("--text", required=True); p_sch.add_argument("--top-k", type=int, default=3); p_sch.add_argument("--user")
+
+args=ap.parse_args()
+if args.cmd=="ingest":
+    out=ingest(args.file, args.user, args.intent_anchor)
+    print(out)
+elif args.cmd=="validate":
+    out=validate(args.draft)
+    print(out)
+elif args.cmd=="manifest":
+    from pathlib import Path
+    p=Path(args.file).expanduser().resolve()
+    b=p.read_bytes()
+    cas=MinioCAS()
+    ref=cas.put_bytes(b, content_type="application/octet-stream")
+    spans=chunk_linebreaks(b)
+    man=make_manifest_v1(ref.digest, b, "text/plain", spans, {"source_kind":"upload","source_locator":str(p),"collector":args.user})
+    mref=cas.put_bytes(json.dumps(man,separators=(",",":")).encode("utf-8"), content_type="application/json")
+    print(mref.digest)
+elif args.cmd=="show":
+    from pathlib import Path
+    import json
+    d=json.loads(Path(args.draft).read_text())
+    man=d.get("manifest",{})
+    print("[manifest.digest]", man.get("digest"))
+    try:
+        from apps.storage.minio_cas import MinioCAS
+        cas=MinioCAS()
+        mb=cas.get_bytes(type("Ref",(),{"alg":"sha256","digest":man["digest"]}))
+        mj=json.loads(mb.decode("utf-8","ignore"))
+        print(json.dumps(mj.get("spans",[])[:3], indent=2))
+    except Exception as e:
+        print("[warn] could not fetch manifest:", e)
+else:
+    res=search(args.text, args.top_k, args.user)
+    print(json.dumps(res, indent=2))
+PY

@@ -1,0 +1,32 @@
+{
+  "draft_id": "0257caa0-901a-4f77-a1bf-05c34d763e2c",
+  "status": "ready_for_review",
+  "user_id": "ryan",
+  "origin": {
+    "file": "/tmp/sov.txt",
+    "bytes": 47,
+    "intent_anchor": null
+  },
+  "cas": {
+    "digest": "af918d493b53b465b59716a326bcfdc671ab9f44f340612ff73ffc32af23c6a1",
+    "key": "sha256/af/91/af918d493b53b465b59716a326bcfdc671ab9f44f340612ff73ffc32af23c6a1"
+  },
+  "qdrant": {
+    "point_id": 812557069,
+    "collection": "anchors"
+  },
+  "created_at_ms": 1755323522965,
+  "explain": {
+    "method": "anchors",
+    "embedding_dim": 3
+  },
+  "validated_at_ms": 1755323784454,
+  "validation": {
+    "status": "fail",
+    "messages": [
+      "transparency:missing-manifest-digest"
+    ],
+    "latency_ms": 236.69,
+    "engine": "neo4j-lite-audit"
+  }
+}
