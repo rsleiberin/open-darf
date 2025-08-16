@@ -23,3 +23,14 @@ var/
 .DS_Store
 Thumbs.db
 
+# --- TLA Class-A local artifacts ---
+verification/tla/runs/
+states/
+
+# Local dev clutter (keep out of VCS)
+.venv/
+__pycache__/
+*.pyc
+.idea/
+.vscode/
+.DS_Store
