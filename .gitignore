@@ -1,56 +1,24 @@
-*:Zone.Identifier
-
-# runtime artefacts
-node_modules/
-.turbo/
-.env
-node_modules/
-.turbo/
+# Python
 __pycache__/
 *.py[cod]
-*.bak
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+
+# Virtualenvs
+.venv/
+venv/
+
+# Local env & config
+.env
+.env.*
+.env.local
+
+# Local data / artifacts
+var/
+*.log
+
+# OS cruft
 .DS_Store
-
-.env.bak.*
-.env.example.bak.*
-
-# Build tools / local jars
-tools/*.jar
-
-# TLA+ generated artifacts (keep specs)
-docs/darf/spec/tla/runs/
-docs/darf/spec/tla/states/
-docs/darf/spec/tla/**/*.log
-docs/darf/spec/tla/**/*.st
-docs/darf/spec/tla/**/*.fp
-# TLA verification outputs
-verification/tla/runs/*
-verification/tla/**/*.chkpt
-verification/tla/**/*.st.chkpt
-verification/tla/**/*.out
-verification/tla/**/*.log
-# TLA verification outputs
-verification/tla/runs/*
-verification/tla/**/*.chkpt
-verification/tla/**/*.st.chkpt
-verification/tla/**/*.out
-verification/tla/**/*.log
-# Legacy TLA outputs still under docs (frozen)
-docs/darf/spec/tla/runs/
-docs/darf/spec/tla/**/*.chkpt
-docs/darf/spec/tla/**/*.st
-docs/darf/spec/tla/**/nodes_*
-docs/darf/spec/tla/**/ptrs_*
-docs/darf/spec/tla/**/*.fp
-docs/darf/spec/tla/**/*.log
-# legacy TLC outputs (frozen)
-docs/darf/spec/tla/runs/
-docs/darf/spec/tla/**/*.chkpt
-docs/darf/spec/tla/**/*.st.chkpt
-docs/darf/spec/tla/**/*.out
-docs/darf/spec/tla/**/*.log
-
-# Keep TLA run artifacts ignored, but track markdown reports
-verification/tla/runs/*
-!verification/tla/runs/_reports/
-!verification/tla/runs/_reports/*.md
+Thumbs.db
