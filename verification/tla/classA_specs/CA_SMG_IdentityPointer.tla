@@ -1,11 +1,11 @@
 ---------------------------- MODULE CA_SMG_IdentityPointer ----------------------------
 EXTENDS Naturals, FiniteSets
-CONSTANTS Users, AllowCoreMutation
+CONSTANTS Users, AllowCoreMutation, MaxAux
 VARIABLES idCore, idAux, prevCore
 
 TypeInvariant ==
   /\ idCore \in [Users -> Nat]
-  /\ idAux  \in [Users -> Nat]
+  /\ idAux  \in [Users -> 0..MaxAux]
   /\ prevCore \in [Users -> Nat]
 
 Init ==
@@ -15,6 +15,7 @@ Init ==
 
 AuxStep ==
   \E u \in Users:
+    /\ idAux[u] < MaxAux
     /\ idCore' = idCore
     /\ idAux'  = [idAux EXCEPT ![u] = idAux[u] + 1]
     /\ prevCore' = idCore
