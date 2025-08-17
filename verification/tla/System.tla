@@ -29,7 +29,7 @@ Grants(spanHash, policyHash, ts) ==
         /\ e.type = "grant"
         /\ e.data = spanHash  \* Assuming data field contains span hash for grants
         /\ e.hash # ""        \* Valid entry
-        /\ \E t \in Nat : t <= ts  \* Simplified timestamp check
+        /\ e.timestamp <= ts  \* Simplified timestamp check
     }
 
 \* Filter revocation entries by span hash and timestamp
@@ -37,7 +37,7 @@ Revocations(spanHash, ts) ==
     {e \in AllEntries :
         /\ e.type = "revoke"
         /\ e.data = spanHash  \* Assuming data field contains span hash for revokes
-        /\ \E t \in Nat : t <= ts  \* Simplified timestamp check
+        /\ e.timestamp <= ts  \* Simplified timestamp check
     }
 
 \* Decode span set from Merkle root to individual span hashes
@@ -107,7 +107,7 @@ CrossModuleConsistency ==
                 /\ ConstitutionCoreInst!Hash(op) = r.input_hash
 
 \* System-wide revocation liveness property
-Liv_SystemRevocation ==
+Liv_SystemRevocation_OLD ==
     \* Eventually all revocations in the log invalidate dependent receipts
     <>[](\A revEntry \in AllEntries :
         revEntry.type = "revoke" =>
@@ -161,3 +161,38 @@ SystemLiveness ==
     /\ Liv_SystemRevocation
 
 ====
+(***************************************************************************)
+(* Peer-review helper operators for receipt ↔ consent-log linkage           *)
+(***************************************************************************)
+CONSTANT Hashes
+CONSTANT SpanHashesCoveredByReceipt
+ASSUME SpanHashesCoveredByReceipt \in [ReceiptsInst!receipts -> SUBSET Hashes]
+
+AllEntries ==
+  UNION { SeqToSet(ConsentLogInst!log[r]) : r \in ConsentLogInst!Replicas }
+
+IsGrant(e)  == e.type = "grant"
+IsRevoke(e) == e.type = "revoke"
+
+Grants(h, ph, ts) ==
+  { e \in AllEntries :
+      IsGrant(e) /\ e.span_hash = h /\ e.policy_hash = ph /\ e.timestamp <= ts }
+
+Revocations(h, ts) ==
+  { e \in AllEntries :
+      IsRevoke(e) /\ e.span_hash = h /\ e.timestamp <= ts }
+
+ReceiptCoveredByLog(r) ==
+  \A h \in SpanHashesCoveredByReceipt[r] :
+      (\E e \in Grants(h, r.policy_hash, r.timestamp) : TRUE)
+/\    ~(\E x \in Revocations(h, r.timestamp) : TRUE)
+
+(***************************************************************************)
+(* Peer-review: liveness wrt revocations per covered span                   *)
+(***************************************************************************)
+Liv_SystemRevocation ==
+  \A r \in ReceiptsInst!receipts :
+    \A h \in SpanHashesCoveredByReceipt[r] :
+      (\E e \in AllEntries :
+          IsRevoke(e) /\ e.span_hash = h /\ e.timestamp >= r.timestamp)
+      => <> ~ReceiptCoveredByLog(r)

@@ -81,7 +81,7 @@ Authorized(node, principal) ==
         /\ d.delegatee = principal
 
 \* Check if principal is authorized for specific operation
-AuthorizedForOp(op) ==
+AuthorizedForOp(op, d) == RequiredPerm(op) \in d.permissions
     \/ Owner[op.node] = op.principal  \* Node owner
     \/ \E d \in delegations :          \* Or delegated
         /\ d.delegator = op.node
@@ -229,3 +229,25 @@ Next ==
 Spec == Init /\ [][Next]_vars
 
 ====
+(***************************************************************************)
+(* Peer-review: permission mapping & op authorization                        *)
+(***************************************************************************)
+RequiredPerm(op) ==
+  CASE op.type = "create"  -> "write"
+     [] op.type = "modify" -> "write"
+     [] op.type = "delete" -> "delete"
+     [] op.type = "search" -> "read"
+     [] OTHER              -> "read"
+
+AuthorizedForOp(op, d) ==
+  RequiredPerm(op) \in d.permissions
+
+(***************************************************************************)
+(* Peer-review: guarded delegation                                          *)
+(***************************************************************************)
+AddDelegation ==
+  \E delegator \in Nodes, delegate \in Principals :
+    /\ Authorized(delegator, Owner[delegator])
+    /\ delegator # delegate
+    /\ delegations' = [delegations EXCEPT ![delegator] = @ \cup {delegate}]
+    /\ UNCHANGED <<policies, signatures>>
