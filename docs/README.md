@@ -4,7 +4,7 @@
 - `decisions/` - ADR repository (25 ADRs, authoritative source)
 - `templates/` - ADR templates for decision documentation
 
-## Production System Documentation  
+## Production System Documentation
 - `api/` - REST API documentation (generated from code)
 - `architecture/` - System architecture docs (generated from ADRs)
 - `deployment/` - Production deployment and operations guides

@@ -9,9 +9,9 @@
 
 The **Sane Label System** gives every issue exactly **one** label from each category:
 
-* **Type** → what kind of work  
-* **Priority** → urgency  
-* **Status** → current workflow state (drives automations)  
+* **Type** → what kind of work
+* **Priority** → urgency
+* **Status** → current workflow state (drives automations)
 * **Area** → codebase or domain slice
 
 `./scripts/labels.sh` is the single source of truth & can be re-run at any time to sync colours/descriptions or add new labels.

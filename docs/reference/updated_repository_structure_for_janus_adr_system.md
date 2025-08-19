@@ -258,7 +258,7 @@ def process_adr_trigger(trigger_event):
 # packages/adr-core/src/models/sqlalchemy/adr.py
 class ADR(Base):
     __tablename__ = 'adrs'
-    
+
     id = Column(UUID, primary_key=True)
     code = Column(String(10), unique=True)  # e.g., 'RSH-001'
     trigger_rules = Column(JSONB)  # Trigger configuration
@@ -291,23 +291,23 @@ class ADRDecisionAgent:
             system_message="""You are an ADR generation specialist.
             Use HTN decomposition to break down complex decisions."""
         )
-        
+
         self.tools = [
             Tool(name="query_similar_adrs", func=self.query_similar),
             Tool(name="check_constraints", func=self.validate_constitutional),
             Tool(name="calculate_confidence", func=self.calculate_mcda_score)
         ]
-    
+
     async def generate_adr(self, context):
         # Use GraphRAG to find relevant context
         relevant_docs = await self.graphrag_retrieve(context)
-        
+
         # Generate decision with AutoGen
         response = await self.assistant.generate_reply(
             messages=[{"role": "user", "content": context}],
             tools=self.tools
         )
-        
+
         # Validate and store
         return self.validate_and_store(response)
 ```
@@ -322,7 +322,7 @@ class HybridADRRetriever:
     def __init__(self):
         self.neo4j = GraphDatabase.driver("bolt://neo4j:7687")
         self.qdrant = QdrantClient(host="qdrant", port=6333)
-    
+
     async def retrieve(self, query, k=5):
         # 1. Vector similarity from Qdrant
         vector_results = await self.qdrant.search(
@@ -330,7 +330,7 @@ class HybridADRRetriever:
             query_vector=embed(query),
             limit=k*2
         )
-        
+
         # 2. Graph context from Neo4j
         with self.neo4j.session() as session:
             graph_results = session.run("""
@@ -338,7 +338,7 @@ class HybridADRRetriever:
                 WHERE a.id IN $ids
                 RETURN related
             """, ids=[r.id for r in vector_results])
-        
+
         # 3. Combine and rank
         return self.rank_results(vector_results, graph_results)
 ```
@@ -348,26 +348,26 @@ class HybridADRRetriever:
 # scripts/migrate_legacy_adrs.py
 async def migrate_legacy_adrs():
     """Migrate 25 existing ADRs to new system"""
-    
+
     # 1. Parse existing ADRs
     legacy_adrs = parse_legacy_adrs("docs/decisions/")
-    
+
     # 2. Generate embeddings
     for adr in legacy_adrs:
         adr.embedding = generate_embedding(adr.content)
-    
+
     # 3. Extract implicit triggers
     for adr in legacy_adrs:
         adr.triggers = extract_triggers_with_llm(adr)
-    
+
     # 4. Build dependency graph
     graph = build_dependency_graph(legacy_adrs)
-    
+
     # 5. Store in new system
     await store_in_postgres(legacy_adrs)
     await store_in_neo4j(graph)
     await store_in_qdrant([a.embedding for a in legacy_adrs])
-    
+
     print(f"Migrated {len(legacy_adrs)} ADRs successfully")
 ```
 

@@ -74,7 +74,7 @@ Successfully processed 3 research documents and generated 7 new ADRs:
 From RSH-001 (Vector Database Research):
 - CON-001: Vector Storage Requirements (confidence: 9)
 
-From RSH-002 (Backend Architecture Research): 
+From RSH-002 (Backend Architecture Research):
 - CON-002: Hybrid Storage Architecture (confidence: 9)
 - SEC-003: AI Agent Security & Multi-Tenant Isolation (confidence: 9)
 - ARC-015: Data Layer Architecture (confidence: 9)

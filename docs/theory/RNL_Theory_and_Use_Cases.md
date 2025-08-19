@@ -10,8 +10,8 @@ node(Name) · rel(A->B,type) · prop(key:value) · role(name)
 L0 off · L1 light (default, ≤1 hint/sentence) · L2 structured · L3 query-ready (on request)
 
 ## Dialect switching (auto when named or implied)
-Postgres: table(User), column(email), index(user_email_idx), tx(begin/commit), constraint(unique)  
-Neo4j: node(User), rel(User->Doc,AUTHORED), label(User), prop(email)  
+Postgres: table(User), column(email), index(user_email_idx), tx(begin/commit), constraint(unique)
+Neo4j: node(User), rel(User->Doc,AUTHORED), label(User), prop(email)
 Qdrant: collection(docs), vector(embedding), payload(tags), filter(must)
 
 ## Utterance shape (for decompression/learning)

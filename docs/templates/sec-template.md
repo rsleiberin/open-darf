@@ -174,4 +174,3 @@ Brief description of the security challenge being addressed and why a specific s
 - [Security incident that reveals gaps in current approach]
 - [Technology changes that affect security assumptions]
 - [Business requirement changes that affect risk tolerance]
-

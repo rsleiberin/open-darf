@@ -10,7 +10,7 @@ Build Consciousness Interface Architecture through Synthetic Memory Graphs (SMGs
 
 ### TLA+ Formal Verification (Priority 1)
 - **Class A** (10min): Core safety properties for local development
-- **Class B** (8hrs): Comprehensive safety for server infrastructure  
+- **Class B** (8hrs): Comprehensive safety for server infrastructure
 - **Class C** (days): Complex composition properties for distributed systems
 - **Coverage**: Constitutional compliance, Byzantine consensus, identity persistence, performance
 
@@ -49,7 +49,7 @@ class SyntheticMemoryGraph:
         self.identity_node = SelfReferentialPointer(user_id)
         self.memory_structure = PersistentMemory()
         self.constraints = constitutional_constraints
-    
+
     def make_recommendation(self, decision_context):
         if not self.validate_constitutional_compliance(decision_context):
             raise ConstitutionalViolationError()
@@ -60,7 +60,7 @@ class SyntheticMemoryGraph:
 ```python
 def validate_constitutional_compliance(operation, user_context):
     """Required for ALL operations. Target: <170ms"""
-    return (preserve_user_sovereignty(operation, user_context) 
+    return (preserve_user_sovereignty(operation, user_context)
             and enhance_user_capability(operation, user_context)
             and explain_operation_impact(operation, user_context))
 ```

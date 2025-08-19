@@ -24,14 +24,14 @@ SOFTWARE.
 
 ## Research Materials Notice
 
-The research documents in `docs/reference/` may contain content derived from 
-various sources. These documents are included for architectural decision 
-reference purposes. Any third-party content retains its original licensing 
+The research documents in `docs/reference/` may contain content derived from
+various sources. These documents are included for architectural decision
+reference purposes. Any third-party content retains its original licensing
 and attribution.
 
 ## ADR Decision Framework
 
-The Architecture Decision Record (ADR) framework and templates in this 
-repository are provided under the same MIT license. The ADR methodology 
-itself builds upon established practices in the software architecture 
+The Architecture Decision Record (ADR) framework and templates in this
+repository are provided under the same MIT license. The ADR methodology
+itself builds upon established practices in the software architecture
 community.

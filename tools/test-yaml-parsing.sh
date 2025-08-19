@@ -7,10 +7,10 @@ for file in docs/decisions/000{2..4}*.md; do
     if [ -f "$file" ]; then
         filename=$(basename "$file")
         echo -n "Testing $filename: "
-        
+
         # Extract and test YAML
         yaml_content=$(awk '/^---$/{flag=1; next} /^---$/{flag=0} flag' "$file")
-        
+
         if echo "$yaml_content" | python3 -c "
 import yaml
 import sys

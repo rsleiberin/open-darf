@@ -1,10 +1,14 @@
 from __future__ import annotations
-import hashlib, json, time
+import hashlib
+import json
+import time
 from dataclasses import dataclass, asdict, field
 from typing import List, Optional, Dict, Any
 
+
 def sha256_hex(b: bytes) -> str:
     return hashlib.sha256(b).hexdigest()
+
 
 @dataclass
 class Span:
@@ -19,6 +23,7 @@ class Span:
     # Transformation lineage, e.g., [{"op":"chunker/linebreak-v1","parent":"sha256-..."}]
     lineage: List[Dict[str, Any]] = field(default_factory=list)
 
+
 @dataclass
 class ManifestV1:
     # Content-addressed span manifest
@@ -31,20 +36,24 @@ class ManifestV1:
     provenance: Dict[str, Any]
 
     def dumps(self) -> bytes:
-        return json.dumps(asdict(self), ensure_ascii=False, separators=(",", ":")).encode("utf-8")
+        return json.dumps(
+            asdict(self), ensure_ascii=False, separators=(",", ":")
+        ).encode("utf-8")
+
 
 def build_manifest_v1(
-    doc_bytes: bytes,
-    doc_type: str,
-    spans: List[Span],
-    user_id: str,
-    auth_class: str
+    doc_bytes: bytes, doc_type: str, spans: List[Span], user_id: str, auth_class: str
 ) -> bytes:
     doc_digest = f"sha256-{sha256_hex(doc_bytes)}"
     m = ManifestV1(
         version="1",
         doc={"digest": doc_digest, "bytes": len(doc_bytes), "type": doc_type},
         spans=spans,
-        provenance={"source": "ingest", "time": int(time.time()), "auth_class": auth_class, "user_id": user_id},
+        provenance={
+            "source": "ingest",
+            "time": int(time.time()),
+            "auth_class": auth_class,
+            "user_id": user_id,
+        },
     )
     return m.dumps()

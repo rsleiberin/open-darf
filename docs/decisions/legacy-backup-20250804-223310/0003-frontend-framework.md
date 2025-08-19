@@ -11,5 +11,5 @@ Next 15 / React 19 selected for frontend UI. was evaluated against alternatives;
 **Next 15 / React 19 selected for frontend UI.**
 
 ## Consequences
-* Establishes a stable contract for related components.  
+* Establishes a stable contract for related components.
 * Changing this choice requires a superseding ADR.

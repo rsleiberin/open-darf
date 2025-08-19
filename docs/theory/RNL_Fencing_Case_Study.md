@@ -29,7 +29,7 @@ An experiment asked the agent to “speak” in a hybrid RNL format that blended
 
 RNL-Lite is a minimal dialect for *describing* structure without producing executable blocks.
 
-**Inline tokens:** wrap grammar fragments in guillemets: «User», «Person{name}», «-[:AUTHORED]->».  
+**Inline tokens:** wrap grammar fragments in guillemets: «User», «Person{name}», «-[:AUTHORED]->».
 **Blocks:** use four-space indentation or non-exec fences labeled “text”, “example”, “pseudo”, or “console” only.
 
 **Example (speakable NL with schema hints)**

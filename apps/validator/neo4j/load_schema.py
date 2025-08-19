@@ -1,6 +1,8 @@
 from pathlib import Path
 from neo4j import GraphDatabase
-import os, re
+import os
+import re
+
 
 def main():
     uri = os.getenv("NEO4J_URI", "bolt://localhost:7687")
@@ -24,6 +26,7 @@ def main():
                     print(f"applied: {p.name}: {first}")
     finally:
         drv.close()
+
 
 if __name__ == "__main__":
     main()

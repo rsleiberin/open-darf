@@ -30,25 +30,25 @@ for adr_file in "$ADR_DIR"/*.md; do
     if [ -f "$adr_file" ]; then
         filename=$(basename "$adr_file")
         total_files=$((total_files + 1))
-        
+
         echo -ne "${BLUE}Checking: $filename${NC}"
-        
+
         file_issues=()
-        
+
         # Check 1: YAML front matter exists
         if head -1 "$adr_file" | grep -q "^---"; then
             valid_yaml=$((valid_yaml + 1))
         else
             file_issues+=("no_yaml")
         fi
-        
+
         # Check 2: Has enhanced metadata fields
         if grep -q "decision_confidence:" "$adr_file" && grep -q "time_investment:" "$adr_file"; then
             has_enhanced_metadata=$((has_enhanced_metadata + 1))
         else
             file_issues+=("missing_enhanced_fields")
         fi
-        
+
         # Check 3: YAML syntax validation (basic)
         if head -1 "$adr_file" | grep -q "^---"; then
             yaml_content=$(awk '/^---$/{flag=1; next} /^---$/{flag=0} flag' "$adr_file")
@@ -66,7 +66,7 @@ except:
                 file_issues+=("invalid_yaml_syntax")
             fi
         fi
-        
+
         # Report results
         if [ ${#file_issues[@]} -eq 0 ]; then
             echo -e " ${GREEN}✅${NC}"

@@ -50,12 +50,12 @@ EOF
 
 # Make scripts executable
 chmod +x tools/update-adr-type-system.sh
-chmod +x tools/fix-migration-printf.sh  
+chmod +x tools/fix-migration-printf.sh
 chmod +x tools/validate-migrated-adrs.sh
 
 echo "✅ Created missing tool scripts"
 echo ""
 echo "Available tools:"
 echo "- tools/update-adr-type-system.sh"
-echo "- tools/fix-migration-printf.sh"  
+echo "- tools/fix-migration-printf.sh"
 echo "- tools/validate-migrated-adrs.sh"

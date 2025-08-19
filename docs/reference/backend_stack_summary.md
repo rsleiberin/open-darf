@@ -125,4 +125,3 @@ This document tracks the selected and pending components for the Janus architect
 ---
 
 _Last updated: 2025-07-30_
-

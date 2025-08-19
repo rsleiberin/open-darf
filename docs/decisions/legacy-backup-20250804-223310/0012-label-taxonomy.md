@@ -11,5 +11,5 @@
 **23-label “Sane Label Schema” enforced via sync script.**
 
 ## Consequences
-* Establishes a stable contract for related components.  
+* Establishes a stable contract for related components.
 * Changing this choice requires a superseding ADR.

@@ -13,7 +13,7 @@ BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-echo "=== ADR Structure Analyzer ===" 
+echo "=== ADR Structure Analyzer ==="
 echo "Analyzing ADR structures in: $ADR_DIR"
 echo ""
 
@@ -36,14 +36,14 @@ for adr_file in "$ADR_DIR"/*.md; do
         echo -e "${YELLOW}No ADR files found${NC}"
         exit 0
     fi
-    
+
     filename=$(basename "$adr_file")
     echo -e "${GREEN}Analyzing: $filename${NC}"
-    
+
     # Extract key structural elements
     echo "FILE: $filename" >> "$ANALYSIS_FILE"
     echo "---" >> "$ANALYSIS_FILE"
-    
+
     # Check for YAML front matter
     if head -1 "$adr_file" | grep -q "^---"; then
         echo "✓ Has YAML front matter" >> "$ANALYSIS_FILE"
@@ -51,30 +51,30 @@ for adr_file in "$ADR_DIR"/*.md; do
         awk '/^---$/{flag=1; next} /^---$/{flag=0} flag' "$adr_file" >> "$ANALYSIS_FILE"
     else
         echo "✗ No YAML front matter detected" >> "$ANALYSIS_FILE"
-        
+
         # Look for title in first few lines
         title_line=$(head -5 "$adr_file" | grep -E "^#+ " | head -1)
         if [ ! -z "$title_line" ]; then
             echo "Title found: $title_line" >> "$ANALYSIS_FILE"
         fi
     fi
-    
+
     # Check for common ADR sections
     echo "" >> "$ANALYSIS_FILE"
     echo "Sections detected:" >> "$ANALYSIS_FILE"
-    
+
     grep -i "^#+ *status" "$adr_file" && echo "✓ Status section" >> "$ANALYSIS_FILE"
     grep -i "^#+ *context" "$adr_file" && echo "✓ Context section" >> "$ANALYSIS_FILE"
     grep -i "^#+ *decision" "$adr_file" && echo "✓ Decision section" >> "$ANALYSIS_FILE"
     grep -i "^#+ *rationale" "$adr_file" && echo "✓ Rationale section" >> "$ANALYSIS_FILE"
     grep -i "^#+ *consequences" "$adr_file" && echo "✓ Consequences section" >> "$ANALYSIS_FILE"
     grep -i "^#+ *alternatives" "$adr_file" && echo "✓ Alternatives section" >> "$ANALYSIS_FILE"
-    
+
     # Count lines and words
     line_count=$(wc -l < "$adr_file")
     word_count=$(wc -w < "$adr_file")
     echo "Lines: $line_count, Words: $word_count" >> "$ANALYSIS_FILE"
-    
+
     echo "" >> "$ANALYSIS_FILE"
     echo "===========================================" >> "$ANALYSIS_FILE"
     echo "" >> "$ANALYSIS_FILE"
@@ -117,6 +117,6 @@ echo "Results saved to: $ANALYSIS_FILE"
 echo ""
 echo -e "${YELLOW}Usage workflow:${NC}"
 echo "1. Run this script: ./tools/adr-structure-analyzer.sh"
-echo "2. Run content viewer: ./tools/adr-viewer.sh" 
+echo "2. Run content viewer: ./tools/adr-viewer.sh"
 echo "3. Review both output files"
 echo "4. Share individual ADR contents with Claude for updating"

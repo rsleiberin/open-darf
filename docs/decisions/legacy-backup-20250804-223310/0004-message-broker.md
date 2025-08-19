@@ -11,5 +11,5 @@ RabbitMQ 3 adopted as default message broker. was evaluated against alternatives
 **RabbitMQ 3 adopted as default message broker.**
 
 ## Consequences
-* Establishes a stable contract for related components.  
+* Establishes a stable contract for related components.
 * Changing this choice requires a superseding ADR.

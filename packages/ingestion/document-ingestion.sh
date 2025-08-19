@@ -38,4 +38,3 @@ echo "✅ Manifest created at ${OUTPUT_DIR}/doc_manifest.tsv"
 # python tools/chunk_docs.py --input "${OUTPUT_DIR}/doc_manifest.tsv"
 
 echo "🚀 Ingestion phase complete."
-

@@ -20,14 +20,14 @@ for adr_file in "$ADR_DIR"/*.md; do
     if [ -f "$adr_file" ]; then
         filename=$(basename "$adr_file")
         total_files=$((total_files + 1))
-        
+
         echo -ne "${BLUE}Validating: $filename${NC}"
-        
+
         # Check if file has YAML front matter
         if head -1 "$adr_file" | grep -q "^---"; then
             # Extract YAML correctly (between first and second ---)
             yaml_content=$(sed -n '/^---$/,/^---$/p' "$adr_file" | sed '1d;$d')
-            
+
             # Test YAML parsing
             if echo "$yaml_content" | python3 -c "
 import yaml

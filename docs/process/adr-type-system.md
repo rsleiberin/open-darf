@@ -78,11 +78,11 @@ This document defines the Architecture Decision Record (ADR) type system for the
 
 ### Benefits of Expanded Type System
 
-**✅ Omni-Domain Coverage**: Handles any research domain without gaps  
-**✅ One-Pass Ingestion**: No need to re-process documents for missing types  
-**✅ Graph-Ready**: Rich typing enables sophisticated knowledge graph partitioning  
-**✅ Agent-Scalable**: Types support both generalist and specialist agent development  
-**✅ Future-Proof**: Comprehensive enough for research scaling and automation  
+**✅ Omni-Domain Coverage**: Handles any research domain without gaps
+**✅ One-Pass Ingestion**: No need to re-process documents for missing types
+**✅ Graph-Ready**: Rich typing enables sophisticated knowledge graph partitioning
+**✅ Agent-Scalable**: Types support both generalist and specialist agent development
+**✅ Future-Proof**: Comprehensive enough for research scaling and automation
 
 ## ADR Naming Convention
 
@@ -100,7 +100,7 @@ ADR-YYMM-TYPE-NNN[-vM.m.p]
 ### Examples
 ```
 ADR-2508-CON-001        # Concept: Vector Store (base version)
-ADR-2508-VEN-001        # Vendor: Qdrant implementation  
+ADR-2508-VEN-001        # Vendor: Qdrant implementation
 ADR-2508-RSH-001        # Research: Vector DB comparison study
 ADR-2508-AGT-001        # Agent: Literature review specialist
 ADR-2508-UX-001         # UX: Component design patterns
@@ -143,8 +143,8 @@ tags: [tag1, tag2, tag3]
 ---
 ```
 
-**Field hygiene**  
-• `research_basis` must list ADR IDs only (no free-text).  
+**Field hygiene**
+• `research_basis` must list ADR IDs only (no free-text).
 • Only RSH ADRs may contain `linked_evidence:`; downstream ADRs point to research via `research_basis`.
 
 
@@ -152,10 +152,10 @@ tags: [tag1, tag2, tag3]
 
 ### Research → Concept → Vendor Chain
 ```
-RSH ADR (Literature Review) 
+RSH ADR (Literature Review)
     ↓ informs
 CON ADR (Requirements Definition)
-    ↓ drives  
+    ↓ drives
 VEN ADR (Specific Implementation)
     ↓ enables
 INT ADR (System Integration)
@@ -196,7 +196,7 @@ GOV ADR (Governance Framework)
 **Priority Types**: `ALG`, `AGT`, `SWM`, `FRD`, `DAT`, `PER`, `API`
 
 - [ ] Implement ML models based on research
-- [ ] Design specialized agent architectures  
+- [ ] Design specialized agent architectures
 - [ ] Build fraud detection algorithms
 - [ ] Create swarm coordination protocols
 - [ ] Establish knowledge graph schemas
@@ -254,7 +254,7 @@ docs/
 
 ### Legacy ADR Handling
 1. **Preserve Legacy IDs**: Add `legacy_id` field to maintain references
-2. **Cross-Reference**: Link old and new formats bidirectionally  
+2. **Cross-Reference**: Link old and new formats bidirectionally
 3. **Gradual Migration**: Update high-impact decisions first
 4. **No Breaking Changes**: Existing links continue to work
 5. **Type Assignment**: Assign appropriate types from 33-type system to legacy ADRs

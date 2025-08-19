@@ -11,7 +11,7 @@ policy.id fields. All invariants now type-correct with proper authorization pred
 ---- MODULE ConstitutionCore ----
 EXTENDS Naturals, Sequences, FiniteSets, TLC
 
-CONSTANTS 
+CONSTANTS
     Nodes,          \* Set of system nodes
     Principals,     \* Set of authorized principals
     Resources,      \* Set of protected resources
@@ -156,8 +156,8 @@ CreateOperation(principal, resource, node) ==
         resource |-> resource,
         node |-> node,
         timestamp |-> CHOOSE t \in Nat : TRUE,
-        status |-> IF Authorized(node, principal) 
-                   THEN "authorized" 
+        status |-> IF Authorized(node, principal)
+                   THEN "authorized"
                    ELSE "denied"
     ]
     IN /\ operations' = operations \union {newOp}

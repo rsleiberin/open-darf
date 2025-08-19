@@ -7,10 +7,10 @@
 
 **Assessment**: The **Deliberative Agentic Reasoning Framework (DARF)** naming aligns excellently with the research space and production goals:
 
-✅ **"Deliberative"** - Captures the bargaining/negotiation approach over simple majority rule  
-✅ **"Agentic"** - Centers on identity-sovereign agents as the core abstraction  
-✅ **"Reasoning"** - Emphasizes the constitutional constraint system and ADR-driven decision making  
-✅ **"Framework"** - Positions as infrastructure for others to build upon  
+✅ **"Deliberative"** - Captures the bargaining/negotiation approach over simple majority rule
+✅ **"Agentic"** - Centers on identity-sovereign agents as the core abstraction
+✅ **"Reasoning"** - Emphasizes the constitutional constraint system and ADR-driven decision making
+✅ **"Framework"** - Positions as infrastructure for others to build upon
 
 **Tagline validation**: *"Identity-sovereign agents; delegated mandates in the commons; deliberation over majority"* - Precise and differentiated from existing AI governance approaches.
 
@@ -26,7 +26,7 @@
 
 ### Active Development Threads
 1. **Core ADR System**: HTN planner and BDI reactor implementation
-2. **Privacy Bridge**: Zero-knowledge proof integration design  
+2. **Privacy Bridge**: Zero-knowledge proof integration design
 3. **Memory Tiles**: POC in `packages/governance-poc/`
 4. **Trading Integration**: Research complete, awaiting time-series infrastructure
 
@@ -35,31 +35,31 @@
 Based on the constitutional AI handoff, four urgent architectural choices need resolution:
 
 ### 1. Inter-Agent Conflict Resolution
-**Options**: Nash bargaining, CIRL-inspired cooperation, pre-approved fallback catalogs  
-**Selection Criteria**: Pareto efficiency, budget compliance, local hardware tractability  
+**Options**: Nash bargaining, CIRL-inspired cooperation, pre-approved fallback catalogs
+**Selection Criteria**: Pareto efficiency, budget compliance, local hardware tractability
 **Required**: Negotiation trace schema, budget contracts, fallback policies
 
-### 2. Identity & Chain-of-Trust  
-**Options**: Decentralized identifiers, k-of-n multi-signature, capability downshift  
-**Selection Criteria**: Offline verification, recovery time, human factors  
+### 2. Identity & Chain-of-Trust
+**Options**: Decentralized identifiers, k-of-n multi-signature, capability downshift
+**Selection Criteria**: Offline verification, recovery time, human factors
 **Required**: Identity binding records, actuation policies, recovery playbooks
 
 ### 3. Value Drift Detection & Recovery
-**Options**: Scheduled re-elicitation, concept-drift signals, constitutional regression  
-**Selection Criteria**: Sensitivity vs alert fatigue, compute cost, human comprehensibility  
+**Options**: Scheduled re-elicitation, concept-drift signals, constitutional regression
+**Selection Criteria**: Sensitivity vs alert fatigue, compute cost, human comprehensibility
 **Required**: Drift monitors, hold state machines, regression suites
 
 ### 4. Meta-Constitutional Guardrails
-**Options**: Minimal prohibitions, capability-tier gating, red-team checks  
-**Selection Criteria**: Minimality, legal neutrality, testability  
+**Options**: Minimal prohibitions, capability-tier gating, red-team checks
+**Selection Criteria**: Minimality, legal neutrality, testability
 **Required**: Capability-tier matrix, guardrail catalog, red-team cadence
 
 ## Sovereignty Model Implementation Plan
 
 The "monarch at home, diplomat in public" model requires:
 
-**Core Objects**: Personal Constitution, Mandate, Delegation Graph, Group Constitution, Proof-of-Decision  
-**Authority Precedence**: Personal > Group for personal assets; Group > Personal only for explicitly mandated shared assets  
+**Core Objects**: Personal Constitution, Mandate, Delegation Graph, Group Constitution, Proof-of-Decision
+**Authority Precedence**: Personal > Group for personal assets; Group > Personal only for explicitly mandated shared assets
 **Safety Mechanisms**: Budgeted actions, re-delegation limits, emergency stops, privacy by scope
 
 ## Research Preparation Strategy
@@ -82,7 +82,7 @@ The DARF naming strongly aligns with Russell's constitutional AI principles, whi
 
 **Research Findings**: The Kalai-Smorodinsky solution equalizes relative gains and maximizes equal value, while Nash solution maximizes product of normalized utilities. Recent work shows KS bargaining enhances decision quality and fairness in large-scale group decision-making scenarios.
 
-**Architectural Recommendation**: 
+**Architectural Recommendation**:
 - **Primary**: Kalai-Smorodinsky solution for fairness in agent cooperation
 - **Fallback**: Nash solution for computational efficiency when KS fails
 - **Safety**: Pre-approved fallback catalogs with budget enforcement
@@ -95,7 +95,7 @@ The DARF naming strongly aligns with Russell's constitutional AI principles, whi
 
 **Architectural Recommendation**:
 - **Identity Layer**: W3C DIDs with offline-capable verification
-- **Credential Layer**: Verifiable Credentials with ZKP-based selective disclosure  
+- **Credential Layer**: Verifiable Credentials with ZKP-based selective disclosure
 - **Recovery**: k-of-n multi-signature with time-locked constitutional amendments
 - **Attestation**: ZKPs enable verification of essential information through smart contracts without storing sensitive data
 
@@ -113,14 +113,14 @@ The DARF naming strongly aligns with Russell's constitutional AI principles, whi
 
 **Implementation Priority**: **MEDIUM** - Post-core system deployment
 
-### 4. **Meta-Constitutional Guardrails Architecture** 
+### 4. **Meta-Constitutional Guardrails Architecture**
 
 **Research Findings**: Deontic logic provides formal representation of norms and obligations, with LegalRuleML offering machine-readable legal rule representation. LegalRuleML can be transformed into modal defeasible logic for automated compliance checking with deontic effects.
 
 **Architectural Recommendation**:
 - **Deontic Layer**: Defeasible Deontic Logic (DDL) for domain-neutral, computationally efficient normative specifications
 - **Capability Tiers**: Progressive privilege escalation with proof requirements
-- **Legal Encoding**: LegalRuleML for machine-readable constitutional constraints  
+- **Legal Encoding**: LegalRuleML for machine-readable constitutional constraints
 - **Red-Team Gates**: Scheduled deception/bypass testing for tier promotion
 
 **Implementation Priority**: **MEDIUM** - Critical for enterprise adoption
@@ -137,7 +137,7 @@ The DARF naming strongly aligns with Russell's constitutional AI principles, whi
 2. Can assistance games with uncertainty lead to deferential AI behavior that respects constitutional constraints?
 3. Integration path for preference learning from human behavior within identity-bound constitutions?
 
-### **Phase 2: Multi-Agent Bargaining Implementation** (Weeks 3-4)  
+### **Phase 2: Multi-Agent Bargaining Implementation** (Weeks 3-4)
 **Focus**: Nash vs Kalai-Smorodinsky solution implementation with robust equilibria
 
 **Key Research Questions**:
@@ -148,7 +148,7 @@ The DARF naming strongly aligns with Russell's constitutional AI principles, whi
 ### **Phase 3: Privacy Bridge & ZKP Integration** (Weeks 5-6)
 **Focus**: Zero-knowledge proof systems for compliance verification without data exposure
 
-**Key Research Questions**:  
+**Key Research Questions**:
 1. How to implement credential status checks that don't divulge Subject-identifying information?
 2. Can we achieve offline verification while maintaining cryptographic security guarantees?
 3. Integration between selective disclosure VCs and DARF's constitutional constraint system?
@@ -174,7 +174,7 @@ The DARF naming strongly aligns with Russell's constitutional AI principles, whi
 ### **Next Phase Priorities** (Ordered by Dependencies)
 1. **Identity Infrastructure** (Issues #103, #108) - Privacy bridge with DID/VC/ZKP
 2. **Bargaining Implementation** (Issues #110, #111) - HTN planner + BDI reactor
-3. **Drift Detection** (Issue #113) - Cascade control with circuit breakers  
+3. **Drift Detection** (Issue #113) - Cascade control with circuit breakers
 4. **Legal Framework** (Issue #122) - Deontic logic integration
 
 ### **Production Readiness** (Long-term)
@@ -187,7 +187,7 @@ The DARF naming strongly aligns with Russell's constitutional AI principles, whi
 ## ⚡ **Critical Success Factors**
 
 1. **Governance First**: Every technical decision must enhance user sovereignty and constitutional compliance
-2. **Offline Capability**: All core functions must work without internet connectivity  
+2. **Offline Capability**: All core functions must work without internet connectivity
 3. **Privacy by Design**: Zero-knowledge proofs and selective disclosure as default behaviors
 4. **Auditability**: Complete decision trails with cryptographic verification
 5. **Cross-Border Safety**: Strict adherence to GREEN/YELLOW/RED sharing policies

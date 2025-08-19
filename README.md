@@ -16,10 +16,10 @@ This system embodies **digital sovereignty**: an AI agent that represents you wi
 
 The system's intelligence comes from its decision architecture—every capability, integration, and constraint is formally documented in ADRs that create an executable knowledge graph:
 
-- **25+ interconnected ADRs** with full research traceability  
-- **Research → Concept → Implementation** chain for all technical decisions  
-- **Constitutional framework** for agent behaviour and budget constraints  
-- **Self-documenting evolution** as capabilities expand  
+- **25+ interconnected ADRs** with full research traceability
+- **Research → Concept → Implementation** chain for all technical decisions
+- **Constitutional framework** for agent behaviour and budget constraints
+- **Self-documenting evolution** as capabilities expand
 
 Browse the corpus in `docs/decisions/`.
 
@@ -63,22 +63,22 @@ reference/  # Research materials (PDFs, CSVs)
 ## Core Capabilities
 
 ### Decision Architecture
-* Formal reasoning through structured ADR workflows  
-* Evidence-based decisions with research traceability  
-* Confidence scoring and uncertainty acknowledgement  
-* Constitutional constraints preventing unauthorised actions  
+* Formal reasoning through structured ADR workflows
+* Evidence-based decisions with research traceability
+* Confidence scoring and uncertainty acknowledgement
+* Constitutional constraints preventing unauthorised actions
 
 ### Agent Operations
-* Budget management with crypto-wallet integration  
-* Authentication gating for major decisions (phone / biometric)  
-* Perfect memory of all decisions and their rationale  
-* Fraud detection via behavioural-pattern analysis  
+* Budget management with crypto-wallet integration
+* Authentication gating for major decisions (phone / biometric)
+* Perfect memory of all decisions and their rationale
+* Fraud detection via behavioural-pattern analysis
 
 ---
 
 ## Local Containers (Podman)
 
-We run local services (PostgreSQL, Neo4j, Qdrant, etc.) with **Podman**.  
+We run local services (PostgreSQL, Neo4j, Qdrant, etc.) with **Podman**.
 Follow the instructions in `infra/podman/README_podman.md` to install Podman 3.4+ on Ubuntu 20.04 and start the compose file.
 
 ```bash
@@ -122,7 +122,7 @@ Commit this updated README on `infra-podman-init` (or a fresh branch) before ope
 
 ### Phase 0: Foundation ✅ COMPLETE
 - [x] Issue #40: PostgreSQL setup in Podman
-- [x] Issue #41: SQLAlchemy smoke test passing  
+- [x] Issue #41: SQLAlchemy smoke test passing
 - [x] Issue #42: Fixed pyproject.toml parse error
 - [x] Issue #43: Research artifact retained in docs/reference
 - [ ] Issue #44: PR for db-postgres-standup branch (pending)
@@ -149,4 +149,3 @@ During the RAG Foundation sprint, the team completed a series of improvements to
 - Added a `.env.example` file and updated `.gitignore` to exclude `node_modules/` and `.turbo/` directories.
 - Removed Podman-specific artefacts and updated container documentation for Qdrant and Neo4j services.
 - Ensured that all tests pass (`pytest`), type checks succeed (`mypy`), and lint issues are resolved (`ruff`) before merging.
-

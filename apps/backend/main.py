@@ -7,16 +7,18 @@ from langchain.embeddings import OpenAIEmbeddings
 from qdrant_client import QdrantClient
 from langchain_community.vectorstores import Qdrant as LCQdrant
 
+
 class Query(BaseModel):
     question: str
+
 
 class GraphRAGRetriever:
     def __init__(self):
         self.embed = OpenAIEmbeddings()
         self.qdrant = LCQdrant(
-            client=QdrantClient(url=os.getenv("QDRANT_URL")) ,
+            client=QdrantClient(url=os.getenv("QDRANT_URL")),
             collection_name="adr_chunks",
-            embeddings=self.embed
+            embeddings=self.embed,
         )
         self.driver = GraphDatabase.driver(
             os.getenv("NEO4J_URL"),
@@ -26,18 +28,22 @@ class GraphRAGRetriever:
     def query(self, q: str) -> t.Dict[str, t.Any]:
 
         docs = self.qdrant.similarity_search_with_score(q, k=5)
-        answer = "\n".join(d.page_content for d,_ in docs)
-        return {"answer": answer, "sources": [d.metadata for d,_ in docs]}
+        answer = "\n".join(d.page_content for d, _ in docs)
+        return {"answer": answer, "sources": [d.metadata for d, _ in docs]}
+
 
 app = FastAPI()
 retriever = GraphRAGRetriever()
 
-@app.get("/health")        # acceptance for #55
-def health(): return {"ok": True}
 
-@app.post("/rag/query")    # Issue #58
+@app.get("/health")  # acceptance for #55
+def health():
+    return {"ok": True}
+
+
+@app.post("/rag/query")  # Issue #58
 def rag_query(payload: Query):
     try:
-    return retriever.query(payload.question)
+        return retriever.query(payload.question)
     except Exception as e:
-    raise HTTPException(500, str(e))
+        raise HTTPException(status_code=500, detail=str(e))

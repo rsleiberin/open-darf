@@ -11,5 +11,5 @@ Neo4j 5 Community for knowledge graph. was evaluated against alternatives; see [
 **Neo4j 5 Community for knowledge graph.**
 
 ## Consequences
-* Establishes a stable contract for related components.  
+* Establishes a stable contract for related components.
 * Changing this choice requires a superseding ADR.

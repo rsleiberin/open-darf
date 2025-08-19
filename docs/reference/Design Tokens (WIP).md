@@ -18,13 +18,13 @@ Luminosity palettes differ based on user preferences such as theme and accessibi
 
 Most color processing calculations require normalized values to ensure consistency, especially when working across different bit depths or color systems. By normalizing, the values are expressed as percentages of their maximum possible value. In this step, the RGB values from the typical 8-bit integer range \[0, 255\] are normalized to the range \[0, 1\].
 
-**`XsRGB = X8bit255`**  
+**`XsRGB = X8bit255`**
 
 Where XsRGB represents the normalized 8bit value of either the red, green, or blue value in standard RGB space (sRGB)
 
 #### 2.1.1.2 Linearize the Normalized Values
 
-The normalized RGB values represent color intensities, but they aren't proportional to the actual light emitted because of gamma correction in the sRGB color space. The process of linearization adjusts the normalized sRGB values to reflect actual light intensity as perceived by display devices. This step reverses the gamma correction applied during sRGB encoding, which distorts physical luminance to better align with human visual perception. By linearizing the values, we return to a linear light intensity model, allowing for accurate calculations of relative luminance and contrast ratios.  
+The normalized RGB values represent color intensities, but they aren't proportional to the actual light emitted because of gamma correction in the sRGB color space. The process of linearization adjusts the normalized sRGB values to reflect actual light intensity as perceived by display devices. This step reverses the gamma correction applied during sRGB encoding, which distorts physical luminance to better align with human visual perception. By linearizing the values, we return to a linear light intensity model, allowing for accurate calculations of relative luminance and contrast ratios.
 Figure X (see below) illustrates the relationship between normalized sRGB values, the gamma-corrected encoding, and the linearized light intensity:
 
 ##### 2.1.1.2.1 Figure X: sRGB Gamma Curve vs Linearized Light Intensity
@@ -87,7 +87,7 @@ Simplifying calculations is critical for scalability in a system handling divers
 
 Contrast is a cornerstone of effective design, shaping how users perceive and interact with visual elements. It defines shapes and boundaries, enabling users to distinguish between components and understand their function. By leveraging differences in brightness and color, contrast allows designs to communicate relationships, priorities, and actions effectively. This principle aligns with the guidelines established by WCAG, which provide minimum and maximum contrast ratios to ensure that designs remain legible and accessible for all users, including those with visual impairments. By prioritizing contrast, we ensure that our designs are visually clear, intuitive, and inclusive.
 
-#### 
+####
 
 #### 2.1.2.1 Calculating Luminosity Contrast Ratios
 
@@ -131,8 +131,8 @@ Since sensitivity to such subtle differences varies among individuals and viewin
 
 Ensure essential icons and non-text UI elements have a minimum contrast ratio of 3:1 against their background. Elements include:
 
-* Buttons  
-* Controls  
+* Buttons
+* Controls
 * Indicators (e.g., toggles, checkboxes, sliders)
 
 These elements must remain distinguishable to support usability and accessibility. The 3:1 contrast ratio ensures they are visible, even for users with visual impairments.
@@ -147,8 +147,8 @@ For interactive elements, a 1.5:1 contrast ratio is recommended as the inactive 
 
 Ensure text meets these minimum contrast ratios for readability:
 
-* 4.5:1 for standard text.  
-* 3:1 for large text (18pt or 14pt bold).  
+* 4.5:1 for standard text.
+* 3:1 for large text (18pt or 14pt bold).
 * 7:1 for optimal legibility in critical content.
 
 Text in a design system is a fundamental form of luminosity encoding. It transmits language through patterns of light and dark, making clear contrast essential for readability and comprehension. These ratios are grounded in [WCAG 2.1 Success Criteria 1.4.3 and 1.4.6](https://www.w3.org/WAI/WCAG21/quickref/#contrast-minimum).
@@ -177,8 +177,8 @@ To mitigate the risk of uneven LED aging caused by using absolute black (0,0,0) 
 
 To understand how different types of color blindness impact visual perception, we will calculate the relative luminance of the minimum and maximum sRGB values listed in the table for each impairment type. These sRGB values were determined based on the functionality and limitations of the affected cone cells:
 
-* 255 represents a fully perceived channel, ensuring maximum luminosity for that color.  
-* 0 indicates a channel that is effectively non-functional due to the impairment, meaning the affected color is not perceived.  
+* 255 represents a fully perceived channel, ensuring maximum luminosity for that color.
+* 0 indicates a channel that is effectively non-functional due to the impairment, meaning the affected color is not perceived.
 * 18 is the minimum practical luminosity, chosen to avoid hardware issues like uneven LED wear while maintaining a low but non-zero baseline for partially effective channels.
 
 For example, in the case of Red-Green Color Blindness (Protanopia or Deuteranopia), the red or green channels are non-functional, so the minimum sRGB value is set to (0, 18, 0\) and the maximum to (0, 255, 0). This means the red channel is set to 0 (non-functional), the green channel varies between 18 (minimum) and 255 (maximum), and the blue channel is unaffected. By converting these sRGB values to their corresponding relative luminance values, we can determine the achievable contrast ratios for each impairment type.
@@ -219,8 +219,8 @@ L1\=(CR(L2\+0.05)-0.05
 
 Where:
 
-* CR is the contrast ratio (in this case, 3 for the 3:1 for layers).  
-* L2 is the lower boundary (darker) of the current layer.  
+* CR is the contrast ratio (in this case, 3 for the 3:1 for layers).
+* L2 is the lower boundary (darker) of the current layer.
 * L1 becomes the lower boundary for the next brighter layer.
 
 ##### 2.1.5.1.3 Calculate the Upper Boundaries for Each Layer
@@ -229,11 +229,11 @@ The upper boundary of each layer is calculated based on the lower boundary of th
 
 The formula for calculating the upper boundary is:
 
-L2=(L1+0.05)CR-0.05  
+L2=(L1+0.05)CR-0.05
 Where:
 
-* L1 is the lower boundary (brighter) of the next layer.  
-* The contrast ratio (1.5:1) ensures deactivated states remain distinguishable.  
+* L1 is the lower boundary (brighter) of the next layer.
+* The contrast ratio (1.5:1) ensures deactivated states remain distinguishable.
 * L2 becomes the upper boundary for the current layer.
 
 ##### 2.1.5.1.4 Deactivated Layer States
@@ -256,15 +256,15 @@ A more adaptive approach to micro layers will be discussed in the "Incorporating
 
 In the standard luminosity range (0.006 to 1), the design supports three distinct layers:
 
-* Background Layer: The darkest layer, forming the visual foundation.  
-* Middle Layer: A transitional layer used for elements like cards or secondary content, bridging the gap between the background and the foreground.  
+* Background Layer: The darkest layer, forming the visual foundation.
+* Middle Layer: A transitional layer used for elements like cards or secondary content, bridging the gap between the background and the foreground.
 * Foreground Layer: The brightest layer, reserved for actionable elements and primary content.
 
 Gestalt theory supports this structure by suggesting that content with higher luminosity appears closer to the user, enhancing depth and visual hierarchy. This three-layer approach ensures clarity and distinction across all layers in the standard range.
 
 However, in reduced ranges such as 0.0012 to 0.2126, only two layers are feasible due to the limited contrast ratio. In these cases:
 
-* The middle layer is omitted, merging its purpose with either the background or foreground layers.  
+* The middle layer is omitted, merging its purpose with either the background or foreground layers.
 * The resulting structure consists of a background layer and a foreground layer, where the foreground is reserved for actionable content to maintain visual clarity and functionality.
 
 This adjustment preserves the core hierarchy and usability principles, ensuring that even in constrained ranges, users can interact with and interpret the interface effectively. By dynamically adapting the number of layers, the design system remains flexible and accessible across varying visual requirements.
@@ -279,8 +279,8 @@ When themes change, this metadata-driven approach automates the process of adjus
 
 To create accessible and visually coherent interfaces, themes are built on a unified theory of luminosity layers and micro-layers. Using the WCAG 2.1 contrast ratio guidelines and the structured calculation processes outlined earlier, we define a three-layer structure:
 
-* Background Layer: Provides the foundation for the interface.  
-* Middle Layer: Bridges the background and foreground, typically used for secondary content.  
+* Background Layer: Provides the foundation for the interface.
+* Middle Layer: Bridges the background and foreground, typically used for secondary content.
 * Foreground Layer: Reserved for actionable elements and primary content.
 
 Each layer can be subdivided into micro-layers for finer control over depth and hierarchy. The number of micro-layers is determined by iteratively applying a 1.2 contrast ratio to the luminosity range of each parent layer.
@@ -359,8 +359,8 @@ The process involves extracting dominant color groupings from the image using th
 
 The LAB color space represents color in a way that closely aligns with human perception, using three dimensions:
 
-* L (Lightness): Represents luminosity.  
-* A (Green-Red): Represents the color spectrum from green to red.  
+* L (Lightness): Represents luminosity.
+* A (Green-Red): Represents the color spectrum from green to red.
 * B (Blue-Yellow): Represents the color spectrum from blue to yellow.
 
 This model is particularly useful because it separates luminosity from color information, allowing us to analyze contrast and color independently. LAB’s perceptual uniformity makes it ideal for clustering processes that require meaningful groupings of color based on human vision.
@@ -371,7 +371,7 @@ To cluster colors in the LAB space, we employ DBSCAN (Density-Based Spatial Clus
 
 Two key parameters define the clustering process with DBSCAN:
 
-* eps: This parameter sets the maximum distance between two points in the LAB space to be considered part of the same cluster. It defines the neighborhood size and directly influences the granularity of clusters.  
+* eps: This parameter sets the maximum distance between two points in the LAB space to be considered part of the same cluster. It defines the neighborhood size and directly influences the granularity of clusters.
 * min\_samples: This defines the minimum number of points required to form a cluster. It acts as a threshold to ensure that clusters are meaningful rather than representing noise or isolated data points.
 
 DBSCAN's strength lies in its ability to identify clusters of varying shapes and sizes while treating outliers as noise. This is particularly important when processing LAB data because the density of colors often varies across different images. The flexibility of DBSCAN makes it an ideal choice for clustering in this context, as it dynamically adapts to the distribution of color points.
@@ -384,16 +384,16 @@ The Euclidean distance measures the straight-line distance between points in LAB
 
 2.1.6.1.2 Downsampling for EPS Caluclations
 
-Calculating pairwise Euclidean distances for all points in an image scales quadratically with the number of pixels, resulting in computational inefficiency for large datasets. For instance, an 8K image with over 33 million pixels would require distance calculations on the order of   
+Calculating pairwise Euclidean distances for all points in an image scales quadratically with the number of pixels, resulting in computational inefficiency for large datasets. For instance, an 8K image with over 33 million pixels would require distance calculations on the order of
 𝑂(𝑛2), a prohibitively large computation even with modern GPUs.
 
 Downsampling mitigates this issue by reducing the number of pixels used for parameter calculation while preserving the overall color composition of the image. A baseline resolution of 512x512 pixels has been chosen for this process. This value provides a manageable number of points for efficient computation while retaining the image's dominant color relationships. The baseline resolution is arbitrary and may be refined in future iterations based on experimental results.
 
 Downsampling Process:
 
-* Rescaling: The image is scaled down to 512x512 pixels while maintaining its original aspect ratio. This ensures that the resized image is a proportionate representation of the original, regardless of irregular dimensions.  
-* Extracting LAB Values: The color values from the downsampled image are converted into LAB space.  
-* Calculating EPS: The average Euclidean distance is computed across all points in the downsampled LAB dataset. This value defines eps, serving as a measure of the typical density of points.  
+* Rescaling: The image is scaled down to 512x512 pixels while maintaining its original aspect ratio. This ensures that the resized image is a proportionate representation of the original, regardless of irregular dimensions.
+* Extracting LAB Values: The color values from the downsampled image are converted into LAB space.
+* Calculating EPS: The average Euclidean distance is computed across all points in the downsampled LAB dataset. This value defines eps, serving as a measure of the typical density of points.
 * Optimization with KD-Tree: A KD-tree algorithm is used to optimize distance calculations, reducing the computational complexity from 𝑂(𝑛2) to 𝑂(𝑛 log 𝑛). This optimization ensures efficiency without compromising accuracy.
 
 By downsampling to 512x512 and calculating eps using the average Euclidean distance in LAB space, we achieve a scalable and effective way to parameterize DBSCAN. This approach ensures that clusters reflect meaningful relationships in the image while keeping computational demands manageable.
@@ -408,13 +408,13 @@ ms=max(10,N5000)
 
 Where:
 
-* 𝑁 is the total number of LAB data points (pixels) in the original image.  
-* 5000 is a scaling factor to ensure the parameter adapts to image size.  
+* 𝑁 is the total number of LAB data points (pixels) in the original image.
+* 5000 is a scaling factor to ensure the parameter adapts to image size.
 * A lower limit of 10 guarantees sufficient density for small images.
 
 While the formula provides a robust starting point, adjustments may be necessary to achieve meaningful clusters in specific contexts.
 
-* Sparse Clusters (Too Few Clusters): If the algorithm fails to identify sufficient clusters, increase the inclusivity of clusters by reducing min\_samples by multiplying it by 0.8  
+* Sparse Clusters (Too Few Clusters): If the algorithm fails to identify sufficient clusters, increase the inclusivity of clusters by reducing min\_samples by multiplying it by 0.8
 * Overpopulated Clusters (Too Many Clusters): If too many clusters are formed, increase the exclusivity by multiplying min\_samples by 1.2.
 
 Iterative tuning allows the system to refine cluster groupings based on the image's unique characteristics, ensuring a balance between noise filtering and cluster relevance.
@@ -423,7 +423,7 @@ Iterative tuning allows the system to refine cluster groupings based on the imag
 
 After clustering, post-processing analysis ensures that the resulting clusters align with design objectives and the inherent characteristics of the image. Two key considerations during this phase are:
 
-* Noise Levels: Evaluate the percentage of points classified as noise. Excessive noise may indicate that the eps parameter is too restrictive, resulting in overly stringent density thresholds. Adjusting eps may help reduce noise and incorporate valid points into clusters.  
+* Noise Levels: Evaluate the percentage of points classified as noise. Excessive noise may indicate that the eps parameter is too restrictive, resulting in overly stringent density thresholds. Adjusting eps may help reduce noise and incorporate valid points into clusters.
 * Cluster Validation: Visualize and analyze the resulting clusters to confirm they represent dominant and meaningful groupings within the LAB space. Dominant clusters should correspond to perceptually significant colors or hues in the image, ensuring they align with the visual hierarchy and design intent.
 
 By conducting this analysis, the system refines the clustering results to ensure they provide a strong foundation for theme adaptation and design implementation.

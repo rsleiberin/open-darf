@@ -17,7 +17,7 @@ The framework successfully integrates constitutional AI principles with practica
 
 **False Memory Taxonomy with Severity Weighting:**
 - **Fabricated Facts**: Entirely fictional information (severity: 1.0)
-- **Fabricated Citations**: Non-existent sources cited (severity: 0.9)  
+- **Fabricated Citations**: Non-existent sources cited (severity: 0.9)
 - **Misattribution**: Correct information, wrong attribution (severity: 0.7)
 - **Time/Location Distortion**: Accurate events, incorrect context (severity: 0.6)
 - **Semantic Confabulations**: Inconsistent responses to equivalent queries (severity: 0.8)
@@ -58,7 +58,7 @@ Required sample size calculation: n ≈ 8,400 per condition for detecting 0.5% d
 
 **24-72 hour carryover protocol:**
 - **T₀**: Initial query and response
-- **T₁**: 24h identical queries  
+- **T₁**: 24h identical queries
 - **T₂**: 48h paraphrased queries
 - **T₃**: 72h semantically equivalent queries
 
@@ -70,13 +70,13 @@ Required sample size calculation: n ≈ 8,400 per condition for detecting 0.5% d
 
 **72-hour freshness framework** implementing graduated trust model:
 - **0-24h**: Real-time verification with direct StatusList queries
-- **24-72h**: Cached verification with degraded confidence indicators  
+- **24-72h**: Cached verification with degraded confidence indicators
 - **>72h**: Guardian attestation or denial mode activation
 
 **Cache configuration matrix:**
 ```http
 High-Security: max-age=300s, stale-while-revalidate=60s, must-revalidate
-Standard: max-age=3600s, stale-while-revalidate=300s, must-revalidate  
+Standard: max-age=3600s, stale-while-revalidate=300s, must-revalidate
 Offline-First: max-age=86400s, stale-while-revalidate=43200s
 ```
 
@@ -118,7 +118,7 @@ WebAuthn assertions include DID references with platform authenticator integrati
 
 **Primary constraint relationships:**
 - **T ≥ 3×F**: Operational timeout must exceed three times failure threshold
-- **lease ≤ F**: Resource lease duration bounded by failure threshold  
+- **lease ≤ F**: Resource lease duration bounded by failure threshold
 - **Egress breadth**: Minimum 3 independent pathways with no wildcard domains
 
 **Joint operational validation:**
@@ -161,7 +161,7 @@ def evaluate_constraints(system_state):
 
 **Strict timing requirements:**
 - **Parse stage**: ≤5ms for input processing and validation
-- **Normalize stage**: ≤10ms for data standardization  
+- **Normalize stage**: ≤10ms for data standardization
 - **DDL evaluation**: ≤20ms for decision logic execution
 - **Logging stage**: ≤10ms for telemetry and audit trails
 
@@ -209,7 +209,7 @@ Implementation includes real-time percentile calculation, alerting at 70%/85% th
 
 **Default selection hierarchy:**
 1. **Primary constitutional check**: Safety, harmlessness, helpfulness, honesty evaluation
-2. **Contextual weighting**: Dynamic principle balancing via chain-of-thought reasoning  
+2. **Contextual weighting**: Dynamic principle balancing via chain-of-thought reasoning
 3. **Safe default selection**: Conservative constitutionally-compliant actions under uncertainty
 4. **Precedent integration**: Historical decision consistency maintenance
 
@@ -220,7 +220,7 @@ Implementation includes real-time percentile calculation, alerting at 70%/85% th
 def budget_constrained_constitutional_decision():
     available_budget = get_current_computational_budget()
     risk_level = assess_decision_risk(input)
-    
+
     if available_budget >= full_constitutional_analysis_cost():
         return full_constitutional_analysis(input)
     elif available_budget >= simplified_analysis_cost():
@@ -239,7 +239,7 @@ def budget_constrained_constitutional_decision():
 
 **Abstention triggers include:**
 - Confidence below 85-90% threshold
-- Irreconcilable principle conflicts  
+- Irreconcilable principle conflicts
 - Resource insufficiency for adequate analysis
 - Novel contexts outside training parameters
 
@@ -272,7 +272,7 @@ def budget_constrained_constitutional_decision():
 **Multi-layer verification system:**
 - **Real-time monitoring**: Continuous constitutional checking with drift detection
 - **Formal verification**: Mathematical proofs of constraint satisfaction
-- **Empirical testing**: Statistical analysis against constitutional principles  
+- **Empirical testing**: Statistical analysis against constitutional principles
 - **Expert review**: Human oversight for high-risk decisions
 - **Adversarial testing**: Red-team constitutional vulnerability identification
 

@@ -11,5 +11,5 @@ GitHub – PR-first workflow, protected *main* branch. was evaluated against alt
 **GitHub – PR-first workflow, protected *main* branch.**
 
 ## Consequences
-* Establishes a stable contract for related components.  
+* Establishes a stable contract for related components.
 * Changing this choice requires a superseding ADR.

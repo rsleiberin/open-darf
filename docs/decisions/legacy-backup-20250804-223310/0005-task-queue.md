@@ -11,5 +11,5 @@ Dramatiq with Redis backend. was evaluated against alternatives; see [evidence](
 **Dramatiq with Redis backend.**
 
 ## Consequences
-* Establishes a stable contract for related components.  
+* Establishes a stable contract for related components.
 * Changing this choice requires a superseding ADR.

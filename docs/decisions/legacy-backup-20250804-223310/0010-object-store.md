@@ -11,5 +11,5 @@ MinIO (S3-compatible) as object storage. was evaluated against alternatives; see
 **MinIO (S3-compatible) as object storage.**
 
 ## Consequences
-* Establishes a stable contract for related components.  
+* Establishes a stable contract for related components.
 * Changing this choice requires a superseding ADR.

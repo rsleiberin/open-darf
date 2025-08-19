@@ -2,6 +2,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Dict, List, Tuple
 
+
 @dataclass(frozen=True)
 class Span:
     id: str
@@ -9,7 +10,8 @@ class Span:
     end: int
     level: str = "line"
     page: int | None = None
-    rect: Tuple[float,float,float,float] | None = None  # PDF coords optional
+    rect: Tuple[float, float, float, float] | None = None  # PDF coords optional
+
 
 def chunk_linebreaks(doc_bytes: bytes) -> List[Span]:
     """Split by newline; produce byte spans that map back into the original bytes exactly."""
@@ -27,7 +29,10 @@ def chunk_linebreaks(doc_bytes: bytes) -> List[Span]:
         spans.append(Span(id=f"s{idx}", start=start, end=len(b), level="line"))
     return spans
 
-def make_manifest_v1(doc_digest: str, doc_bytes: bytes, mime: str, spans: List[Span], provenance: Dict) -> Dict:
+
+def make_manifest_v1(
+    doc_digest: str, doc_bytes: bytes, mime: str, spans: List[Span], provenance: Dict
+) -> Dict:
     return {
         "schema": "smg/span-manifest@v1",
         "doc": {"digest": doc_digest, "mime": mime, "bytes": len(doc_bytes)},
@@ -40,6 +45,7 @@ def make_manifest_v1(doc_digest: str, doc_bytes: bytes, mime: str, spans: List[S
                 "level": s.level,
                 "page": s.page,
                 "rect": s.rect,
-            } for s in spans
+            }
+            for s in spans
         ],
     }

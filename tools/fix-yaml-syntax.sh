@@ -25,7 +25,7 @@ for adr_file in "$ADR_DIR"/*.md; do
     if [ -f "$adr_file" ]; then
         filename=$(basename "$adr_file")
         echo -e "${YELLOW}Processing: $filename${NC}"
-        
+
         # Create temporary file with fixed YAML
         {
             # Process line by line
@@ -51,10 +51,10 @@ for adr_file in "$ADR_DIR"/*.md; do
                 fi
             done < "$adr_file"
         } > "${adr_file}.tmp"
-        
+
         # Replace original with fixed version
         mv "${adr_file}.tmp" "$adr_file"
-        
+
         fixed_count=$((fixed_count + 1))
         echo "✅ Fixed YAML in $filename" >> "$FIX_LOG"
     fi

@@ -11,5 +11,5 @@ Qdrant v1 selected for vector storage. was evaluated against alternatives; see [
 **Qdrant v1 selected for vector storage.**
 
 ## Consequences
-* Establishes a stable contract for related components.  
+* Establishes a stable contract for related components.
 * Changing this choice requires a superseding ADR.

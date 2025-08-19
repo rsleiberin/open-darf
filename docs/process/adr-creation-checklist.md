@@ -7,7 +7,7 @@
 
 ### Research-First Rule  (2025-08-06)
 
-- [ ] If the work involves a new research document (PDF), create its **RSH** ADR first.  
+- [ ] If the work involves a new research document (PDF), create its **RSH** ADR first.
       Reference that ADR’s ID (e.g. `ADR-YYYY-RSH-NNN`) in every `research_basis` field—do **not** use free-text.
 - [ ] Non-RSH ADRs must **not** include `linked_evidence:`; evidence belongs only in the RSH ADR.
 

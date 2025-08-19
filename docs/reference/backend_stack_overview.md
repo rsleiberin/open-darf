@@ -3,7 +3,7 @@
 > **Goal**  Design a resilient, mostly self‑hostable agent‑orchestration platform that can run **off‑grid** on local hardware yet scale horizontally or burst to managed services when required.
 
 ---
-## ✅ Locked‑In Core Components  
+## ✅ Locked‑In Core Components
 *(Each chosen after deep comparative research)*
 
 | Category | Technology | Purpose | Key Rationale |

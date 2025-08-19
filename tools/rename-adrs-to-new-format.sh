@@ -26,21 +26,21 @@ for adr_file in "$ADR_DIR"/[0-9]*.md; do
     if [ -f "$adr_file" ]; then
         filename=$(basename "$adr_file")
         echo -e "${YELLOW}Processing: $filename${NC}"
-        
+
         # Extract new ID from the file content
         new_id=$(sed -n '/^---$/,/^---$/p' "$adr_file" | sed '1d;$d' | grep "^id:" | cut -d: -f2 | tr -d ' ')
-        
+
         if [ -n "$new_id" ]; then
             # Create new filename from ID
             new_filename="${new_id}.md"
             new_filepath="$ADR_DIR/$new_filename"
-            
+
             echo "  Renaming to: $new_filename"
             echo "Renamed: $filename -> $new_filename" >> "$RENAME_LOG"
-            
+
             # Rename the file
             mv "$adr_file" "$new_filepath"
-            
+
             renamed_count=$((renamed_count + 1))
         else
             echo "  ❌ Could not extract ID from $filename"

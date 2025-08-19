@@ -30,7 +30,7 @@ where: α + β + γ = 1, β ≥ 0.3 (constitutional minimum), γ ≥ 0.2 (safety
 
 **Feasible Action Space**:
 ```
-F = {a ∈ Actions | 
+F = {a ∈ Actions |
      ∀i: budget_cost(a) ≤ budget_remaining_i AND
      constitutional_valid(a) = TRUE AND
      safety_score(a) ≥ safety_threshold}
@@ -70,7 +70,7 @@ F = {a ∈ Actions |
     }
   ],
   "outcome": {
-    "final_action": "structured_action", 
+    "final_action": "structured_action",
     "proof_of_consent": ["signature_1", "signature_2"],
     "budget_deductions": {"agent_1": {...}, "agent_2": {...}}
   },
@@ -83,7 +83,7 @@ F = {a ∈ Actions |
 1. **Timeout Detection**: 30-second negotiation limit
 2. **Escalation Ladder**:
    - **Level 1**: Expand feasible set by 10% budget tolerance
-   - **Level 2**: Nash bargaining with risk-adjusted utilities  
+   - **Level 2**: Nash bargaining with risk-adjusted utilities
    - **Level 3**: Constitutional fallback (lowest-risk action from catalog)
    - **Level 4**: E-stop with human notification
 
@@ -136,7 +136,7 @@ F = {a ∈ Actions |
 
 **Standard Recovery Process**:
 1. **Guardian Assembly**: Secure communication channel establishment
-2. **Identity Verification**: Multi-factor authentication of guardian identities  
+2. **Identity Verification**: Multi-factor authentication of guardian identities
 3. **Compromise Assessment**: Determine scope of identity compromise
 4. **Key Regeneration**: Generate new keypairs with fresh entropy
 5. **Constitutional Rebinding**: Update constitutional digest and bindings
@@ -177,7 +177,7 @@ MONITOR → NORMAL: drift_score < warning_threshold for 24h
 HOLD → RECOVERY: user_intervention = TRUE
 HOLD → DEGRADED: auto_timeout = 72h without intervention
 RECOVERY → NORMAL: validation_success = TRUE
-RECOVERY → DEGRADED: validation_failure = TRUE  
+RECOVERY → DEGRADED: validation_failure = TRUE
 DEGRADED → NORMAL: manual_override with constitutional_revalidation
 ```
 
@@ -204,12 +204,12 @@ DEGRADED → NORMAL: manual_override with constitutional_revalidation
 ```text
 def transform_legalruleml_to_ddl(legalruleml_doc):
     """Convert LegalRuleML to Defeasible Deontic Logic"""
-    
+
     # Parse obligations, permissions, prohibitions
     obligations = extract_deontic_operators(legalruleml_doc, "obligation")
-    permissions = extract_deontic_operators(legalruleml_doc, "permission") 
+    permissions = extract_deontic_operators(legalruleml_doc, "permission")
     prohibitions = extract_deontic_operators(legalruleml_doc, "prohibition")
-    
+
     # Build precedence hierarchy
     precedence = {
         "constitutional_prohibitions": 1000,
@@ -219,7 +219,7 @@ def transform_legalruleml_to_ddl(legalruleml_doc):
         "domain_guidelines": 600,
         "general_permissions": 500
     }
-    
+
     # Generate DDL rules with precedence weights
     ddl_rules = []
     for rule in obligations:
@@ -229,7 +229,7 @@ def transform_legalruleml_to_ddl(legalruleml_doc):
             weight=precedence[rule.category],
             defeasible=rule.defeasible
         ))
-    
+
     return DDLRuleSet(ddl_rules)
 ```
 
@@ -247,7 +247,7 @@ FOR each potential action A:
     applicable_rules = find_applicable_rules(A, context)
     resolved_rules = resolve_conflicts(applicable_rules, precedence_order)
     final_decision = evaluate_ddl(resolved_rules, A)
-    
+
     IF final_decision = PERMIT:
         RETURN execute_with_audit_trail(A)
     ELSE:
@@ -328,7 +328,7 @@ FOR each potential action A:
 
 **Privacy Levels**:
 1. **Public**: Constitutional principles and aggregate statistics
-2. **Authenticated**: Detailed decisions for authorized parties  
+2. **Authenticated**: Detailed decisions for authorized parties
 3. **Private**: Encrypted for user only, hash publicly verifiable
 4. **Redacted**: Zero-knowledge proofs of compliance without revealing content
 
@@ -367,7 +367,7 @@ FOR each potential action A:
   },
   "governance_mandate": {
     "scope": "specific_asset_operations",
-    "authority": "did:group:mandate_issuer", 
+    "authority": "did:group:mandate_issuer",
     "expiry": "iso8601",
     "revocation_conditions": ["majority_vote", "safety_violation"]
   }
@@ -386,7 +386,7 @@ FOR each potential action A:
 ∀ users u1, u2:
 ∀ actions a1 ∈ personal_domain(u1), a2 ∈ personal_domain(u2):
     constitutional_decision(a1, u1) ⊥ constitutional_decision(a2, u2)
-    
+
 WHERE ⊥ denotes independence (no causal influence)
 ```
 
@@ -436,7 +436,7 @@ WHERE ⊥ denotes independence (no causal influence)
    - Recovery time from hold states
 
 5. **Memory Tile Integration (neuroscience validation)**:
-   - False memory prevention with suggestive AI interactions  
+   - False memory prevention with suggestive AI interactions
    - 72-hour TTL compliance with retention accuracy
    - Constitutional screening of memory formation
 
@@ -462,7 +462,7 @@ WHERE ⊥ denotes independence (no causal influence)
 - Performance profiling and optimization
 - Constitutional rule engine validation
 
-**Phase 2: Integration Testing (Week 2)**  
+**Phase 2: Integration Testing (Week 2)**
 - Multi-agent negotiation scenarios
 - End-to-end constitutional compliance
 - Offline operation validation

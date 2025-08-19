@@ -67,7 +67,7 @@ ReceiptHasLogEntry(r) ==
                 /\ entry.hash = r.span_set_hash
 
 \* Main specification: conjunctive composition
-Spec == 
+Spec ==
     /\ ConstitutionCoreInst!Spec
     /\ ConsentLogInst!Spec
     /\ ReceiptsInst!Spec
@@ -99,7 +99,7 @@ CrossModuleConsistency ==
     \* 1. Has coverage in the consent log (per-span verification)
     \* 2. Corresponds to a constitutional operation
     \A r \in ReceiptsInst!receipts :
-        r.status = "valid" => 
+        r.status = "valid" =>
             \/ ReceiptCoveredByLog(r)  \* Per-span verification
             \/ ReceiptHasLogEntry(r)   \* Fallback: direct entry match
             \/ \E op \in ConstitutionCoreInst!operations :

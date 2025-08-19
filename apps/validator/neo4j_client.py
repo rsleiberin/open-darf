@@ -2,21 +2,32 @@ from __future__ import annotations
 import os
 from neo4j import GraphDatabase
 
+
 class Graph:
     def __init__(self):
         self.uri = os.getenv("NEO4J_URL", "bolt://localhost:7687")
         self.user = os.getenv("NEO4J_USER", "neo4j")
-        self.pw   = os.getenv("NEO4J_PASSWORD", "neo4jpass123")
+        self.pw = os.getenv("NEO4J_PASSWORD", "neo4jpass123")
         self.driver = GraphDatabase.driver(self.uri, auth=(self.user, self.pw))
 
     def close(self):
         if self.driver:
             self.driver.close()
 
-    def __enter__(self): return self
-    def __exit__(self, exc_type, exc, tb): self.close()
+    def __enter__(self):
+        return self
 
-    def mirror_draft(self, *, draft: dict, manifest: dict, mirror_spans: bool = True, max_spans: int | None = None):
+    def __exit__(self, exc_type, exc, tb):
+        self.close()
+
+    def mirror_draft(
+        self,
+        *,
+        draft: dict,
+        manifest: dict,
+        mirror_spans: bool = True,
+        max_spans: int | None = None,
+    ):
         user_id = draft["user_id"]
         doc_digest = draft["doc_digest"]
         manifest_digest = draft["manifest"]["digest"]
@@ -26,7 +37,8 @@ class Graph:
 
         with self.driver.session() as s:
             if mirror_spans and spans:
-                s.run("""
+                s.run(
+                    """
                     MERGE (u:User {uid:$user_id})
                     MERGE (d:Document {digest:$doc_digest})
                     MERGE (m:Manifest {digest:$manifest_digest})
@@ -39,13 +51,17 @@ class Graph:
                       MERGE (m)-[:HAS_SPAN]->(s)
                     RETURN 1
                 """,
-                user_id=user_id,
-                doc_digest=doc_digest,
-                manifest_digest=manifest_digest,
-                spans=[{"id":s["id"], "start":s["start"], "end":s["end"]} for s in spans]
+                    user_id=user_id,
+                    doc_digest=doc_digest,
+                    manifest_digest=manifest_digest,
+                    spans=[
+                        {"id": s["id"], "start": s["start"], "end": s["end"]}
+                        for s in spans
+                    ],
                 ).consume()
             else:
-                s.run("""
+                s.run(
+                    """
                     MERGE (u:User {uid:$user_id})
                     MERGE (d:Document {digest:$doc_digest})
                     MERGE (m:Manifest {digest:$manifest_digest})
@@ -53,7 +69,7 @@ class Graph:
                     MERGE (d)-[:HAS_MANIFEST]->(m)
                     RETURN 1
                 """,
-                user_id=user_id,
-                doc_digest=doc_digest,
-                manifest_digest=manifest_digest
+                    user_id=user_id,
+                    doc_digest=doc_digest,
+                    manifest_digest=manifest_digest,
                 ).consume()

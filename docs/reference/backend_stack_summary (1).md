@@ -1,7 +1,7 @@
 ## 🧠 Janus System Design Brief
-(High-Capacity Agent Handoff Summary)  
-Date: 2025-07-31  
-Author: High-Capacity 4o Agent  
+(High-Capacity Agent Handoff Summary)
+Date: 2025-07-31
+Author: High-Capacity 4o Agent
 Source Stack Document: backend_stack_overview.md
 
 ### 🎯 Project Vision: “A Scalable, Offline-First Personal Intelligence Architecture”
@@ -166,4 +166,3 @@ This document tracks the selected and pending components for the Janus architect
 ---
 
 _Last updated: 2025-07-31_
-

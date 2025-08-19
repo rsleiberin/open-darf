@@ -27,16 +27,16 @@ for adr_file in "$ADR_DIR"/ADR-*.md; do
     if [ -f "$adr_file" ]; then
         filename=$(basename "$adr_file")
         echo -e "${YELLOW}Checking: $filename${NC}"
-        
+
         # Check if file has invalid legacy_id formatting
         if grep -q "legacy_id: 00[0-9][0-9]" "$adr_file"; then
             echo -e "${GREEN}Fixing: $filename${NC}"
             echo "Fixing: $filename" >> "$FIX_LOG"
-            
+
             # Create temporary file with corrected legacy_id
             sed 's/legacy_id: 00\([0-9][0-9]\)/legacy_id: \1/' "$adr_file" > "${adr_file}.tmp"
             mv "${adr_file}.tmp" "$adr_file"
-            
+
             fixed_count=$((fixed_count + 1))
             echo "✅ Fixed legacy_id format in $filename" >> "$FIX_LOG"
         fi

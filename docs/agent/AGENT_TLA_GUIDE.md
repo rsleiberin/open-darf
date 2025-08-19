@@ -30,13 +30,13 @@ Implement and verify TLA+ specifications for Constitutional AI system. Focus on 
 ---------------------------- MODULE ModuleName ----------------------------
 EXTENDS Naturals, Sequences, FiniteSets, TLC
 
-CONSTANTS 
+CONSTANTS
     SystemParameters
 
 VARIABLES
     SystemState
 
-TypeInvariant == 
+TypeInvariant ==
     /\ Constitutional constraints
     /\ Performance bounds
 
@@ -91,7 +91,7 @@ ByzantineFaultTolerance ==
 
 ConstitutionalConsensus ==
     \A decision \in CollectiveDecisions:
-        ConsensusReached(decision) => 
+        ConsensusReached(decision) =>
             /\ ConstitutionallyValid(decision)
             /\ PreservesIndividualSovereignty(decision)
 ```
@@ -126,7 +126,7 @@ tlc -config constitutional_c.cfg -distributed -checkpoint ConstitutionalAI.tla
 
 ### Constitutional Compliance (15 properties)
 - [ ] SovereigntyPreservation
-- [ ] ExplicitAuthorization  
+- [ ] ExplicitAuthorization
 - [ ] CapabilityEnhancement
 - [ ] TransparencyMaintenance
 - [ ] RevocationAuthority
@@ -234,10 +234,10 @@ def verify_constitutional_properties():
         'class_b': run_class_b_verification(),
         'class_c': run_class_c_verification()
     }
-    
+
     if not results['class_a'].passed:
         raise VerificationError("Class A properties failed")
-    
+
     return results
 ```
 
@@ -250,7 +250,7 @@ class ConstitutionalPropertyManager:
         if not result.passed:
             self.log_violation(property_name, result.counterexample)
         return result
-    
+
     def verify_all_properties(self):
         """Verify all 134+ constitutional properties"""
         results = {}
@@ -278,7 +278,7 @@ class ConstitutionalPropertyManager:
 ### Specification Quality
 - All 134+ properties formally specified
 - 100% Class A property verification
-- 95% Class B property verification  
+- 95% Class B property verification
 - 80% Class C property verification
 
 ### Constitutional Compliance
@@ -295,7 +295,7 @@ class ConstitutionalPropertyManager:
 ## Current Priority Tasks
 
 1. Implement ConstitutionalComplianceSpec.tla
-2. Create SMGIdentitySpec.tla  
+2. Create SMGIdentitySpec.tla
 3. Develop MultiAgentCoordinationSpec.tla
 4. Set up Class A verification infrastructure
 5. Verify first 15 constitutional compliance properties

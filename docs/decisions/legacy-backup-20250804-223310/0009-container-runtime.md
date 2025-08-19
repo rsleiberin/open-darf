@@ -11,5 +11,5 @@ Podman 4 + Quadlet as container runtime. was evaluated against alternatives; see
 **Podman 4 + Quadlet as container runtime.**
 
 ## Consequences
-* Establishes a stable contract for related components.  
+* Establishes a stable contract for related components.
 * Changing this choice requires a superseding ADR.

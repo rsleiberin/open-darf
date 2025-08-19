@@ -20,8 +20,8 @@ This repository **requires** the following conventions for every contributor.
 | Sync Sane labels         | ./tools/sync-labels.sh |
 | Clean Zone Identifiers (if cloning from Windows) | ./tools/remove-zone-identifiers.sh |
 
-> **Why label sync?**  
-> GitHub’s default labels are removed and the canonical 23 Sane labels are created/updated  
+> **Why label sync?**
+> GitHub’s default labels are removed and the canonical 23 Sane labels are created/updated
 > so that PR boards, automations and reports remain predictable across all Darf repos.
 
 ---
@@ -63,9 +63,9 @@ After squash-merge GitHub auto-deletes the feature branch.
 
 ## 5. Maintaining the label set
 
-* Script: ./tools/sync-labels.sh  
-  * idempotent — safe to rerun any time  
-  * creates/updates **only** the canonical labels  
+* Script: ./tools/sync-labels.sh
+  * idempotent — safe to rerun any time
+  * creates/updates **only** the canonical labels
   * deletes default GitHub labels we don’t use (`bug`, `enhancement`, …)
 
 > Run it after forking or enabling Discussions/Issues on a fresh clone.
@@ -80,5 +80,5 @@ Use this helper script to remove them safely:
 
 ./tools/remove-zone-identifiers.sh
 
-Only needed if you’re cloning or editing the repo from a Windows-based editor or terminal.  
+Only needed if you’re cloning or editing the repo from a Windows-based editor or terminal.
 Last updated: 2025-08-03
