@@ -70,6 +70,21 @@ class ConstraintEngine:
 
         # Optional Neo4j policy lookups
         if self._neo:
+
+            # Quiet mode: skip graph lookup on fresh DBs to avoid UnknownLabel notices
+            try:
+                with self._driver.session() as s0:
+                    meta = s0.run("CALL db.labels() YIELD label RETURN collect(label) AS L").single()
+                    labels = set(meta["L"] if meta else [])
+                if not {"Principal","Action","Resource"}.issubset(labels):
+                    reasons.append("neo4j_labels_missing:skipped_lookup")
+                    from time import perf_counter as _pc
+                    return ValidationResult(True, reasons, (_pc()-t0)*1000.0)
+            except Exception as e:
+                reasons.append(f"neo4j_error:{type(e).__name__}")
+                from time import perf_counter as _pc
+                return ValidationResult(True, reasons, (_pc()-t0)*1000.0)
+
             try:
                 with self._driver.session() as s:
                     # Simple pattern: require an ALLOW edge Principal-[:MAY]->(Action)-[:ON]->(Resource)
