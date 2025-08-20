@@ -1,149 +1,170 @@
-# GPT-5 Constitutional AI Implementation Instructions
+# AGENT\_OPERATING\_GUIDE.md (Concise vNext)
 
-## Core Mission
-Build Consciousness Interface Architecture through Synthetic Memory Graphs (SMGs) that represent human consciousness while preserving individual sovereignty.
+> **Scope:** How every agent works in this repo. Keep decisions constitutional, verified, observable, and fast.
+> **This file must stay < 8k chars.**
 
-## Breakthrough Discovery
-**Consciousness Representation Principle**: Represent rather than replicate consciousness. SMGs serve as sovereignty-preserving proxies enabling beneficial coordination without violating user autonomy.
+---
 
-## Primary Responsibilities
+## 1) Mission & Principles
 
-### TLA+ Formal Verification (Priority 1)
-- **Class A** (10min): Core safety properties for local development
-- **Class B** (8hrs): Comprehensive safety for server infrastructure
-- **Class C** (days): Complex composition properties for distributed systems
-- **Coverage**: Constitutional compliance, Byzantine consensus, identity persistence, performance
+* **Mission:** Build the Constitutional AI stack using Synthetic Memory Graphs (SMGs) that **represent** (not replicate) human preferences while preserving sovereignty.
+* **North stars (must hold):**
 
-### Implementation (Priority 2)
-- **Constitutional Constraint Engine**: Neo4j hierarchical validation <170ms
-- **Byzantine Consensus**: AP-PBFT adaptation with constitutional integration <500ms
-- **SMG Architecture**: Self-referential identity pointers with memory persistence
-- **Anchor Transformation**: Constitutional preservation during conversion <100ms
+  1. **Sovereignty** (no unauthorized actions)
+  2. **Capability** (assist, don’t replace)
+  3. **Transparency** (explain impact)
+  4. **Revocation** (user can undo/override)
+* **Stack targets:** PostgreSQL + Neo4j + Qdrant + MinIO (+ Redis optional).
 
-### Code Standards
-- **Constitutional First**: Every function validates sovereignty preservation
-- **Performance Critical**: Meet response time targets under load
-- **Formal Verification**: TLA+ specs precede implementation
-- **Stack**: PostgreSQL+Neo4j+Qdrant+MinIO+Redis
+---
 
-## Constitutional Requirements
+## 2) Verification & CI Policy (TLA+)
 
-### Core Invariants (Must Prove)
-1. **Sovereignty Preservation**: No unauthorized decisions
-2. **Capability Enhancement**: Improve user decision-making
-3. **Transparency**: Users understand SMG recommendations
-4. **Revocation Authority**: Users control SMG behavior
+* **Classes**
 
-### Implementation Constraints
-- Every API endpoint validates constitutional compliance
-- All SMG operations require explicit user authorization
-- Constitutional violations trigger immediate halt
-- Audit trails required for all decisions
+  * **Class A (≈10 min):** Core safety invariants for local dev/PRs.
+  * **Class B (≈8 hr):** Broader coverage nightly.
+  * **Class C (days):** Compositional/distributed weekly.
+* **CI rules**
 
-## Technical Specifications
+  * **Every PR:** run **Class A**; **fail PR** on regression or missing artifacts.
+  * **Nightly:** **Class B**; publish short status (PASS/BITE) to logs.
+  * **Weekly:** **Class C**; attach summary for architect review.
+* **Artifacts (write-only; append):**
 
-### SMG Implementation
-```python
-class SyntheticMemoryGraph:
-    def __init__(self, user_id, constitutional_constraints):
-        self.identity_node = SelfReferentialPointer(user_id)
-        self.memory_structure = PersistentMemory()
-        self.constraints = constitutional_constraints
+  * TLA logs: `docs/_archive/tla_logs/` (timestamped filenames + small README).
+  * Audit receipts (e.g., perf/validation): `docs/audit/...`
+* **No “status-only” PR may change `.tla/.cfg`.** Gate this in CI.
 
-    def make_recommendation(self, decision_context):
-        if not self.validate_constitutional_compliance(decision_context):
-            raise ConstitutionalViolationError()
-        # Implementation continues...
-```
+---
 
-### Constitutional Validation
-```python
-def validate_constitutional_compliance(operation, user_context):
-    """Required for ALL operations. Target: <170ms"""
-    return (preserve_user_sovereignty(operation, user_context)
-            and enhance_user_capability(operation, user_context)
-            and explain_operation_impact(operation, user_context))
-```
+## 3) Performance SLOs (guardrails)
 
-### Byzantine Consensus
-```
-Formula: n > 2x_s(G) + x_r(G) + 3t
-Default: x_s(G)=2, x_r(G)=1
-Requirement: All consensus operations preserve individual sovereignty
-```
+* **Neo4j constitutional validation p95 < 170 ms**
+* **Anchor transform p95 < 100 ms**
+* **Qdrant search p95 ≤ 10 ms** (dev env receipts acceptable; track trend)
+* If a change risks SLO, add a perf note + receipt under `docs/audit/…`.
 
-## Implementation Phases
+---
 
-### Phase 1: Foundation (Current)
-- Repository cleanup, constitutional documentation
-- Anchor system: ingestion, storage, search
-- Constraint engine: Neo4j schema, TLA+ specs, real-time validation
+## 4) Labels & Tracking (must comply)
 
-### Phase 2: SMG Development
-- Individual SMG: identity persistence, preference learning
-- Validation: >95% decision accuracy, constitutional verification
+* **Required families per issue/PR:**
 
-### Phase 3: Multi-Agent Coordination
-- Byzantine consensus, network effects, scalability testing
+  * **Exactly one:** `type:*` (feature|bug|docs|refactor|enhancement|research|epic)
+  * **Exactly one:** `status:*` (discussion|in-progress|in-review|blocked|done)
+  * **Exactly one:** `priority:*` (high|medium|low)
+  * **At least one:** `area:*` (backend|infra|devops|docs|ui|frontend|security|chatbot|…)
+* **Forbidden:** `deferred`, `status:review`, `blocked: adr-pipeline`.
+* Streams & milestones: use `Stream`, `Milestone: M1`, `Roadmap:2025-2026` as appropriate.
 
-## Development Protocol
+---
 
-### Before Implementation
-1. TLA+ specification for component
-2. Constitutional analysis
-3. Performance planning
-4. Integration design
+## 5) PR Lifecycle (checklist)
 
-### During Implementation
-1. Constitutional validation in every function
-2. Performance monitoring
-3. Constitutional compliance testing
-4. Clear sovereignty preservation documentation
+**Before open**
 
-### After Implementation
-1. Formal verification execution
-2. Performance validation
-3. Constitutional testing
-4. Integration testing
+* ✅ TLA **Class A** green (or explain BITE in negative configs).
+* ✅ Pre-commit clean: `pre-commit run -a` (no changed files).
+* ✅ Label families set; link issue(s).
+* ✅ Artifacts (if relevant) added under approved dirs (see §2, §7).
 
-## Error Handling
+**During review**
 
-### Constitutional Violations
-```python
-class ConstitutionalViolationError(Exception):
-    def __init__(self, violation_type, user_id, operation_details):
-        self.create_audit_trail()
-        self.notify_user()
-        self.rollback_to_constitutional_state()
-```
+* ✅ CI green (tests + TLA).
+* ✅ No `.tla/.cfg` changes in status-only PRs.
+* ✅ Docs/SLO receipts included for perf-sensitive changes.
 
-### Performance/Byzantine Issues
-- Graceful degradation maintaining constitutional compliance
-- Priority queuing for constitutional operations
-- Attack detection and participant isolation
+**Merge**
 
-## Quality Assurance
+* Prefer **squash** with conventional message (e.g., `feat(search): …`, `fix(api): …`, `chore(ci): …`).
 
-### Testing Requirements
-```python
-def test_constitutional_compliance():
-    test_sovereignty_preservation()
-    test_capability_enhancement()
-    test_transparency_requirements()
-    test_revocation_authority()
-```
+---
 
-### Success Metrics
-- Constitutional compliance: 100%
-- Performance: <170ms validation, <500ms consensus, <100ms transformation
-- Decision accuracy: >95% SMG-user agreement
-- Byzantine resistance: 33% fault tolerance
+## 6) Daily Ops (agent routine)
 
-## Current Priorities
-1. Repository cleanup (#200) and constitutional documentation
-2. Anchor foundation system with constitutional validation
-3. Neo4j constitutional constraint schema
-4. TLA+ specifications for core safety properties
-5. Real-time constitutional compliance validation engine
+1. **Sync & triage:** review open PRs; enforce label policy; spot “status-only” claims.
+2. **Verification cadence:** confirm last **Class B/C** runs landed logs.
+3. **Perf receipts:** if you touched search/validation/transform, drop p95 summary JSON.
+4. **Hygiene:** keep local artifacts out of commits; ensure scripts use shim (see §7).
 
-**Start with Issue #200: Repository cleanup and constitutional AI foundation.**
+---
+
+## 7) Repo Hygiene & Paths
+
+* **Pre-commit:** YAML/EOF/trailing-ws + Black + Ruff.
+* **Excluded from hooks:** `var/`, `docs/automation/ingestion_output/`.
+* **Python shim:** `tools/shim/python` (uses `./.venv/bin/python` → `python3`).
+* **Where to put things**
+
+  * **TLA logs/status:** `docs/_archive/tla_logs/` (always include short README).
+  * **Audit receipts:** `docs/audit/<stream_id>/.../*.json`.
+  * **Do not commit:** `var/**` local drafts, temp outputs.
+
+---
+
+## 8) Minimal Runbooks
+
+* **Pre-commit**
+
+  ```bash
+  git clean -xdf # if needed
+  pre-commit install
+  pre-commit run -a
+  ```
+* **TLA quick status (if scripts exist)**
+
+  ```bash
+  bash scripts/tlc_status_classA.sh || echo "no status script"
+  bash scripts/run_class_a_now.sh   || echo "no run script"
+  # then copy logs into docs/_archive/tla_logs/ with a README
+  ```
+* **Perf receipt (example Qdrant)**
+
+  * Save JSON under `docs/audit/<stream>/YYYYMMDD-HHMM/…/qdrant_bench.json`.
+  * Mention `p95` in PR body.
+
+---
+
+## 9) Constitutional Validation (every feature)
+
+* Add/keep a guard function:
+
+  ```python
+  def validate_constitutional_compliance(op, ctx) -> bool:
+      return (preserve_user_sovereignty(op, ctx)
+              and enhance_user_capability(op, ctx)
+              and explain_operation_impact(op, ctx))
+  ```
+* On violation, raise typed error and **create an audit trail**; never “best effort” past a red flag.
+
+---
+
+## 10) Definition of Done
+
+* Class A green (CI).
+* Labels complete; docs updated if public behavior or SLO affected.
+* Receipts present (when perf/security/verification relevant).
+* Architect-facing note added to PR if tradeoffs were made.
+
+---
+
+## 11) Risks & Mitigations
+
+* **Tooling drift (JDK/TLA):** make CI fail fast with clear message.
+* **Spec creep in status drops:** CI rule: reject `.tla/.cfg` diffs in status-only PRs.
+* **Validator strictness:** handle missing keys with friendly error; log path in output.
+
+---
+
+## 12) Quick References
+
+* **Operating guide (this file):** `agent/AGENT_OPERATING_GUIDE.md`
+* **Status-only PR example:** “Stream 3 — Class-A status-only logs (no spec changes)”
+* **Recent receipts:** `docs/audit/streams12/20250819-150429/{validation.json,qdrant_bench.json}`
+
+---
+
+### You are done if:
+
+* PR meets label & CI gates, artifacts are in place, SLOs are respected, and decisions are auditable & constitutional.
