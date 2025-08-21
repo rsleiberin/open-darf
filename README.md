@@ -1,66 +1,92 @@
-# Darf Intelligence Stack
+# DARF Intelligence Stack
 
-**Constitutional AI Platform for Digital Sovereignty**
+**Foundational Infrastructure for Constitutional AI Development**
 
 *A perfect day is completing each moment of that day perfectly.*
 
-A Constitutional AI platform that operates as your digital self, making decisions within formal mathematical constraints while preserving individual sovereignty. The system provides autonomous decision-making with constitutional compliance, comprehensive audit trails, and structured Architecture Decision Records (ADRs) that create an executable knowledge graph.
+A systematic platform for developing constitutional AI capabilities through document ingestion, knowledge management, and formal verification frameworks. The system builds foundational infrastructure that preserves individual sovereignty while enabling systematic research integration and decision support capabilities.
 
 ---
 
-## Architecture Overview
+## Project Overview
 
-The Darf Intelligence Stack implements a constitutional AI consciousness interface architecture that preserves user sovereignty while enabling beneficial AI assistance. The system operates through formal constitutional constraints that ensure every AI operation enhances rather than diminishes individual agency.
+The DARF Intelligence Stack implements foundational infrastructure for constitutional AI development through an ingestion-first architecture that provides immediate utility for knowledge management while building toward advanced constitutional constraint validation. The system emphasizes systematic capability building that enhances research workflows and decision-making processes while preparing for future consciousness interface implementation.
 
-### Core Principles
+### Development Philosophy
 
-**Digital Sovereignty**: AI agents represent users with the same intentionality users bring to decisions, operating within constitutional bounds users define while maintaining full audit trails and verification capabilities.
+**Ingestion-First Architecture**: Document processing and knowledge management capabilities provide immediate utility for research workflow enhancement while building systematic foundations for constitutional AI development.
 
-**Constitutional Compliance**: Mathematical frameworks ensure all system operations preserve user autonomy through formal verification of decision-making processes and sovereignty preservation guarantees.
+**Systematic Infrastructure Building**: Each development phase creates standalone value while establishing architectural foundations required for constitutional constraint validation and sovereignty preservation protocols.
 
-**Decision Architecture**: Structured ADR system creates executable knowledge graphs where every capability, integration, and constraint receives formal documentation with complete research traceability.
+**Formal Verification Integration**: Mathematical frameworks through TLA+ specifications ensure systematic property validation while building toward constitutional compliance verification capabilities.
+
+---
+
+## Current Development Status
+
+### Phase 1: Foundation Infrastructure (In Progress)
+
+**Constitutional Constraint Engine Infrastructure**: Neo4j schema implementation with path-based authorization achieving 49.75ms response times, database integration with audit trail generation, and systematic policy validation frameworks.
+
+**Document Processing and Knowledge Management**: MinIO content-addressable storage integration, Qdrant semantic search achieving 7.745ms latency, PostgreSQL relational database optimization, and systematic content ingestion pipeline development.
+
+**Formal Verification Framework**: TLA+ Class-A specification completion with 45,217+ state verification, authorization model formalization, systematic property validation, and mathematical infrastructure component verification.
+
+### Immediate Development Priorities
+
+**Document Ingestion Pipeline**: Complete implementation of document blob processing with provenance capture, bias neutralization while preserving metadata, and systematic knowledge graph integration supporting research workflow enhancement.
+
+**Constitutional Framework Preparation**: Enhanced constraint validation capabilities including tri-state decision frameworks, scope-based authorization, and systematic audit trail generation preparing for constitutional compliance verification.
+
+**Research Integration Optimization**: Knowledge management interface development, automated content organization, and systematic research workflow improvement providing measurable utility enhancement.
 
 ---
 
 ## Technology Stack
 
-| Concern                | Technology                                           |
+| Component              | Technology                                           |
 |------------------------|------------------------------------------------------|
-| **Constitutional Engine** | TLA+ formal verification with sovereignty preservation |
-| **Decision Engine**    | ADR-driven workflows with confidence scoring         |
-| **Backend Language**   | Python 3.12 · Poetry 2.1.3                         |
-| **Frontend Framework** | Next 15 · React 19 · Tailwind 4 · shadcn/UI        |
-| **Message Broker**     | RabbitMQ 3 · Dramatiq + Redis task queuing          |
-| **Relational Database** | PostgreSQL 15                                        |
-| **Knowledge Graph**    | Neo4j 5 Community (Constitutional Schema)           |
-| **Vector Store**       | Qdrant v1 (Semantic Search)                         |
-| **Object Store**       | MinIO S3-compatible (Content-Addressable)           |
-| **Cache & Pub-sub**    | Redis 7                                              |
-| **Container Runtime**  | Podman 3.4+ · Quadlet                               |
+| **Constitutional Engine** | TLA+ formal verification with Neo4j graph validation |
+| **Knowledge Management** | Document processing with provenance tracking         |
+| **Backend Language**   | Python 3.12 with Poetry 2.1.3                      |
+| **Frontend Framework** | Next 15 with React 19 and Tailwind 4                |
+| **Message Processing** | RabbitMQ 3 with Dramatiq and Redis queuing          |
+| **Relational Database** | PostgreSQL 15 with systematic schema management     |
+| **Graph Database**     | Neo4j 5 Community with constitutional schema        |
+| **Vector Search**      | Qdrant v1 for semantic similarity                   |
+| **Object Storage**     | MinIO S3-compatible with content addressing         |
+| **Cache Layer**        | Redis 7 for performance optimization                |
+| **Container Runtime**  | Podman 3.4+ with Quadlet orchestration              |
 
 ---
 
 ## Repository Structure
 
-This turborepo monorepo is organized to support scalable development across multiple applications and shared packages:
+This monorepo supports systematic development across foundational infrastructure components:
 
 ```
-apps/                   # Application services
-├── backend/           # Constitutional AI agent services & decision engine
-└── frontend/          # Constitutional AI interface
-packages/              # Shared libraries and utilities
-├── shared/            # ADR parsing & workflow execution
+apps/                   # Application development
+├── backend/           # Constitutional framework services
+├── frontend/          # Knowledge management interface
+└── validator/         # Constitutional constraint validation
+
+packages/              # Shared component libraries
+├── shared/            # Common utilities and frameworks
 ├── tla/               # Formal verification specifications
 └── constitutional/    # Sovereignty preservation protocols
-infra/                 # Infrastructure as code
+
+verification/          # Formal verification infrastructure
+├── tla/               # TLA+ specifications and verification
+└── reports/           # Verification results and analysis
+
+infra/                 # Infrastructure configuration
 ├── podman/            # Local development containers
-└── kubernetes/        # Production deployment manifests
-docker/                # Container build configurations
+└── deployment/        # Production deployment specifications
+
 docs/                  # Documentation and specifications
-├── decisions/         # ADR corpus (authoritative)
-├── templates/         # ADR templates
-├── audit/             # Performance receipts and validation logs
-└── api/               # API documentation
+├── constitutional-ai/ # Architectural frameworks
+├── decisions/         # Architecture Decision Records
+└── reference/         # Technical documentation
 ```
 
 ---
@@ -69,134 +95,171 @@ docs/                  # Documentation and specifications
 
 ### Prerequisites
 
-- Node.js 18+ and npm 9+
-- Python 3.12+ and Poetry 2.1.3+
-- Podman 3.4+ (for local services)
-- Git 2.40+
+- Node.js 18+ with npm 9+
+- Python 3.12+ with Poetry 2.1.3+
+- Podman 3.4+ for local service orchestration
+- Git 2.40+ for repository management
 
-### Local Development Setup
+### Local Development Environment
 
 ```bash
-# Clone the repository
+# Clone repository and install dependencies
 git clone https://github.com/rsleiberin/darf-source.git
 cd darf-source
-
-# Install all dependencies
 npm install
 
-# Start local services (PostgreSQL, Neo4j, Qdrant, Redis, MinIO)
+# Start foundational services
 cd infra/podman
-podman-compose up -d
+podman-compose up -d  # PostgreSQL, Neo4j, Qdrant, Redis, MinIO
 
-# Install Python dependencies
+# Initialize Python environment
 poetry install --no-interaction
 
-# Run development servers
+# Start development servers
 npm run dev
 ```
 
-### Verification
+### Verification and Testing
 
 ```bash
-# Run all tests
+# Run comprehensive testing suite
 npm run test
 
-# Run linting
-npm run lint
+# Execute formal verification
+cd verification/tla
+bash scripts/run_class_a_now.sh
 
-# Type checking
-npm run type-check
+# Validate system integration
+npm run integration-test
 
-# Python-specific testing
+# Python component testing
 poetry run pytest
 ```
 
 ---
 
-## Development Workflow
-
-### Architecture Decision Records
-
-All significant decisions are documented through structured ADRs that create an executable knowledge graph. Each ADR follows the research-to-concept-to-implementation chain with full traceability and constitutional compliance verification.
-
-Browse existing ADRs in `docs/decisions/` and use templates in `docs/templates/` for new decisions.
-
-### Constitutional Compliance
-
-All development must maintain constitutional compliance verification through formal mathematical frameworks. The TLA+ specifications in `packages/tla/` provide formal verification requirements for sovereignty preservation properties.
-
-Development workflow includes constitutional compliance gates through automated CI checks that verify mathematical sovereignty preservation throughout implementation processes.
-
-### Performance Requirements
-
-The system maintains validated performance targets including constitutional compliance verification under 170ms, semantic search capabilities under 120ms, and multi-agent coordination under 500ms. All implementations must demonstrate performance compliance through comprehensive benchmarking protocols.
-
----
-
 ## Core Capabilities
 
-### Constitutional Agent Operations
+### Document Processing and Knowledge Management
 
-The system provides autonomous decision-making within formal constitutional constraints, comprehensive audit trails with perfect decision memory, fraud detection through behavioral pattern analysis, and mathematical sovereignty preservation guarantees throughout all operations.
+The system provides systematic document ingestion with provenance tracking, content organization through semantic search capabilities, research workflow optimization with automated content processing, and knowledge graph development supporting systematic information organization.
 
-Agent capabilities include budget management with crypto-wallet integration, authentication gating for major decisions, preference learning without sovereignty violation, and decision recommendation with constitutional compliance verification.
+Current capabilities include content-addressable storage for document integrity, semantic similarity search for research discovery, systematic metadata preservation throughout processing workflows, and research integration interfaces supporting workflow enhancement.
 
-### Formal Verification Framework
+### Constitutional Framework Infrastructure
 
-TLA+ specifications provide mathematical proof of sovereignty preservation properties while enabling systematic formal verification of constitutional compliance across all system operations. The verification framework supports distributed deployment scenarios with Byzantine fault tolerance and democratic legitimacy preservation.
+Infrastructure preparation for constitutional constraint validation includes Neo4j graph schema for authorization relationships, systematic audit trail generation throughout all operations, formal verification framework preparation, and policy evaluation infrastructure development.
 
----
+The constitutional framework provides foundation for future sovereignty preservation capabilities while supporting current workflow requirements through systematic authorization checking and comprehensive decision tracking.
 
-## Contributing
+### Formal Verification and Quality Assurance
 
-### Development Standards
+TLA+ specification framework provides mathematical validation of infrastructure component behavior while building toward constitutional property verification. The verification system includes systematic testing protocols, performance validation under operational conditions, and comprehensive quality assurance throughout development processes.
 
-All contributions must maintain constitutional compliance verification as the primary optimization criterion while following established coding standards through automated linting and type checking. Implementation requires comprehensive testing with constitutional compliance validation at all development checkpoints.
-
-### Pull Request Process
-
-Pull requests must include constitutional compliance verification, performance impact assessment, comprehensive test coverage, and ADR documentation for architectural decisions. The CI system enforces label requirements and policy gates to maintain systematic governance throughout development advancement.
-
-### Code Organization
-
-Follow the established monorepo structure with clear separation between applications, shared packages, and infrastructure components. Maintain constitutional compliance integration throughout all development workflows with formal verification requirements documented in TLA+ specifications.
+Current verification capabilities include infrastructure component property validation, authorization consistency checking, systematic state management verification, and preparation for enhanced constitutional compliance property validation.
 
 ---
 
-## Project Status
+## Development Approach
 
-### Current Development Phase
+### Systematic Capability Building
 
-**Phase 1 Foundation**: Constitutional constraint validation engine implementation with systematic integration of Neo4j constitutional schema validation, real-time constraint checking protocols, and mathematical sovereignty preservation verification systems.
+Development follows ingestion-first architecture where each component provides immediate utility while building foundations for constitutional AI capabilities. The systematic approach ensures measurable value delivery while working toward speculative consciousness interface implementation.
 
-**Infrastructure**: PostgreSQL 15 operational with SQLAlchemy integration, comprehensive CI governance with policy enforcement, and systematic development discipline through comprehensive GitHub issue tracking.
+Implementation priorities focus on document processing enhancement, knowledge management workflow optimization, and constitutional framework preparation that supports both current research requirements and future constitutional constraint validation.
 
-**Recent Achievements**: Project structure optimization with all linting requirements satisfied, RAG foundation implementation with langchain integration, and comprehensive workflow automation through policy gates and documentation ownership protection.
+### Quality Assurance and Testing
 
-### Immediate Priorities
+Comprehensive CI governance includes systematic policy enforcement, documentation ownership protection, performance validation protocols, and formal verification integration. Quality standards maintain development discipline while supporting systematic advancement through planned capabilities.
 
-Constitutional constraint validation engine development represents the primary implementation focus with Neo4j constitutional schema integration, sub-170ms performance requirements, and comprehensive testing frameworks for operational deployment validation.
+Testing frameworks include infrastructure component validation, integration testing across multi-database architecture, performance benchmarking under operational conditions, and systematic verification of constitutional compliance preparation.
 
-Enhanced development workflow optimization includes TLA+ formal verification integration, systematic constitutional compliance verification protocols, and preparation for expanded monorepo operations supporting future scalability requirements.
+### Research Integration and Enhancement
 
----
+The system supports systematic research integration through optimized document processing, automated knowledge extraction and organization, research workflow interface development, and systematic academic collaboration preparation.
 
-## Documentation
-
-Comprehensive documentation is maintained in the `docs/` directory including architecture specifications, API documentation, deployment guides, and constitutional compliance frameworks. The ADR system in `docs/decisions/` provides complete decision traceability with research foundations.
-
-For detailed technical specifications, formal verification requirements, and constitutional compliance protocols, refer to the comprehensive documentation structure that supports systematic development advancement and operational deployment guidance.
+Research capabilities include provenance tracking for all processed content, bias preservation as metadata throughout processing workflows, systematic knowledge graph development, and academic publication preparation frameworks.
 
 ---
 
-## License
+## Performance and Validation
 
-This project implements constitutional AI frameworks with mathematical sovereignty preservation guarantees. See LICENSE file for terms and conditions regarding usage, modification, and distribution of constitutional AI implementations.
+### Current Performance Metrics
+
+**Infrastructure Performance**: Constitutional constraint checking achieves 49.75ms response times against 170ms targets, semantic search operations achieve 7.745ms latency, and database integration maintains systematic performance under operational testing conditions.
+
+**Development Quality**: Comprehensive GitHub issue tracking manages 200+ development items, systematic CI governance maintains code quality standards, and formal verification framework validates infrastructure component behavior through mathematical property checking.
+
+**Research Integration**: Document processing workflow provides measurable research efficiency improvement, knowledge management capabilities support systematic academic work, and research integration optimization enhances workflow effectiveness.
+
+### Validation Framework
+
+System validation includes infrastructure component testing under operational conditions, constitutional framework preparation validation, research workflow improvement measurement, and systematic quality assurance throughout development advancement.
+
+Performance validation ensures sub-170ms constitutional validation capability preparation, reliable document processing and knowledge management operation, and systematic formal verification framework effectiveness supporting future constitutional property validation.
 
 ---
 
-*Empowering individuals with sovereign, auditable AI through systematic constitutional compliance verification and consciousness interface architecture.*
+## Contributing and Development Standards
+
+### Development Workflow
+
+All contributions maintain systematic development discipline through comprehensive testing requirements, formal verification integration, constitutional compliance preparation, and systematic documentation standards throughout implementation advancement.
+
+Pull requests require performance impact assessment, constitutional framework compatibility validation, comprehensive test coverage, and systematic integration with existing infrastructure components.
+
+### Code Organization and Standards
+
+Follow established monorepo structure with clear component separation, systematic documentation practices, and comprehensive quality assurance throughout development processes. Maintain constitutional compliance preparation as optimization criterion while building immediately useful capabilities.
+
+Development standards include systematic code quality enforcement, comprehensive testing protocol adherence, formal verification integration requirements, and systematic documentation excellence supporting future team expansion and operational deployment.
+
+---
+
+## Future Development Roadmap
+
+### Phase 2: Enhanced Capability Development (Planned)
+
+**Constitutional Constraint Validation**: Implementation of tri-state decision frameworks, enhanced policy evaluation capabilities, production security hardening, and comprehensive constitutional compliance verification systems.
+
+**Advanced Knowledge Management**: Enhanced document processing capabilities, automated research integration optimization, systematic academic workflow support, and comprehensive knowledge discovery interfaces.
+
+**Multi-Agent Infrastructure**: Systematic agent coordination protocols, distributed processing capabilities, and enhanced formal verification supporting constitutional compliance across multi-component systems.
+
+### Phase 3: Production Readiness (Planned)
+
+**Enterprise Integration**: Security hardening for production deployment, enterprise authentication system compatibility, comprehensive monitoring and alerting capabilities, and systematic operational support frameworks.
+
+**Advanced Constitutional Capabilities**: Consciousness representation architecture implementation, sovereignty preservation validation, democratic governance framework development, and advanced constraint satisfaction algorithm deployment.
+
+**Academic and Community Engagement**: Peer-reviewed publication preparation, open-source component development, community collaboration frameworks, and systematic technical standards contribution.
+
+---
+
+## Academic and Research Context
+
+This project represents systematic infrastructure development supporting constitutional AI research through practical implementation of sovereignty preservation protocols, formal verification frameworks, and systematic knowledge management capabilities.
+
+The development approach provides immediate utility for research workflow enhancement while building foundations for advanced constitutional constraint validation and consciousness interface architecture implementation. Academic collaboration opportunities include formal verification methodology development, constitutional AI framework advancement, and systematic research integration optimization.
+
+---
+
+## Documentation and Resources
+
+Comprehensive documentation maintains systematic coverage of architectural frameworks, implementation specifications, formal verification requirements, and constitutional compliance protocols. The Architecture Decision Record system provides complete traceability for all significant development decisions.
+
+Technical documentation includes API specifications, deployment guides, constitutional framework specifications, and systematic formal verification documentation supporting both current development and future operational requirements.
+
+---
+
+## License and Usage
+
+This project implements foundational infrastructure for constitutional AI development with mathematical sovereignty preservation preparation. See LICENSE file for terms regarding usage, modification, and distribution of constitutional AI infrastructure components.
+
+---
+
+*Building systematic foundations for constitutional AI through document processing, knowledge management, and formal verification frameworks that enhance research capabilities while preparing for advanced consciousness interface implementation.*
 
 **Repository**: [https://github.com/rsleiberin/darf-source](https://github.com/rsleiberin/darf-source)
 
-*Last updated: August 19, 2025*
+*Last updated: August 21, 2025*
