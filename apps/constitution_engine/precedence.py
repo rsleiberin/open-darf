@@ -1,6 +1,7 @@
 from __future__ import annotations
 from apps.constitution_engine.phase2 import Decision, ValidationResult
 
+
 def decide_precedence(allow_exists: bool, deny_exists: bool) -> ValidationResult:
     """
     Pure precedence rule:

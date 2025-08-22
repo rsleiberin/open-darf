@@ -263,3 +263,9 @@ This project implements foundational infrastructure for constitutional AI develo
 **Repository**: [https://github.com/rsleiberin/darf-source](https://github.com/rsleiberin/darf-source)
 
 *Last updated: August 21, 2025*
+
+## Constitutional Engine — Fail-Closed Posture (Phase-2)
+
+- **Default (prod)**: fail-closed — when the graph/DB is unavailable or schema is missing, decisions surface as `INDETERMINATE` with a reason slug.
+- **Dev-only override**: set `ENGINE_FAIL_OPEN=true` locally to flip `_fail_closed_default()` to ALLOW (used for rapid local testing).
+- **API contract**: responses include `{ decision: ALLOW|DENY|INDETERMINATE, reason_code: <slug> }`.

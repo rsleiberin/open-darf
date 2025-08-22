@@ -7,12 +7,14 @@ Usage:
   export NEO4J_PASSWORD=please_set_me
   python -m scripts.seed_neo4j
 """
+
 from neo4j import GraphDatabase
-import os, sys
+import os
+import sys
 
 URI = os.getenv("NEO4J_URI", "bolt://localhost:7687")
 USER = os.getenv("NEO4J_USER", "neo4j")
-PWD  = os.getenv("NEO4J_PASSWORD", "please_set_me")
+PWD = os.getenv("NEO4J_PASSWORD", "please_set_me")
 
 CONSTRAINTS = [
     "CREATE CONSTRAINT principal_id_unique IF NOT EXISTS FOR (p:Principal) REQUIRE p.id IS UNIQUE",
@@ -28,12 +30,15 @@ SEED = [
     ("MERGE (p)-[:MAY]->(a)-[:ON]->(r)", {}),
 ]
 
+
 def main() -> int:
     try:
         driver = GraphDatabase.driver(URI, auth=(USER, PWD))
         with driver.session() as s:
-            for stmt in CONSTRAINTS: s.run(stmt).consume()
-            for stmt, extra in SEED: s.run(stmt, **PARAMS, **extra).consume()
+            for stmt in CONSTRAINTS:
+                s.run(stmt).consume()
+            for stmt, extra in SEED:
+                s.run(stmt, **PARAMS, **extra).consume()
             rec = s.run(
                 """
                 CALL db.labels() YIELD label WITH collect(label) AS L
@@ -46,11 +51,16 @@ def main() -> int:
             ).single()
         driver.close()
         if rec:
-            print("labels:", rec["labels"]); print("rels  :", rec["rels"])
-            print("path  :", rec["principal"], "->", rec["action"], "->", rec["resource"])
+            print("labels:", rec["labels"])
+            print("rels  :", rec["rels"])
+            print(
+                "path  :", rec["principal"], "->", rec["action"], "->", rec["resource"]
+            )
         return 0
     except Exception as e:
-        print("❌ seed error:", repr(e), file=sys.stderr); return 1
+        print("❌ seed error:", repr(e), file=sys.stderr)
+        return 1
+
 
 if __name__ == "__main__":
     raise SystemExit(main())

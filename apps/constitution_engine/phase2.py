@@ -5,20 +5,25 @@ from enum import Enum
 import os
 from typing import Dict
 
+
 class Decision(Enum):
     ALLOW = "ALLOW"
     DENY = "DENY"
     INDETERMINATE = "INDETERMINATE"
 
+
 @dataclass
 class ValidationResult:
     decision: Decision
     reason_code: str = ""
-    metrics: Dict[str, int] = field(default_factory=lambda: {
-        "neo4j_roundtrips": 0,
-        "cache_hits": 0,
-        "cache_misses": 0,
-    })
+    metrics: Dict[str, int] = field(
+        default_factory=lambda: {
+            "neo4j_roundtrips": 0,
+            "cache_hits": 0,
+            "cache_misses": 0,
+        }
+    )
+
 
 def _fail_closed_default() -> ValidationResult:
     """

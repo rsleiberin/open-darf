@@ -1,0 +1,96 @@
+"""Constitutional engine decision path (Phase-2 wiring).
+
+Responsibilities:
+- Query the graph for ALLOW / DENY paths for (principal, action, resource).
+- Gate by scopes: a.required_scope ∈ p.scopes (if required_scope is set).
+- Resolve via precedence (DENY wins), return ValidationResult with reason_code.
+- Fail-closed by default; _fail_closed_default() honors ENGINE_FAIL_OPEN for dev.
+
+This module is import-safe if the Neo4j driver is missing; evaluate_with_driver
+will simply fall back to _fail_closed_default() in that case.
+"""
+from __future__ import annotations
+from typing import Any, Optional
+
+try:  # optional import to keep import-time safe
+    from neo4j import GraphDatabase  # type: ignore
+except Exception:  # pragma: no cover
+    GraphDatabase = None  # type: ignore
+
+from apps.constitution_engine.phase2 import (
+    Decision,
+    ValidationResult,
+    _fail_closed_default,
+)
+from apps.constitution_engine.precedence import decide_precedence
+
+
+def _get(ctx: Any, key: str, default: Optional[str] = None) -> Optional[str]:
+    """Tolerant getter: supports dicts and objects."""
+    if ctx is None:
+        return default
+    if isinstance(ctx, dict):
+        return ctx.get(key, default)
+    return getattr(ctx, key, default)
+
+
+def evaluate_request(ctx: Any, neo4j_session) -> ValidationResult:
+    """Evaluate a single authorization request using an existing Neo4j session."""
+    pid = _get(ctx, "principal_id")
+    aid = _get(ctx, "action_id")
+    rid = _get(ctx, "resource_id")
+    if not pid or not aid or not rid:
+        # Missing identifiers is a policy error; fail-closed.
+        return _fail_closed_default()
+
+    try:
+        rec = neo4j_session.run(
+            """
+            MATCH (p:Principal {id: $pid}), (a:Action {id: $aid}), (r:Resource {id: $rid})
+            WITH p, a, r
+            WHERE a.required_scope IS NULL OR a.required_scope IN p.scopes
+            OPTIONAL MATCH (p)-[:ALLOW]->(a)-[:ON]->(r)
+            WITH p, a, r, COUNT(*) > 0 AS allow_exists
+            OPTIONAL MATCH (p)-[:DENY]->(a)-[:ON]->(r)
+            RETURN allow_exists, COUNT(*) > 0 AS deny_exists
+            """,
+            {"pid": str(pid), "aid": str(aid), "rid": str(rid)},
+        ).single()
+
+        if rec is None:
+            # Could not resolve basic triplet or scope gate failed → fail-closed.
+            return _fail_closed_default()
+
+        vr: ValidationResult = decide_precedence(bool(rec["allow_exists"]), bool(rec["deny_exists"]))
+        return vr
+    except Exception:
+        # DB unreachable, tx error, or schema missing → fail-closed posture.
+        return _fail_closed_default()
+
+
+def evaluate_with_driver(
+    ctx: Any,
+    uri: Optional[str] = None,
+    user: Optional[str] = None,
+    password: Optional[str] = None,
+) -> ValidationResult:
+    """Convenience helper: open a session and evaluate once."""
+    if GraphDatabase is None:  # driver not installed
+        return _fail_closed_default()
+
+    # Pull from env if not explicitly passed (keeps wiring simple for services)
+    import os
+
+    uri = uri or os.getenv("NEO4J_URI")
+    user = user or os.getenv("NEO4J_USER")
+    password = password or os.getenv("NEO4J_PASSWORD")
+
+    if not uri or not user or not password:
+        return _fail_closed_default()
+
+    driver = GraphDatabase.driver(uri, auth=(user, password))
+    try:
+        with driver.session() as session:
+            return evaluate_request(ctx, session)
+    finally:
+        driver.close()

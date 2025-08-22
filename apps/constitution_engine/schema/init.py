@@ -1,4 +1,5 @@
 from __future__ import annotations
+import os
 import argparse
 import sys
 from typing import List
@@ -11,6 +12,7 @@ SCHEMA_STEPS: List[str] = [
     "CREATE INDEX IF NOT EXISTS FOR (a:Action)    ON (a.type)",
     "CREATE INDEX IF NOT EXISTS FOR (r:Resource)  ON (r.type)",
 ]
+
 
 def run(dry_run: bool = True) -> int:
     if dry_run:
@@ -25,7 +27,7 @@ def run(dry_run: bool = True) -> int:
         return 2
     uri = os.getenv("NEO4J_URI", "bolt://localhost:7687")
     user = os.getenv("NEO4J_USER", "neo4j")
-    pwd  = os.getenv("NEO4J_PASSWORD", "password")
+    pwd = os.getenv("NEO4J_PASSWORD", "password")
     driver = GraphDatabase.driver(uri, auth=(user, pwd))
     try:
         with driver.session() as s:
@@ -36,12 +38,22 @@ def run(dry_run: bool = True) -> int:
         driver.close()
     return 0
 
+
 def main(argv: List[str] | None = None) -> int:
-    import os  # placed here to keep top-level minimal deps
+
     p = argparse.ArgumentParser("constitution schema init")
     p.add_argument("--dry-run", action="store_true", default=False)
     args = p.parse_args(argv)
     return run(dry_run=args.dry_run)
 
+
 if __name__ == "__main__":
     raise SystemExit(main())
+try:
+    SCHEMA_STEPS
+except NameError:
+    SCHEMA_STEPS = []
+SCHEMA_STEPS += [
+    "CREATE INDEX IF NOT EXISTS FOR (p:Principal) ON (p.scopes)",
+    "CREATE INDEX IF NOT EXISTS FOR (a:Action) ON (a.required_scope)",
+]
