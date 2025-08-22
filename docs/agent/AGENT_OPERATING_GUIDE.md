@@ -33,7 +33,7 @@
 * Product/infra code, scripts, CI policy gates.
 * Audit receipts, non-TLA docs and benches.
 
-If unsure → don’t touch; ask or open an issue.
+> If unsure → don’t touch; ask or open an issue.
 
 ---
 
@@ -50,6 +50,7 @@ If unsure → don’t touch; ask or open an issue.
 * Every PR runs **Class A**; fail on regression or missing artifacts.
 * “Status-only” PRs: **no `.tla/.cfg` diffs**.
 * Non-TLA agents **must not** add/modify/remove TLA verification jobs.
+* Prefer **phase-scoped** CI jobs that do not require live services unless the change demands them (e.g., Phase-2 engine/api/schema tests + schema `--dry-run`).
 
 **Artifacts (append-only)**
 
@@ -62,9 +63,9 @@ If unsure → don’t touch; ask or open an issue.
 
 * Neo4j constitutional validation **p95 < 170 ms**.
 * Anchor transform **p95 < 100 ms**.
-* Qdrant search **p95 ≤ 10 ms** (dev receipts acceptable; track trend).
+* Qdrant search **p95 ≤ 10 ms** (dev receipts OK; track trend).
 
-Any risk to SLOs → include a perf note + receipt under `docs/audit/...`.
+> Any risk to SLOs → include a perf note + receipt under `docs/audit/...`.
 
 ---
 
@@ -79,7 +80,7 @@ Any risk to SLOs → include a perf note + receipt under `docs/audit/...`.
 
 **Forbidden labels:** `deferred`, `status:review`, `blocked: adr-pipeline`.
 
-**Do not create labels from CI/scripts.** Use the GitHub UI.
+Do **not** create labels from CI/scripts. Use the GitHub UI.
 
 **Branch protection (admin UI):** require status checks
 `policy-gates` and `policy-guide-ownership`.
@@ -156,11 +157,22 @@ For benches/validation, emit compact JSON receipts with:
 
 Reference key receipts in PR bodies.
 
+**Runtime signals (min spec)**
+
+* Structured log lines for key decisions (e.g., `decision=<…> reason=<…>`).
+* Counters for critical outcomes (e.g., `ce.decision{decision=…}`).
+* Never let observability paths raise.
+
 ---
 
 ## 11) Constitutional Validation (every feature)
 
-Keep/implement a guard that enforces the four North stars and returns a typed failure with an audit trail (never “best effort” past a red flag).
+Every new capability must pass a **constitutional guard**:
+
+* Resolve to `ALLOW|DENY|INDETERMINATE` with a machine-readable `reason_code`.
+* **Deny precedence** over allow.
+* **Fail-closed** on uncertainty (system errors, missing schema/data).
+* Leave an **audit trail** (receipts/logs) for the decision.
 
 ---
 
@@ -180,23 +192,30 @@ Keep/implement a guard that enforces the four North stars and returns a typed fa
 * **Spec creep in status-only PRs:** gate `.tla/.cfg` diffs.
 * **Validator strictness:** handle missing keys gracefully; log error paths.
 * **Worktree rot:** prune & recreate; never operate from TLA workspace.
+* **Live-service coupling:** prefer phase-scoped tests; add true integration jobs only when needed.
 
 ---
 
 ## 14) Output Conventions (UI-first, Script-second)
 
-* Start with a short **READ ME FIRST** + bullet **ACTIONS**.
-* Provide terminal steps under **“OPTIONAL: TERMINAL SCRIPT”** (≤200 lines; idempotent).
+* Start with **READ ME FIRST** + bullet **ACTIONS**.
+* Provide **OPTIONAL: TERMINAL SCRIPT** (≤200 lines; idempotent).
 * Every ops deliverable is dual-mode:
-
-  * (A) human summary (decisions, risks, exact file paths),
-  * (B) copy-paste script to do the work.
-* Use explicit sections: **READ ME FIRST**, **ACTIONS**, **RISKS**, **ARTIFACTS**, **OPTIONAL: TERMINAL SCRIPT**.
+  (A) human summary (decisions, risks, exact file paths),
+  (B) copy-paste script to do the work.
 * Don’t auto-execute or imply background work.
 
 ---
 
-## 15) Quick References
+## 15) Session Discipline (crash/resume & safety)
+
+* If a terminal **crashes**, provide a concise **resume script** only on request.
+* Never run background tasks or promise future work; **perform in-message**.
+* Keep env overrides explicit; **`ENGINE_FAIL_OPEN` is dev-only** and **must not** be set in CI/prod.
+
+---
+
+## 16) Quick References
 
 * Operating guide (this file): `docs/agent/AGENT_OPERATING_GUIDE.md`
 * Policy gates (CI): `.github/workflows/policy-gates.yml`
