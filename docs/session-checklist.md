@@ -17,3 +17,6 @@
 - [ ] Update CHANGELOG if needed
 
 > End-of-session target: **changes pushed**, **PR merged (or auto-merge armed)**, repo **clean/pruned**.
+
+> Note: Phase-2 required-check could not be set via API (403 plan limit).
+> If Branch protection UI is unavailable for this repo/plan, keep it informational for now.
