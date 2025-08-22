@@ -1,220 +1,229 @@
-# DARF Constitutional AI Development Roadmap - Progress Tracking Checklist
+# DARF Document Processing and Knowledge Graph Roadmap
 
-**Last Updated**: August 21, 2025
-**Repository**: rsleiberin/darf-source
-**Development Approach**: Ingestion-First Architecture with Constitutional Framework Preparation
-**Current Phase**: Foundation Infrastructure Development
+**Last updated:** 2025-08-22 (research-aligned)
 
-## Development Stream Overview
+---
 
-This roadmap tracks progress through systematic capability building focused on document ingestion, knowledge management, and constitutional framework preparation. Each stream builds immediately useful capabilities while establishing infrastructure for future constitutional AI implementation.
+## Executive Overview
 
-## Phase 1: Foundation Infrastructure Development
+DARF’s near-term goal is to stand up a **document processing → provenance anchoring → bias filtration → entity/relationship extraction → HyperGraphRAG** pipeline that is **provably aligned** (constitutional constraints), **observable** (receipts + metrics), and **performant** (p95 < 50 ms for hot paths) while preserving **sovereignty** and **revocation** guarantees.
 
-### Stream 1: Constitutional Constraint Engine Infrastructure
-**GitHub Epic**: #205 - Stream 1 Constitutional Constraint Engine
-**Status**: Phase 1 Complete, Phase 2 In Progress
-**Target**: Database infrastructure and basic constraint validation
+This roadmap translates research artifacts into concrete, incremental deliverables with receipts and CI policy gates.
 
-#### Phase 1 Completions ✅
-- [x] Neo4j constitutional schema implementation (#230 - merged)
-- [x] Basic path-based authorization checking (Principal-MAY-Action-ON-Resource)
-- [x] Database seeding and constraint management (#233 - merged)
-- [x] Performance validation achieving 49.75ms response times
-- [x] Quiet-mode handling for development environments
-- [x] Comprehensive audit trail generation
+---
 
-#### Phase 2 Development Tasks 🔄
-- [ ] DENY precedence rule implementation
-- [ ] Tri-state decision framework (ALLOW/DENY/INDETERMINATE)
-- [ ] Scope-based authorization enhancement
-- [ ] Fail-closed security posture for production
-- [ ] Policy conflict resolution protocols
-- [ ] Enhanced error handling and logging
-- [ ] Integration testing with enterprise authentication
-- [ ] Performance optimization under enhanced policy complexity
+## Phasing at a Glance
 
-### Stream 2: Anchor Foundation System
-**GitHub Epic**: #206 - Stream 2 Anchor Foundation
-**Status**: Infrastructure Complete, Enhancement Phase
-**Target**: Document ingestion and knowledge management capabilities
+- **Phase 1 – Ingestion Foundations (current)**
+  - Deterministic **SHA-256 anchoring** (doc + paragraph sub-anchors)
+  - **Provenance graph (PROV-O)** initialization (Entity/Activity/Agent)
+  - **Routing** (Lambda vs EC2) + MinIO contract (mocked in tests)
+  - Unit tests, perf smoke, receipts & metrics stubs
 
-#### Infrastructure Completions ✅
-- [x] MinIO content-addressable storage deployment
-- [x] Qdrant vector database integration achieving 7.745ms p95 latency
-- [x] PostgreSQL relational database setup and optimization
-- [x] Basic semantic search functionality
-- [x] Content ingestion pipeline foundation
+- **Phase 2 – Constitutional Engine & API hardening** ✅ (shipped)
+  - Tri-state evaluation (ALLOW/DENY/ABSTAIN) with precedence & scopes
+  - `/validate` FastAPI route; **reason codes**; **receipts** (JSONL)
+  - Metrics scaffold; optional index dry-run utilities
 
-#### Document Processing Enhancement Tasks 🔄
-- [ ] Document blob ingestion with provenance tracking
-- [ ] Bias neutralization while preserving bias metadata
-- [ ] Knowledge graph integration with constitutional metadata
-- [ ] Research workflow optimization and interface development
-- [ ] Systematic content organization and retrieval
-- [ ] Performance optimization for large document collections
-- [ ] User interface for knowledge management workflows
+- **Phase 3 – Bias Filtration + Extraction**
+  - Bias detection via **CBDT** (Contextualized Bi-Directional Dual Transformer) for technical/academic corpora
+  - Lightweight NER + relationship extraction; language-agnostic where feasible
 
-### Stream 3: Formal Verification Framework
-**GitHub Epic**: #207 - Stream 3 Formal Verification (TLA+/TLAPS)
-**Status**: Class-A Verification Complete, Enhancement Phase
-**Target**: Mathematical validation of system properties
+- **Phase 4 – HybridRAG / HyperGraphRAG**
+  - Hierarchical chunking + vector + graph retrieval orchestration
+  - Constitutional validation integrated into retrieval and synthesis steps
 
-#### Class-A Verification Completions ✅
-- [x] TLA+ specification recovery and debugging
-- [x] Authorization model formalization with ownership-based validation
-- [x] Bounded model verification generating 45,217+ states
-- [x] Infrastructure component property validation
-- [x] Systematic logging and handoff documentation
-- [x] Quick verification workflow under 10 minutes
+- **Phase 5 – Observability & SLO tightening**
+  - p95 latencies, compression targets, receipt coverage, and live dashboards
+  - Rotating receipts with correlation IDs and latency fields
 
-#### Enhanced Verification Development Tasks 🔄
-- [ ] Unified authorization model across all operations
-- [ ] Comprehensive invariant property specification
-- [ ] Signature integrity and cryptographic validation
-- [ ] State management correctness verification
-- [ ] Class-B verification preparation for expanded properties
-- [ ] Integration testing with implementation components
-- [ ] Documentation enhancement for specification maintenance
+---
 
-## Phase 2: Enhanced Capability Development
+## Targets (from research)
 
-### Development Quality Assurance
-**Status**: Active and Operational
-**Target**: Systematic development discipline and quality standards
+- **Compression:** ≥ 47× semantic/contextual compression with hierarchical chunking
+- **Latency:** sub-50 ms p95 graph reads on hot paths; ≤ 170 ms constitutional validation p95
+- **Recall:** ≥ 60 % improvement in relevant context recall with HyperGraphRAG
+- **Bias detection:** ≥ 91 % F1 on technical/academic domains (CBDT)
 
-#### Quality Framework Completions ✅
-- [x] CI governance with policy gate enforcement (#229 - merged)
-- [x] Documentation ownership protection
-- [x] Pre-commit hook standardization
-- [x] Systematic issue tracking with 200+ managed issues
-- [x] Multi-stream development coordination
-- [x] Repository organization for monorepo management
+---
 
-#### Quality Enhancement Tasks 🔄
-- [ ] Branch protection configuration for required checks
-- [ ] Automated testing framework expansion
-- [ ] Performance regression testing implementation
-- [ ] Documentation standards enforcement
-- [ ] Security testing integration
-- [ ] Compliance audit trail enhancement
+## Architecture Primitives
 
-### Research Integration and Knowledge Management
-**Status**: Foundational Work Complete, Enhancement Phase
-**Target**: Systematic research workflow improvement
+- **Storage**
+  - **MinIO** for artifacts (originals, normalized docs)
+  - **PostgreSQL** for anchors & operational metadata
+  - **Neo4j** for provenance + knowledge graph
+  - **Qdrant** for vector search
+  - **Redis** for cache/coordination
 
-#### Research Infrastructure Completions ✅
-- [x] Multi-agent coordination framework (Claude/GPT coordination)
-- [x] Research handoff procedures and documentation
-- [x] Theoretical framework development and integration
-- [x] Academic positioning strategy development
+- **Compute**
+  - **Lambda** for small doc transforms; **EC2** for large workloads
+  - Background workers via **Dramatiq**; broker **RabbitMQ**
 
-#### Research Enhancement Tasks 🔄
-- [ ] Ingestion pipeline completion for research documents
-- [ ] Automated knowledge extraction and organization
-- [ ] Research workflow optimization interface
-- [ ] Academic publication preparation framework
-- [ ] Technical documentation excellence standards
-- [ ] Cross-platform research integration tools
+- **Observability**
+  - JSONL receipts (append-only), metrics (Prometheus/Otel), correlation IDs
 
-## Phase 3: Production Readiness Preparation
+- **Governance**
+  - Constitutional validation engine on all sensitive ops
+  - Receipts-backed auditability and revocation pathways
 
-### Security and Compliance Framework
-**Status**: Planning Phase
-**Target**: Enterprise deployment security posture
+---
 
-#### Security Development Tasks 📋
-- [ ] Comprehensive authentication integration
-- [ ] Authorization audit trail enhancement
-- [ ] Penetration testing and security validation
-- [ ] Enterprise identity management compatibility
-- [ ] Regulatory compliance documentation
-- [ ] Security monitoring and alerting systems
-- [ ] Incident response procedures development
+## Phase 1 – Scope & Deliverables (repo work underway)
 
-### Performance and Scalability Optimization
-**Status**: Planning Phase
-**Target**: Production-grade performance under enterprise load
+**Goal:** Make ingestion deterministic and testable without live services.
 
-#### Optimization Development Tasks 📋
-- [ ] Database query optimization and indexing
-- [ ] Caching layer implementation for constitutional validation
-- [ ] Load testing under realistic enterprise scenarios
-- [ ] Horizontal scaling preparation and testing
-- [ ] Performance monitoring and optimization feedback
-- [ ] Resource utilization optimization
-- [ ] Capacity planning and infrastructure requirements
+**Deliverables**
+1. **Anchoring**
+   - `apps/document_processor/anchoring.py`
+     - `create_anchor_hierarchy(doc)` → base + paragraph anchors (`sha256:<hash>:<type>:<ts>:para_<i>:<span>:<sha>`)
 
-### Enterprise Integration Capabilities
-**Status**: Planning Phase
-**Target**: Seamless integration with enterprise systems
+2. **Routing**
+   - `apps/document_processor/routing.py`
+     - `decide_processor(size_mb)` with `MAX_DOCUMENT_SIZE_LAMBDA_MB` env threshold
 
-#### Integration Development Tasks 📋
-- [ ] API framework development and documentation
-- [ ] Enterprise monitoring system integration
-- [ ] Backup and disaster recovery procedures
-- [ ] Configuration management and deployment automation
-- [ ] User management and access control systems
-- [ ] Audit logging for regulatory compliance
-- [ ] Technical support and maintenance procedures
+3. **Provenance (PROV-O)**
+   - `apps/provenance/prov_logging.py`
+     - Pure Cypher generator for `Entity/Activity/Agent` ingestion events
 
-## Future Development Considerations
+4. **Tests & Perf**
+   - `tests/unit/*` (anchoring, routing, provenance)
+   - `tests/performance/test_perf_smoke.py` (fast placeholder)
 
-### Advanced Constitutional Capabilities
-**Status**: Research and Preparation Phase
-**Target**: Consciousness representation and advanced constitutional validation
+5. **Docs**
+   - This `docs/ROADMAP.md` (canonical)
+   - Pointers under `docs/architecture/TECHNICAL_DECISIONS.md`, `docs/implementation/PROVENANCE_GUIDE.md`
 
-#### Advanced Development Preparation 📋
-- [ ] Consciousness representation architecture design
-- [ ] Multi-agent coordination protocol specification
-- [ ] Byzantine fault tolerance implementation planning
-- [ ] Democratic governance framework development
-- [ ] Advanced constraint satisfaction algorithm research
-- [ ] Performance scaling analysis for complex systems
-- [ ] Academic publication preparation for advanced features
+6. **CI**
+   - `performance-testing.yml` (PR + nightly)
 
-### Academic and Community Engagement
-**Status**: Preparation Phase
-**Target**: Field leadership and community contribution
+**Exit criteria**
+- Unit + perf smoke green in CI
+- Anchors deterministic; provenance Cypher valid; receipts baseline retained
 
-#### Academic Development Tasks 📋
-- [ ] ICML 2025 submission preparation
-- [ ] Open-source component extraction and documentation
-- [ ] Replication package development for research validation
-- [ ] Community engagement and collaboration framework
-- [ ] Technical standards development participation
-- [ ] Industry conference presentation preparation
-- [ ] Peer review and academic validation processes
+---
 
-## Success Metrics and Validation Framework
+## Phase 2 – Summary (completed)
 
-### Technical Performance Targets
-- Constitutional constraint validation: Maintain sub-170ms response times
-- Document processing: Achieve efficient ingestion and retrieval workflows
-- System reliability: Demonstrate consistent operation under normal load
-- Quality assurance: Maintain comprehensive testing and validation coverage
+- Tri-state constitutional engine & `/validate` route
+- Centralized reason codes
+- JSONL receipts (env-resolved path per emit; thread-safe)
+- Metrics counters/labels scaffold
+- Optional index dry-run utility
+- CI stabilized via `tests/conftest.py` for imports
 
-### Research and Development Effectiveness
-- Knowledge management improvement: Measurable enhancement in research workflow
-- Development velocity: Systematic progress through planned capabilities
-- Quality maintenance: Consistent adherence to development standards
-- Documentation excellence: Comprehensive and accurate technical documentation
+---
 
-### Strategic Positioning Objectives
-- Academic credibility: Preparation for peer-reviewed publication
-- Technical leadership: Demonstration of sophisticated engineering practices
-- Market positioning: Preparation for enterprise deployment scenarios
-- Innovation protection: Strategic development of competitive advantages
+## Phase 3 – Bias Filtration + Extraction
 
-## Resource Allocation and Timeline Estimates
+**Objectives**
+- Integrate **CBDT** for bias detection on technical/academic docs
+- NER + simple relation extraction; produce typed nodes/edges
+- Emit **bias analysis receipts** with model versions and thresholds
 
-### Immediate Priorities (Next 2-3 Months)
-Focus development effort on completing the document ingestion pipeline and knowledge management capabilities that provide immediate utility for research workflow enhancement while building confidence in the systematic development approach.
+**Tasks**
+- Model serving stub (CPU-first, GPU-optional)
+- Batch evaluation suite and golden datasets
+- Policy: fail-closed on high-risk bias score unless explicitly overridden
 
-### Medium-Term Development (3-6 Months)
-Advance constitutional framework capabilities through enhanced constraint validation, formal verification expansion, and security hardening that prepares the system for more sophisticated constitutional compliance validation.
+**SLOs**
+- Bias pass pipeline adds ≤ 35 ms p95 for short docs; batch path out-of-band
 
-### Long-Term Objectives (6-12 Months)
-Explore consciousness representation implementation and advanced constitutional capabilities once foundational infrastructure demonstrates reliable operation and provides proven value for knowledge management and research integration workflows.
+---
 
-This roadmap provides systematic tracking of development progress while maintaining focus on immediately useful capabilities that validate the ingestion-first architecture approach and build confidence for attempting more speculative constitutional AI implementations.
+## Phase 4 – HybridRAG / HyperGraphRAG
+
+**Objectives**
+- Hierarchical chunking → vector + graph retrieval → constitutional-checked synthesis
+- Query planner that selects between dense, sparse, and graph traversals
+
+**Tasks**
+- Chunker with overlap rules, language-aware boundaries
+- Retrieval orchestrator (LangChain/Autogen guardrails optional)
+- Neo4j + Qdrant hybrid queries; provenance propagation
+
+**SLOs**
+- End-to-end retrieval p95 ≤ 120 ms (hot cache), ≤ 250 ms (cold)
+
+---
+
+## Phase 5 – Observability & SLO Tightening
+
+**Objectives**
+- Live dashboards for latency, receipts volume, bias outcomes
+- Correlate receipts with decision paths and reason codes
+
+**Tasks**
+- Prometheus metrics export + Grafana boards
+- Receipt rotation & enrichment (policy_id, latency_ms, corr_id)
+- Perf regression guards (CI gates on p95 deltas)
+
+---
+
+## Data Contracts & Schemas (initial)
+
+- **Anchor record (PostgreSQL)**
+  - `anchor_id`, `doc_id`, `doc_type`, `sha256`, `ts`, `para_spans[]`
+
+- **Provenance (Neo4j)**
+  - `(doc:Entity:Document {id, type})`
+  - `(act:Activity {id, type, startTime})`
+  - `(ag:Agent {id, type})`
+  - Relationships: `:wasGeneratedBy`, `:wasAssociatedWith`
+
+- **Vector index (Qdrant)**
+  - `collection: "darf_docs_v1"`; payload: `anchor_id`, `doc_id`, `section_path`
+
+---
+
+## Receipts & Metrics (expanded plan)
+
+- **Receipt fields** (minimum): `decision`, `reason_code`, `principal_id`, `correlation_id`, `latency_ms`, `policy_id`, `ts`
+- **Metrics**: counters (`decision_total{decision,reason_code}`), histograms (`latency_ms_bucket`)
+
+---
+
+## Risks & Mitigations
+
+- **Model drift** → pin versions; periodic evals; receipt lineage
+- **Graph latency spikes** → bounded traversals; hot path indices; cache keys in Redis
+- **Cost pressure** → Lambda threshold tuning; batch large docs on EC2; compression
+
+---
+
+## Policy Gates (per PR)
+
+- Exactly one of each: `type:*`, `status:*`, `priority:*`
+- ≥ 1 `area:*`
+- Append-only receipts & audit artifacts for perf-sensitive changes
+- No `.tla/.cfg` changes in status-only PRs
+
+---
+
+## Definition of Done (phase-scoped)
+
+- Tests & CI green; p95 targets met or receipts added
+- Docs updated (this file + pointers)
+- Audit receipts under `docs/audit/<stream>/<timestamp>/…` where relevant
+
+---
+
+## Next Up (shortlist)
+
+- Wire MinIO upload client + content-type normalization
+- Neo4j driver integration for provenance writes
+- Bias filtration service stub + golden set
+- Chunker + dual-indexer (Qdrant + Neo4j)
+- Perf dashboards with p95/p99 tracking
+
+---
+
+## Appendix – Why this works
+
+- **Determinism first** (anchors, receipts) → reliable regression & audits
+- **Separation of concerns** → swap components without breaking contracts
+- **Hybrid retrieval** → higher recall with tractable latency
+- **Constitutional guard** → safety and sovereignty by construction
+
+This roadmap is maintained as the **single source of truth** for implementation sequencing. Keep it tight; append receipts where claims affect SLOs or safety.
