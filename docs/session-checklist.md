@@ -9,9 +9,9 @@
 - [x] Tighten Phase-2 CI workflow (cache + path filters)
 - [x] Install local deps & run tests (pytest)
 - [x] Commit & push branch
-- [x] Open PR with labels (current PR is this recover branch)
+- [x] Open PR with labels (latest PR kept; older closed)
 - [ ] Make Phase-2 check REQUIRED on `main` (GitHub UI)
-- [ ] Merge PR (squash) or enable auto-merge and wait for checks
+- [ ] Merge PR (squash) or auto-merge after checks pass
 - [ ] Prune remotes/branches (`git fetch --prune`, `git remote prune origin`)
 - [ ] Verify clean repo state (`git status -sb`, `git branch -r`)
 - [ ] Update CHANGELOG if needed
