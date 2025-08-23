@@ -13,3 +13,8 @@ Production wiring adds driver sessions, retention, and C2PA-style manifests.
 - Module: `apps/document_processor/upload.py`
 - Functions: `upload_bytes(...)`, `upload_file(...)`
 - Behavior: inject a MinIO-compatible client with `put_object(...)`. We infer content-type (e.g., markdown/json/pdf) and construct deterministic object keys under `UPLOAD_PREFIX` (default `docs/`).
+
+## Neo4j Schema
+- Module: `apps/provenance/schema.py`
+- Functions: `constraint_statements()`, `apply_constraints(driver)`
+- Idempotent: uses `IF NOT EXISTS` for constraints/indexes; safe to re-run in CI and at startup.
