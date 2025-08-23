@@ -18,3 +18,9 @@ Production wiring adds driver sessions, retention, and C2PA-style manifests.
 - Module: `apps/provenance/schema.py`
 - Functions: `constraint_statements()`, `apply_constraints(driver)`
 - Idempotent: uses `IF NOT EXISTS` for constraints/indexes; safe to re-run in CI and at startup.
+
+## Anchor Vector Store
+- Module: `tools/qdrant_bootstrap.py`
+- Functions: `collection_config(...)`, `ensure_collection(client, ...)`
+- Client: inject a Qdrant-like client exposing `get_collection` and `create_collection`.
+- Defaults: `size=1024`, `distance=Cosine`, `name=anchors`. Safe to re-run in CI and at startup.
