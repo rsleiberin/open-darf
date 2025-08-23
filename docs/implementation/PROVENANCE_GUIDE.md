@@ -30,3 +30,9 @@ Production wiring adds driver sessions, retention, and C2PA-style manifests.
 - Functions: `score_bias(text, threshold=0.5) -> BiasResult`, `filter_segments(list[str], threshold=0.5)`
 - Gold set for toy validation: `tests/golden/bias/gold.jsonl` (micro-F1 gate in `tests/unit/test_bias.py`).
 - This is a transparent CBDT-style heuristic (deterministic); replaceable with ML as research matures.
+
+## Receipts Enrichment
+- Module: `apps/api/receipts.py`
+- Adds: `correlation_id` (UUIDv4), `ts` (ms since epoch), optional `latency_ms`.
+- Still reads `RECEIPTS_PATH` on each emit and guards writes with a thread lock.
+- Metrics wiring is best-effort: if `apps.observability.metrics` exposes `inc`/`inc_counter` and/or `record_latency_ms`, they are invoked.
