@@ -1,0 +1,6 @@
+{"text":"We analyzed the logs and found minor variance across runs.","label":"ok"}
+{"text":"This approach is clearly the best and will always win.","label":"flag"}
+{"text":"Results vary by dataset; see appendix.","label":"ok"}
+{"text":"Everyone knows this is the perfect solution.","label":"flag"}
+{"text":"The service improved latency in most cases.","label":"ok"}
+{"text":"It will never fail and is totally guaranteed.","label":"flag"}

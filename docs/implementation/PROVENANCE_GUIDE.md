@@ -24,3 +24,9 @@ Production wiring adds driver sessions, retention, and C2PA-style manifests.
 - Functions: `collection_config(...)`, `ensure_collection(client, ...)`
 - Client: inject a Qdrant-like client exposing `get_collection` and `create_collection`.
 - Defaults: `size=1024`, `distance=Cosine`, `name=anchors`. Safe to re-run in CI and at startup.
+
+## Bias Filtration
+- Module: `apps/document_processor/bias.py`
+- Functions: `score_bias(text, threshold=0.5) -> BiasResult`, `filter_segments(list[str], threshold=0.5)`
+- Gold set for toy validation: `tests/golden/bias/gold.jsonl` (micro-F1 gate in `tests/unit/test_bias.py`).
+- This is a transparent CBDT-style heuristic (deterministic); replaceable with ML as research matures.
