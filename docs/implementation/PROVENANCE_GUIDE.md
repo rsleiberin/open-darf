@@ -8,3 +8,8 @@ Production wiring adds driver sessions, retention, and C2PA-style manifests.
 - Module: `apps/provenance/neo4j_write.py`
 - Env: `NEO4J_URI`, `NEO4J_USER`, `NEO4J_PASSWORD`
 - Function: `write_ingestion_event(ev, driver=None)` — accepts injected driver for tests; uses env when not provided.
+
+## Ingestion Upload
+- Module: `apps/document_processor/upload.py`
+- Functions: `upload_bytes(...)`, `upload_file(...)`
+- Behavior: inject a MinIO-compatible client with `put_object(...)`. We infer content-type (e.g., markdown/json/pdf) and construct deterministic object keys under `UPLOAD_PREFIX` (default `docs/`).
