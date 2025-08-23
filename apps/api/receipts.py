@@ -6,77 +6,57 @@ import tempfile
 import threading
 import time
 import uuid
-from typing import Dict, Any
+from typing import Any, Dict, Optional
 
 _lock = threading.Lock()
 
 
 def _path() -> str:
     """
-    Resolve path on every call (env-redirect friendly).
+    Resolve the receipts path on EACH emit so tests/runtime can set RECEIPTS_PATH after import.
     """
     p = os.getenv("RECEIPTS_PATH")
     if not p:
-        p = os.path.join(tempfile.gettempdir(), "darf_receipts.jsonl")
+        p = os.path.join(tempfile.gettempdir(), "receipts.jsonl")
     return p
 
 
-def _enrich(rec: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Add correlation_id and timestamp; compute latency if t0 is supplied.
-    Never mutates the caller's dict.
-    """
-    out: Dict[str, Any] = dict(rec)
-    # correlation for traceability
-    out.setdefault("correlation_id", str(uuid.uuid4()))
-    # event time (ms since epoch)
-    out.setdefault("ts", int(time.time() * 1000))
-
-    # latency enrichment:
-    # - preferred: caller supplies latency_ms
-    # - fallback: if caller passes t0 (perf_counter at request start), compute and remove t0
-    if "latency_ms" not in out and "t0" in out:
+def _enrich(record: Dict[str, Any]) -> Dict[str, Any]:
+    out = dict(record)
+    if "correlation_id" not in out:
+        out["correlation_id"] = str(uuid.uuid4())
+    if "ts" not in out:
+        out["ts"] = int(time.time() * 1000)
+    t0 = out.pop("t0", None)
+    if t0 is not None and "latency_ms" not in out:
         try:
-            start = float(out.get("t0"))  # type: ignore[arg-type]
-            out["latency_ms"] = (time.perf_counter() - start) * 1000.0
+            out["latency_ms"] = max(0.0, (time.perf_counter() - float(t0)) * 1000.0)
         except Exception:
+            # Don't let observability break writes
             pass
-        finally:
-            out.pop("t0", None)
     return out
 
 
-def emit(record: Dict[str, Any]) -> str:
+def emit(payload: Optional[Dict[str, Any]] = None, /, **kwargs: Any) -> str:
     """
-    Append one JSON object per line to the receipts file.
-    Thread-safe; resolves path per call; enriches record with correlation & ts.
-    Returns the path written to.
+    JSONL emitter. Supports BOTH calling styles:
+      - emit({"decision": "...", ...})
+      - emit(decision="...", reason_code="...", ...)
+    Returns the absolute path written to.
     """
-    enriched = _enrich(record)
+    data: Dict[str, Any] = {}
+    if payload is not None:
+        if not isinstance(payload, dict):
+            raise TypeError("payload must be a dict if provided")
+        data.update(payload)
+    if kwargs:
+        data.update(kwargs)
 
-    # Optional metrics wiring (best-effort; no hard dep)
-    try:
-        from apps.observability import metrics  # type: ignore
-
-        # counters may or may not exist; guard with getattr
-        inc = getattr(metrics, "inc", None) or getattr(metrics, "inc_counter", None)
-        if callable(inc):
-            inc("receipts_emitted", labels={"decision": enriched.get("decision")})
-        rec_lat = getattr(metrics, "record_latency_ms", None)
-        if callable(rec_lat) and "latency_ms" in enriched:
-            rec_lat(decision=enriched.get("decision"), ms=float(enriched["latency_ms"]))
-    except Exception:
-        # metrics wiring must not throw
-        pass
-
-    p = _path()
-    line = json.dumps(enriched, separators=(",", ":"), ensure_ascii=False)
+    rec = _enrich(data)
+    path = _path()
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    line = json.dumps(rec, separators=(",", ":"))
     with _lock:
-        with open(p, "a", encoding="utf-8") as fh:
-            fh.write(line + "\n")
-    return p
-
-
-# Provide a compatibility alias if older code imported a different name
-write = emit  # alias
-EMIT = emit  # optional constant some code bases prefer
+        with open(path, "a", encoding="utf-8") as f:
+            f.write(line + "\n")
+    return path
