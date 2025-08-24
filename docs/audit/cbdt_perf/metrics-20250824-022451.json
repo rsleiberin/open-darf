@@ -1,0 +1,8 @@
+{
+  "n": 150,
+  "avg_ms_no_receipts": 0.014658688645189008,
+  "avg_ms_with_receipts": 0.24441950061979392,
+  "overhead_ms": 0.2297608119746049,
+  "overhead_pct": 1567.4035893382086,
+  "limit_ms_per_doc": 2000.0
+}

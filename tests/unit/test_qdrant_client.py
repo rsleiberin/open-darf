@@ -1,28 +1,53 @@
-import os
-import pytest
-from apps.search.qdrant_client import QdrantSearch
-
-pytestmark = pytest.mark.skipif(
-    not os.getenv("QDRANT_URL"),
-    reason="QDRANT_URL not set; source .env.local or run bin/use-env.sh",
-)
+from apps.anchors.qdrant_client import QdrantWrapper, QdrantConfig
 
 
-def test_upsert_and_search_top1_and_filter():
-    q = QdrantSearch()
-    q.ensure_collection(dim=3, distance="Cosine")
+class FakeQdrant:
+    def __init__(self):
+        self.collections = {}
+        self.upserts = []
 
-    # Clean slate: use a unique collection for unit tests to avoid collisions
-    # (Alternatively, run recreate_collection, but we keep it non-destructive for now.)
-    # Insert three one-hot points
-    q.upsert([1, 0, 0], {"anchor_id": "a1", "user_id": "ryan"}, point_id=1)
-    q.upsert([0, 1, 0], {"anchor_id": "a2", "user_id": "ryan"}, point_id=2)
-    q.upsert([0, 0, 1], {"anchor_id": "a3", "user_id": "ryan"}, point_id=3)
+    # simulate get_collection / create_collection
+    def get_collection(self, name):
+        if name not in self.collections:
+            raise RuntimeError("not found")
+        return self.collections[name]
 
-    # Top1 should be id=1 for [1,0,0]
-    res = q.query([1, 0, 0], top_k=3)
-    assert res[0].id == 1
+    def create_collection(self, collection_name, vectors_config):
+        self.collections[collection_name] = {"vectors_config": vectors_config}
 
-    # Filter by user_id (same result here, but verifies filter path)
-    resf = q.query([1, 0, 0], top_k=3, user_id="ryan")
-    assert resf[0].id == 1
+    # simulate upsert
+    def upsert(self, collection_name, points):
+        assert (
+            collection_name in self.collections
+        ), "collection must exist before upsert"
+        assert {"ids", "vectors", "payloads"} <= set(points.keys())
+        n = len(points["ids"])
+        assert n == len(points["vectors"]) == len(points["payloads"])
+        self.upserts.append((collection_name, n))
+
+
+def test_ensure_collection_idempotent():
+    fake = FakeQdrant()
+    wrap = QdrantWrapper(fake)
+    cfg = QdrantConfig(
+        url="http://fake", collection="anchors", vector_size=8, distance="Cosine"
+    )
+    wrap.ensure_collection(cfg)
+    # second call must not raise and must not overwrite
+    wrap.ensure_collection(cfg)
+    assert "anchors" in fake.collections
+    assert fake.collections["anchors"]["vectors_config"]["size"] == 8
+
+
+def test_upsert_points_ok():
+    fake = FakeQdrant()
+    wrap = QdrantWrapper(fake)
+    cfg = QdrantConfig(url="http://fake", collection="anchors", vector_size=4)
+    wrap.ensure_collection(cfg)
+    pts = [
+        ("a", [0.1, 0.2, 0.3, 0.4], {"doc": "d1", "pos": 0}),
+        ("b", [0.2, 0.3, 0.4, 0.5], {"doc": "d1", "pos": 1}),
+    ]
+    n = wrap.upsert(cfg.collection, pts)
+    assert n == 2
+    assert fake.upserts and fake.upserts[-1] == ("anchors", 2)
