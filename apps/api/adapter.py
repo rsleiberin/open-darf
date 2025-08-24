@@ -1,14 +1,20 @@
 from __future__ import annotations
+
 from typing import Any, Mapping
-
-from apps.api.dto import ValidationDTO, to_validation_dto
-from apps.constitution_engine import engine
+from apps.constitution_engine import engine as _engine
 
 
-def validate(ctx: Mapping[str, Any], neo4j_session) -> ValidationDTO:
+def validate(ctx: Mapping[str, Any], session: Any) -> dict[str, str]:
     """
-    API-edge adapter: evaluates the request via engine and returns a DTO
-    suitable for HTTP responses. Fail-closed behavior is enforced in the engine.
+    Adapter-facing validation: returns a small DTO:
+      - decision: "ALLOW" | "DENY" | "INDETERMINATE"
+      - reason_code: first reason when indeterminate, else "no-signal"
     """
-    vr = engine.evaluate_request(ctx, neo4j_session)
-    return to_validation_dto(vr)
+    result = _engine.evaluate_request(ctx, session)
+    decision_str = str(result.decision)
+    reason_code = (
+        result.reasons[0]
+        if decision_str == "INDETERMINATE" and result.reasons
+        else "no-signal"
+    )
+    return {"decision": decision_str, "reason_code": reason_code}
