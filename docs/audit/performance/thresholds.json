@@ -1,0 +1,8 @@
+{
+  "vector_search_p95_ms": 10,
+  "graph_query_p95_ms": 50,
+  "bias_detection_f1_min": 0.91,
+  "bias_detection_latency_s_max": 2.0,
+  "provenance_overhead_pct_max": 4.0,
+  "lineage_query_ms_max": 100
+}
