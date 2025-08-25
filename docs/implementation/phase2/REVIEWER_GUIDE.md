@@ -27,3 +27,11 @@ pytest -q tests -k 'not postgres_connection and not neo4j' -s -vv
 ### Env flags
 - Graph precedence is behind `CONSTITUTION_USE_GRAPH_PRECEDENCE=1`.
 - Production fail-open is clamped off at adapter entry; `ENGINE_FAIL_OPEN` is ignored in prod.
+
+### Enable graph precedence locally
+
+Export the env flag and run the tests; no live DB required:
+
+    export GRAPH_PRECEDENCE=1
+    pytest -q tests/constitution_graph/test_precedence_adapter.py
+    pytest -q tests/api/test_validation_dto_and_logging.py

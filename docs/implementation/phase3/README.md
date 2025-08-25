@@ -16,3 +16,10 @@ This PR introduces a **passing scaffold** for the pipeline:
 Set `PIPELINE_PERF=1` to include timing stats in receipts:
 - `perf.parse_ms` and `perf.process_ms` with `p50/p95/max/avg/n`
 - `obs.parser_counts` (e.g., `{"text": N, "noop": M}`)
+
+## Parser flags
+
+- `PIPELINE_PARSER_HTML=1` — enable minimal HTML parser (UTF-8/Latin-1 decode).
+- `PIPELINE_PARSER_PDF=1` — enable PDF detector stub (no text extraction).
+- `PIPELINE_PARSER_DOCX=1` — enable DOCX detector stub (no unzip/parse).
+- `PIPELINE_FORCE_MIME=1` — bypass text/plain fast-path and route via flags.
