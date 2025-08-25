@@ -1,0 +1,18 @@
+{
+  "timestamp_utc": "2025-08-25T01:59:09Z",
+  "scenario": "neo4j_unavailable_simulated",
+  "expected_posture": "fail_closed",
+  "result": {
+    "decision": "INDETERMINATE",
+    "reason_code": "graph_query_error",
+    "allow_exists": false,
+    "deny_exists": false,
+    "query_ms": 0.0010020448826253414,
+    "error": "simulated graph outage"
+  },
+  "elapsed_ms": 0.13687595492228866,
+  "assertions": {
+    "decision_is_indeterminate": true,
+    "reason_is_graph_query_error": true
+  }
+}

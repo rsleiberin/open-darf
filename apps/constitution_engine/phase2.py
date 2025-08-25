@@ -30,6 +30,8 @@ def _fail_closed_default() -> ValidationResult:
     Use fail-closed by default when schema is absent or DB is unreachable.
     Allow a local/dev override via ENGINE_FAIL_OPEN=true.
     """
-    if os.getenv("ENGINE_FAIL_OPEN", "false").lower() in ("1", "true", "yes"):
+    if os.getenv("APP_ENV", "").lower() not in ("production", "prod") and os.getenv(
+        "ENGINE_FAIL_OPEN", "false"
+    ).lower() in ("1", "true", "yes"):
         return ValidationResult(Decision.ALLOW, "fail_open:dev_override")
     return ValidationResult(Decision.INDETERMINATE, "neo4j_schema_missing:fail_closed")

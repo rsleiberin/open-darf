@@ -1,0 +1,21 @@
+{
+  "timestamp_utc": "2025-08-25T02:04:07Z",
+  "samples": 3000,
+  "mix_counts": {
+    "allow_only": 754,
+    "deny_only": 735,
+    "both": 743,
+    "none": 768
+  },
+  "metrics_ms": {
+    "p50": 0.0023539760150015354,
+    "p95": 0.002474989742040634,
+    "p99": 0.004357949364930391,
+    "avg": 0.0024285482553144297,
+    "min": 0.0022239983081817627,
+    "max": 0.01642096322029829,
+    "total_ms": 9.807298018131405
+  },
+  "neo4j_enabled": false,
+  "notes": "Adapter + precedence resolver only (no live DB). Graph path latency budget validated at code-path level."
+}

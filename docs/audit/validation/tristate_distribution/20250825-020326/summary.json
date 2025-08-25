@@ -1,0 +1,22 @@
+{
+  "timestamp_utc": "2025-08-25T02:03:26Z",
+  "scenario": "synthetic-tristate-distribution",
+  "total_samples": 100,
+  "counts": {
+    "ALLOW": 50,
+    "DENY": 40,
+    "INDETERMINATE": 10
+  },
+  "reasons": {
+    "allow_present_no_deny": 50,
+    "deny_precedence": 40,
+    "graph_query_error": 5,
+    "no_allow_no_deny": 5
+  },
+  "timing_ms": {
+    "min": 0.0011119991540908813,
+    "avg": 0.002456318470649421,
+    "max": 0.014227000065147877
+  },
+  "notes": "Adapter-level tri-state validation; outage path exercises fail-closed -> INDETERMINATE."
+}

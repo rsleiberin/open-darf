@@ -1,4 +1,4 @@
-# AGENT\_OPERATING\_GUIDE.md (Concise vNext)
+# AGENT_OPERATING_GUIDE.md (Concise vNext)
 
 > **Scope:** How every agent works in this repo. Keep decisions constitutional, verified, observable, and fast.
 > **Hard limit:** This file must stay **< 8k chars**.
@@ -135,6 +135,12 @@ Do **not** create labels from CI/scripts. Use the GitHub UI.
 * Audit receipts: `docs/audit/<stream>/<YYYYMMDD-HHMM>/…/*.json`
 * Don’t commit: `var/**` (local drafts/temp outputs).
 
+**Shell heredocs (for ops scripts)**
+
+* Use **UPPER\_SNAKE** markers with ticket or phase context (e.g., `PHASE2_WIRE_240`).
+* One logical step per heredoc; name reflects **intent + scope**.
+* Scripts must be **idempotent** and **annotated** (echo banners before actions).
+
 ---
 
 ## 9) Local Neo4j (dev convenience)
@@ -167,12 +173,13 @@ Reference key receipts in PR bodies.
 
 ## 11) Constitutional Validation (every feature)
 
-Every new capability must pass a **constitutional guard**:
+Every capability must pass a **constitutional guard**:
 
 * Resolve to `ALLOW|DENY|INDETERMINATE` with a machine-readable `reason_code`.
 * **Deny precedence** over allow.
 * **Fail-closed** on uncertainty (system errors, missing schema/data).
 * Leave an **audit trail** (receipts/logs) for the decision.
+* Experimental paths must be **env-gated**; defaults stay **safe**.
 
 ---
 
@@ -196,13 +203,29 @@ Every new capability must pass a **constitutional guard**:
 
 ---
 
-## 14) Output Conventions (UI-first, Script-second)
+## 14) Output & Status Conventions (UI-first, Script-second)
 
-* Start with **READ ME FIRST** + bullet **ACTIONS**.
-* Provide **OPTIONAL: TERMINAL SCRIPT** (≤200 lines; idempotent).
-* Every ops deliverable is dual-mode:
-  (A) human summary (decisions, risks, exact file paths),
-  (B) copy-paste script to do the work.
+**Human-first status card (top of each turn)**
+
+* **Just finished:** what completed **this turn**.
+* **Up next:** the next concrete step.
+* **Errors this step / Retries:** integers.
+* **Signals:** brief: pre-commit fixes, test summary, new receipt paths.
+
+**Checklist markers**
+
+* 🟩 = **newly completed this turn**
+* 🟦 = **completed earlier**
+* ⏳ = **in progress**
+* ❌ = **error**
+* 🔁 = **retry**
+
+Always list **Just finished** first; then **Up next**; then the **full checklist** ordered by execution timeline (newest completions first). Keep each item to one action.
+
+**Deliverable format**
+
+* (A) **Human summary**: decisions, risks, exact file paths.
+* (B) **OPTIONAL: Terminal script** (≤200 lines; idempotent).
 * Don’t auto-execute or imply background work.
 
 ---
@@ -211,7 +234,7 @@ Every new capability must pass a **constitutional guard**:
 
 * If a terminal **crashes**, provide a concise **resume script** only on request.
 * Never run background tasks or promise future work; **perform in-message**.
-* Keep env overrides explicit; **`ENGINE_FAIL_OPEN` is dev-only** and **must not** be set in CI/prod.
+* Keep env overrides explicit; **`ENGINE_FAIL_OPEN` is dev-only** and **must not** be set in CI/prod. If present in prod contexts, **ignore/clear** and **fail-closed**.
 
 ---
 

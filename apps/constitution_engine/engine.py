@@ -153,7 +153,9 @@ def _probe_session_signals(ctx: Mapping[str, Any], session: Any) -> Tuple[bool, 
 
 def evaluate_request(ctx: Mapping[str, Any], session: Any) -> SimpleNamespace:
     """Evaluate constitutional signals with deny precedence and strict logging."""
-    fail_open = os.getenv("ENGINE_FAIL_OPEN", "").lower() in ("1", "true", "yes", "y")
+    fail_open = (os.getenv("APP_ENV", "").lower() not in ("production", "prod")) and (
+        os.getenv("ENGINE_FAIL_OPEN", "").lower() in ("1", "true", "yes", "y")
+    )
     reasons: list[str] = []
     decision_str: str
 
