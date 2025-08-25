@@ -1,0 +1,51 @@
+{
+  "pipeline_run_id": "198e3276dd0-6b56-9c3f71b6073f1890",
+  "doc_id": "budget-micro-001",
+  "flags": {
+    "PIPELINE_CBDT": true,
+    "PIPELINE_PERF": true
+  },
+  "timing_ms": {
+    "cbdt_total": 0.017,
+    "p50": 0.017,
+    "p95": 0.017,
+    "max": 0.017
+  },
+  "counters": {
+    "counts_by_label": {
+      "loaded_language": 1,
+      "hedging": 1,
+      "weasel_words": 1
+    },
+    "findings_total": 3,
+    "top_cues": [
+      "clearly",
+      "undeniable",
+      "might",
+      "some say"
+    ],
+    "model": {
+      "name": "LocalCBDT-heuristic",
+      "version": "0.1.0"
+    },
+    "blocks_scored": 2
+  },
+  "model": {
+    "name": "LocalCBDT-heuristic",
+    "version": "0.1.0",
+    "provider": "LocalCBDT-heuristic"
+  },
+  "signals": [],
+  "findings_sample": [
+    {
+      "block_id": "b1",
+      "label": "loaded_language",
+      "score": 0.8,
+      "cues": [
+        "clearly",
+        "undeniable"
+      ],
+      "span": null
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "doc_id": "prov-shape-001",
+  "jsonld": {
+    "@context": "https://www.w3.org/ns/prov#",
+    "entity": {
+      "@id": "urn:doc:prov-shape-001",
+      "prov:type": "prov:Entity"
+    },
+    "activity": {
+      "@id": "urn:activity:pipeline-run_once",
+      "prov:type": "prov:Activity",
+      "prov:startedAtTime": "2025-08-25T21:47:17.208466+00:00",
+      "prov:endedAtTime": "2025-08-25T21:47:17.208466+00:00"
+    },
+    "agent": {
+      "@id": "urn:agent:pipeline",
+      "prov:type": "prov:SoftwareAgent"
+    },
+    "wasGeneratedBy": {
+      "prov:entity": "urn:doc:prov-shape-001",
+      "prov:activity": "urn:activity:pipeline-run_once"
+    },
+    "wasAssociatedWith": {
+      "prov:activity": "urn:activity:pipeline-run_once",
+      "prov:agent": "urn:agent:pipeline"
+    }
+  },
+  "timing_ms": 0.03225996624678373,
+  "flags": {
+    "PIPELINE_PROV": true,
+    "PIPELINE_PERF": true
+  }
+}

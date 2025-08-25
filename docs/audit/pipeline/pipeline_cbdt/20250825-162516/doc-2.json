@@ -1,0 +1,47 @@
+{
+  "pipeline_run_id": "198e31f0237-66c3-23e3813d3bb19445",
+  "doc_id": "doc-2",
+  "flags": {
+    "PIPELINE_CBDT": true,
+    "PIPELINE_PERF": true
+  },
+  "timing_ms": {
+    "cbdt_total": 0.022,
+    "p50": 0.022,
+    "p95": 0.022,
+    "max": 0.022
+  },
+  "counters": {
+    "counts_by_label": {
+      "loaded_language": 1,
+      "appeal_to_authority": 1
+    },
+    "findings_total": 2,
+    "top_cues": [
+      "clearly",
+      "experts say"
+    ],
+    "model": {
+      "name": "LocalCBDT-heuristic",
+      "version": "0.1.0"
+    },
+    "blocks_scored": 1
+  },
+  "model": {
+    "name": "LocalCBDT-heuristic",
+    "version": "0.1.0",
+    "provider": "LocalCBDT-heuristic"
+  },
+  "signals": [],
+  "findings_sample": [
+    {
+      "block_id": "b1",
+      "label": "loaded_language",
+      "score": 0.7,
+      "cues": [
+        "clearly"
+      ],
+      "span": null
+    }
+  ]
+}

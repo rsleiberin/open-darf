@@ -1,0 +1,12 @@
+{
+  "doc_id": "oscar-shape-001",
+  "version": "0",
+  "risk_score": 1.0,
+  "tags": [
+    "appeal_to_authority",
+    "hedging",
+    "loaded_language"
+  ],
+  "timing_ms": 0.006051035597920418,
+  "receipt_path": null
+}

@@ -1,0 +1,70 @@
+{
+  "count": 1,
+  "reports": {
+    "r1": {
+      "parser": "text",
+      "bias": {
+        "counts": {
+          "loaded_language": 2,
+          "appeal_to_authority": 1
+        },
+        "hits": [
+          [
+            "loaded_language",
+            "clearly"
+          ],
+          [
+            "loaded_language",
+            "undeniable"
+          ],
+          [
+            "appeal_to_authority",
+            "experts say"
+          ]
+        ]
+      },
+      "cbdt": {
+        "counts_by_label": {
+          "loaded_language": 1,
+          "appeal_to_authority": 1
+        },
+        "findings_total": 2,
+        "receipt_path": "docs/audit/pipeline/pipeline_cbdt/20250825-162516/r1.json",
+        "receipt_last": "docs/audit/pipeline/pipeline_cbdt/_last/r1.json",
+        "signals": [
+          "obs_error:none"
+        ]
+      }
+    }
+  },
+  "perf": {
+    "parse_ms": {
+      "p50": 0.0025050248950719833,
+      "p95": 0.0025050248950719833,
+      "max": 0.0025050248950719833,
+      "avg": 0.0025050248950719833,
+      "n": 1
+    },
+    "process_ms": {
+      "p50": 0.45623298501595855,
+      "p95": 0.45623298501595855,
+      "max": 0.45623298501595855,
+      "avg": 0.45623298501595855,
+      "n": 1
+    },
+    "cbdt_ms": {
+      "p50": 0.42288104305043817,
+      "p95": 0.42288104305043817,
+      "max": 0.42288104305043817,
+      "avg": 0.42288104305043817,
+      "n": 1
+    }
+  },
+  "obs": {
+    "parser_counts": {
+      "text": 1
+    },
+    "cbdt_runs": 1,
+    "cbdt_findings_total": 2
+  }
+}

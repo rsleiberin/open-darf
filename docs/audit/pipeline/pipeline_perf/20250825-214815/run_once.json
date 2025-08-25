@@ -1,0 +1,50 @@
+{
+  "count": 2,
+  "reports": {
+    "a.txt": {
+      "parser": "text",
+      "bias": {
+        "counts": {},
+        "hits": [],
+        "cbdt": {
+          "score": 0.0,
+          "labels": []
+        }
+      }
+    },
+    "nested/b.txt": {
+      "parser": "text",
+      "bias": {
+        "counts": {},
+        "hits": [],
+        "cbdt": {
+          "score": 0.0,
+          "labels": []
+        }
+      }
+    }
+  },
+  "perf": {
+    "parse_ms": {
+      "p50": 0.0031009840313345194,
+      "p95": 0.003971261321566999,
+      "max": 0.004067958798259497,
+      "avg": 0.0031009840313345194,
+      "n": 2
+    },
+    "process_ms": {
+      "p50": 0.008700997568666935,
+      "p95": 0.01000422635115683,
+      "max": 0.010149029549211264,
+      "avg": 0.008700997568666935,
+      "n": 2
+    }
+  },
+  "obs": {
+    "parser_counts": {
+      "text": 2
+    },
+    "cbdt_runs": 0,
+    "cbdt_findings_total": 0
+  }
+}
