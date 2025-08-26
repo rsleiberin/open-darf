@@ -29,8 +29,8 @@ Module: apps/extractors/biobert.py  →  extract(text) -> list[Entity]
 **Enable:** EXTRACTOR_BIO=1
 Module: apps/extractors/biobert.py  →  extract(text) -> list[Entity]
 
-## Week 3 — Text2NKG interface
+## Week 4 — Temporal modeling
 
-**Enable:** EXTRACTOR_NKG=1
-Module: apps/extractors/text2nkg.py → extract(text) -> list[Hyperedge]
-Perf: RUN_PERF=1 pytest -q tests/performance/test_text2nkg_perf.py
+**API:** apps/hyperrag/temporal_index.py
+- Types: TemporalSpan, TemporalHyperedge
+- Query: temporal_filter(edges, window, mode={overlap|within})
