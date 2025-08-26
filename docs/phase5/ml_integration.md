@@ -29,8 +29,24 @@ Module: apps/extractors/biobert.py  →  extract(text) -> list[Entity]
 **Enable:** EXTRACTOR_BIO=1
 Module: apps/extractors/biobert.py  →  extract(text) -> list[Entity]
 
+## Week 1 — SciBERT integration
+
+**Paths:** apps/extractors/scibert.py
+**Enable:** EXTRACTOR_SCI=1
+**Tests:** tests/extractors/test_scibert_stub.py
+**Perf (gated):** RUN_PERF=1 tests/performance/test_scibert_perf.py
+
 ## Week 4 — Temporal modeling
 
 **API:** apps/hyperrag/temporal_index.py
-- Types: TemporalSpan, TemporalHyperedge
-- Query: temporal_filter(edges, window, mode={overlap|within})
+**Types:** TemporalSpan, TemporalHyperedge
+**Query:** temporal_filter(edges, window, mode={overlap|within})
+**Tests:** tests/temporal/test_temporal_index.py
+
+## Week 3 — Text2NKG interface
+
+**Paths:** `apps/extractors/text2nkg.py`
+**Enable:** `EXTRACTOR_NKG=1`
+**Validation:** hyperedge schema + `temporal_index` compatibility
+**Tests:** `tests/text2nkg/test_interface.py`
+**Perf (gated):** `RUN_PERF=1 pytest -q tests/performance/test_text2nkg_perf.py`
