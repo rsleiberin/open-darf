@@ -1,49 +1,63 @@
+#!/usr/bin/env python3
 from __future__ import annotations
-from dataclasses import dataclass
-from typing import Any, Dict, Tuple
+import os
+import json
+import urllib.request
+import urllib.error
+import datetime
+import pathlib
+
+HOST = os.environ.get("QDRANT_HTTP", "http://127.0.0.1:6333")
+COLL = os.environ.get("QDRANT_COLL", "facts")
+D = int(os.environ.get("QDRANT_D", "384"))
 
 
-@dataclass
-class VectorConfig:
-    size: int = 1024
-    distance: str = "Cosine"  # Accept: Cosine | Dot | Euclid
+def req(method: str, path: str, data=None):
+    url = HOST + path
+    body = None
+    if data is not None:
+        body = json.dumps(data).encode("utf-8")
+    r = urllib.request.Request(url, data=body, method=method)
+    if data is not None:
+        r.add_header("Content-Type", "application/json")
+    with urllib.request.urlopen(r, timeout=10) as resp:
+        return json.loads(resp.read().decode())
 
 
-def collection_config(
-    name: str = "anchors", *, vec: VectorConfig = VectorConfig()
-) -> Dict[str, Any]:
-    """
-    Declarative config dict for a Qdrant collection. Pure function.
-    """
-    return {
-        "name": name,
-        "vectors": {"size": vec.size, "distance": vec.distance},
-        "on_disk": True,
-        "optimizers_config": {"default_segment_number": 2},
-        # Add payload schema later if/when we lock fields
-    }
-
-
-def ensure_collection(
-    client: Any, name: str = "anchors", *, vec: VectorConfig = VectorConfig()
-) -> Tuple[bool, Dict[str, Any]]:
-    """
-    Idempotently ensure a collection exists using an injected client.
-    Expected client minimal surface:
-      - get_collection(name) -> dict     (raises KeyError if not found)
-      - create_collection(collection_name=<str>, vectors_config=<dict>) -> any
-    Returns (created, summary_dict).
-    """
+def main() -> int:
+    # Create if missing
     try:
-        existing = client.get_collection(name)
-        cfg = existing.get("config") if isinstance(existing, dict) else None
-        return (False, {"ok": True, "name": name, "existing": True, "config": cfg})
-    except KeyError:
-        pass
-
-    vectors_cfg = {"size": vec.size, "distance": vec.distance}
-    client.create_collection(collection_name=name, vectors_config=vectors_cfg)
-    return (
-        True,
-        {"ok": True, "name": name, "created": True, "config": {"vectors": vectors_cfg}},
+        req("GET", f"/collections/{COLL}")
+    except Exception:
+        req(
+            "PUT",
+            f"/collections/{COLL}",
+            {
+                "vectors": {"size": D, "distance": "Cosine"},
+                "hnsw_config": {"m": 16, "ef_construct": 128},
+            },
+        )
+    # Receipt
+    info = req("GET", f"/collections/{COLL}")
+    stamp = datetime.datetime.utcnow().strftime("%Y%m%d-%H%M%S")
+    outdir = pathlib.Path("docs/audit/storage_bootstrap") / stamp
+    outdir.mkdir(parents=True, exist_ok=True)
+    (outdir / "qdrant_info.json").write_text(
+        json.dumps(
+            {
+                "timestamp_utc": datetime.datetime.utcnow().isoformat(
+                    timespec="seconds"
+                )
+                + "Z",
+                "info": info,
+            },
+            indent=2,
+        ),
+        encoding="utf-8",
     )
+    print(f"Qdrant bootstrap receipt → {outdir}/qdrant_info.json")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
