@@ -31,3 +31,10 @@ This avoids multi-rel reification bloat and keeps roles explicit.
 ## Compliance hooks
 All graph writes must consult `evaluate_action(...)` (fail-closed). The `GuardedGraphStore` enforces this around:
 - `upsert_entity`, `upsert_hyperedge`, `relate`.
+
+## Role fanout sanity & receipts
+
+- **IndexSim**: in-repo, service-free adjacency/fanout helper (apps/hyperrag/index_sim.py) used for local sanity and perf micro-bench.
+- **Perf (gated)**: `tests/performance/test_storage_tuning.py` runs when `RUN_PERF=1`; thresholds lenient and CI-safe.
+- **Receipts**: always written to pytest `tmp_path`; optional mirror to `docs/audit/_last/` only when `WRITE_RECEIPTS=1` and not in CI.
+- **No external services** are required by these tests.
