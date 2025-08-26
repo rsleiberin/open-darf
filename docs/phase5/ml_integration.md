@@ -28,3 +28,9 @@ Module: apps/extractors/biobert.py  →  extract(text) -> list[Entity]
 
 **Enable:** EXTRACTOR_BIO=1
 Module: apps/extractors/biobert.py  →  extract(text) -> list[Entity]
+
+## Week 3 — Text2NKG interface
+
+**Enable:** EXTRACTOR_NKG=1
+Module: apps/extractors/text2nkg.py → extract(text) -> list[Hyperedge]
+Perf: RUN_PERF=1 pytest -q tests/performance/test_text2nkg_perf.py
