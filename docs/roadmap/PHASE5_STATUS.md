@@ -7,8 +7,8 @@
 - ✅ Group 5: Temporal model scaffold (timespan extraction)
 - ✅ Group 6: Constitutional middleware (pre/post; DENY precedence)
 - ✅ Group 7: Perf hooks & QA (RUN_PERF gating)
-- ⏳ Group 8: Docs & issues (this doc)
-- ⏳ Group 9: Risks & rollback hardening
+- ✅ Group 8: Docs & issues (this doc)
+- ✅ Group 9: Risks & rollback hardening
 
 ## How to run locally
 
