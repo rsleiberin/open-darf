@@ -35,3 +35,6 @@ __pycache__/
 .vscode/
 .DS_Store
 verification/tla/tools/
+/var/infodump/
+/docs/audit/*
+!docs/audit/.gitkeep
