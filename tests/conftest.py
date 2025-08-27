@@ -1,7 +1,14 @@
-# Ensure repo root is on sys.path so "apps.*" imports work on CI runners.
-import os
-import sys
+import pytest
 
-_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
-if _ROOT not in sys.path:
-    sys.path.insert(0, _ROOT)
+
+@pytest.fixture(autouse=True)
+def isolate_flags(monkeypatch):
+    # Default all feature flags OFF for each test to prevent env leakage.
+    for k in (
+        "EXTRACTOR_SCI",
+        "EXTRACTOR_BIO",
+        "EXTRACTOR_TEXT2NKG",
+        "TEMPORAL_GRAPH_MODEL",
+    ):
+        monkeypatch.setenv(k, "0")
+    yield
