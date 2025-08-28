@@ -1,15 +1,15 @@
 {
-  "pipeline_run_id": "198edef6402-2351-9243bc2ae3c47fe5",
+  "pipeline_run_id": "198eedcb7ac-4f25-9243bc2ae3c47fe5",
   "doc_id": "e2e-micro-001",
   "flags": {
     "PIPELINE_CBDT": true,
     "PIPELINE_PERF": true
   },
   "timing_ms": {
-    "cbdt_total": 0.029,
-    "p50": 0.029,
-    "p95": 0.029,
-    "max": 0.029
+    "cbdt_total": 0.031,
+    "p50": 0.031,
+    "p95": 0.031,
+    "max": 0.031
   },
   "counters": {
     "counts_by_label": {
