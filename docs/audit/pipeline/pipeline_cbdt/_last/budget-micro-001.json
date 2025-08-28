@@ -1,15 +1,15 @@
 {
-  "pipeline_run_id": "198e3340b64-76d5-c082da66cbc57a71",
+  "pipeline_run_id": "198edef6401-2351-3274ddc0992995e0",
   "doc_id": "budget-micro-001",
   "flags": {
     "PIPELINE_CBDT": true,
     "PIPELINE_PERF": true
   },
   "timing_ms": {
-    "cbdt_total": 0.034,
-    "p50": 0.034,
-    "p95": 0.034,
-    "max": 0.034
+    "cbdt_total": 0.052,
+    "p50": 0.052,
+    "p95": 0.052,
+    "max": 0.052
   },
   "counters": {
     "counts_by_label": {

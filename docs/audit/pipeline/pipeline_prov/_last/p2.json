@@ -9,8 +9,8 @@
     "activity": {
       "@id": "urn:activity:pipeline-run_once",
       "prov:type": "prov:Activity",
-      "prov:startedAtTime": "2025-08-25T21:48:15.631950+00:00",
-      "prov:endedAtTime": "2025-08-25T21:48:15.631950+00:00"
+      "prov:startedAtTime": "2025-08-27T23:49:05.713911+00:00",
+      "prov:endedAtTime": "2025-08-27T23:49:05.713911+00:00"
     },
     "agent": {
       "@id": "urn:agent:pipeline",
@@ -25,7 +25,7 @@
       "prov:agent": "urn:agent:pipeline"
     }
   },
-  "timing_ms": 0.02771196886897087,
+  "timing_ms": 0.019086000975221395,
   "flags": {
     "PIPELINE_PROV": true,
     "PIPELINE_PERF": true

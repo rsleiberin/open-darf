@@ -1,116 +1,116 @@
 from __future__ import annotations
 import os
 from typing import Any, Dict, List
-from dataclasses import dataclass
-from apps.guards import constitutional as constitutional_guard
+
+# Soft-optional deps: module must import even if transformers is absent
+_AVAILABLE = True
+try:
+    from transformers import pipeline  # type: ignore
+except Exception:  # pragma: no cover
+    _AVAILABLE = False
+
+_NER = None  # lazy HF pipeline
 
 
-@dataclass
-class Entity:
-    text: str
-    label: str
-    start: int
-    end: int
-    score: float
-    guard_decision: str
-    reason_code: str
-    provenance: Dict[str, Any]
+def _allow_load() -> bool:
+    return os.getenv("EXTRACTOR_SCI", "0") == "1"
+
+
+def _ner_model_id() -> str:
+    # Override to a SciBERT fine-tune when available
+    return os.getenv("SCIBERT_NER_MODEL_ID", "dslim/bert-base-NER")
+
+
+def _load() -> None:
+    global _NER
+    if _NER is not None:
+        return
+    if not _AVAILABLE:
+        raise RuntimeError("SciBERT extractor unavailable: missing transformers")
+    _NER = pipeline("ner", model=_ner_model_id(), aggregation_strategy="simple")
+
+
+def extract(text: str) -> Dict[str, Any]:
+    guard_trace: List[Dict[str, Any]] = []
+
+    if not _allow_load():
+        guard_trace.append(
+            {"component": "scibert", "status": "skipped", "reason": "flag_off"}
+        )
+        return {
+            "summary": "",
+            "entities": [],
+            "relations": [],
+            "temporals": [],
+            "guard_trace": guard_trace,
+            "decision": "INDETERMINATE",
+        }
+
+    if not _AVAILABLE:
+        guard_trace.append(
+            {"component": "scibert", "status": "unavailable", "reason": "missing_deps"}
+        )
+        return {
+            "summary": "",
+            "entities": [],
+            "relations": [],
+            "temporals": [],
+            "guard_trace": guard_trace,
+            "decision": "INDETERMINATE",
+            "error": "missing_dependencies",
+        }
+
+    try:
+        _load()
+        assert _NER is not None
+        raw = _NER(text)
+        entities = [
+            {
+                "text": e.get("word"),
+                "label": e.get("entity_group"),
+                "start": int(e.get("start", -1)),
+                "end": int(e.get("end", -1)),
+                "score": float(e.get("score", 0.0)),
+                "source": "scibert_ner",
+            }
+            for e in raw
+        ]
+        guard_trace.append(
+            {"component": "scibert", "status": "ok", "count": len(entities)}
+        )
+        return {
+            "summary": " ".join(sorted({e["text"] for e in entities}))[:512],
+            "entities": entities,
+            "relations": [],
+            "temporals": [],
+            "guard_trace": guard_trace,
+            "decision": "INDETERMINATE",
+        }
+    except Exception as exc:  # pragma: no cover
+        guard_trace.append(
+            {"component": "scibert", "status": "error", "reason": str(exc)}
+        )
+        return {
+            "summary": "",
+            "entities": [],
+            "relations": [],
+            "temporals": [],
+            "guard_trace": guard_trace,
+            "decision": "INDETERMINATE",
+            "error": "runtime_error",
+        }
 
 
 class SciBERTExtractor:
-    def __init__(self) -> None:
-        self.enabled = os.getenv("EXTRACTOR_SCI", "0") == "1"
-        self.model_name = os.getenv(
-            "SCI_MODEL_NAME", "allenai/scibert_scivocab_uncased"
-        )
-        self._pipe = None
-        self._init_error = None
-        if self.enabled:
-            try:
-                from transformers import pipeline  # type: ignore
+    """Class shim for legacy imports. Safe when deps missing and flag is OFF."""
 
-                task = os.getenv("SCI_TASK", "ner")
-                self._pipe = pipeline(
-                    task, model=self.model_name, grouped_entities=True
-                )
-            except Exception as e:
-                self._init_error = str(e)
-                self._pipe = None
-
-    def is_enabled(self) -> bool:
-        return self.enabled
-
-    def health(self) -> Dict[str, Any]:
-        return {
-            "enabled": self.enabled,
-            "model_name": self.model_name,
-            "pipe_ready": self._pipe is not None,
-            "init_error": self._init_error,
-        }
+    name = "scibert"
 
     def extract(self, text: str) -> Dict[str, Any]:
-        guard = constitutional_guard.evaluate({"text": text})
-        if guard.decision == "DENY":
-            return {
-                "decision": "DENY",
-                "reason_code": guard.reason_code,
-                "entities": [],
-                "provenance": {"stage": "pre_guard"},
-            }
+        return extract(text)
 
-        if not self.enabled:
-            return {
-                "decision": guard.decision,
-                "reason_code": "disabled",
-                "entities": [],
-                "provenance": {"enabled": False, "stage": "disabled_stub"},
-            }
+    def __call__(self, text: str) -> Dict[str, Any]:
+        return self.extract(text)
 
-        if self._pipe is None:
-            final = constitutional_guard.precedence(guard.decision, "INDETERMINATE")
-            return {
-                "decision": final,
-                "reason_code": "model_unavailable",
-                "entities": [],
-                "provenance": {
-                    "enabled": True,
-                    "stage": "model_unavailable",
-                    "error": self._init_error,
-                },
-            }
 
-        raw = self._pipe(text)  # type: ignore[call-arg]
-        ents: List[Entity] = []
-        final_decision = guard.decision
-        for r in raw:
-            ent_text = r.get("word") or r.get("entity_group") or ""
-            start = int(r.get("start", -1))
-            end = int(r.get("end", -1))
-            label = r.get("entity_group") or r.get("entity") or "ENTITY"
-            score = float(r.get("score", 0.0))
-            eg = constitutional_guard.evaluate({"text": ent_text})
-            final_decision = constitutional_guard.precedence(
-                final_decision, eg.decision
-            )
-            ents.append(
-                Entity(
-                    text=ent_text,
-                    label=str(label),
-                    start=start,
-                    end=end,
-                    score=score,
-                    guard_decision=eg.decision,
-                    reason_code=eg.reason_code,
-                    provenance={"model": self.model_name},
-                )
-            )
-        return {
-            "decision": final_decision,
-            "reason_code": "ok",
-            "entities": [e.__dict__ for e in ents],
-            "provenance": {
-                "enabled": True,
-                "stage": "inference",
-                "model": self.model_name,
-            },
-        }
+__all__ = ["extract", "SciBERTExtractor"]

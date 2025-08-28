@@ -1,15 +1,15 @@
 {
-  "pipeline_run_id": "198e3340b87-76d5-349982e2aa4bd0d5",
+  "pipeline_run_id": "198edef6429-2351-3d651057b9b48a22",
   "doc_id": "r1",
   "flags": {
     "PIPELINE_CBDT": true,
     "PIPELINE_PERF": true
   },
   "timing_ms": {
-    "cbdt_total": 0.021,
-    "p50": 0.021,
-    "p95": 0.021,
-    "max": 0.021
+    "cbdt_total": 0.019,
+    "p50": 0.019,
+    "p95": 0.019,
+    "max": 0.019
   },
   "counters": {
     "counts_by_label": {
