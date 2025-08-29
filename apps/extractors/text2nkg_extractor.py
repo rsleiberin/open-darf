@@ -263,18 +263,26 @@ except Exception:
 try:
     from apps.observability import metrics as _obs_metrics
 except Exception:  # fallback noop
+
     class _Noop:
-        def __call__(self, *_a, **_k): return self
-        def __enter__(self): return None
-        def __exit__(self, exc_type, exc, tb): return False
+        def __call__(self, *_a, **_k):
+            return self
+
+        def __enter__(self):
+            return None
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
     _obs_metrics = type("M", (), {"timer": lambda *_a, **_k: _Noop()})()
 
 try:
     _extract_relations_simple_real = extract_relations_simple
+
     def extract_relations_simple_timer_wrapped(text: str):
         with _obs_metrics.timer("text2nkg"):
             return _extract_relations_simple_real(text)
+
     extract_relations_simple = extract_relations_simple_timer_wrapped  # override
 except Exception:
     pass
-

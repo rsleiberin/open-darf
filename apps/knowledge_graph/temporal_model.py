@@ -283,18 +283,26 @@ except Exception:
 try:
     from apps.observability import metrics as _obs_metrics
 except Exception:  # fallback noop
+
     class _Noop:
-        def __call__(self, *_a, **_k): return self
-        def __enter__(self): return None
-        def __exit__(self, exc_type, exc, tb): return False
+        def __call__(self, *_a, **_k):
+            return self
+
+        def __enter__(self):
+            return None
+
+        def __exit__(self, exc_type, exc, tb):
+            return False
+
     _obs_metrics = type("M", (), {"timer": lambda *_a, **_k: _Noop()})()
 
 try:
     _parse_timespan_real = parse_timespan
+
     def parse_timespan_timer_wrapped(text: str):
         with _obs_metrics.timer("temporal"):
             return _parse_timespan_real(text)
+
     parse_timespan = parse_timespan_timer_wrapped  # override
 except Exception:
     pass
-

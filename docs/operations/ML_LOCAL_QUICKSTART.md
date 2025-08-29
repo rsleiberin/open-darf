@@ -23,3 +23,23 @@ This guide helps you run Phase-6 validation locally without CI.
 
     # Relation extractor smoke
     python -c "from apps.extractors.text2nkg_extractor import extract_relations_simple as x; print(x('Aspirin treats fever'))"
+
+## Phase 6B — Local Accuracy & Perf Flow
+
+### Accuracy (SciERC, BioRED)
+    # run harness (impl-provided)
+    .devtools/report_accuracy.sh
+
+    # validate canonical receipts
+    bash scripts/validate_accuracy_receipts.sh receipts/_last
+
+    # local accuracy gates (uses latest var/receipts path)
+    bash scripts/local_ml_gates.sh
+
+### Performance/Observability
+    # collect perf / decision overhead snapshots (service-free)
+    export OBS_ENABLE=1 RUN_PERF=1
+    .devtools/report_perf.sh
+
+Expected receipts: receipts/_last/{scierc,biored}_scores_ml_test.json with:
+  micro {P,R,F1,tp,fp,fn} and meta {dataset,split,generated_at,version}.

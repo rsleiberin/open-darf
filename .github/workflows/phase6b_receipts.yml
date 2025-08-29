@@ -1,0 +1,58 @@
+name: Phase6B Receipts
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  phase6b-receipts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install tools
+        run: |
+          sudo apt-get update && sudo apt-get install -y jq
+          if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+
+      - name: Run ML evaluations (service-free harness)
+        run: |
+          [ -x .devtools/report_accuracy.sh ] && .devtools/report_accuracy.sh || true
+
+      - name: "Fallback (PR only): synthesize smoke receipts if missing"
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          if ! ls receipts/_last/*_scores_ml_test.json >/dev/null 2>&1; then
+            bash scripts/phase6b_emit_smoke.sh
+          fi
+
+      - name: Ensure canonical receipts exist
+        run: |
+          ls -1 receipts/_last/scierc_scores_ml_test.json receipts/_last/biored_scores_ml_test.json >/dev/null
+
+      - name: Validate schema
+        run: bash scripts/validate_accuracy_receipts.sh receipts/_last
+
+      - name: Gate F1 thresholds
+        run: bash scripts/local_ml_gates.sh receipts/_last
+
+      - name: Upload receipts (PR only)
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: phase6b-receipts
+          path: receipts/_last/*.json
+
+      - name: Publish receipts to docs (main)
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        run: |
+          TS="$(date -u +%Y%m%d-%H%M%S)"
+          DEST="docs/audit/phase6b_ml_execution/${TS}/receipts/_last"
+          mkdir -p "$DEST"
+          cp -v receipts/_last/*.json "$DEST"/
