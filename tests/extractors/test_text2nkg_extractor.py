@@ -1,30 +1,32 @@
-from apps.extractors.text2nkg_extractor import Text2NKGExtractor
-from apps.knowledge_graph.entity_extraction import extract_all
+from apps.extractors.text2nkg_extractor import extract_relations_simple
 
 
-def test_text2nkg_disabled_safe(monkeypatch):
-    monkeypatch.setenv("EXTRACTOR_TEXT2NKG", "0")
-    out = Text2NKGExtractor().extract("AI enables research.")
-    assert out["reason_code"] == "disabled"
-    assert out["relations"] == []
+def norm(r):
+    return (r["subject"], r["relation"], r["object"])
 
 
-def test_text2nkg_simple_relation(monkeypatch):
-    monkeypatch.setenv("EXTRACTOR_TEXT2NKG", "1")
-    out = Text2NKGExtractor().extract("Vitamin C prevents scurvy.")
-    assert out["decision"] in ("ALLOW", "INDETERMINATE")
-    assert out["relations"], "should detect at least one relation"
-    rel = out["relations"][0]
-    assert rel["relation"] == "prevents"
-    role_names = {r["name"] for r in rel["roles"]}
-    assert {"subject", "predicate", "object"}.issubset(role_names)
+def test_causes_active():
+    out = extract_relations_simple("Vitamin C causes scurvy prevention")
+    assert out and norm(out[0]) == ("Vitamin C", "causes", "scurvy prevention")
 
 
-def test_orchestrator_relations_path(monkeypatch):
-    monkeypatch.setenv("EXTRACTOR_SCI", "0")
-    monkeypatch.setenv("EXTRACTOR_BIO", "0")
-    monkeypatch.setenv("EXTRACTOR_TEXT2NKG", "1")
-    out = extract_all("System uses database.")
-    assert (
-        "relations" in out and out["relations"]
-    ), "orchestrator should surface relations"
+def test_caused_by_passive():
+    out = extract_relations_simple("Hypertension is caused by obesity")
+    assert out and norm(out[0]) == ("obesity", "causes", "Hypertension")
+
+
+def test_treats_active():
+    out = extract_relations_simple("Aspirin treats fever")
+    assert out and norm(out[0]) == ("Aspirin", "treats", "fever")
+
+
+def test_treated_by_passive():
+    out = extract_relations_simple("Pneumonia is treated by antibiotics")
+    assert out and norm(out[0]) == ("antibiotics", "treats", "Pneumonia")
+
+
+def test_associated_with_bidirectional():
+    out = extract_relations_simple("Smoking associated with lung cancer")
+    pairs = set(map(norm, out))
+    assert ("Smoking", "associated with", "lung cancer") in pairs
+    assert ("lung cancer", "associated with", "Smoking") in pairs

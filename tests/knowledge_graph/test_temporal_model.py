@@ -1,25 +1,28 @@
-from apps.knowledge_graph.temporal_model import TemporalModel, parse_timespan
-from apps.knowledge_graph.entity_extraction import extract_all
+from apps.knowledge_graph.temporal_model import parse_timespan
 
 
-def test_temporal_disabled_stub(monkeypatch):
-    monkeypatch.setenv("TEMPORAL_GRAPH_MODEL", "0")
-    out = TemporalModel().infer("Project ran from 2019 to 2021")
-    assert out["reason_code"] == "disabled"
-    assert out["events"] == []
+def test_iso_year():
+    evs = parse_timespan("2021")
+    assert evs and evs[0]["start"] == "2021-01-01" and evs[0]["end"] == "2021-12-31"
 
 
-def test_parse_timespan_years():
-    ts = parse_timespan("operated from 2018 to 2020")
-    assert ts and ts.start.startswith("2018") and ts.end.startswith("2020")
+def test_iso_month():
+    evs = parse_timespan("2021-03")
+    assert evs and evs[0]["start"] == "2021-03-01" and evs[0]["end"] == "2021-03-31"
 
 
-def test_orchestrator_temporal_path(monkeypatch):
-    monkeypatch.setenv("EXTRACTOR_SCI", "0")
-    monkeypatch.setenv("EXTRACTOR_BIO", "0")
-    monkeypatch.setenv("EXTRACTOR_TEXT2NKG", "0")
-    monkeypatch.setenv("TEMPORAL_GRAPH_MODEL", "1")
-    out = extract_all("System migrated from 2017 to 2019")
-    assert (
-        "temporals" in out and out["temporals"]
-    ), "temporals should surface when temporal model enabled"
+def test_iso_day():
+    evs = parse_timespan("2021-03-15")
+    assert evs and evs[0]["start"] == "2021-03-15" and evs[0]["end"] == "2021-03-15"
+
+
+def test_month_day_range():
+    evs = parse_timespan("March 15-20, 2021")
+    assert evs and evs[0]["start"] == "2021-03-15" and evs[0]["end"] == "2021-03-20"
+
+
+def test_open_since_until():
+    s = parse_timespan("since 2020-05")
+    u = parse_timespan("until 2022")
+    assert s and s[0]["start"] == "2020-05-01" and s[0]["end"] is None
+    assert u and u[0]["start"] is None and u[0]["end"] == "2022-12-31"
