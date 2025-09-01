@@ -1,0 +1,9 @@
+{
+  "task": "biored",
+  "model": "models/cache/biobert-base-cased-v1.1",
+  "micro": {
+    "entity_f1": 0.6310494357786541,
+    "relation_f1": 0.0
+  },
+  "timing": {}
+}

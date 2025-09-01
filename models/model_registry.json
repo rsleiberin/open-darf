@@ -1,0 +1,22 @@
+{
+  "scibert": {
+    "hf_id": "allenai/scibert_scivocab_uncased",
+    "approx_size_mb": 441,
+    "cache_dir": "models/cache/scibert-scivocab-uncased"
+  },
+  "biobert": {
+    "hf_id": "dmis-lab/biobert-base-cased-v1.1",
+    "approx_size_mb": 420,
+    "cache_dir": "models/cache/biobert-base-cased-v1.1"
+  },
+  "biobert_ner": {
+    "hf_id": "kamalkraj/BioBERT-NER",
+    "approx_size_mb": 420,
+    "cache_dir": "models/cache/biobert-ner"
+  },
+  "biomed_ner_scaffold": {
+    "hf_id": "d4data/biomedical-ner-all",
+    "approx_size_mb": 260,
+    "cache_dir": "models/cache/d4data-biomedical-ner-all"
+  }
+}

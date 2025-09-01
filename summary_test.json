@@ -1,0 +1,9 @@
+{
+  "status": "ok",
+  "device": "cuda",
+  "model_src": "local",
+  "entity_precision": 0.35785953177257523,
+  "entity_recall": 0.26884422110552764,
+  "entity_f1": 0.30703012912482064,
+  "train_seconds": 27.67
+}

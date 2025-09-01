@@ -1,0 +1,5 @@
+[check-ignore]
+.gitignore:41:/models/cache/	models/cache
+models/checkpoints not ignored (post-patch check)
+.gitignore:19:var/	var/receipts/.
+.gitignore:19:var/	var/reports/.

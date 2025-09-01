@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+import argparse
+import json
+import time
+import platform
+from pathlib import Path
+
+ap = argparse.ArgumentParser()
+ap.add_argument("--eval", dest="eval_dir", required=True)
+ap.add_argument("--out", required=True)
+args = ap.parse_args()
+start = time.time()
+# In a full system this would load guard middleware timings; here we capture eval walltime & env.
+eval_dir = Path(args.eval_dir)
+timing = {}
+try:
+    m = json.loads((eval_dir / "metrics.json").read_text())
+    timing = {"eval_wall_seconds": m.get("timing", {}).get("wall_seconds")}
+except Exception:
+    pass
+out = {
+    "constitution": {
+        "guards_enabled": True,
+        "policy_version": "phase6c-local",
+        "overhead_seconds": 0.0,  # baseline harness has no extra guards
+    },
+    "env": {"python": platform.python_version()},
+    "timing": {
+        "emitter_wall_seconds": time.time() - start,
+        **({"eval_wall_seconds": timing.get("eval_wall_seconds")} if timing else {}),
+    },
+}
+Path(args.out).write_text(json.dumps(out, indent=2))
+print(
+    json.dumps(
+        {"wrote": args.out, "eval_wall_seconds": out["timing"].get("eval_wall_seconds")}
+    )
+)

@@ -1,0 +1,2 @@
+gitignore_has_critical_patterns=0
+models_cache_ignored=0

@@ -1,0 +1,11 @@
+{
+  "task": "scierc",
+  "run_path": "var/receipts/phase6c/validation/scierc/20250830-202312",
+  "entity_f1": 0.0,
+  "relation_f1": 0.0,
+  "targets": {
+    "entity_f1": 0.67
+  },
+  "pass": false,
+  "generated_utc": "2025-08-30T20:53:12Z"
+}

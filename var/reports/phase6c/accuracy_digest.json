@@ -1,0 +1,100 @@
+{
+  "generated_utc": "2025-08-30T20:40:18Z",
+  "scierc": {
+    "path": "var/receipts/phase6c/validation/scierc/20250830-202312",
+    "summary": {
+      "task": "scierc",
+      "model": "scibert",
+      "micro": {
+        "entity_f1": 0.0,
+        "relation_f1": 0.0
+      },
+      "timing": {
+        "wall_seconds": 0.013819217681884766
+      }
+    }
+  },
+  "biored": {
+    "path": "var/receipts/phase6c/validation/biored/20250830-202808",
+    "summary": {
+      "task": "biored",
+      "model": "biobert",
+      "micro": {
+        "entity_f1": 0.0,
+        "relation_f1": 0.0
+      },
+      "timing": {
+        "wall_seconds": 0.0001881122589111328
+      }
+    }
+  },
+  "biored_ner_dev_stringmatch": {
+    "status": "ok",
+    "eval": "stringmatch",
+    "split": "dev",
+    "entity_f1": 0.09350486350800126,
+    "precision": 0.06809872029250456,
+    "recall": 0.14914914914914915,
+    "docs_scored": 64
+  },
+  "biored_ner_test_stringmatch": {
+    "status": "ok",
+    "split": "test",
+    "model": "d4data/biomedical-ner-all",
+    "device": "cuda",
+    "docs": 100,
+    "pred_entities": 5079,
+    "labels": {
+      "Disease_disorder": 516,
+      "Sign_symptom": 712,
+      "Detailed_description": 550,
+      "Lab_value": 387,
+      "Biological_structure": 173,
+      "Diagnostic_procedure": 1541,
+      "Administration": 13,
+      "Medication": 449,
+      "Dosage": 50,
+      "Subject": 51,
+      "Coreference": 357,
+      "Family_history": 41,
+      "Personal_background": 27,
+      "Severity": 34,
+      "Quantitative_concept": 5,
+      "Duration": 17,
+      "Sex": 32,
+      "Time": 9,
+      "Age": 20,
+      "Therapeutic_procedure": 39,
+      "Clinical_event": 4,
+      "Date": 9,
+      "History": 27,
+      "Activity": 2,
+      "Outcome": 4,
+      "Frequency": 1,
+      "Nonbiological_location": 8,
+      "Other_event": 1
+    },
+    "precision": 0.09043141592920353,
+    "recall": 0.19452706722189173,
+    "entity_f1": 0.12346611289409097,
+    "wall_seconds": 1.8528
+  },
+  "scierc_dict_test": {
+    "status": "ok",
+    "split": "test",
+    "docs_scored": 100,
+    "precision": 0.021318790282597918,
+    "recall": 0.1053921568627451,
+    "entity_f1": 0.0354639175257732,
+    "wall_seconds": 0.0458
+  },
+  "scierc_official_entities_test": {
+    "status": "ok",
+    "split": "test",
+    "pred_spans": 5479,
+    "gold_spans": 1685,
+    "precision": 0.11035653650254669,
+    "recall": 0.09009009009009009,
+    "entity_f1": 0.09919877909194963
+  }
+}

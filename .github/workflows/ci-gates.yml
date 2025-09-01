@@ -1,0 +1,31 @@
+name: CI Gates
+on:
+  pull_request:
+  push:
+    branches: [ main, "**" ]
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Emit gates.json from validation artifacts (strict)
+        run: |
+          python scripts/emit_perf_and_constitution.py \
+            --eval var/receipts/phase6c/validation \
+            --out  var/reports/phase6c/gates.json
+
+      - name: Verify gates (presence + non-regression)
+        run: |
+          python scripts/ci_verify_gates.py
+
+      - name: Print scoreboard
+        run: |
+          python scripts/print_scoreboard.py

@@ -1,0 +1,23 @@
+{'loss': 0.342, 'grad_norm': 1.0211751461029053, 'learning_rate': 2.5e-05, 'epoch': 0.5}
+{'loss': 0.152, 'grad_norm': 0.8549864888191223, 'learning_rate': 0.0, 'epoch': 1.0}
+{'eval_loss': 0.1362544298171997, 'eval_tok_P': 0.9298650363362637, 'eval_tok_R': 0.910333145115651, 'eval_tok_F1': 0.9199954343321813, 'eval_runtime': 0.8521, 'eval_samples_per_second': 234.727, 'eval_steps_per_second': 29.341, 'epoch': 1.0}
+{'train_runtime': 13.2219, 'train_samples_per_second': 60.506, 'train_steps_per_second': 7.563, 'train_loss': 0.2469997835159302, 'epoch': 1.0}
+{
+  "status": "ok",
+  "device": "cuda",
+  "model": "biobert-base-cased-v1.1",
+  "token_micro": {
+    "P": 0.0,
+    "R": 0.0,
+    "F1": 0.0
+  },
+  "entity_micro": {
+    "P": 0.8156950672642083,
+    "R": 0.514568599716969,
+    "F1": 0.6310494357786541,
+    "tp": 1819,
+    "fp": 411,
+    "fn": 1716
+  },
+  "train_runtime_sec": 13.2219
+}

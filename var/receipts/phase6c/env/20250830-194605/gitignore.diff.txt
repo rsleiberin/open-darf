@@ -1,0 +1,12 @@
+diff --git a/.gitignore b/.gitignore
+index c361838..bf060b7 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -38,3 +38,7 @@ verification/tla/tools/
+ /var/infodump/
+ /docs/audit/*
+ !docs/audit/.gitkeep
++/models/cache/
++/models/checkpoints/
++/var/receipts/
++/var/reports/

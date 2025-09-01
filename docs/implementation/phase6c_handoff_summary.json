@@ -1,0 +1,19 @@
+{
+  "generated_utc": "2025-08-30T21:19:12Z",
+  "branch": "phase6c-results-20250830-211158",
+  "receipts": {
+    "scierc": "var/receipts/phase6c/validation/scierc/20250830-202312",
+    "biored": "var/receipts/phase6c/validation/biored/20250830-202808"
+  },
+  "reports": {
+    "gates": "var/reports/phase6c/gates.json",
+    "digest": "var/reports/phase6c/accuracy_digest.json",
+    "prov_export": "var/reports/phase6c/prov_export.json"
+  },
+  "artifacts": [
+    "var/reports/phase6c/artifacts_20250830-210646.tar.gz"
+  ],
+  "env": {
+    "python": "3.8.10"
+  }
+}

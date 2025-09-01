@@ -38,13 +38,3 @@ verification/tla/tools/
 /var/infodump/
 /docs/audit/*
 !docs/audit/.gitkeep
-/models/cache/
-/models/checkpoints/
-/var/receipts/
-/var/reports/
-/data/
-/datasets/
-/tools/**/__pycache__/
-/var/tmp/
-/tools/biored_ncbi/src/
-/var/
