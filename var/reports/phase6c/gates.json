@@ -8,7 +8,7 @@
     "python": "3.8.10"
   },
   "timing": {
-    "emitter_wall_seconds": 9.393692016601562e-05
+    "emitter_wall_seconds": 0.0003006458282470703
   },
   "scierc": {
     "entity_f1": 0.30703012912482064,
