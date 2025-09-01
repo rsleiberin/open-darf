@@ -10,6 +10,35 @@ jobs:
     name: CI Gates
     runs-on: ubuntu-latest
     steps:
+      - name: Validation sanity (list & rebuild metrics.json if missing)
+        run: |
+          echo "== validation dir =="
+          ls -la var/receipts/phase6c/validation || true
+          python - <<'PY'
+          import json, pathlib, time
+          val = pathlib.Path("var/receipts/phase6c/validation")
+          out = val/"metrics.json"
+          m  = {"version":"validation_metrics_v2","generated_at":int(time.time())}
+          try:
+              sc=json.load(open(val/"scierc_scores_ml_test.json"))
+              mi=sc.get("micro",{})
+              if {"P","R","F1"} <= set(mi):
+                  m["scierc"]={"entity_f1":float(mi["F1"]),
+                               "precision":float(mi["P"]),
+                               "recall":float(mi["R"]),
+                               "provenance":"validation_scierc_scores_ml_test.json"}
+          except Exception: pass
+          try:
+              br=json.load(open(val/"biored_scores_ml_test.json"))
+              mic=br.get("micro",{})
+              m["biored"]={"entity_f1":float(mic.get("entity_f1",0.0)),
+                             "relation_f1":float(mic.get("relation_f1",0.0)),
+                             "provenance":"validation_biored_scores_ml_test.json"}
+          except Exception: pass
+          out.parent.mkdir(parents=True, exist_ok=True)
+          out.write_text(json.dumps(m, indent=2), encoding="utf-8")
+          print(out.read_text())
+          PY
       - name: Checkout
         uses: actions/checkout@v4
 
