@@ -1,12 +1,13 @@
 name: CI Gates
+
 on:
-  workflow_dispatch:
-  pull_request:
   push:
-    branches: [ main, "**" ]
+    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   gates:
+    name: CI Gates
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -15,9 +16,9 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: '3.10'
 
-      - name: Emit gates.json from validation artifacts (strict)
+      - name: Emit gates.json (from pinned validation)
         run: |
           python scripts/emit_perf_and_constitution.py \
             --eval var/receipts/phase6c/validation \
@@ -30,3 +31,9 @@ jobs:
       - name: Print scoreboard
         run: |
           python scripts/print_scoreboard.py
+
+      - name: Upload gates.json artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gates-json
+          path: var/reports/phase6c/gates.json
