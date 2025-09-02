@@ -57,3 +57,12 @@ db-psql:    ; @tools/dev/pg-dev.sh db-psql
 db-down:    ; @tools/dev/pg-dev.sh db-down
 db-logs:    ; @tools/dev/pg-dev.sh db-logs
 test-db:    ; @tools/dev/pg-dev.sh test-db
+
+.PHONY: rel-demo
+rel-demo:
+\t@mkdir -p var/receipts/phase6c/validation
+\t@echo '{"doc_id":"D1","entities":[{"id":"A","type":"Gene","sent":0},{"id":"B","type":"Disease","sent":0}],"relations":[{"head":"A","tail":"B","type":"assoc"}]}' > var/receipts/phase6c/validation/toy_biored.jsonl
+\t@PYTHONPATH=$(PWD)$(if $(PYTHONPATH),:$(PYTHONPATH),) \
+\tpython3 -m scripts.relation_extraction.emit_rel_metrics --input var/receipts/phase6c/validation/toy_biored.jsonl --out var/receipts/phase6c/validation/biored_relations_scores_heuristic.json --predictor heuristic
+\t@echo 'biored metrics:'
+\t@jq '.biored' var/receipts/phase6c/validation/biored_relations_scores_heuristic.json
