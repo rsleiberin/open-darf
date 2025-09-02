@@ -48,3 +48,13 @@ verification/tla/tools/
 /var/tmp/
 /tools/biored_ncbi/src/
 /var/
+
+# === Phase-7A allowlist: keep audit markdown in repo (receipts remain ignored) ===
+!docs/audit/
+!docs/audit/phase7a/
+!docs/audit/phase7a/*.md
+# re-ignore any binaries under audit just in case
+docs/audit/**/*.pdf
+docs/audit/**/*.png
+docs/audit/**/*.jpg
+docs/audit/**/*.csv
