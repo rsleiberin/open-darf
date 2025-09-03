@@ -1,0 +1,129 @@
+import os, re
+from typing import Iterable, Dict, Any, List
+
+class Prediction:
+    def __init__(self, spans: List[Dict[str, Any]], relations: List[Dict[str, Any]]):
+        self.spans = spans
+        self.relations = relations
+
+class BaseAdapter:
+    def __init__(self, cfg: Dict[str, Any]):
+        self.cfg = cfg
+    def predict(self, sents: Iterable[Dict[str, Any]]) -> Iterable[Prediction]:
+        raise NotImplementedError
+
+def _try_import_text2nkg():
+    try:
+        import text2nkg  # type: ignore
+        return text2nkg
+    except Exception:
+        return None
+
+def _has_hf_stack():
+    try:
+        import torch  # noqa
+        import transformers  # noqa
+        return True
+    except Exception:
+        return False
+
+class Text2NKGAdapter(BaseAdapter):
+    def __init__(self, cfg: Dict[str, Any]):
+        super().__init__(cfg)
+        self.impl = _try_import_text2nkg()
+        if self.impl is None:
+            raise RuntimeError("text2nkg package not available (prefer_text2nkg was True)")
+    def predict(self, sents: Iterable[Dict[str, Any]]) -> Iterable[Prediction]:
+        # TODO: wire real text2nkg inference once package is present.
+        for _ in sents:
+            yield Prediction(spans=[], relations=[])
+
+class HFBaselineAdapter(BaseAdapter):
+    def __init__(self, cfg: Dict[str, Any]):
+        super().__init__(cfg)
+        from transformers import AutoTokenizer, AutoModelForTokenClassification, pipeline
+        model_path = os.path.expanduser(cfg.get("ner_model_path","~/.darf/models/scibert"))
+        local_only = bool(cfg.get("local_files_only", True))
+        self.tok = AutoTokenizer.from_pretrained(model_path, local_files_only=local_only)
+        self.mdl = AutoModelForTokenClassification.from_pretrained(model_path, local_files_only=local_only)
+        self.pipe = pipeline(
+            "token-classification",
+            model=self.mdl,
+            tokenizer=self.tok,
+            aggregation_strategy="simple",
+            device=0 if cfg.get("cuda", True) else -1
+        )
+    def predict(self, sents: Iterable[Dict[str, Any]]) -> Iterable[Prediction]:
+        for s in sents:
+            text = s["text"]
+            ents = self.pipe(text)
+            spans=[]
+            for e in ents:
+                spans.append({"start": int(e["start"]), "end": int(e["end"]), "label": str(e.get("entity_group","ENT"))})
+            rels=[]
+            for i in range(len(spans)):
+                for j in range(i+1, len(spans)):
+                    rels.append({"h": i, "t": j, "type": "CO_OCCUR"})
+            yield Prediction(spans=spans, relations=rels)
+
+class HeuristicAdapter(BaseAdapter):
+    """
+    Deterministic, offline-only fallback:
+    - Tokenize on word boundaries
+    - Emit spans for tokens with length>=4 or TitleCase
+    - Pairwise CO_OCCUR relations within each sentence
+    """
+    _word = re.compile(r"\b\w+\b", re.UNICODE)
+    def predict(self, sents: Iterable[Dict[str, Any]]) -> Iterable[Prediction]:
+        for s in sents:
+            text = s["text"]
+            spans=[]
+            for m in self._word.finditer(text):
+                tok = m.group(0)
+                if len(tok) >= 4 or (tok[:1].isupper() and tok[1:].islower()):
+                    spans.append({"start": m.start(), "end": m.end(), "label": "HEUR"})
+            rels=[]
+            for i in range(len(spans)):
+                for j in range(i+1, min(i+6, len(spans))):  # local window to bound density
+                    rels.append({"h": i, "t": j, "type": "CO_OCCUR"})
+            yield Prediction(spans=spans, relations=rels)
+
+def get_adapter(cfg: Dict[str, Any]) -> BaseAdapter:
+    mode = (os.getenv("T2NKG_ADAPTER","") or str(cfg.get("force_adapter",""))).lower()
+    if mode in {"heuristic","heur","h"}:
+        try:
+            from tools.text2nkg.adapter import HeuristicAdapter  # self-ref ok after exec
+        except Exception:
+            pass
+        return HeuristicAdapter(cfg)
+    prefer_text2nkg = cfg.get("prefer_text2nkg", True)
+    if prefer_text2nkg:
+        t2 = _try_import_text2nkg()
+        if t2 is not None:
+            return Text2NKGAdapter(cfg)
+    if _has_hf_stack():
+        try:
+            return HFBaselineAdapter(cfg)
+        except Exception:
+            pass  # fall through to heuristic
+    return HeuristicAdapter(cfg)
+
+def get_adapter(cfg):
+    """Return an adapter instance based on cfg.
+    - default: 'hf' if ner_model_path{,_map} present, else 'heuristic'
+    - robust: on HF errors, fall back to HeuristicAdapter and annotate cfg.
+    """
+    want = (cfg.get("adapter") or
+            ("hf" if (cfg.get("ner_model_path") or cfg.get("ner_model_path_map")) else "heuristic")).lower()
+    if want in {"hf","hfbaseline","hf-baseline","transformers"}:
+        try:
+            return HFBaselineAdapter(cfg)
+        except Exception as e:
+            # Do not crash scoring; record why we fell back.
+            try:
+                cfg["_adapter_warning"] = f"hf_fallback:{type(e).__name__}"
+            except Exception:
+                pass
+            return HeuristicAdapter(cfg)
+    # default / explicit heuristic
+    return HeuristicAdapter(cfg)

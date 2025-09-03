@@ -22,21 +22,3 @@ def decide(action: str, context: Dict[str, Any]) -> Tuple[str, List[str], float,
         principles = [f"exp:len={length}→allow(conf≈{conf:.2f})"]
     elapsed_us = (time.perf_counter() - t0) * 1e6
     return state, principles, conf, elapsed_us
-
-def decide(action, context):
-    """
-    returns: (state, principles, confidence, elapsed_us)
-    - state: "ok" | "indeterminate"
-    - principles: list of applied principle IDs (empty if none)
-    """
-    import time
-    t0 = time.time()
-    text_len = int((context or {}).get("text_len", 0) or 0)
-    principles = []
-    state = "ok"
-    if text_len <= 0:
-        principles.append("exp:empty-input→indeterminate")
-        state = "indeterminate"
-    conf = 1.0
-    elapsed_us = int((time.time() - t0) * 1e6)
-    return state, principles, conf, elapsed_us
