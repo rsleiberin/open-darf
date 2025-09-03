@@ -1,19 +1,7 @@
-# Normalize all text files to LF
-* text=auto eol=lf
-
-# Binary (no EOL munging)
-*.png -text
-*.jpg -text
-*.jpeg -text
-*.gif -text
-*.pdf -text
-*.zip -text
-*.ico -text
-*.mp3 -text
-*.mp4 -text
-*.mov -text
-*.woff -text
-*.woff2 -text
-*.pdf -diff
-docs/reference/_dedupe/** linguist-generated
-*.pdf -diff
+* text=auto
+*.py     text eol=lf
+*.sh     text eol=lf
+*.md     text eol=lf
+*.json   text eol=lf
+*.jsonl  text eol=lf
+*.yml    text eol=lf

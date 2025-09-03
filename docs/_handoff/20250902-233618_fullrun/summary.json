@@ -1,0 +1,132 @@
+{
+  "results": [
+    {
+      "dataset": "biored",
+      "split": "dev",
+      "adapter": "HFBaselineAdapter",
+      "strict_f1": 0.0,
+      "text_f1": 0.12443095599393021,
+      "overlap_f1": 0.4734446130500759,
+      "strict": {
+        "tp": 0,
+        "pred_total": 5058,
+        "gold_total": 3509,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "text": {
+        "tp": 533,
+        "pred_total": 5058,
+        "gold_total": 3509,
+        "precision": 0.10537761961249506,
+        "recall": 0.1518951268167569,
+        "f1": 0.12443095599393021
+      },
+      "overlap": {
+        "tp": 2028,
+        "pred_total": 5058,
+        "gold_total": 3509,
+        "precision": 0.40094899169632264,
+        "recall": 0.5779424337418068,
+        "f1": 0.4734446130500759
+      }
+    },
+    {
+      "dataset": "biored",
+      "split": "test",
+      "adapter": "HFBaselineAdapter",
+      "strict_f1": 0.0,
+      "text_f1": 0.13052091830788953,
+      "overlap_f1": 0.4621838946509731,
+      "strict": {
+        "tp": 0,
+        "pred_total": 5079,
+        "gold_total": 3502,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "text": {
+        "tp": 560,
+        "pred_total": 5079,
+        "gold_total": 3502,
+        "precision": 0.11025792478834416,
+        "recall": 0.1599086236436322,
+        "f1": 0.13052091830788953
+      },
+      "overlap": {
+        "tp": 1983,
+        "pred_total": 5079,
+        "gold_total": 3502,
+        "precision": 0.390431187241583,
+        "recall": 0.5662478583666476,
+        "f1": 0.4621838946509731
+      }
+    },
+    {
+      "dataset": "scierc",
+      "split": "dev",
+      "adapter": "HFBaselineAdapter",
+      "strict_f1": 0.0,
+      "text_f1": 0.0,
+      "overlap_f1": 0.0,
+      "strict": {
+        "tp": 0,
+        "pred_total": 0,
+        "gold_total": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "text": {
+        "tp": 0,
+        "pred_total": 0,
+        "gold_total": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "overlap": {
+        "tp": 0,
+        "pred_total": 0,
+        "gold_total": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    },
+    {
+      "dataset": "scierc",
+      "split": "test",
+      "adapter": "HFBaselineAdapter",
+      "strict_f1": 0.0,
+      "text_f1": 0.0,
+      "overlap_f1": 0.0,
+      "strict": {
+        "tp": 0,
+        "pred_total": 0,
+        "gold_total": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "text": {
+        "tp": 0,
+        "pred_total": 0,
+        "gold_total": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "overlap": {
+        "tp": 0,
+        "pred_total": 0,
+        "gold_total": 0,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      }
+    }
+  ]
+}

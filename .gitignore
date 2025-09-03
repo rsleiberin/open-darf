@@ -1,60 +1,17 @@
-# Python
+# Python venvs
+.venv*/
+venv*/
+
+# Python cache
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
-*.egg-info/
-.eggs/
 
-# Virtualenvs
-.venv/
-venv/
+# Local data/receipts (derived)
+var/**
 
-# Local env & config
-.env
-.env.*
-.env.local
+# Hand-off bundles
+handoff_*.tar.gz
 
-# Local data / artifacts
-var/
-*.log
-
-# OS cruft
+# OS/editor cruft
 .DS_Store
 Thumbs.db
-
-# --- TLA Class-A local artifacts ---
-verification/tla/runs/
-states/
-
-# Local dev clutter (keep out of VCS)
-.venv/
-__pycache__/
-*.pyc
-.idea/
-.vscode/
-.DS_Store
-verification/tla/tools/
-/var/infodump/
-/docs/audit/*
-!docs/audit/.gitkeep
-/models/cache/
-/models/checkpoints/
-/var/receipts/
-/var/reports/
-/data/
-/datasets/
-/tools/**/__pycache__/
-/var/tmp/
-/tools/biored_ncbi/src/
-/var/
-
-# === Phase-7A allowlist: keep audit markdown in repo (receipts remain ignored) ===
-!docs/audit/
-!docs/audit/phase7a/
-!docs/audit/phase7a/*.md
-# re-ignore any binaries under audit just in case
-docs/audit/**/*.pdf
-docs/audit/**/*.png
-docs/audit/**/*.jpg
-docs/audit/**/*.csv

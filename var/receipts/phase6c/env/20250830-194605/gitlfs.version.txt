@@ -1,1 +1,0 @@
-git-lfs/3.6.1 (GitHub; linux amd64; go 1.23.3)

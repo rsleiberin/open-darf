@@ -1,0 +1,36 @@
+{
+  "results": [
+    {
+      "dataset": "biored",
+      "split": "dev",
+      "adapter": "HFBaselineAdapter",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "dataset": "biored",
+      "split": "test",
+      "adapter": "HFBaselineAdapter",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "dataset": "scierc",
+      "split": "dev",
+      "adapter": "HFBaselineAdapter",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "dataset": "scierc",
+      "split": "test",
+      "adapter": "HFBaselineAdapter",
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    }
+  ]
+}
