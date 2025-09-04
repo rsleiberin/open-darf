@@ -261,3 +261,17 @@ Special recognition goes to the open-source communities behind Neo4j, Qdrant, Mi
 
 **Last Updated**: August 31, 2025
 **Development Day**: 29
+
+## Phase 7B — Scored Runner (smoke)
+
+Run the end-to-end scored harness locally (no heavy downloads), producing receipts and a docs scoreboard:
+
+    python tools/text2nkg/run_eval_scored.py \
+      --dataset biored --split dev \
+      --outdir var/receipts/phase7b/smoke_$(date +%Y%m%d-%H%M%S) \
+      --smoke --write-docs-scoreboard
+
+Mapping can be bypassed for diagnostics:
+
+    DARF_BYPASS_MAP=1 python tools/text2nkg/run_eval_scored.py \
+      --dataset biored --split dev --outdir var/tmp/dev --smoke
