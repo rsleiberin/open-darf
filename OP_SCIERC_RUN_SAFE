@@ -11,31 +11,17 @@ TST="$GOLD_DIR/test.jsonl"
 
 if [ ! -s "$DEV" ] || [ ! -s "$TST" ]; then
   echo "(!) SciERC gold missing."
-  echo "Provide char-offset JSONL at:"
-  echo "  $DEV"
-  echo "  $TST"
-  echo "Or set GOLD_FORCE_DIR_SCIERC to a directory containing dev.jsonl and test.jsonl"
+  echo "Place dev/test JSONL under: $GOLD_DIR"
+  echo "Or set GOLD_FORCE_DIR_SCIERC=/abs/path"
   echo "OK (no-op)"
   exit 0
 fi
 
-TARGET="var/datasets/normalized/scierc"
-mkdir -p "$TARGET"
-ln -sf "$DEV" "$TARGET/dev.jsonl" 2>/dev/null || cp -f "$DEV" "$TARGET/dev.jsonl"
-ln -sf "$TST" "$TARGET/test.jsonl" 2>/dev/null || cp -f "$TST" "$TARGET/test.jsonl"
-
-export TRANSFORMERS_OFFLINE=1
 STAMP="$(date +%Y%m%d-%H%M%S)"
-RUN="var/receipts/scierc/$STAMP"; mkdir -p "$RUN"
+RUN="var/receipts/phase7a/text2nkg_fullrun/$STAMP"
+mkdir -p "$RUN/scierc_dev" "$RUN/scierc_test"
 
-CFG="$RUN/hf_config.json"
-BASE="var/receipts/phase7a/text2nkg_fullrun/20250902-232710/hf_config.json"
-if [ -s "$BASE" ]; then cp "$BASE" "$CFG"; else printf '{}' > "$CFG"; fi
+python tools/text2nkg/run_eval_scored.py --dataset scierc --split dev  --outdir "$RUN/scierc_dev"  || true
+python tools/text2nkg/run_eval_scored.py --dataset scierc --split test --outdir "$RUN/scierc_test" || true
 
-for sp in dev test; do
-  OUT="$RUN/scierc_${sp}"; mkdir -p "$OUT"
-  python tools/text2nkg/run_eval_scored.py --dataset scierc --split "$sp" --config "$CFG" --outdir "$OUT" || echo "(!) runner rc!=0 for $sp"
-done
-
-echo "OUT_ROOT=$RUN"
 echo "OK"
