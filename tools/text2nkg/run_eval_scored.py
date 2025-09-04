@@ -110,6 +110,11 @@ def _run_eval(
     if smoke:
         raw_pred_spans, gold_spans = _smoke_data()
         adapter_name = "smoke_adapter"
+        # Default mapping for smoke if not provided via --config
+        if not cfg.get("label_map"):
+            cfg = dict(cfg)
+            cfg["label_map"] = {"HEUR": "ENT"}
+
     else:
         if pred_path and gold_path:
             raw_pred_spans, gold_spans = _load_real_paths(pred_path, gold_path)
