@@ -1,175 +1,195 @@
-import os, json, time, argparse, subprocess, hashlib
-from typing import Dict, Any, List, Tuple, Optional
-from tools.text2nkg.adapter import get_adapter
-from tools.text2nkg.emit_nkg import emit_nkg
-from tools.constitutional import hooks
-from tools.text2nkg.gold_utils import discover_gold
+from __future__ import annotations
+import argparse
+import json
+import os
+import shutil
+import time
+from pathlib import Path
+from typing import Dict, List, Mapping, Optional, Tuple
 
-def file_sha256(path: str) -> str:
+from tools.text2nkg.transforms.label_map import apply_label_map
+from tools.text2nkg.emit_nkg import assert_valid_spans
+from tools.text2nkg.pipeline import compute_metrics
+
+def _label_histogram(spans):
+    from collections import Counter
+    return dict(Counter(s.get('label') for s in spans))
+
+
+# ----------------------------
+# Helpers (defined BEFORE main)
+# ----------------------------
+
+def _now_stamp() -> str:
+    return time.strftime("%Y%m%d-%H%M%S", time.gmtime())
+
+def _read_json(path: Path) -> Dict:
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+def _write_json(path: Path, obj) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(obj, f, ensure_ascii=False, indent=2, sort_keys=True)
+
+def _read_spans_any(path: Path) -> List[dict]:
+    """
+    Read spans from:
+      - JSON object with key "spans": {"spans":[...]}
+      - JSON array: [ {...}, {...} ]
+      - JSONL: one JSON span per line
+    Returns list[dict].
+    """
+    txt = path.read_text(encoding="utf-8").strip()
+    if not txt:
+        return []
+    first = txt.lstrip()[:1]
     try:
-        h=hashlib.sha256()
-        with open(path,'rb') as f:
-            for chunk in iter(lambda:f.read(1<<20), b''):
-                h.update(chunk)
-        return h.hexdigest()
-    except Exception as e:
-        return f"error:{e}"
+        if first == "{":
+            obj = json.loads(txt)
+            if isinstance(obj, dict) and "spans" in obj:
+                spans = obj.get("spans") or []
+                return list(spans)
+            return []
+        elif first == "[":
+            arr = json.loads(txt)
+            if isinstance(arr, list):
+                return list(arr)
+            return []
+        else:
+            # JSONL
+            spans: List[dict] = []
+            for line in txt.splitlines():
+                line = line.strip()
+                if not line:
+                    continue
+                spans.append(json.loads(line))
+            return spans
+    except Exception:
+        return []
 
-def git_meta():
-    def g(args):
-        try:
-            return subprocess.check_output(["git"]+args, text=True).strip()
-        except Exception:
-            return "n/a"
-    return {
-        "branch": g(["rev-parse","--abbrev-ref","HEAD"]),
-        "head": g(["rev-parse","--short=12","HEAD"]),
-        "dirty": g(["status","--porcelain"]) != "",
-    }
+def _load_real_paths(pred_path: str, gold_path: str) -> Tuple[List[dict], List[dict]]:
+    pp, gp = Path(pred_path), Path(gold_path)
+    if not pp.exists():
+        raise FileNotFoundError(f"Pred path missing: {pp}")
+    if not gp.exists():
+        raise FileNotFoundError(f"Gold path missing: {gp}")
+    pred = _read_spans_any(pp)
+    gold = _read_spans_any(gp)
+    return pred, gold
 
-def load_sentences(path: str) -> List[Dict[str,Any]]:
-    sents=[]
-    with open(path,"r",encoding="utf-8") as f:
-        for i, line in enumerate(f):
-            o=json.loads(line)
-            text = o.get("text") or o.get("sentence") or o.get("raw","")
-            sents.append({"sid": o.get("id", i), "text": text})
-    return sents
+def _smoke_data() -> Tuple[List[dict], List[dict]]:
+    # Minimal 2-span sample; one alias-bound case to exercise validator
+    preds = [
+        {"start": 0, "end": 4, "label": "HEUR"},
+        {"begin": 6, "end": 10, "type": "heur"},
+        {"start": 10, "end": 10, "label": "X"},  # invalid
+    ]
+    gold = [
+        {"start": 0, "end": 4, "label": "ENT"},
+        {"start": 6, "end": 10, "label": "ENT"},
+    ]
+    return preds, gold
 
-def score_sets(pred: List[Tuple[int,int,str]], gold: List[Tuple[int,int,str]], labeled: bool):
-    P = {(a,b,(l if labeled else None)) for a,b,l in pred}
-    G = {(a,b,(l if labeled else None)) for a,b,l in gold}
-    tp = len(P & G)
-    return tp, len(P), len(G)
+def _load_config(path: Optional[str]) -> Dict:
+    if not path:
+        return {}
+    p = Path(path)
+    if not p.exists():
+        raise FileNotFoundError(f"Config not found: {p}")
+    cfg = _read_json(p)
+    if not isinstance(cfg, dict):
+        raise ValueError("Config JSON must be an object.")
+    return cfg
+
+def _run_eval(
+    dataset: str,
+    split: str,
+    outdir: Path,
+    cfg: Dict,
+    smoke: bool = False,
+    pred_path: str | None = None,
+    gold_path: str | None = None,
+) -> Dict:
+    # Obtain raw preds/gold
+    if smoke:
+        raw_pred_spans, gold_spans = _smoke_data()
+        adapter_name = "smoke_adapter"
+        # Default mapping for smoke if not provided via --config
+        if not cfg.get("label_map"):
+            cfg = dict(cfg)
+            cfg["label_map"] = {"HEUR": "ENT"}
+
+    else:
+        if pred_path and gold_path:
+            raw_pred_spans, gold_spans = _load_real_paths(pred_path, gold_path)
+            adapter_name = "from_paths"
+        else:
+            raise SystemExit("Provide --pred-path and --gold-path (or use --smoke).")
+
+    # Transform -> validate
+    mapped = apply_label_map(raw_pred_spans, cfg.get("label_map"), cfg.get("label_map_default"))
+    valid_pred, skipped = assert_valid_spans(mapped)
+    valid_gold, _ = assert_valid_spans(gold_spans)
+    metrics = compute_metrics(valid_pred, valid_gold)
+
+    # Write outputs
+    outdir.mkdir(parents=True, exist_ok=True)
+    _write_json(outdir / "pred_spans.jsonl", {"spans": valid_pred})
+    _write_json(outdir / "metrics.json", {
+        "dataset": dataset, "split": split, "adapter": adapter_name,
+        "env_bypass": bool(os.getenv("DARF_BYPASS_MAP")),
+        "skipped_invalid_pred_spans": skipped,
+        "label_histogram": _label_histogram(valid_pred),
+        "run_meta": { "pred_count": len(valid_pred), "gold_count": len(valid_gold) },
+        "strict": {"f1": metrics["strict"]["f1"], "precision": metrics["strict"]["precision"], "recall": metrics["strict"]["recall"]},
+        "unlabeled_boundary": metrics["unlabeled_boundary"],
+        "unlabeled_text_multiset": metrics["unlabeled_text_multiset"],
+        "timestamp_utc": _now_stamp(),
+    })
+    return metrics
+
+# -----------
+# Entry point
+# -----------
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--dataset", choices=["biored","scierc"], required=True)
-    ap.add_argument("--split", choices=["dev","test"], default="dev")
-    ap.add_argument("--config", default="var/config/text2nkg_config.json")
-    ap.add_argument("--outdir", default=None)
+    ap = argparse.ArgumentParser(description="DARF Phase7b scored evaluation runner")
+    ap.add_argument("--dataset", required=True, help="Dataset name (e.g., biored)")
+    ap.add_argument("--split", required=True, choices=["dev","test","train","smoke"], help="Dataset split")
+    ap.add_argument("--config", required=False, help="Path to JSON config with label_map etc.")
+    ap.add_argument("--outdir", required=True, help="Output directory for receipts")
+    ap.add_argument("--write-docs-scoreboard", dest="write_docs_scoreboard", action="store_true", help="Copy scoreboard to docs/scoreboards/")
+    ap.add_argument("--smoke", action="store_true", help="Run a local smoke evaluation with tiny synthetic data")
+    ap.add_argument("--pred-path", required=False, help="Path to predicted spans (JSON/JSONL)")
+    ap.add_argument("--gold-path", required=False, help="Path to gold spans (JSON/JSONL)")
     args = ap.parse_args()
 
-    cfg = {}
-    if os.path.exists(args.config):
-        with open(args.config,"r") as f:
-            cfg=json.load(f)
+    cfg = _load_config(args.config)
+    outdir = Path(args.outdir)
+    dataset, split = args.dataset, args.split
 
-    # Local-only model mapping (won't fetch)
-    model_map = cfg.get("ner_model_path_map", {
-        "scierc": os.path.expanduser("~/.darf/models/scibert-scivocab-uncased"),
-        "biored": os.path.expanduser("~/.darf/models/biobert-base-cased-v1.1")
-    })
-    cfg["ner_model_path"] = model_map.get(args.dataset, cfg.get("ner_model_path", model_map.get("scierc")))
-    cfg["local_files_only"] = True
+    metrics = _run_eval(dataset, split, outdir, cfg, smoke=args.smoke, pred_path=args.pred_path, gold_path=args.gold_path)
 
-    # Sentence source
-    if args.dataset=="biored":
-        sent_path=f"var/datasets/text/biored_by_sentence/{args.split}.jsonl"
-    else:
-        sent_path=f"var/datasets/text/scierc_by_sentence/{args.split}.jsonl"
-    os.makedirs(os.path.dirname(sent_path), exist_ok=True)
-    if not os.path.exists(sent_path):
-        with open(sent_path,"w",encoding="utf-8") as w:
-            w.write(json.dumps({"id": 0, "text": ""})+"\n")
-
-    sents=load_sentences(sent_path)
-
-    adapter=get_adapter(cfg)
-    preds=list(adapter.predict(sents))  # each p is expected to expose .spans (start,end,label)
-
-    stamp=time.strftime("%Y%m%d-%H%M%S", time.gmtime())
-    outdir=args.outdir or f"var/receipts/phase7a/text2nkg/{args.dataset}_{args.split}_{stamp}"
-    os.makedirs(outdir, exist_ok=True)
-
-    # Emit NKG (graph)
-    run_meta={"dataset": args.dataset, "split": args.split, "cfg": cfg, "git": git_meta(),
-              "env": {"TRANSFORMERS_OFFLINE": os.getenv("TRANSFORMERS_OFFLINE")},
-              "sentence_path": sent_path, "sentence_sha256": file_sha256(sent_path)}
-    nkg=emit_nkg(sents, preds, run_meta)
-    with open(os.path.join(outdir,"nkg.json"),"w") as f: json.dump(nkg, f, indent=2)
-
-    # Dump raw predicted spans (for inspection)
-    with open(os.path.join(outdir,"pred_spans.jsonl"),"w",encoding="utf-8") as w:
-        for s, p in zip(sents, preds):
-            spans = [{"start": int(sp.get("start")), "end": int(sp.get("end")), "label": str(sp.get("label",""))}
-                     for sp in getattr(p,"spans",[]) if isinstance(sp.get("start"),int) and isinstance(sp.get("end"),int)]
-            w.write(json.dumps({"id": s["sid"], "text_len": len(s["text"]), "spans": spans}, ensure_ascii=False)+"\n")
-
-    # Audit (latency only)
-    from tools.constitutional import hooks
-    lat=[]
-    with open(os.path.join(outdir,"audit.jsonl"),"w",encoding="utf-8") as stream:
-        for s, p in zip(sents, preds):
-            spans_n=len(getattr(p,"spans",[])); rels_n=len(getattr(p,"relations",[]))
-            state, pr, conf, us = hooks.decide(
-                action="emit_sentence_graph",
-                context={"dataset": args.dataset, "split": args.split, "sid": s["sid"],
-                         "text_len": len(s["text"]), "spans": spans_n, "relations": rels_n}
-            )
-            stream.write(json.dumps({"ts": time.time(), "dataset": args.dataset, "split": args.split,
-                                     "sid": s["sid"], "state": state, "principles": pr,
-                                     "confidence": conf, "elapsed_us": us})+"\n")
-            lat.append(us)
-    with open(os.path.join(outdir,"audit_summary.json"),"w") as f:
-        f.write(json.dumps({
-            "calls": len(lat),
-            "elapsed_us_avg": (sum(lat)/len(lat)) if lat else 0.0
-        }, indent=2))
-
-    # --- GOLD DISCOVERY + SCORING ---
-    gold_path, gold = discover_gold(args.dataset, args.split)
-    # gold: Dict[sid, List[Tuple[int,int,str]]]
-    # Build per-sid gold sets once
-    gold_total = sum(len(v) for v in gold.values())
-
-    pred_total=0
-    tp_strict=0
-    tp_unlab=0
-
-    with open(os.path.join(outdir,"pred_spans.jsonl"), "r", encoding="utf-8") as fin:
-        for i, line in enumerate(fin):
-            o=json.loads(line)
-            sid=o.get("id", i)
-            pred = [(int(s["start"]), int(s["end"]), str(s.get("label",""))) for s in o.get("spans",[])]
-            g = gold.get(sid, [])
-            # strict (label-aware)
-            a, pN, gN = score_sets(pred, g, labeled=True)
-            tp_strict += a
-            pred_total += pN
-            # unlabeled
-            a2, _, _ = score_sets(pred, g, labeled=False)
-            tp_unlab += a2
-
-    def prf(tp, pN, gN):
-        prec = (tp/pN) if pN else 0.0
-        rec  = (tp/gN) if gN else 0.0
-        f1   = (2*prec*rec/(prec+rec)) if (prec+rec) else 0.0
-        return prec, rec, f1
-
-    p_strict, r_strict, f1_strict = prf(tp_strict, pred_total, gold_total)
-    p_unlab,  r_unlab,  f1_unlab  = prf(tp_unlab,  pred_total, gold_total)
-
-    metrics = {
-        "adapter": adapter.__class__.__name__,
-        "pred_span_count": pred_total,
-        "gold_source": gold_path,
-        "entities_strict_span": {
-            "tp": tp_strict, "pred_total": pred_total, "gold_total": gold_total,
-            "precision": p_strict, "recall": r_strict, "f1": f1_strict
-        },
-        "entities_unlabeled_span": {
-            "tp": tp_unlab, "pred_total": pred_total, "gold_total": gold_total,
-            "precision": p_unlab, "recall": r_unlab, "f1": f1_unlab
-        }
+    # Build a tiny scoreboard artifact (timestamped summary)
+    scoreboard = {
+        "dataset": dataset,
+        "split": split,
+        "timestamp_utc": _now_stamp(),
+        "strict": metrics["strict"],
+        "unlabeled_boundary": metrics["unlabeled_boundary"],
+        "unlabeled_text_multiset": metrics["unlabeled_text_multiset"],
     }
-    with open(os.path.join(outdir,"metrics.json"),"w") as f:
-        json.dump(metrics, f, indent=2)
+    stamp = _now_stamp()
+    sb_name = f"{dataset}_{split}_scoreboard_{stamp}.json"
+    _write_json(outdir / "scoreboard.json", scoreboard)
 
-    print(f"✓ NKG written: {outdir}/nkg.json")
-    print(f"✓ Pred spans: {outdir}/pred_spans.jsonl")
-    print(f"✓ Metrics   : {outdir}/metrics.json")
-    print(f"Adapter: {adapter.__class__.__name__}")
-    print(f"Gold: {gold_path}  (gold_total={gold_total})")
+    if args.write_docs_scoreboard:
+        docs_path = Path("docs/scoreboards") / sb_name
+        _write_json(docs_path, scoreboard)
+        print(f"Wrote docs scoreboard: {docs_path}")
+
+    print(json.dumps({"status":"ok","outdir":str(outdir),"strict_f1":scoreboard["strict"]["f1"]}, indent=2))
+
 if __name__ == "__main__":
     main()

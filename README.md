@@ -1,3 +1,5 @@
+[![Hygiene](https://github.com/rsleiberin/darf-source/actions/workflows/hygiene.yml/badge.svg)](https://github.com/rsleiberin/darf-source/actions/workflows/hygiene.yml)  [![Acceptance](https://github.com/rsleiberin/darf-source/actions/workflows/acceptance.yml/badge.svg)](https://github.com/rsleiberin/darf-source/actions/workflows/acceptance.yml)
+
 # DARF: Delegated Agentic Reasoning Framework
 
 **Constitutional AI Through Architectural Governance**
@@ -261,3 +263,45 @@ Special recognition goes to the open-source communities behind Neo4j, Qdrant, Mi
 
 **Last Updated**: August 31, 2025
 **Development Day**: 29
+
+## Phase 7B — Scored Runner (smoke)
+
+Run the end-to-end scored harness locally (no heavy downloads), producing receipts and a docs scoreboard:
+
+    python tools/text2nkg/run_eval_scored.py \
+      --dataset biored --split dev \
+      --outdir var/receipts/phase7b/smoke_$(date +%Y%m%d-%H%M%S) \
+      --smoke --write-docs-scoreboard
+
+Mapping can be bypassed for diagnostics:
+
+    DARF_BYPASS_MAP=1 python tools/text2nkg/run_eval_scored.py \
+      --dataset biored --split dev --outdir var/tmp/dev --smoke
+
+### Scored runner usage
+
+See `docs/run_eval_scored.md` for smoke and path-based evaluation examples.
+
+### One-liner runs with `OP_BIORED_RUN_SAFE`
+
+Smoke (no downloads):
+
+    ./OP_BIORED_RUN_SAFE smoke
+
+Path-based (real predictions & gold):
+
+    ./OP_BIORED_RUN_SAFE real <pred_dev.jsonl> <gold_dev.json[l]> <pred_test.jsonl> <gold_test.json[l]>
+
+The runner writes receipts under `var/receipts/...` and timestamped scoreboards into `docs/scoreboards/`.
+
+
+### Phase 7B Acceptance Checklist
+
+- [x] Label mapping **transform** (pipeline, env bypass via `DARF_BYPASS_MAP=1`)
+- [x] Exporter span **validator** (`assert_valid_spans`), skips invalid with counts
+- [x] **Runner** computes strict / unlabeled_boundary / unlabeled_text_multiset
+- [x] **Scoreboards** and **metrics** receipts written; optional docs copy
+- [x] **CI** blocks `models/cache/**`, `var/**`, and non-LFS files >25MB; runs smoke/unit tests
+- [x] **Docs**: label mapping + runner usage + example config
+- [ ] **BioRED real run** strict F1 matches golden within ±0.002 on dev/test (requires real paths)
+
