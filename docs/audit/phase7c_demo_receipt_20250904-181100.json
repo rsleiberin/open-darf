@@ -1,0 +1,52 @@
+{
+  "phase": "7C",
+  "demo_dir": "var/receipts/phase7c/demo_20250904-180129",
+  "git": {
+    "branch": "feat/phase7c-doc-blocking",
+    "commit": "e9b44c7",
+    "remote": "https://github.com/rsleiberin/darf-source.git"
+  },
+  "counts_tags": {
+    "ACCEPTABLE": 1,
+    "REJECTED": 3,
+    "PENDING": 0,
+    "UNKNOWN": 0
+  },
+  "accepted_count": 1,
+  "accepted_ids_sample": [
+    "c"
+  ],
+  "blocking_report": {
+    "lines_total": 10,
+    "events_total": 8,
+    "skipped_no_decision": 2,
+    "by_decision": {
+      "REJECTED": 6,
+      "ACCEPTABLE": 2
+    },
+    "by_stage": {
+      "ingest": 8
+    },
+    "timing": {
+      "ingest": {
+        "REJECTED": {
+          "count": 6,
+          "mean_ms": 0.0089111328125,
+          "p50_ms": 0.005859375,
+          "p95_ms": 0.024169921875,
+          "p99_ms": 0.024169921875
+        },
+        "ACCEPTABLE": {
+          "count": 2,
+          "mean_ms": 0.0072021484375,
+          "p50_ms": 0.00537109375,
+          "p95_ms": 0.009033203125,
+          "p99_ms": 0.009033203125
+        }
+      }
+    }
+  },
+  "consistency": {
+    "accepted_subset_of_tags": true
+  }
+}
