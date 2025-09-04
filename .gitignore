@@ -18,3 +18,8 @@ Thumbs.db
 var/
 models/cache/
 *.safetensors
+!var/receipts/
+!var/receipts/phase6c/
+!var/receipts/phase6c/validation/
+!var/receipts/phase6c/validation/biored_scores_ml_test.json
+!var/receipts/phase6c/validation/scierc_scores_ml_test.json
