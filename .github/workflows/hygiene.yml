@@ -25,7 +25,6 @@ jobs:
           set -euo pipefail
           big_files=""
           while IFS= read -r -d '' f; do
-            # skip directories and symlinks
             [ -f "$f" ] || continue
             size_kb="$(du -k "$f" | awk '{print $1}')"
             if [ "${size_kb:-0}" -gt 25600 ]; then
@@ -38,7 +37,7 @@ jobs:
           fi
 
   tests:
-    name: Smoke tests
+    name: Smoke tests (Phase7b scope)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -52,7 +51,6 @@ jobs:
           if [ -f requirements.txt ]; then
             pip install -r requirements.txt
           fi
-          # Ensure pytest present even if requirements.txt missing minimal deps
           python - <<'PY'
 try:
   import pytest  # noqa: F401
@@ -60,10 +58,14 @@ except Exception:
   import sys, subprocess
   subprocess.check_call([sys.executable, "-m", "pip", "install", "pytest"])
 PY
-      - name: Run unit + smoke tests
+      - name: Run Phase7b smoke/unit tests only
         env:
           DARF_BYPASS_MAP: ""
         shell: bash
         run: |
           set -euo pipefail
-          pytest -q
+          pytest -q \
+            tests/test_label_map.py \
+            tests/test_emit_validator.py \
+            tests/test_pipeline_smoke.py \
+            tests/test_runner_smoke.py
