@@ -1,0 +1,4 @@
+{"id": "a", "constitutional_status": "REJECTED", "constitutional_rule_id": "EMPTY_TEXT", "constitutional_rationale": "no content"}
+{"id": "b", "constitutional_status": "REJECTED", "constitutional_rule_id": "TOO_SHORT", "constitutional_rationale": "len=5 < 20"}
+{"id": "c", "constitutional_status": "ACCEPTABLE", "constitutional_rule_id": "PASS_RULES", "constitutional_rationale": "meets baseline constraints"}
+{"id": "d", "constitutional_status": "REJECTED", "constitutional_rule_id": "BLOCKLIST_SOURCE", "constitutional_rationale": "source=blockedSite"}
