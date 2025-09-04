@@ -1,0 +1,9 @@
+{
+  "phase": "7D",
+  "group": "Competitive Positioning Docs",
+  "status": "in_progress",
+  "artifacts": [
+    "docs/positioning/phase7d_competitive_positioning.md",
+    "docs/constraints/phase7d_math_guarantees.md"
+  ]
+}

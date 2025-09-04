@@ -1,0 +1,7 @@
+{
+  "phase": "7D",
+  "group": "Integration Testing & Validation",
+  "status": "advanced",
+  "ci": ".github/workflows/phase7d.yml",
+  "notes": "Runs 7D unit tests and 7C suite under REASONING_ENABLE=1"
+}

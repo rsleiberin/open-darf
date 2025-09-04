@@ -1,0 +1,9 @@
+{
+  "phase": "7D",
+  "group": "Precedent Tracking & Consistency",
+  "status": "in_progress",
+  "updates": {
+    "consistency_check": "implemented with tests",
+    "decision_writebacks": "store optional decision field in precedents"
+  }
+}

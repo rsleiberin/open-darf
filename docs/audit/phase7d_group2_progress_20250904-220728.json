@@ -1,0 +1,13 @@
+{
+  "phase": "7D",
+  "group": "Precedent Tracking & Consistency",
+  "tasks": [
+    {"name": "Store decision patterns linked to principle combinations", "status": "enabled (local/neo4j)"},
+    {"name": "Detect similar scenarios via similarity lookup", "status": "enabled"},
+    {"name": "Validate consistency for analogous contexts", "status": "pending"},
+    {"name": "Enable decisions to cite prior precedents", "status": "enabled"},
+    {"name": "Support governed evolution of interpretations", "status": "pending"}
+  ],
+  "branch": "feat/phase7d-reasoning-infra",
+  "commit": "$(git rev-parse --short=12 HEAD)"
+}

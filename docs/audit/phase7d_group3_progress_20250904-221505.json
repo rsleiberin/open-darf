@@ -1,0 +1,11 @@
+{
+  "phase": "7D",
+  "group": "Multi-Principle Conflict Resolution",
+  "status": "in_progress",
+  "features": [
+    "Strict DENY precedence (fail-closed)",
+    "Deterministic resolution (commutative, idempotent)",
+    "Weights applied only in non-denial cases",
+    "Transparent rationale for audits"
+  ]
+}
