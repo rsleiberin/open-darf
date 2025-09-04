@@ -275,3 +275,7 @@ Mapping can be bypassed for diagnostics:
 
     DARF_BYPASS_MAP=1 python tools/text2nkg/run_eval_scored.py \
       --dataset biored --split dev --outdir var/tmp/dev --smoke
+
+### Scored runner usage
+
+See `docs/run_eval_scored.md` for smoke and path-based evaluation examples.
