@@ -1,0 +1,96 @@
+name: Acceptance (BioRED golden check)
+
+on:
+  workflow_dispatch:
+    inputs:
+      pred_dev:
+        description: "Path to predicted spans for DEV (JSON/JSONL) in repo or fetched by prior step"
+        required: true
+        type: string
+      gold_dev:
+        description: "Path to gold spans for DEV (JSON/JSONL)"
+        required: true
+        type: string
+      pred_test:
+        description: "Path to predicted spans for TEST (JSON/JSONL)"
+        required: true
+        type: string
+      gold_test:
+        description: "Path to gold spans for TEST (JSON/JSONL)"
+        required: true
+        type: string
+      tol:
+        description: "Absolute tolerance for F1 delta vs golden"
+        required: false
+        default: "0.002"
+        type: string
+
+jobs:
+  accept:
+    name: Run path-based eval and verify against golden
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install deps (minimal)
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          fi
+
+      - name: Show inputs
+        run: |
+          echo "pred_dev=${{ inputs.pred_dev }}"
+          echo "gold_dev=${{ inputs.gold_dev }}"
+          echo "pred_test=${{ inputs.pred_test }}"
+          echo "gold_test=${{ inputs.gold_test }}"
+          echo "tol=${{ inputs.tol }}"
+
+      - name: Run DEV (path-based)
+        env:
+          DARF_BYPASS_MAP: ""
+        run: |
+          python tools/text2nkg/run_eval_scored.py \
+            --dataset biored --split dev \
+            --outdir var/receipts/ci_accept/dev \
+            --pred-path "${{ inputs.pred_dev }}" \
+            --gold-path "${{ inputs.gold_dev }}" \
+            --config configs/hf_config.json \
+            --write-docs-scoreboard
+
+      - name: Run TEST (path-based)
+        env:
+          DARF_BYPASS_MAP: ""
+        run: |
+          python tools/text2nkg/run_eval_scored.py \
+            --dataset biored --split test \
+            --outdir var/receipts/ci_accept/test \
+            --pred-path "${{ inputs.pred_test }}" \
+            --gold-path "${{ inputs.gold_test }}" \
+            --config configs/hf_config.json \
+            --write-docs-scoreboard
+
+      - name: Verify against golden
+        id: verify
+        run: |
+          python tools/text2nkg/check_golden.py \
+            --dev-scoreboard var/receipts/ci_accept/dev/scoreboard.json \
+            --test-scoreboard var/receipts/ci_accept/test/scoreboard.json \
+            --golden docs/scoreboards/biored_phase7a_20250903-172808.json \
+            --tol "${{ inputs.tol }}"
+
+      - name: Upload receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci_accept_${{ github.run_id }}
+          path: |
+            var/receipts/ci_accept/**
+            docs/scoreboards/biored_*_scoreboard_*.json
