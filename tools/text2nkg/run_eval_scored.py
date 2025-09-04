@@ -11,6 +11,11 @@ from tools.text2nkg.transforms.label_map import apply_label_map
 from tools.text2nkg.emit_nkg import assert_valid_spans
 from tools.text2nkg.pipeline import compute_metrics
 
+def _label_histogram(spans):
+    from collections import Counter
+    return dict(Counter(s.get('label') for s in spans))
+
+
 # ----------------------------
 # Helpers (defined BEFORE main)
 # ----------------------------
@@ -135,6 +140,8 @@ def _run_eval(
         "dataset": dataset, "split": split, "adapter": adapter_name,
         "env_bypass": bool(os.getenv("DARF_BYPASS_MAP")),
         "skipped_invalid_pred_spans": skipped,
+        "label_histogram": _label_histogram(valid_pred),
+        "run_meta": { "pred_count": len(valid_pred), "gold_count": len(valid_gold) },
         "strict": {"f1": metrics["strict"]["f1"], "precision": metrics["strict"]["precision"], "recall": metrics["strict"]["recall"]},
         "unlabeled_boundary": metrics["unlabeled_boundary"],
         "unlabeled_text_multiset": metrics["unlabeled_text_multiset"],
