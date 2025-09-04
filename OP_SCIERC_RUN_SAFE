@@ -1,27 +1,37 @@
 #!/usr/bin/env bash
 set +e
-echo "=== SciERC safe run (skips if gold missing) ==="
-if git rev-parse --show-toplevel >/dev/null 2>&1; then R="$(git rev-parse --show-toplevel)"; else R="$PWD"; fi
-cd "$R" || { echo "❌ cd failed: $R"; echo OK; exit 0; }
+
+echo "=== SciERC safe runner ==="
+if git rev-parse --show-toplevel >/dev/null 2>&1; then ROOT="$(git rev-parse --show-toplevel)"; else ROOT="$PWD"; fi
+cd "$ROOT" || { echo "❌ cd failed: $ROOT"; echo "OK (no-op)"; exit 0; }
+
+GOLD_DIR="${GOLD_FORCE_DIR_SCIERC:-var/datasets/normalized/scierc}"
+DEV="$GOLD_DIR/dev.jsonl"
+TST="$GOLD_DIR/test.jsonl"
+
+if [ ! -s "$DEV" ] || [ ! -s "$TST" ]; then
+  echo "(!) SciERC gold missing."
+  echo "Place char-offset gold at:"
+  echo "  - var/datasets/normalized/scierc/dev.jsonl"
+  echo "  - var/datasets/normalized/scierc/test.jsonl"
+  echo "OR set: export GOLD_FORCE_DIR_SCIERC=/abs/path/with/dev_and_test_jsonl"
+  echo "Then re-run: bash OP_SCIERC_RUN_SAFE"
+  echo "OK (safe skip)"
+  exit 0
+fi
 
 export TRANSFORMERS_OFFLINE=1
 unset T2NKG_ADAPTER 2>/dev/null || true
-unset DARF_BYPASS_MAP 2>/dev/null || true
 
 STAMP="$(date +%Y%m%d-%H%M%S)"
-RUN="var/receipts/phase7a/text2nkg_fullrun/$STAMP"; mkdir -p "$RUN"
-BASE="var/receipts/phase7a/text2nkg_fullrun/20250902-232710"
-[ -f "$BASE/hf_config.json" ] && cp "$BASE/hf_config.json" "$RUN/hf_config.json" || printf '{}' > "$RUN/hf_config.json"
+RUN="var/receipts/phase7a/text2nkg_fullrun/$STAMP"
+mkdir -p "$RUN"
 
-SRC="${GOLD_FORCE_DIR_SCIERC:-var/datasets/normalized/scierc}"
-if [ -s "$SRC/dev.jsonl" ] && [ -s "$SRC/test.jsonl" ]; then
-  echo "✓ Found SciERC gold at: $SRC"
-  for sp in dev test; do
-    OUT="$RUN/scierc_${sp}"; mkdir -p "$OUT"
-    GOLD_FORCE_DIR_SCIERC="$SRC" python tools/text2nkg/run_eval_scored.py --dataset scierc --split "$sp" --config "$RUN/hf_config.json" --outdir "$OUT" || echo "(!) runner rc!=0 for scierc/$sp"
-  done
-else
-  echo "(!) SciERC gold not found; see docs/scierc_char_gold.md"
-fi
+for sp in dev test; do
+  OUT="$RUN/scierc_${sp}"
+  mkdir -p "$OUT"
+  python tools/text2nkg/run_eval_scored.py --dataset scierc --split "$sp" --outdir "$OUT" || echo "(!) runner rc!=0 for $sp"
+done
+
 echo "OUT_ROOT=$RUN"
-echo "OK (SciERC guard)"
+echo "OK (SciERC safe run)"
