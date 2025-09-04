@@ -1,3 +1,5 @@
+[![Hygiene](https://github.com/rsleiberin/darf-source/actions/workflows/hygiene.yml/badge.svg)](https://github.com/rsleiberin/darf-source/actions/workflows/hygiene.yml)  [![Acceptance](https://github.com/rsleiberin/darf-source/actions/workflows/acceptance.yml/badge.svg)](https://github.com/rsleiberin/darf-source/actions/workflows/acceptance.yml)
+
 # DARF: Delegated Agentic Reasoning Framework
 
 **Constitutional AI Through Architectural Governance**
