@@ -1,7 +1,7 @@
 # Phase 7E — Evidence Pack
 
 - Version: 7e_evidence_pack_v1
-- Generated: 2025-09-05T00:23:59Z
+- Generated: 2025-09-05T01:02:12Z
 - Example count: 0
 
 _No redacted enriched examples found in docs/evidence/phase7e/enriched_examples._
