@@ -1,0 +1,18 @@
+version: "vote_schema_v1"
+decision_context:
+  id: "<string, required>"
+  description: "<string, required>"
+  tags: ["<optional strings>"]
+votes:
+  - principle: "<string, required>"
+    decision: "<ALLOW|DENY|PENDING, required>"
+    weight: "<float 0..1, default 1.0>"
+    rationale: "<string, required>"
+    dependencies: ["<optional principle ids>"]
+    interactions: ["<optional principle ids>"]
+redaction_policy:
+  - "<no PII in rationale>"
+resolution_rules:
+  - "Strict DENY precedence: any DENY -> REJECTED"
+  - "Else weighted ALLOW mass >= 0.5 -> ACCEPTABLE"
+  - "Else -> PENDING"
