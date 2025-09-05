@@ -1,7 +1,19 @@
 {
-  "perf_receipts": [],
-  "version": "7e_evidence_pack_v1",
-  "generated_at_utc": "2025-09-05T01:02:12Z",
-  "count": 0,
-  "examples": []
+  "count": 2,
+  "examples": [
+    {
+      "example_file": "examples_index.json",
+      "example_id": null,
+      "redacted_at_utc": null,
+      "source_path": null
+    },
+    {
+      "example_file": "stats.json",
+      "example_id": null,
+      "redacted_at_utc": null,
+      "source_path": null
+    }
+  ],
+  "generated_at_utc": "2025-09-05T00:30:00Z",
+  "version": "7e_evidence_pack_v1"
 }
