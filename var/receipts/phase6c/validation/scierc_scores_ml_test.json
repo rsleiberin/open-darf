@@ -1,8 +1,12 @@
 {
-  "note": "placeholder validation input required by CI Gates preflight; replace with canonical receipts when finalized",
-  "dataset": "SciERC",
-  "phase": "6c",
-  "source": "phase7e/ci-bootstrap",
-  "generated_utc": "2025-09-04T23:52:21Z",
-  "contents": "non-empty sentinel to satisfy presence check"
+  "micro": {
+    "P": 0.35785953177257523,
+    "R": 0.26884422110552764,
+    "F1": 0.30703012912482064
+  },
+  "meta": {
+    "dataset": "SciERC",
+    "source": "phase7e/fix-schema",
+    "generated_utc": "2025-09-05T00:05:43Z"
+  }
 }
