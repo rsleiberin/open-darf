@@ -1,19 +1,10 @@
 {
-  "count": 2,
+  "count": {
+    "examples": 1
+  },
   "examples": [
-    {
-      "example_file": "examples_index.json",
-      "example_id": null,
-      "redacted_at_utc": null,
-      "source_path": null
-    },
-    {
-      "example_file": "stats.json",
-      "example_id": null,
-      "redacted_at_utc": null,
-      "source_path": null
-    }
+    "README.md"
   ],
-  "generated_at_utc": "2025-09-05T00:30:00Z",
-  "version": "7e_evidence_pack_v1"
+  "generated_at_utc": "2025-09-05T01:57:07Z",
+  "version": "7e"
 }
