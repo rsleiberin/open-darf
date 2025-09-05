@@ -1,0 +1,10 @@
+[
+  {
+    "file": "README.md",
+    "source_exec": {
+      "synthesis": "var/receipts/phase7f/dryrun_exec/20250905-233445/synthesis_exec.json",
+      "revocation": "var/receipts/phase7f/dryrun_exec/20250905-233445/revocation_exec.json"
+    },
+    "generated_at_utc": "20250905-233445"
+  }
+]
