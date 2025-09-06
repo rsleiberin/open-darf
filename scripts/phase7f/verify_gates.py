@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import os, json, glob, subprocess, time, sys
+import os, json, glob, subprocess, time
 
 TARGETS = {
   "synthesis_e2e_sec_le": 2.0,
@@ -9,10 +9,8 @@ TARGETS = {
 }
 
 def git_head_short():
-    try:
-        return subprocess.check_output(["git","rev-parse","--short=12","HEAD"], text=True).strip()
-    except Exception:
-        return "unknown"
+    try: return subprocess.check_output(["git","rev-parse","--short=12","HEAD"], text=True).strip()
+    except Exception: return "unknown"
 
 def latest(globpat):
     paths = sorted(glob.glob(globpat), key=os.path.getmtime, reverse=True)
@@ -23,27 +21,20 @@ def load_json(path):
 
 def main():
     head = git_head_short()
-    # prior synthesis+revocation dry-run receipts
     synth = latest("var/receipts/phase7f/dryrun_exec/*/synthesis_exec.json")
     revo  = latest("var/receipts/phase7f/dryrun_exec/*/revocation_exec.json")
     prop  = latest("var/receipts/phase7f/propagation_perf/*/summary.json")
+    depm  = latest("var/receipts/phase7f/dep_acc/*/metrics.json")
 
-    measurements = {
-      "synthesis_e2e_sec": None,
-      "propagation_p95_ms": None,
-      "revocation_e2e_sec": None,
-      "dependency_accuracy": None
-    }
+    measurements = { "synthesis_e2e_sec": None, "propagation_p95_ms": None, "revocation_e2e_sec": None, "dependency_accuracy": None }
 
-    if synth:
-        try: measurements["synthesis_e2e_sec"] = float(load_json(synth).get("timing_sec"))
-        except Exception: pass
-    if revo:
-        try: measurements["revocation_e2e_sec"] = float(load_json(revo).get("timing_sec"))
-        except Exception: pass
-    if prop:
-        try: measurements["propagation_p95_ms"] = float(load_json(prop)["summary"]["p95_ms"])
-        except Exception: pass
+    try:
+        if synth: measurements["synthesis_e2e_sec"] = float(load_json(synth).get("timing_sec"))
+        if revo:  measurements["revocation_e2e_sec"] = float(load_json(revo).get("timing_sec"))
+        if prop:  measurements["propagation_p95_ms"] = float(load_json(prop)["summary"]["p95_ms"])
+        if depm:  measurements["dependency_accuracy"] = float(load_json(depm)["micro"]["recall"])
+    except Exception:
+        pass
 
     status = {
       "synthesis_ok": None if measurements["synthesis_e2e_sec"] is None else measurements["synthesis_e2e_sec"] <= TARGETS["synthesis_e2e_sec_le"],
@@ -52,20 +43,12 @@ def main():
       "dep_acc_ok": None if measurements["dependency_accuracy"] is None else measurements["dependency_accuracy"] >= TARGETS["dependency_accuracy_ge"]
     }
 
-    out = {
-      "phase": "7F",
-      "head": head,
-      "targets": TARGETS,
-      "measurements": measurements,
-      "status": status
-    }
-
+    out = { "phase":"7F", "head":head, "targets":TARGETS, "measurements":measurements, "status":status }
     ts = time.strftime("%Y%m%d-%H%M%S", time.gmtime())
     outdir = f"var/receipts/phase7f/gates_eval/{ts}"
     os.makedirs(outdir, exist_ok=True)
     path = os.path.join(outdir, "gates_summary.json")
     with open(path, "w") as f: json.dump(out, f, indent=2)
     print(path)
-
 if __name__ == "__main__":
-    sys.exit(main() or 0)
+    main()

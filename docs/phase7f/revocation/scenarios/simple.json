@@ -1,0 +1,6 @@
+{
+  "name": "simple",
+  "edges":[["A","B"],["B","C"],["C","D"]],
+  "starts":["B"],
+  "expected_scope":["B","C","D"]
+}

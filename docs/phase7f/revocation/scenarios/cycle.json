@@ -1,0 +1,7 @@
+{
+  "name": "cycle",
+  "edges":[["X","Y"],["Y","Z"],["Z","X"],["Z","W"]],
+  "starts":["Y"],
+  "expected_scope":["Y","Z","X","W"],
+  "cycle_detected": true
+}
