@@ -61,3 +61,5 @@
 ## A2 Orchestrator parallel — 20250906-142656 UTC
 
 - Latest orchestrator receipt: `<none>`
+
+- A2 parallel orchestrator: merged (PR #381); latest receipt: `var/receipts/phase7f/orchestrator_parallel/20250906-143844/summary.json`
