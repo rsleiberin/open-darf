@@ -100,3 +100,25 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# --- 7F/D16: Tri-state enforcement helper (append-only) ---
+try:
+    from scripts.phase7f.tri_state import Decision, decide_with_constraints, combine_decisions
+except Exception:  # fallback to minimal shim
+    class Decision(str):
+        ALLOW="ALLOW"; DENY="DENY"; INDETERMINATE="INDETERMINATE"
+    def decide_with_constraints(scores, constraints):
+        # conservative: any False -> DENY; any None -> INDETERMINATE; else ALLOW
+        vals = list(constraints.values())
+        if any(v is False for v in vals): 
+            return "DENY", {"constraints": constraints, "scores": scores}
+        if any(v is None for v in vals):
+            return "INDETERMINATE", {"constraints": constraints, "scores": scores}
+        return "ALLOW", {"constraints": constraints, "scores": scores}
+    def combine_decisions(ds):
+        return "DENY" if "DENY" in ds else ("ALLOW" if set(ds)=={"ALLOW"} else "INDETERMINATE")
+
+def orchestrator_triage(scores, constraints):
+    """Return (Decision, rationale) with deny precedence & fail-closed behavior."""
+    decision, rationale = decide_with_constraints(scores, constraints)
+    return decision, rationale

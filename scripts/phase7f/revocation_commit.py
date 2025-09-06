@@ -103,3 +103,19 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# --- 7F/D16: Tri-state rationale hook (append-only) ---
+try:
+    from scripts.phase7f.tri_state import Decision, fail_closed
+except Exception:
+    class Decision(str):
+        ALLOW="ALLOW"; DENY="DENY"; INDETERMINATE="INDETERMINATE"
+    def fail_closed(*signals):
+        if any(s is False for s in signals): return "DENY"
+        if any(s is None for s in signals): return "INDETERMINATE"
+        return "ALLOW"
+
+def _tri_state_guard(pre_checks_ok: bool|None, scope_ok: bool|None):
+    """Compute Decision with fail-closed semantics for commit preflight."""
+    d = fail_closed(pre_checks_ok, scope_ok)
+    return d
