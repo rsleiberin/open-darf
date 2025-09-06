@@ -1,0 +1,23 @@
+name: Phase 7F Gates
+on:
+  workflow_dispatch:
+    inputs:
+      gates_summary:
+        description: "Path to gates_summary.json (optional)"
+        required: false
+        default: ""
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Verify 7F Gates
+        env:
+          GATES_SUMMARY: ${{ inputs.gates_summary }}
+        run: |
+          python scripts/phase7f/verify_gates.py
