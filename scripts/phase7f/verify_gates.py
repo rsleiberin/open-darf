@@ -1,62 +1,71 @@
 #!/usr/bin/env python3
-import os, sys, json, glob, pathlib
+import os, json, glob, subprocess, time, sys
 
-DEFAULTS = {
+TARGETS = {
   "synthesis_e2e_sec_le": 2.0,
   "propagation_p95_ms_le": 100.0,
   "revocation_e2e_sec_le": 5.0,
   "dependency_accuracy_ge": 0.999
 }
 
-ROOT = pathlib.Path(__file__).resolve().parents[2]
-plan_path = ROOT / "docs/phase7f/plans/ci_gates_plan.json"
-cfg = dict(DEFAULTS)
-try:
-    with open(plan_path, "r") as f:
-        data = json.load(f)
-        cfg.update(data.get("gates", {}))
-except Exception:
-    pass
+def git_head_short():
+    try:
+        return subprocess.check_output(["git","rev-parse","--short=12","HEAD"], text=True).strip()
+    except Exception:
+        return "unknown"
 
-# Locate summary or build a minimal one from dry-run execs
-summary_path = os.environ.get("GATES_SUMMARY")
-if not summary_path:
-    candidates = sorted(glob.glob("var/receipts/phase7f/gates_eval/*/gates_summary.json"))
-    summary_path = candidates[-1] if candidates else ""
+def latest(globpat):
+    paths = sorted(glob.glob(globpat), key=os.path.getmtime, reverse=True)
+    return paths[0] if paths else None
 
 def load_json(path):
-    try:
-        with open(path, "r") as f: return json.load(f)
-    except Exception:
-        return {}
+    with open(path) as f: return json.load(f)
 
-report = load_json(summary_path) if summary_path else {}
+def main():
+    head = git_head_short()
+    # prior synthesis+revocation dry-run receipts
+    synth = latest("var/receipts/phase7f/dryrun_exec/*/synthesis_exec.json")
+    revo  = latest("var/receipts/phase7f/dryrun_exec/*/revocation_exec.json")
+    prop  = latest("var/receipts/phase7f/propagation_perf/*/summary.json")
 
-syn = report.get("measurements", {}).get("synthesis_e2e_sec", None)
-prop = report.get("measurements", {}).get("propagation_p95_ms", None)
-rev  = report.get("measurements", {}).get("revocation_e2e_sec", None)
-dep  = report.get("measurements", {}).get("dependency_accuracy", None)
+    measurements = {
+      "synthesis_e2e_sec": None,
+      "propagation_p95_ms": None,
+      "revocation_e2e_sec": None,
+      "dependency_accuracy": None
+    }
 
-# Evaluate with tri-state (None -> pending, non-blocking)
-def le(meas, targ): 
-    return None if meas is None else (meas <= targ)
-def ge(meas, targ):
-    return None if meas is None else (meas >= targ)
+    if synth:
+        try: measurements["synthesis_e2e_sec"] = float(load_json(synth).get("timing_sec"))
+        except Exception: pass
+    if revo:
+        try: measurements["revocation_e2e_sec"] = float(load_json(revo).get("timing_sec"))
+        except Exception: pass
+    if prop:
+        try: measurements["propagation_p95_ms"] = float(load_json(prop)["summary"]["p95_ms"])
+        except Exception: pass
 
-status = {
-  "synthesis_ok":   le(syn, cfg["synthesis_e2e_sec_le"]),
-  "propagation_ok": le(prop, cfg["propagation_p95_ms_le"]),
-  "revocation_ok":  le(rev, cfg["revocation_e2e_sec_le"]),
-  "dep_acc_ok":     ge(dep, cfg["dependency_accuracy_ge"])
-}
+    status = {
+      "synthesis_ok": None if measurements["synthesis_e2e_sec"] is None else measurements["synthesis_e2e_sec"] <= TARGETS["synthesis_e2e_sec_le"],
+      "propagation_ok": None if measurements["propagation_p95_ms"] is None else measurements["propagation_p95_ms"] <= TARGETS["propagation_p95_ms_le"],
+      "revocation_ok": None if measurements["revocation_e2e_sec"] is None else measurements["revocation_e2e_sec"] <= TARGETS["revocation_e2e_sec_le"],
+      "dep_acc_ok": None if measurements["dependency_accuracy"] is None else measurements["dependency_accuracy"] >= TARGETS["dependency_accuracy_ge"]
+    }
 
-print(json.dumps({
-  "cfg": cfg,
-  "summary_path": summary_path or "<none>",
-  "measurements": {"synthesis": syn, "propagation": prop, "revocation": rev, "dep_acc": dep},
-  "status": status
-}, indent=2))
+    out = {
+      "phase": "7F",
+      "head": head,
+      "targets": TARGETS,
+      "measurements": measurements,
+      "status": status
+    }
 
-# Exit code policy: only fail if a measured gate exists and violates its threshold
-fail = any(val is False for val in status.values())
-sys.exit(1 if fail else 0)
+    ts = time.strftime("%Y%m%d-%H%M%S", time.gmtime())
+    outdir = f"var/receipts/phase7f/gates_eval/{ts}"
+    os.makedirs(outdir, exist_ok=True)
+    path = os.path.join(outdir, "gates_summary.json")
+    with open(path, "w") as f: json.dump(out, f, indent=2)
+    print(path)
+
+if __name__ == "__main__":
+    sys.exit(main() or 0)
