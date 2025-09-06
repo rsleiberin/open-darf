@@ -30,3 +30,9 @@
 
 - **B7 (commit executor)**: merged and demo-run (dry-run receipt) → `var/receipts/phase7f/revocation_commit/20250906-015234/commit_receipt.json`
 - **Checklist now**: A1=IN_PROGRESS, A4=COMPLETE, B7=COMPLETE, B10=COMPLETE, C14=COMPLETE, C15=COMPLETE
+
+## A3 Verification — 20250906-023759 UTC
+
+- Propagation p95: 1.078555011190474 ms (target ≤ 100.0 ms) — **PASS**
+- Bench receipt: `var/receipts/phase7f/propagation_perf/20250906-022702/summary.json`
+- Gates summary: `var/receipts/phase7f/gates_eval/20250906-023800/gates_summary.json`
