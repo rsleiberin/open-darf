@@ -36,3 +36,11 @@
 - Propagation p95: 1.078555011190474 ms (target ≤ 100.0 ms) — **PASS**
 - Bench receipt: `var/receipts/phase7f/propagation_perf/20250906-022702/summary.json`
 - Gates summary: `var/receipts/phase7f/gates_eval/20250906-023800/gates_summary.json`
+
+## Revocation scenarios & dependency accuracy (7F — 20250906-055719 UTC)
+
+- Scenarios: `docs/phase7f/revocation/scenarios/*.json`
+- Dependency accuracy (micro recall): `1.0` (target ≥ 0.999)
+- Metrics receipt: `var/receipts/phase7f/dep_acc/20250906-055719/metrics.json`
+- Gates summary: `var/receipts/phase7f/gates_eval/20250906-055719/gates_summary.json`
+- Checklist: B7=COMPLETE, B11=COMPLETE
