@@ -49,3 +49,7 @@
 
 - C12 Neo4j tuning plan: `var/receipts/phase7f/neo4j_tuning/20250906-061020/summary.json` (docs-only; apply in infra).
 - C13 Qdrant sweep: `var/receipts/phase7f/qdrant_perf/20250906-061020/summary.json` (simulated; target p95 ≤ 7.745ms).
+
+## D18 End-to-end validation (20250906-061516 UTC)
+
+- Receipt: `var/receipts/phase7f/e2e/20250906-061516/summary.json`
