@@ -1,0 +1,13 @@
+{
+  "phase": "7F",
+  "mode": "revocation_commit",
+  "inputs": ["doc_ids_to_revoke[]"],
+  "algorithm": [
+    "Resolve dependency graph; detect cycles",
+    "Compute cascade scope (reverse reachability)",
+    "Write PROV-O revocation bundle",
+    "Delete/mark in Neo4j, delete vectors in Qdrant",
+    "Emit receipts (scope, timings, errors) and constitutional rationale"
+  ],
+  "acceptance": { "cascade_accuracy_ge": 0.999, "e2e_sec_le": 5.0 }
+}

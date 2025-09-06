@@ -1,0 +1,13 @@
+{
+  "phase": "7F",
+  "component": "orchestrator",
+  "steps": [
+    "Fetch query → spawn parallel tasks: {vector_search, graph_propagation}",
+    "Vector: Qdrant HNSW search (topK=64) with ef_search ∈ {64,128}",
+    "Graph: Neo4j constraint propagation + precedent expansion (p95<100ms)",
+    "Fuse with RRF(k=60); carry provenance per candidate",
+    "Apply constitutional filters (deny precedence; fail-closed)",
+    "Emit fused_topk with decision trails & timings"
+  ],
+  "targets": { "e2e_sec_le": 2.0, "propagation_p95_ms_le": 100 }
+}
