@@ -44,3 +44,8 @@
 - Metrics receipt: `var/receipts/phase7f/dep_acc/20250906-055719/metrics.json`
 - Gates summary: `var/receipts/phase7f/gates_eval/20250906-055719/gates_summary.json`
 - Checklist: B7=COMPLETE, B11=COMPLETE
+
+## Perf plans & receipts (7F — 20250906-061020 UTC)
+
+- C12 Neo4j tuning plan: `var/receipts/phase7f/neo4j_tuning/20250906-061020/summary.json` (docs-only; apply in infra).
+- C13 Qdrant sweep: `var/receipts/phase7f/qdrant_perf/20250906-061020/summary.json` (simulated; target p95 ≤ 7.745ms).
