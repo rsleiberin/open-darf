@@ -53,3 +53,7 @@
 ## D18 End-to-end validation (20250906-061516 UTC)
 
 - Receipt: `var/receipts/phase7f/e2e/20250906-061516/summary.json`
+
+## D19 Grant-ready summary (20250906-061814 UTC)
+
+- Summary: `docs/phase7f/GRANT_SUMMARY.md`
