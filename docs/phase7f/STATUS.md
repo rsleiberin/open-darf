@@ -25,3 +25,8 @@
 - **CI Gates run receipt**: `var/receipts/phase7f/ci_runs/20250906-002208/summary.env`
 - **Gates summary**: `var/receipts/phase7f/gates_eval/20250906-001701/gates_summary.json`
 - **Neo4j plan**: `var/receipts/phase7f/session/20250905-204724/plan/neo4j_indexes.cql` (applied: pending env, currently dry-run)
+
+## Refresh — 20250906-015234 UTC @ ef8aabc568bb
+
+- **B7 (commit executor)**: merged and demo-run (dry-run receipt) → `var/receipts/phase7f/revocation_commit/20250906-015234/commit_receipt.json`
+- **Checklist now**: A1=IN_PROGRESS, A4=COMPLETE, B7=COMPLETE, B10=COMPLETE, C14=COMPLETE, C15=COMPLETE
