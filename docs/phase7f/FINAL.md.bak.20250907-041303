@@ -22,11 +22,11 @@
 - A1 apply is gated on environment. Use plan at `docs/phase7f/plans/neo4j_indexes.cql`. Dry-run receipts already captured.
 - No handoff generated here; this is a docs-only rollup within Phase 7F.
 
-<!-- auto:phase7f-final-a1 20250907-041303 -->
+<!-- auto:phase7f-final-a1 20250907-040835 -->
 ### A1 — Neo4j schema prerequisites (indexes + constraints)
 
-Applied successfully on UTC 20250907-040558 against database **neo4j** (server **5.22.0**).
+Applied successfully on UTC '"$TS"' against database **'"$DBNAME"'** (server **'"$SERVER_VER"'**).
 - Indexes ONLINE: `idx_doc_anchor_composite`, `idx_relation_key`, `idx_vote_decision`, `idx_constraint_key`
 - Constraints present: `unique_document_id`, `node_precedent_id`
-- Receipt: `var/receipts/phase7f/neo4j_indexes/20250907-040558/summary.env`
-- Engine/Container: podman / 478722db6edf
+- Receipt: `'"$LAST_ENV"'`
+- Engine/Container: '"$ENGINE"' / '"$CID"'

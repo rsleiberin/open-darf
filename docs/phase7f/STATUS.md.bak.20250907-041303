@@ -64,13 +64,13 @@
 
 - A2 parallel orchestrator: merged (PR #381); latest receipt: `var/receipts/phase7f/orchestrator_parallel/20250906-143844/summary.json`
 
-<!-- auto:phase7f-a1 20250907-041303 -->
+<!-- auto:phase7f-a1 20250907-040835 -->
 ## A1 — Neo4j indexes & constraints (applied)
 
 - Result: **APPLIED**
-- Server version: 5.22.0
-- Database: neo4j
+- Server version: '"$SERVER_VER"'
+- Database: '"$DBNAME"'
 - Indexes: **4/4 ONLINE**
-- Constraints: **unique_document_id**=1, **node_precedent_id**=1
-- Engine/Container: podman / 478722db6edf
-- Receipt: `var/receipts/phase7f/neo4j_indexes/20250907-040558/summary.env` (UTC 20250907-040558)
+- Constraints: **unique_document_id**='"$UD_PRESENT"', **node_precedent_id**='"$NP_PRESENT"'
+- Engine/Container: '"$ENGINE"' / '"$CID"'
+- Receipt: `'"$LAST_ENV"'` (UTC '"$TS"')
