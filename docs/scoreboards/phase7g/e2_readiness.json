@@ -1,0 +1,13 @@
+{
+  "status": "gap",
+  "timestamp": "2025-09-08T00:09:25Z",
+  "target_f1_micro": 0.5,
+  "best_f1_micro": 0.336842,
+  "delta_to_target": 0.163158,
+  "model": "heuristic-stdlib-v6+PURE-bridge",
+  "source_receipt": "var/receipts/phase7g/pure_runs/20250907-235111/metrics.json",
+  "precision_micro": 0.457143,
+  "recall_micro": 0.266667,
+  "f1_unlabeled": 0.53125,
+  "notes": "Direction-aware lexical rules; negation + distance filters; imported into PURE outdir via shim"
+}

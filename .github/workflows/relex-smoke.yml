@@ -26,3 +26,11 @@ jobs:
           python-version: '3.10'
       - name: Run RE smoke (heuristic stdlib)
         run: python scripts/relex_ci_smoke.py
+      - name: Upload RE smoke receipts
+        uses: actions/upload-artifact@v4
+        with:
+          name: relex-smoke-receipts
+          path: |
+            var/receipts/phase7g/relex_ci_smoke/**/metrics.json
+            var/receipts/phase7g/relex_ci_smoke/**/local_smoke.json
+          if-no-files-found: warn

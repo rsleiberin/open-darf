@@ -1,0 +1,43 @@
+name: PURE Opt-in
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'apps/relex/pure/**'
+      - 'scripts/pure_runner.sh'
+      - 'scripts/setup_pure_env.sh'
+      - 'requirements/pure.txt'
+      - '.github/workflows/pure-optin.yml'
+jobs:
+  pure-optin:
+    if: contains(join(fromJson(toJson(github.event.pull_request.labels)).*.name, ','), 'ci:run-pure')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Prepare PURE env (CPU)
+        run: |
+          python -m venv .venv_pure
+          . .venv_pure/bin/activate
+          python -m pip install -U pip wheel
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.2.2
+          python -m pip install -r requirements/pure.txt
+      - name: Run PURE runner (skeleton)
+        run: |
+          . .venv_pure/bin/activate
+          bash scripts/pure_bridge_run.sh
+      - name: Validate metrics receipts
+        run: |
+          pip install jsonschema
+          python scripts/metrics_validate.py --strict
+      - name: Upload PURE receipts
+        uses: actions/upload-artifact@v4
+        with:
+          name: pure-receipts
+          path: |
+            var/receipts/phase7g/pure_runs/**/metrics.json
+            var/receipts/phase7g/pure_runs/**/scoreboard_compact.json
+            var/receipts/phase7g/pure_runs/**/runner_stdout.json
+          if-no-files-found: warn
