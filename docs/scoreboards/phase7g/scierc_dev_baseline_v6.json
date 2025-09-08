@@ -1,0 +1,1 @@
+{"dataset": "SciERC", "split": "dev", "model": "heuristic-stdlib-v6", "f1_micro": 0.336842, "f1_unlabeled": 0.53125, "precision_micro": 0.457143, "recall_micro": 0.266667, "pred_count": 128, "gold_pairs": 118, "latency_ms": 5.35}

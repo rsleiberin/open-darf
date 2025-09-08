@@ -1,0 +1,29 @@
+[
+  {
+    "run_dir": "var/receipts/phase7g/relation_baseline/run/20250907-204220_v5",
+    "model": "heuristic-stdlib-v5",
+    "f1": 0.186992,
+    "prec": 0.179688,
+    "rec": 0.194915,
+    "pred": 128,
+    "gold": 118
+  },
+  {
+    "run_dir": "var/receipts/phase7g/relation_baseline/run/20250907-205327_v6",
+    "model": "heuristic-stdlib-v6",
+    "f1": 0.336842,
+    "prec": 0.457143,
+    "rec": 0.266667,
+    "pred": 128,
+    "gold": 118
+  },
+  {
+    "run_dir": "var/receipts/phase7g/relation_baseline/run/20250907-205635_v7",
+    "model": "heuristic-stdlib-v7",
+    "f1": 0.208333,
+    "prec": 0.277778,
+    "rec": 0.166667,
+    "pred": 78,
+    "gold": 118
+  }
+]
