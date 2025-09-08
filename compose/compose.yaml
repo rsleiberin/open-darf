@@ -1,0 +1,38 @@
+version: "3.9"
+name: darf
+services:
+  api:
+    image: ghcr.io/example/darf-api:dev
+    profiles: ["dev","staging","prod"]
+    env_file:
+      - ../configs/.env.local
+    environment:
+      # Secrets can be mounted in staging/prod via Docker/Podman secrets
+      # These envs act as fallback if secrets aren't used
+      - DB_PASSWORD
+      - LLM_API_KEY
+    ports:
+      - "${API_PORT:-8000}:8000"
+    depends_on:
+      - neo4j
+  neo4j:
+    image: neo4j:5.22.0
+    profiles: ["dev","staging","prod"]
+    environment:
+      - NEO4J_AUTH=${DB_USER:-neo4j}/${DB_PASSWORD:-password}
+      - NEO4J_server_config_strict__validation_enabled=false
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j_data:/data
+
+# Example secrets declaration (enable in staging/prod)
+# secrets:
+#   db_password:
+#     file: ../secrets/DB_PASSWORD
+#   llm_api_key:
+#     file: ../secrets/LLM_API_KEY
+
+volumes:
+  neo4j_data:

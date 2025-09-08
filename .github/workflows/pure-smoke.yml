@@ -1,0 +1,24 @@
+name: PURE Scaffold Smoke
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'apps/relex/pure/**'
+      - 'scripts/pure_smoke.py'
+      - '.github/workflows/pure-smoke.yml'
+  push:
+    branches: [ feat/phase7g-config ]
+    paths:
+      - 'apps/relex/pure/**'
+      - 'scripts/pure_smoke.py'
+      - '.github/workflows/pure-smoke.yml'
+jobs:
+  pure-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Run PURE scaffold smoke
+        run: python scripts/pure_smoke.py
