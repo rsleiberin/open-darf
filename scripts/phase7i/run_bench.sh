@@ -121,12 +121,12 @@ EOF
     f1:.f1_micro, p:.precision_micro, r:.recall_micro,
     f1u:.f1_unlabeled, pc:.pred_count, gp:.gold_pairs,
     lat:.latency_ms, comp:(.constitutional_compliance_rate // 0)
-  # __PERF_CAPTURE_MARKER__ capture perf into metrics (latency_ms, gpu_mem_mb)
-  if [ -f "$MET" ]; then
-    LAT_MS=""
-    if [ -n "${_DARF_LAT_START_MS:-}" ] && [ -n "${_DARF_LAT_END_MS:-}" ]; then
-      LAT_MS=$(( _DARF_LAT_END_MS - _DARF_LAT_START_MS ))
-    fi
+# (disabled)   # __PERF_CAPTURE_MARKER__ capture perf into metrics (latency_ms, gpu_mem_mb)
+# (disabled)   if [ -f "$MET" ]; then
+# (disabled)     LAT_MS=""
+# (disabled)     if [ -n "${_DARF_LAT_START_MS:-}" ] && [ -n "${_DARF_LAT_END_MS:-}" ]; then
+# (disabled)       LAT_MS=$(( _DARF_LAT_END_MS - _DARF_LAT_START_MS ))
+# (disabled)     fi
     GPU_MB_VAL="${GPU_MB:-0}"
     if command -v nvidia-smi >/dev/null 2>&1; then
       # take total-used for a coarse snapshot
@@ -146,6 +146,8 @@ if [ "$RUNNER_AVAILABLE" = "true" ]; then
     # shellcheck disable=SC2086
   # __FILTERS_MARKER__ post-run filter hook
   # __EVAL_HELPER_MARKER__ evaluate if predictions and gold are present
+  # __PERF_HELPER_MARKER__ patch latency & GPU mem into metrics.json
+  bash "$ROOT/scripts/phase7i/eval/update_perf.sh" "$MET" "${_DARF_LAT_START_MS:-}" "${_DARF_LAT_END_MS:-}"
   bash "$ROOT/scripts/phase7i/eval/evaluate_if_present.sh" "$ROOT" "$OUTDIR" "$DATASET" "$SPLIT" "$MODEL" "$MET" "${GPU_MB:-0}"
   PRED_JSON="$OUTDIR/preds.json"
   FILT_JSON="$OUTDIR/preds.filtered.json"
