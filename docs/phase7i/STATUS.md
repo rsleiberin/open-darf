@@ -49,3 +49,6 @@ See docs/phase7i/ACCEPTANCE_REPORT.md
 ## CI Setup 20250909-182452 UTC
 Workflow: .github/workflows/phase7i_ci.yml validates metrics, aggregates scoreboards, and posts acceptance snapshot on PR.
 Developer shortcuts in Makefile: bench-all, aggregate, accept, verify-splits, bootstrap.
+
+## Competitive Comparison & PR Checklist 20250909-182724 UTC
+Added literature_baselines.json template, comparator script, and PR closeout checklist.
