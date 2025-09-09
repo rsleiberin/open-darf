@@ -23,3 +23,6 @@
 - Handoff: `docs/agent/handoff_latest.md`
 - Full-suite summary: `docs/phase7h/FULL_SUITE_SUMMARY.md`
 - Receipts manifest: `docs/phase7h/RECEIPTS_MANIFEST.json`
+
+## Forward Reference
+- Phase 8 kickoff: see `docs/phase8/STATUS.md`
