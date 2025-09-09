@@ -24,3 +24,6 @@ handoff:
 	./scripts/phase7i/verify_splits.py --json > /dev/null || true
 	@echo "Regenerating session handoff..."
 	@true
+
+gate:
+	./scripts/phase7i/acceptance_gate.sh

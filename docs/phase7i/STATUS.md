@@ -55,3 +55,6 @@ Added literature_baselines.json template, comparator script, and PR closeout che
 
 ## Preflight Gate 20250909-183218 UTC
 Added scripts/phase7i/preflight.sh and wired into run_all.sh and Makefile to block empty/missing splits.
+
+## Acceptance Gate 20250909-184239 UTC
+- Added scripts/phase7i/acceptance_gate.sh and Makefile target 'gate' to enforce Phase 7I criteria.
