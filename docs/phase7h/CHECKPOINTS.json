@@ -1,0 +1,9 @@
+[
+  {
+    "tag": "phase7h-closeout-20250909-044802",
+    "sha": "c2ec71d49a94",
+    "branch": "feat/phase7h-e2e-receipts-acceptance",
+    "timestamp_utc": "2025-09-09T04:48:02Z",
+    "notes": "Phase 7H acceptance: closed-repo E2E + full-suite receipts + architect handoff"
+  }
+]
