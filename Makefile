@@ -33,3 +33,12 @@ runners-verify:
 
 doctor:
 	./scripts/phase7i/doctor.sh
+
+archive-receipts:
+	./scripts/phase7i/receipts_archive.sh
+
+reset-for-real: archive-receipts
+	@echo "[RESET] Archived current receipts. Next:"
+	@echo "  1) Edit scripts/phase7i/runner_cmds.env to point to REAL models"
+	@echo "  2) make runners-verify"
+	@echo "  3) make bench-test && make aggregate && make accept && make gate"
