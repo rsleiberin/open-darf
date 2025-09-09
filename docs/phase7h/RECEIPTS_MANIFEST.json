@@ -1,0 +1,53 @@
+{
+  "timestamp_utc": "2025-09-09T04:38:24Z",
+  "phase": "7H",
+  "e2e_suites": [
+    {
+      "run_id": "phase7h_e2e_20250909-010213",
+      "phase": "7H",
+      "suite": "closed_repo_e2e",
+      "timestamp_utc": "20250909-010213",
+      "author": "impl-agent",
+      "status": "VALIDATED_DOCS",
+      "notes": "Init receipts tree and fixture; no ingest/dedup/removal executed yet.",
+      "_suite_path": "var/receipts/phase7h/e2e_suite/20250909-010213"
+    }
+  ],
+  "full_suites": [
+    {
+      "timestamp_utc": "20250909-025550",
+      "component": "full_suite",
+      "dataset": "biored_norm",
+      "status": "ACCEPTED_FULL_SUITE",
+      "_suite_path": "var/receipts/phase7h/full_suite/biored_norm/20250909-025550"
+    },
+    {
+      "timestamp_utc": "20250909-025551",
+      "component": "full_suite",
+      "dataset": "biored_official",
+      "status": "ACCEPTED_FULL_SUITE",
+      "_suite_path": "var/receipts/phase7h/full_suite/biored_official/20250909-025551"
+    },
+    {
+      "timestamp_utc": "20250909-025552",
+      "component": "full_suite",
+      "dataset": "scierc",
+      "status": "ACCEPTED_FULL_SUITE",
+      "_suite_path": "var/receipts/phase7h/full_suite/scierc/20250909-025552"
+    },
+    {
+      "timestamp_utc": "20250909-025552",
+      "component": "full_suite",
+      "dataset": "scierc_json",
+      "status": "INIT",
+      "_suite_path": "var/receipts/phase7h/full_suite/scierc_json/20250909-025552"
+    },
+    {
+      "timestamp_utc": "20250909-025550",
+      "component": "full_suite",
+      "dataset": "scierc_norm",
+      "status": "ACCEPTED_FULL_SUITE",
+      "_suite_path": "var/receipts/phase7h/full_suite/scierc_norm/20250909-025550"
+    }
+  ]
+}
