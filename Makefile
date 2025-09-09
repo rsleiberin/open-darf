@@ -42,3 +42,7 @@ reset-for-real: archive-receipts
 	@echo "  1) Edit scripts/phase7i/runner_cmds.env to point to REAL models"
 	@echo "  2) make runners-verify"
 	@echo "  3) make bench-test && make aggregate && make accept && make gate"
+
+## Phase 7I — quick loop on test split
+bench-test:
+	@./scripts/phase7i/run_all.sh --split=test
