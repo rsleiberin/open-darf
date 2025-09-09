@@ -1,0 +1,20 @@
+Phase 7I datasets guide
+
+Scope
+SciERC and BioRED datasets are required. Maintain academic split parity for fair comparison with PURE and PL-Marker.
+
+Expected layout under project root
+data/scierc/
+  train.json or jsonl
+  dev.json or jsonl
+  test.json or jsonl
+data/biored/
+  train.json or jsonl
+  dev.json or jsonl
+  test.json or jsonl
+
+Verification
+Use scripts/phase7i/verify_splits.py to validate file presence, line counts, optional md5 checksums, and basic label sanity.
+
+Notes
+Do not shuffle or merge splits. Keep filenames and line ordering identical to academic baselines where possible.
