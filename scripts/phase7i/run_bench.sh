@@ -121,6 +121,21 @@ EOF
     f1:.f1_micro, p:.precision_micro, r:.recall_micro,
     f1u:.f1_unlabeled, pc:.pred_count, gp:.gold_pairs,
     lat:.latency_ms, comp:(.constitutional_compliance_rate // 0)
+  # __PERF_CAPTURE_MARKER__ capture perf into metrics (latency_ms, gpu_mem_mb)
+  if [ -f "$MET" ]; then
+    LAT_MS=""
+    if [ -n "${_DARF_LAT_START_MS:-}" ] && [ -n "${_DARF_LAT_END_MS:-}" ]; then
+      LAT_MS=$(( _DARF_LAT_END_MS - _DARF_LAT_START_MS ))
+    fi
+    GPU_MB_VAL="${GPU_MB:-0}"
+    if command -v nvidia-smi >/dev/null 2>&1; then
+      # take total-used for a coarse snapshot
+      GPU_MB_VAL=$(nvidia-smi --query-gpu=memory.total,memory.used --format=csv,noheader,nounits 2>/dev/null | head -n1 | awk -F, "{print \$1}")
+    fi
+    if command -v jq >/dev/null 2>&1; then
+      jq ".latency_ms = (\"$LAT_MS\"|tonumber // .latency_ms) | .gpu_mem_mb = (\"$GPU_MB_VAL\"|tonumber // .gpu_mem_mb)" "$MET" > "$MET.tmp" && mv "$MET.tmp" "$MET" || true
+    fi
+  fi
   }' "$MET" > "$OUTDIR/scoreboard.json" || true
   echo "[RESULT] Wrote receipt: $OUTDIR"
 }

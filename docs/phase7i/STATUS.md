@@ -58,3 +58,7 @@ Added scripts/phase7i/preflight.sh and wired into run_all.sh and Makefile to blo
 
 ## Acceptance Gate 20250909-184239 UTC
 - Added scripts/phase7i/acceptance_gate.sh and Makefile target 'gate' to enforce Phase 7I criteria.
+
+## Runner Verification & Perf Capture 20250909-195615 UTC
+- Added scripts/phase7i/verify_runners.sh to validate runner_cmds.env and binaries.
+- Patched run_bench.sh to record latency_ms and gpu_mem_mb into metrics.
