@@ -52,3 +52,6 @@ Developer shortcuts in Makefile: bench-all, aggregate, accept, verify-splits, bo
 
 ## Competitive Comparison & PR Checklist 20250909-182724 UTC
 Added literature_baselines.json template, comparator script, and PR closeout checklist.
+
+## Preflight Gate 20250909-183218 UTC
+Added scripts/phase7i/preflight.sh and wired into run_all.sh and Makefile to block empty/missing splits.

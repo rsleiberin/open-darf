@@ -14,3 +14,6 @@ verify-splits:
 
 bootstrap:
 	./scripts/phase7i/datasets_bootstrap.sh
+
+preflight:
+	./scripts/phase7i/preflight.sh
