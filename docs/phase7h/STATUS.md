@@ -17,3 +17,9 @@
 - Re-eval: `re_eval_metrics.json`
 
 **Note:** Open-repo migration remains deferred until closed-repo E2E passes acceptance.
+
+## Session Save — 2025-09-09T04:44:37Z
+- Branch: `feat/phase7h-e2e-receipts-acceptance`
+- Handoff: `docs/agent/handoff_latest.md`
+- Full-suite summary: `docs/phase7h/FULL_SUITE_SUMMARY.md`
+- Receipts manifest: `docs/phase7h/RECEIPTS_MANIFEST.json`
