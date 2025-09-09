@@ -23,3 +23,9 @@ Outputs will appear under
 var/receipts/phase7i/<model>/<timestamp>/
 and scoreboards are aggregated into
 docs/scoreboards/phase7i/
+
+Wrappers (20250909-200046 UTC)
+- You can point runner_cmds.env to the provided wrappers:
+  RUNNER_PURE_CMD=/home/tank/darf-source/scripts/phase7i/wrappers/run_pure.sh
+  RUNNER_PLMARKER_CMD=/home/tank/darf-source/scripts/phase7i/wrappers/run_plmarker.sh
+- Use --simulate to smoke-test end-to-end without real models.
