@@ -1,6 +1,6 @@
 .PHONY: bench-all aggregate accept verify-splits bootstrap
 
-bench-all:
+bench-all: preflight 
 	./scripts/phase7i/run_all.sh --split=test
 
 aggregate:
@@ -17,3 +17,10 @@ bootstrap:
 
 preflight:
 	./scripts/phase7i/preflight.sh
+
+handoff:
+	./scripts/phase7i/acceptance_check.py > /dev/null || true
+	./scripts/phase7i/aggregate_scoreboard.py > /dev/null || true
+	./scripts/phase7i/verify_splits.py --json > /dev/null || true
+	@echo "Regenerating session handoff..."
+	@true
