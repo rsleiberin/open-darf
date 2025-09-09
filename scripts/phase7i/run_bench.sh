@@ -130,6 +130,8 @@ if [ "$RUNNER_AVAILABLE" = "true" ]; then
   if [ -n "$CMD" ]; then
     # shellcheck disable=SC2086
   # __FILTERS_MARKER__ post-run filter hook
+  # __EVAL_HELPER_MARKER__ evaluate if predictions and gold are present
+  bash "$ROOT/scripts/phase7i/eval/evaluate_if_present.sh" "$ROOT" "$OUTDIR" "$DATASET" "$SPLIT" "$MODEL" "$MET" "${GPU_MB:-0}"
   PRED_JSON="$OUTDIR/preds.json"
   FILT_JSON="$OUTDIR/preds.filtered.json"
   if [ -s "$PRED_JSON" ] && [ -n "$FILTERS" ]; then
