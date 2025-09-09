@@ -1,33 +1,34 @@
 #!/usr/bin/env bash
-ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
-[ -x "$ROOT/scripts/phase7i/preflight.sh" ] && "$ROOT/scripts/phase7i/preflight.sh"
-# __PREFLIGHT_MARKER__
 set -euo pipefail
+# Minimal orchestrator: runs PURE and PL-Marker over SciERC & BioRED.
+# Usage: run_all.sh [--split=test] [--filters=csv]
+
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
 SPLIT="test"
 FILTERS=""
-while [ $# -gt 0 ]; do
-  case "$1" in
-    --split=*)   SPLIT="${1#--split=}" ;;
-    --filters=*) FILTERS="${1#--filters=}" ;;
+
+for arg in "$@"; do
+  case "$arg" in
+    --split=*)   SPLIT="${arg#--split=}" ;;
+    --filters=*) FILTERS="${arg#--filters=}" ;;
+    *) ;; # ignore unknowns (future-proof)
   esac
-  shift || true
 done
 
-ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
-RUN="$ROOT/scripts/phase7i/run_bench.sh"
+# Preflight gate
+"$ROOT/scripts/phase7i/preflight.sh"
 
-declare -a CMDS=(
-  "pure scierc"
-  "pure biored"
-  "pl-marker scierc"
-  "pl-marker biored"
-)
+models=(pure pl-marker)
+datasets=(scierc biored)
 
-for C in "${CMDS[@]}"; do
-  set -- $C
-  M="$1"; D="$2"
-  echo "[RUN] $M on $D split=$SPLIT filters=${FILTERS:-<none>}"
-  "$RUN" "$M" "$D" --split="$SPLIT" ${FILTERS:+--filters="$FILTERS"} || true
+for m in "${models[@]}"; do
+  for d in "${datasets[@]}"; do
+    if [ -n "$FILTERS" ]; then
+      "$ROOT/scripts/phase7i/run_bench.sh" "$m" "$d" "$SPLIT" --filters="$FILTERS"
+    else
+      "$ROOT/scripts/phase7i/run_bench.sh" "$m" "$d" "$SPLIT"
+    fi
+  done
 done
 
 echo "[DONE] All requested baselines executed."
