@@ -129,6 +129,13 @@ if [ "$RUNNER_AVAILABLE" = "true" ]; then
   set +e
   if [ -n "$CMD" ]; then
     # shellcheck disable=SC2086
+  # __FILTERS_MARKER__ post-run filter hook
+  PRED_JSON="$OUTDIR/preds.json"
+  FILT_JSON="$OUTDIR/preds.filtered.json"
+  if [ -s "$PRED_JSON" ] && [ -n "$FILTERS" ]; then
+    echo "[INFO] Applying filters: $FILTERS"
+    python3 "$ROOT/scripts/phase7i/filters/apply_filters.py" --preds "$PRED_JSON" --out "$FILT_JSON" --filters "$FILTERS" >/dev/null 2>&1 || true
+  fi
     eval $CMD > "$OUTDIR/runner.log" 2>&1
   else
     python -m "$MOD" --dataset "$DDIR" --split "$SPLIT" > "$OUTDIR/runner.log" 2>&1
