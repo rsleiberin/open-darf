@@ -27,3 +27,6 @@ handoff:
 
 gate:
 	./scripts/phase7i/acceptance_gate.sh
+
+runners-verify:
+	./scripts/phase7i/verify_runners.sh
