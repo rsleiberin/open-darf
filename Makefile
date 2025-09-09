@@ -30,3 +30,6 @@ gate:
 
 runners-verify:
 	./scripts/phase7i/verify_runners.sh
+
+doctor:
+	./scripts/phase7i/doctor.sh
