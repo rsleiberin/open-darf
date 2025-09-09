@@ -39,3 +39,6 @@ Next focus: real baseline executions for PURE and PL-Marker on SciERC and BioRED
 - scripts/phase7i/run_all.sh to execute PURE/PL-Marker on SciERC & BioRED.
 - scripts/phase7i/aggregate_scoreboard.py emits docs/scoreboards/phase7i/summary_*.md.
 - Next: set runner_cmds.env and run scripts/phase7i/run_all.sh --split=test; then re-run aggregation.
+
+## PR Link
+https://github.com/rsleiberin/darf-source/pull/388
