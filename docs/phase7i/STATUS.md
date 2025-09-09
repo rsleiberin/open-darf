@@ -42,3 +42,6 @@ Next focus: real baseline executions for PURE and PL-Marker on SciERC and BioRED
 
 ## PR Link
 https://github.com/rsleiberin/darf-source/pull/388
+
+## Acceptance Snapshot 20250909-181847 UTC
+See docs/phase7i/ACCEPTANCE_REPORT.md
