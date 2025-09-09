@@ -1,38 +1,38 @@
 #!/usr/bin/env bash
-set -euo pipefail
+# Hardened PURE wrapper: ensure Bash, probe candidate commands, pass through args.
+set -Eeuo pipefail
 
-: "${OUTDIR:?OUTDIR not set}"
-: "${DATASET:?DATASET not set}"
-: "${SPLIT:?SPLIT not set}"
-
-usage(){ echo "Usage: OUTDIR=... DATASET=... SPLIT=... run_pure.sh [--simulate] --data <path> --split <split> --outdir <path> [-- extra model args]"; }
-
-DATA_PATH="" ; OUT=""
-SIMULATE=0
-while [ $# -gt 0 ]; do
-  case "$1" in
-    --data) DATA_PATH="$2"; shift 2 ;;
-    --split) shift 2 ;; # split already in env
-    --outdir) OUT="$2"; shift 2 ;;
-    --simulate) SIMULATE=1; shift ;;
-    --help|-h) usage; exit 0 ;;
-    --) shift; break ;;
-    *) break ;;
-  esac
-done
-
-OUT="${OUT:-$OUTDIR}"
-mkdir -p "$OUT"
-
-if [ "$SIMULATE" -eq 1 ]; then
-  # emit small dummy preds
-  echo '{"head":"X","tail":"Y","relation":"REL"}' > "$OUT/preds.jsonl"
-  echo "[WRAP/PURE] simulate → $OUT/preds.jsonl"
-  exit 0
+# If not running under bash, re-exec with bash (guards against /bin/sh)
+if [ -z "${BASH_VERSION:-}" ]; then
+  exec /usr/bin/env bash "$0" "$@"
 fi
 
-# >>> Replace the command below with your real PURE invocation <<<
-# Example:
-# /opt/venvs/pure/bin/python /path/to/PURE/run.py --data "$DATA_PATH" --split "$SPLIT" --out "$OUT/preds.jsonl" "$@"
-echo "[WRAP/PURE] ERROR: real PURE command not configured in wrapper."
-exit 4
+# Candidate launchers (first that responds to --help is chosen best-effort)
+CANDIDATES=(
+  "python -m pure.run"
+  "python -m PURE.run"
+  "pure"
+)
+
+choose_runner() {
+  local c
+  for c in "${CANDIDATES[@]}"; do
+    # Best-effort help probe; rc can be non-zero, just look for any output
+    if ${c} --help >/dev/null 2>&1; then
+      echo "${c}"
+      return 0
+    fi
+  done
+  # If none respond, still prefer first candidate for an honest attempt
+  echo "${CANDIDATES[0]}"
+  return 1
+}
+
+RUN_CMD="$(choose_runner || true)"
+
+# Log for harness diagnostics
+echo "[PURE] Using command: ${RUN_CMD}" >&2
+
+# Execute with all original args; rely on harness to supply --dataset/--split/etc.
+# shellcheck disable=SC2086
+eval ${RUN_CMD} "$@"
