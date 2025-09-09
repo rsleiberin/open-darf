@@ -1,37 +1,32 @@
 #!/usr/bin/env bash
-set -euo pipefail
+# Hardened PL-Marker wrapper: ensure Bash, probe candidate commands, pass through args.
+set -Eeuo pipefail
 
-: "${OUTDIR:?OUTDIR not set}"
-: "${DATASET:?DATASET not set}"
-: "${SPLIT:?SPLIT not set}"
-
-usage(){ echo "Usage: OUTDIR=... DATASET=... SPLIT=... run_plmarker.sh [--simulate] --data <path> --split <split> --outdir <path> [-- extra model args]"; }
-
-DATA_PATH="" ; OUT=""
-SIMULATE=0
-while [ $# -gt 0 ]; do
-  case "$1" in
-    --data) DATA_PATH="$2"; shift 2 ;;
-    --split) shift 2 ;;
-    --outdir) OUT="$2"; shift 2 ;;
-    --simulate) SIMULATE=1; shift ;;
-    --help|-h) usage; exit 0 ;;
-    --) shift; break ;;
-    *) break ;;
-  esac
-done
-
-OUT="${OUT:-$OUTDIR}"
-mkdir -p "$OUT"
-
-if [ "$SIMULATE" -eq 1 ]; then
-  echo '{"head":"A","tail":"B","relation":"REL"}' > "$OUT/preds.jsonl"
-  echo "[WRAP/PL-Marker] simulate → $OUT/preds.jsonl"
-  exit 0
+# If not running under bash, re-exec with bash (guards against /bin/sh)
+if [ -z "${BASH_VERSION:-}" ]; then
+  exec /usr/bin/env bash "$0" "$@"
 fi
 
-# >>> Replace the command below with your real PL-Marker invocation <<<
-# Example:
-# /opt/venvs/plmarker/bin/python /path/to/PL-Marker/run.py --data "$DATA_PATH" --split "$SPLIT" --out "$OUT/preds.jsonl" "$@"
-echo "[WRAP/PL-Marker] ERROR: real PL-Marker command not configured in wrapper."
-exit 4
+CANDIDATES=(
+  "python -m plmarker.run"
+  "python -m PLMarker.run"
+  "pl-marker"
+)
+
+choose_runner() {
+  local c
+  for c in "${CANDIDATES[@]}"; do
+    if ${c} --help >/dev/null 2>&1; then
+      echo "${c}"
+      return 0
+    fi
+  done
+  echo "${CANDIDATES[0]}"
+  return 1
+}
+
+RUN_CMD="$(choose_runner || true)"
+echo "[PL-Marker] Using command: ${RUN_CMD}" >&2
+
+# shellcheck disable=SC2086
+eval ${RUN_CMD} "$@"
