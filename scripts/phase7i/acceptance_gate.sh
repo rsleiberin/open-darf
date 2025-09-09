@@ -1,14 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
 ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
-JSON="$( "$ROOT/scripts/phase7i/acceptance_check.py" )" || true
-
-echo "$JSON" > /tmp/phase7i_gate.json
-OVERALL="$(jq -r '.overall_status' /tmp/phase7i_gate.json 2>/dev/null || echo FAIL)"
-
-echo "[GATE] Acceptance overall_status=$OVERALL"
-if [ "$OVERALL" = "PASS" ]; then
+ACC_JSON="$("$ROOT/scripts/phase7i/acceptance_check.py" | tail -n +1)"
+status="$(printf '%s\n' "$ACC_JSON" | python3 -c "import sys,json; print(json.load(sys.stdin)['overall_status'])")"
+echo "$ACC_JSON"
+if [ "$status" = "PASS" ]; then
   echo "[GATE] Phase 7I targets satisfied."
   exit 0
 else
