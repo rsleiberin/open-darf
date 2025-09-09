@@ -18,3 +18,8 @@ Use scripts/phase7i/verify_splits.py to validate file presence, line counts, opt
 
 Notes
 Do not shuffle or merge splits. Keep filenames and line ordering identical to academic baselines where possible.
+
+Quick start 20250909-182235 UTC
+1. Copy DATA_SOURCES.example.env to DATA_SOURCES.env and set either URLs or local dirs.
+2. Run scripts/phase7i/datasets_bootstrap.sh to populate data/scierc and data/biored.
+3. Run scripts/phase7i/verify_splits.py to validate file presence and counts.
