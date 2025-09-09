@@ -34,3 +34,8 @@
 Infra verified and running. Schema aligned to strict metrics. Legacy receipts repaired.
 Harness replaced and smoke tested. Runner command layer added.
 Next focus: real baseline executions for PURE and PL-Marker on SciERC and BioRED.
+
+## Orchestrator & Aggregation 20250909-181414 UTC
+- scripts/phase7i/run_all.sh to execute PURE/PL-Marker on SciERC & BioRED.
+- scripts/phase7i/aggregate_scoreboard.py emits docs/scoreboards/phase7i/summary_*.md.
+- Next: set runner_cmds.env and run scripts/phase7i/run_all.sh --split=test; then re-run aggregation.
