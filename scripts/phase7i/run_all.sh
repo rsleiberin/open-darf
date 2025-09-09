@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+[ -x "$ROOT/scripts/phase7i/preflight.sh" ] && "$ROOT/scripts/phase7i/preflight.sh"
+# __PREFLIGHT_MARKER__
 set -euo pipefail
 SPLIT="test"
 FILTERS=""
