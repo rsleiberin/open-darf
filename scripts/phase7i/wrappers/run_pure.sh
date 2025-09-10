@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
-# PURE wrapper — POSIX sh compatible. Prefers docker image darf/pure:py37-bullseye.
+# PURE wrapper — POSIX sh. Calls container entrypoint that handles deps & model.
 set -eu
 
-# Parse known args (others are ignored/passed-through by harness)
+# Parse harness args (others ignored)
 DATA_PATH=""; SPLIT=""; OUTDIR=""
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -19,80 +19,23 @@ mkdir -p "${OUTDIR}"
 
 DS_ROOT="${HOME}/darf-source"
 SCIERC_DATA="${DATA_PATH:-${DS_ROOT}/data/scierc}"
-PRED_JSONL="${OUTDIR}/preds.jsonl"
+IMAGE="darf/pure:py37-bullseye"
 
 if command -v docker >/dev/null 2>&1; then
-  IMAGE_TAG="darf/pure:py37-bullseye"
-  TMP_OUT="$(mktemp -d)"
-
-  docker run --rm \
-    --entrypoint sh \
-    -v "${SCIERC_DATA}:/data:ro" \
-    -v "${TMP_OUT}:/out" \
-    -w /app \
-    "${IMAGE_TAG}" -c '
-      set -eu
-
-      # Helper: probe module import; if missing, install pinned package.
-      probe_install () {
-        MOD="$1"; PKG_SPEC="$2"
-        python - "$MOD" <<\PY
-import importlib, sys
-m = sys.argv[1]
-try:
-    importlib.import_module(m)
-    print("[PURE] %s present" % m)
-except Exception:
-    raise SystemExit(1)
-PY
-        RC=$?
-        if [ $RC -ne 0 ]; then
-          echo "[PURE] Installing ${PKG_SPEC} ..."
-          python -m pip install --no-cache-dir ${PKG_SPEC}
-        fi
-      }
-
-      probe_install tqdm "tqdm==4.67.1"
-      probe_install numpy "\"numpy<1.22\""
-      probe_install allennlp "allennlp==0.9.0"
-      probe_install overrides "overrides==3.1.0"
-      probe_install transformers "transformers==3.0.2"
-      probe_install requests "requests==2.25.1"
-      probe_install _jsonnet "jsonnet==0.15.0"
-      probe_install sklearn "scikit-learn==0.21.3"
-      probe_install spacy "spacy==2.1.9"
-      # Try to fetch spaCy model (non-fatal if unavailable)
-      python -m spacy download en_core_web_sm || true
-
-      # Run PURE (entity then relation); write predictions.json to /out
-      python run_entity.py \
-        --do_eval --eval_test \
-        --context_window 0 \
-        --task scierc \
-        --data_dir /data \
-        --model allenai/scibert_scivocab_uncased \
-        --output_dir /app/scierc_models/ent-scib-ctx0
-
-      python run_relation.py \
-        --task scierc \
-        --do_eval --eval_test \
-        --model allenai/scibert_scivocab_uncased \
-        --do_lower_case \
-        --context_window 0 \
-        --max_seq_length 128 \
-        --entity_output_dir /app/scierc_models/ent-scib-ctx0 \
-        --output_dir /app/scierc_models/rel-scib-ctx0
-
-      cp -f /app/scierc_models/rel-scib-ctx0/predictions.json /out/predictions.json
-    '
-
-  if [ ! -s "${TMP_OUT}/predictions.json" ]; then
-    echo "[PURE] ERROR: predictions.json missing from docker run." >&2
-    exit 7
+  # Ensure image exists locally (pull if needed)
+  if ! docker image inspect "${IMAGE}" >/dev/null 2>&1; then
+    docker pull "${IMAGE}"
   fi
 
-  # Convert predictions.json (list/dict) -> jsonl expected by evaluator
-  python3 - "$PRED_JSONL" "${TMP_OUT}/predictions.json" << 'PY'
+  # Run packaged entrypoint: writes /out/predictions.json
+  docker run --rm \
+    -v "${SCIERC_DATA}:/data:ro" \
+    -v "${OUTDIR}:/out" \
+    "${IMAGE}" /usr/local/bin/docker_run_scierc.sh /data /out
+
+  # Convert JSON -> JSONL for evaluator if needed
+  if [ -s "${OUTDIR}/predictions.json" ]; then
+    python3 - "${OUTDIR}/preds.jsonl" "${OUTDIR}/predictions.json" << 'PY'
 import json, sys
 dst, src = sys.argv[1], sys.argv[2]
 with open(src) as f: data = json.load(f)
@@ -105,43 +48,10 @@ with open(dst, "w") as w:
         w.write(json.dumps({"pred": data})+"\n")
 print("[PURE] Wrote", dst)
 PY
-  echo "[PURE] Done (docker)."
+  fi
+  echo "[PURE] Completed via docker entrypoint."
   exit 0
 fi
 
-# Fallback: local venv (if docker unavailable)
-PURE_DIR="${DS_ROOT}/external/PURE"
-PURE_VENV="${PURE_DIR}/.venv"
-if [ -x "${PURE_VENV}/bin/python" ]; then
-  ENT_DIR="${PURE_DIR}/scierc_models/ent-scib-ctx0"
-  REL_DIR="${PURE_DIR}/scierc_models/rel-scib-ctx0"
-  "${PURE_VENV}/bin/python" "${PURE_DIR}/run_entity.py" \
-    --do_eval --eval_test --context_window 0 --task scierc \
-    --data_dir "${SCIERC_DATA}" \
-    --model allenai/scibert_scivocab_uncased \
-    --output_dir "${ENT_DIR}"
-  "${PURE_VENV}/bin/python" "${PURE_DIR}/run_relation.py" \
-    --task scierc --do_eval --eval_test \
-    --model allenai/scibert_scivocab_uncased --do_lower_case \
-    --context_window 0 --max_seq_length 128 \
-    --entity_output_dir "${ENT_DIR}" --output_dir "${REL_DIR}"
-  PRED_JSON="${REL_DIR}/predictions.json"
-  python3 - "$PRED_JSONL" "${PRED_JSON}" << 'PY'
-import json, sys
-dst, src = sys.argv[1], sys.argv[2]
-with open(src) as f: data = json.load(f)
-with open(dst, "w") as w:
-    if isinstance(data, list):
-        for r in data: w.write(json.dumps(r)+"\n")
-    elif isinstance(data, dict):
-        for k,v in data.items(): w.write(json.dumps({k:v})+"\n")
-    else:
-        w.write(json.dumps({"pred": data})+"\n")
-print("[PURE] Wrote", dst)
-PY
-  echo "[PURE] Done (venv)."
-  exit 0
-fi
-
-echo "[PURE] ERROR: Neither docker nor local venv available to run PURE." >&2
-exit 8
+echo "[PURE] ERROR: docker not available on host." >&2
+exit 9
