@@ -10,3 +10,6 @@
 [submodule "tools/biored_ncbi/src"]
 	path = tools/biored_ncbi/src
 	url = https://github.com/rsleiberin/biored_ncbi.git
+[submodule "external/PURE/code"]
+	path = external/PURE/code
+	url = https://github.com/princeton-nlp/PURE.git
