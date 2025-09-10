@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# PURE wrapper: dockerized (py3.7 bullseye) preferred, venv fallback.
+# PURE wrapper: dockerized (py3.7 bullseye) preferred; override entrypoint to ensure tqdm at runtime.
 set -Eeuo pipefail
 if [ -z "${BASH_VERSION:-}" ]; then exec /usr/bin/env bash "$0" "$@"; fi
 
@@ -23,10 +23,40 @@ PRED_JSONL="${OUTDIR}/preds.jsonl"
 if command -v docker >/dev/null 2>&1; then
   IMAGE_TAG="darf/pure:py37-bullseye"
   TMP_OUT="$(mktemp -d)"
+
+  # Run with overridden entrypoint: ensure tqdm present, then run entity+relation and export to /out
   docker run --rm \
+    --entrypoint bash \
     -v "${SCIERC_DATA}:/data:ro" \
     -v "${TMP_OUT}:/out" \
-    "${IMAGE_TAG}" --data_dir /data --out_dir /out
+    -w /app \
+    "${IMAGE_TAG}" -lc '
+      set -Eeuo pipefail
+      python - <<PY || python -m pip install --no-cache-dir tqdm && echo "[PURE] Installed tqdm at runtime"
+try:
+  import tqdm  # noqa
+  print("[PURE] tqdm present")
+except Exception as e:
+  raise SystemExit(1)
+PY
+      python run_entity.py \
+        --do_eval --eval_test \
+        --context_window 0 \
+        --task scierc \
+        --data_dir /data \
+        --model allenai/scibert_scivocab_uncased \
+        --output_dir /app/scierc_models/ent-scib-ctx0
+      python run_relation.py \
+        --task scierc \
+        --do_eval --eval_test \
+        --model allenai/scibert_scivocab_uncased \
+        --do_lower_case \
+        --context_window 0 \
+        --max_seq_length 128 \
+        --entity_output_dir /app/scierc_models/ent-scib-ctx0 \
+        --output_dir /app/scierc_models/rel-scib-ctx0
+      cp -f /app/scierc_models/rel-scib-ctx0/predictions.json /out/predictions.json
+    '
 
   if [ ! -s "${TMP_OUT}/predictions.json" ]; then
     echo "[PURE] ERROR: predictions.json missing from docker run." >&2
