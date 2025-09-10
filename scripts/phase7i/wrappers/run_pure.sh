@@ -1,38 +1,88 @@
 #!/usr/bin/env bash
-# Hardened PURE wrapper: ensure Bash, probe candidate commands, pass through args.
+# PURE wrapper: dockerized (py3.7 bullseye) preferred, venv fallback.
 set -Eeuo pipefail
+if [ -z "${BASH_VERSION:-}" ]; then exec /usr/bin/env bash "$0" "$@"; fi
 
-# If not running under bash, re-exec with bash (guards against /bin/sh)
-if [ -z "${BASH_VERSION:-}" ]; then
-  exec /usr/bin/env bash "$0" "$@"
+DATA_PATH=""; SPLIT=""; OUTDIR=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --data|--dataset) DATA_PATH="$2"; shift 2 ;;
+    --split) SPLIT="$2"; shift 2 ;;
+    --outdir) OUTDIR="$2"; shift 2 ;;
+    --) shift; break ;;
+    *) shift ;;
+  esac
+done
+OUTDIR="${OUTDIR:-${PWD}/out}"
+mkdir -p "${OUTDIR}"
+
+DS_ROOT="${HOME}/darf-source"
+SCIERC_DATA="${DATA_PATH:-${DS_ROOT}/data/scierc}"
+PRED_JSONL="${OUTDIR}/preds.jsonl"
+
+if command -v docker >/dev/null 2>&1; then
+  IMAGE_TAG="darf/pure:py37-bullseye"
+  TMP_OUT="$(mktemp -d)"
+  docker run --rm \
+    -v "${SCIERC_DATA}:/data:ro" \
+    -v "${TMP_OUT}:/out" \
+    "${IMAGE_TAG}" --data_dir /data --out_dir /out
+
+  if [ ! -s "${TMP_OUT}/predictions.json" ]; then
+    echo "[PURE] ERROR: predictions.json missing from docker run." >&2
+    exit 7
+  fi
+
+  python3 - <<PY
+import json, sys
+src = "${TMP_OUT}/predictions.json"; dst = "${PRED_JSONL}"
+with open(src) as f: data = json.load(f)
+with open(dst,"w") as w:
+    if isinstance(data,list):
+        for r in data: w.write(json.dumps(r)+"\n")
+    elif isinstance(data,dict):
+        for k,v in data.items(): w.write(json.dumps({k:v})+"\n")
+    else:
+        w.write(json.dumps({"pred": data})+"\n")
+print(f"[PURE] Wrote {dst}")
+PY
+  echo "[PURE] Done (docker)."
+  exit 0
 fi
 
-# Candidate launchers (first that responds to --help is chosen best-effort)
-CANDIDATES=(
-  "python -m pure.run"
-  "python -m PURE.run"
-  "pure"
-)
+# Fallback to local venv if docker missing
+PURE_DIR="${DS_ROOT}/external/PURE"
+PURE_VENV="${PURE_DIR}/.venv"
+if [ -x "${PURE_VENV}/bin/python" ]; then
+  ENT_DIR="${PURE_DIR}/scierc_models/ent-scib-ctx0"
+  REL_DIR="${PURE_DIR}/scierc_models/rel-scib-ctx0"
+  "${PURE_VENV}/bin/python" "${PURE_DIR}/run_entity.py" \
+    --do_eval --eval_test --context_window 0 --task scierc \
+    --data_dir "${SCIERC_DATA}" \
+    --model allenai/scibert_scivocab_uncased \
+    --output_dir "${ENT_DIR}"
+  "${PURE_VENV}/bin/python" "${PURE_DIR}/run_relation.py" \
+    --task scierc --do_eval --eval_test \
+    --model allenai/scibert_scivocab_uncased --do_lower_case \
+    --context_window 0 --max_seq_length 128 \
+    --entity_output_dir "${ENT_DIR}" --output_dir "${REL_DIR}"
+  PRED_JSON="${REL_DIR}/predictions.json"
+  python3 - <<PY
+import json, sys
+src="${PRED_JSON}"; dst="${PRED_JSONL}"
+data=json.load(open(src))
+with open(dst,"w") as w:
+    if isinstance(data,list):
+        for r in data: w.write(json.dumps(r)+"\n")
+    elif isinstance(data,dict):
+        for k,v in data.items(): w.write(json.dumps({k:v})+"\n")
+    else:
+        w.write(json.dumps({"pred": data})+"\n")
+print(f"[PURE] Wrote {dst}")
+PY
+  echo "[PURE] Done (venv)."
+  exit 0
+fi
 
-choose_runner() {
-  local c
-  for c in "${CANDIDATES[@]}"; do
-    # Best-effort help probe; rc can be non-zero, just look for any output
-    if ${c} --help >/dev/null 2>&1; then
-      echo "${c}"
-      return 0
-    fi
-  done
-  # If none respond, still prefer first candidate for an honest attempt
-  echo "${CANDIDATES[0]}"
-  return 1
-}
-
-RUN_CMD="$(choose_runner || true)"
-
-# Log for harness diagnostics
-echo "[PURE] Using command: ${RUN_CMD}" >&2
-
-# Execute with all original args; rely on harness to supply --dataset/--split/etc.
-# shellcheck disable=SC2086
-eval ${RUN_CMD} "$@"
+echo "[PURE] ERROR: Neither docker nor local venv available to run PURE." >&2
+exit 8
