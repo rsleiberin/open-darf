@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# PURE wrapper: dockerized (py3.7 bullseye) preferred; override entrypoint to ensure tqdm at runtime.
+# PURE wrapper: dockerized (py3.7 bullseye) preferred; ensure tqdm + numpy at runtime.
 set -Eeuo pipefail
 if [ -z "${BASH_VERSION:-}" ]; then exec /usr/bin/env bash "$0" "$@"; fi
 
@@ -24,7 +24,6 @@ if command -v docker >/dev/null 2>&1; then
   IMAGE_TAG="darf/pure:py37-bullseye"
   TMP_OUT="$(mktemp -d)"
 
-  # Run with overridden entrypoint: ensure tqdm present, then run entity+relation and export to /out
   docker run --rm \
     --entrypoint bash \
     -v "${SCIERC_DATA}:/data:ro" \
@@ -32,11 +31,19 @@ if command -v docker >/dev/null 2>&1; then
     -w /app \
     "${IMAGE_TAG}" -lc '
       set -Eeuo pipefail
+      # Ensure tqdm and numpy (<=1.21.x for Py3.7)
       python - <<PY || python -m pip install --no-cache-dir tqdm && echo "[PURE] Installed tqdm at runtime"
 try:
   import tqdm  # noqa
   print("[PURE] tqdm present")
-except Exception as e:
+except Exception:
+  raise SystemExit(1)
+PY
+      python - <<PY || python -m pip install --no-cache-dir "numpy<1.22" && echo "[PURE] Installed numpy<1.22 at runtime"
+try:
+  import numpy as np  # noqa
+  print("[PURE] numpy present")
+except Exception:
   raise SystemExit(1)
 PY
       python run_entity.py \
