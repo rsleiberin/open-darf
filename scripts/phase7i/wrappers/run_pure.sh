@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
-# PURE wrapper: dockerized (py3.7 bullseye) preferred; ensure legacy deps at runtime.
-set -Eeuo pipefail
-if [ -z "${BASH_VERSION:-}" ]; then exec /usr/bin/env bash "$0" "$@"; fi
+#!/usr/bin/env sh
+# PURE wrapper — POSIX sh compatible. Prefers docker image darf/pure:py37-bullseye.
+set -eu
 
+# Parse known args (others are ignored/passed-through by harness)
 DATA_PATH=""; SPLIT=""; OUTDIR=""
 while [ $# -gt 0 ]; do
   case "$1" in
@@ -13,6 +13,7 @@ while [ $# -gt 0 ]; do
     *) shift ;;
   esac
 done
+
 OUTDIR="${OUTDIR:-${PWD}/out}"
 mkdir -p "${OUTDIR}"
 
@@ -25,38 +26,45 @@ if command -v docker >/dev/null 2>&1; then
   TMP_OUT="$(mktemp -d)"
 
   docker run --rm \
-    --entrypoint bash \
+    --entrypoint sh \
     -v "${SCIERC_DATA}:/data:ro" \
     -v "${TMP_OUT}:/out" \
     -w /app \
-    "${IMAGE_TAG}" -lc '
-      set -Eeuo pipefail
+    "${IMAGE_TAG}" -c '
+      set -eu
 
-      ensure() {
-        local mod="$1"; shift
-        local install_cmd="$*"
-        python - <<PY || (echo "[PURE] Installing ${mod} ..." && eval "${install_cmd}")
+      # Helper: probe module import; if missing, install pinned package.
+      probe_install () {
+        MOD="$1"; PKG_SPEC="$2"
+        python - "$MOD" <<\PY
+import importlib, sys
+m = sys.argv[1]
 try:
-  import importlib, sys
-  importlib.import_module("'"${mod}"'")
-  print("[PURE] '"${mod}"' present")
+    importlib.import_module(m)
+    print("[PURE] %s present" % m)
 except Exception:
-  raise SystemExit(1)
+    raise SystemExit(1)
 PY
+        RC=$?
+        if [ $RC -ne 0 ]; then
+          echo "[PURE] Installing ${PKG_SPEC} ..."
+          python -m pip install --no-cache-dir ${PKG_SPEC}
+        fi
       }
 
-      # Ensure runtime deps (pin legacy stack for Py3.7/PURE 0.9 series)
-      ensure tqdm "python -m pip install --no-cache-dir tqdm==4.67.1"
-      ensure numpy "python -m pip install --no-cache-dir 'numpy<1.22'"
-      ensure allennlp "python -m pip install --no-cache-dir allennlp==0.9.0"
-      ensure overrides "python -m pip install --no-cache-dir overrides==3.1.0"
-      ensure transformers "python -m pip install --no-cache-dir transformers==3.0.2"
-      ensure requests "python -m pip install --no-cache-dir requests==2.25.1"
-      ensure _jsonnet "python -m pip install --no-cache-dir jsonnet==0.15.0"
-      ensure sklearn "python -m pip install --no-cache-dir scikit-learn==0.21.3"
-      # spaCy must match PURE\'s pins (<2.2); try to import then install if missing
-      ensure spacy "python -m pip install --no-cache-dir spacy==2.1.9 && python -m spacy download en_core_web_sm || true"
+      probe_install tqdm "tqdm==4.67.1"
+      probe_install numpy "\"numpy<1.22\""
+      probe_install allennlp "allennlp==0.9.0"
+      probe_install overrides "overrides==3.1.0"
+      probe_install transformers "transformers==3.0.2"
+      probe_install requests "requests==2.25.1"
+      probe_install _jsonnet "jsonnet==0.15.0"
+      probe_install sklearn "scikit-learn==0.21.3"
+      probe_install spacy "spacy==2.1.9"
+      # Try to fetch spaCy model (non-fatal if unavailable)
+      python -m spacy download en_core_web_sm || true
 
+      # Run PURE (entity then relation); write predictions.json to /out
       python run_entity.py \
         --do_eval --eval_test \
         --context_window 0 \
@@ -83,24 +91,25 @@ PY
     exit 7
   fi
 
-  python3 - <<PY
+  # Convert predictions.json (list/dict) -> jsonl expected by evaluator
+  python3 - "$PRED_JSONL" "${TMP_OUT}/predictions.json" << 'PY'
 import json, sys
-src = "${TMP_OUT}/predictions.json"; dst = "${PRED_JSONL}"
+dst, src = sys.argv[1], sys.argv[2]
 with open(src) as f: data = json.load(f)
-with open(dst,"w") as w:
-    if isinstance(data,list):
-        for r in data: w.write(json.dumps(r)+"\\n")
-    elif isinstance(data,dict):
-        for k,v in data.items(): w.write(json.dumps({k:v})+"\\n")
+with open(dst, "w") as w:
+    if isinstance(data, list):
+        for r in data: w.write(json.dumps(r)+"\n")
+    elif isinstance(data, dict):
+        for k,v in data.items(): w.write(json.dumps({k:v})+"\n")
     else:
-        w.write(json.dumps({"pred": data})+"\\n")
-print(f"[PURE] Wrote {dst}")
+        w.write(json.dumps({"pred": data})+"\n")
+print("[PURE] Wrote", dst)
 PY
   echo "[PURE] Done (docker)."
   exit 0
 fi
 
-# Fallback to local venv if docker missing
+# Fallback: local venv (if docker unavailable)
 PURE_DIR="${DS_ROOT}/external/PURE"
 PURE_VENV="${PURE_DIR}/.venv"
 if [ -x "${PURE_VENV}/bin/python" ]; then
@@ -117,18 +126,18 @@ if [ -x "${PURE_VENV}/bin/python" ]; then
     --context_window 0 --max_seq_length 128 \
     --entity_output_dir "${ENT_DIR}" --output_dir "${REL_DIR}"
   PRED_JSON="${REL_DIR}/predictions.json"
-  python3 - <<PY
+  python3 - "$PRED_JSONL" "${PRED_JSON}" << 'PY'
 import json, sys
-src="${PRED_JSON}"; dst="${PRED_JSONL}"
-data=json.load(open(src))
-with open(dst,"w") as w:
-    if isinstance(data,list):
-        for r in data: w.write(json.dumps(r)+"\\n")
-    elif isinstance(data,dict):
-        for k,v in data.items(): w.write(json.dumps({k:v})+"\\n")
+dst, src = sys.argv[1], sys.argv[2]
+with open(src) as f: data = json.load(f)
+with open(dst, "w") as w:
+    if isinstance(data, list):
+        for r in data: w.write(json.dumps(r)+"\n")
+    elif isinstance(data, dict):
+        for k,v in data.items(): w.write(json.dumps({k:v})+"\n")
     else:
-        w.write(json.dumps({"pred": data})+"\\n")
-print(f"[PURE] Wrote {dst}")
+        w.write(json.dumps({"pred": data})+"\n")
+print("[PURE] Wrote", dst)
 PY
   echo "[PURE] Done (venv)."
   exit 0
