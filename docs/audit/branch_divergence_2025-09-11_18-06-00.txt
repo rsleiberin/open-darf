@@ -1,0 +1,184 @@
+# Branch Divergence Report — 2025-09-11_18-06-00
+
+Base: origin/main
+
+## chore/phase7l-safe-closeout
+- Remote: yes (origin/chore/phase7l-safe-closeout)
+- Divergence vs origin/main: ahead 35, behind 0
+- Last commit: ac710c36 2025-09-10 rsleiberin — Phase 7L: integrate 7i work into chore/phase7l-safe-closeout (20250910-221420)
+- Tags: chore phase7l-wip
+- Changed paths (up to 20):
+```
+A	.github/workflows/phase7i_ci.yml
+M	.gitmodules
+M	Makefile
+A	docs/phase7i/ACCEPTANCE_REPORT.md
+A	docs/phase7i/BRANCH_DISPOSITION.txt
+A	docs/phase7i/DATASETS.txt
+A	docs/phase7i/DATA_SOURCES.example.env
+A	docs/phase7i/EVAL_GUIDE.txt
+A	docs/phase7i/HANDOFF_FINAL_20250909-203726.md
+A	docs/phase7i/PR_CLOSEOUT_CHECKLIST.md
+A	docs/phase7i/RECEIPTS_INDEX.md
+A	docs/phase7i/RUNNERS_SETUP.txt
+A	docs/phase7i/SESSION_HANDOFF.md
+A	docs/phase7i/SPLITS_SNAPSHOT_20250909-184031.json
+A	docs/phase7i/STATUS.md
+M	docs/schemas/metrics_v1.json
+A	docs/scoreboards/phase7i/README.txt
+A	docs/scoreboards/phase7i/comparison_20250909-182724.md
+A	docs/scoreboards/phase7i/literature_baselines.json
+A	docs/scoreboards/phase7i/scoreboard_20250909-175910.jsonl
+```
+
+## feat/phase7h-e2e-receipts-acceptance
+- Remote: yes (origin/feat/phase7h-e2e-receipts-acceptance)
+- Divergence vs origin/main: ahead 6, behind 1
+- Last commit: 83adfc84 2025-09-08 rsleiberin — Phase 8: add receipts-driven scoreboard builder and initial SUMMARY.md
+- Tags: feature phase7h-scaffold
+- Changed paths (up to 20):
+```
+M	docs/agent/handoff_latest.md
+A	docs/agent/session_report_20250909-044924.md
+A	docs/phase7h/CHECKPOINTS.json
+A	docs/phase7h/FULL_SUITE_SUMMARY.md
+A	docs/phase7h/RECEIPTS_INDEX.md
+A	docs/phase7h/RECEIPTS_MANIFEST.json
+A	docs/phase7h/STATUS.md
+A	docs/phase7h/receipts_e2e_suite_20250909-044127.zip
+A	docs/phase7h/receipts_full_suite_20250909-044128.zip
+A	docs/phase8/STATUS.md
+A	docs/phase8/TODO_EVALUATORS.md
+A	docs/phase8/TODO_LOADERS.md
+A	docs/scoreboards/phase8/README.md
+A	docs/scoreboards/phase8/SUMMARY.md
+A	scripts/scoreboard_builder.py
+```
+
+## feat/phase7i-benchmark-optimization
+- Remote: yes (origin/feat/phase7i-benchmark-optimization)
+- Divergence vs origin/main: ahead 33, behind 0
+- Last commit: 729f34c2 2025-09-09 rsleiberin — Phase 7I: Harden PURE docker entrypoint (runtime legacy deps) and pass SPLIT via wrapper; rebuild and re-run
+- Tags: feature phase7i
+- Changed paths (up to 20):
+```
+A	.github/workflows/phase7i_ci.yml
+M	Makefile
+A	docs/phase7i/ACCEPTANCE_REPORT.md
+A	docs/phase7i/BRANCH_DISPOSITION.txt
+A	docs/phase7i/DATASETS.txt
+A	docs/phase7i/DATA_SOURCES.example.env
+A	docs/phase7i/EVAL_GUIDE.txt
+A	docs/phase7i/HANDOFF_FINAL_20250909-203726.md
+A	docs/phase7i/PR_CLOSEOUT_CHECKLIST.md
+A	docs/phase7i/RECEIPTS_INDEX.md
+A	docs/phase7i/RUNNERS_SETUP.txt
+A	docs/phase7i/SESSION_HANDOFF.md
+A	docs/phase7i/SPLITS_SNAPSHOT_20250909-184031.json
+A	docs/phase7i/STATUS.md
+M	docs/schemas/metrics_v1.json
+A	docs/scoreboards/phase7i/README.txt
+A	docs/scoreboards/phase7i/comparison_20250909-182724.md
+A	docs/scoreboards/phase7i/literature_baselines.json
+A	docs/scoreboards/phase7i/scoreboard_20250909-175910.jsonl
+A	docs/scoreboards/phase7i/scoreboard_20250909-180240.jsonl
+```
+
+## phase7l_pre_safepoint_20250910-221420
+- Remote: no (local-only)
+- Divergence vs origin/main: ahead 1, behind 0
+- Last commit: c01de767 2025-09-10 rsleiberin — Phase 7L pre-safepoint backup 20250910-221420
+- Tags: phase7l-wip
+- Changed paths (up to 20):
+```
+M	docs/agent/handoff_latest.md
+A	external/PURE/code
+```
+
+## phase7l_wip_20250910-221121
+- Remote: no (local-only)
+- Divergence vs origin/main: ahead 34, behind 0
+- Last commit: b16bd935 2025-09-10 rsleiberin — Phase 7L safe closeout WIP 20250910-221121
+- Tags: phase7l-wip
+- Changed paths (up to 20):
+```
+A	.github/workflows/phase7i_ci.yml
+A	.pr/phase7i/PR_388_acceptance_20250910-042102.md
+M	Makefile
+A	Makefile.bak.20250909-232554
+M	docs/agent/handoff_latest.md
+A	docs/audit/open_darf_demo_20250910-055037.md
+A	docs/audit/phase7l_ready_for_ckpt_20250910-205906.md
+A	docs/audit/phase7l_run_20250910-035218.md
+M	docs/operations/ROLLBACK_PLAYBOOK.md
+A	docs/phase7i/ACCEPTANCE_REPORT.md
+A	docs/phase7i/BRANCH_DISPOSITION.txt
+A	docs/phase7i/DATASETS.txt
+A	docs/phase7i/DATA_SOURCES.example.env
+A	docs/phase7i/EVAL_GUIDE.txt
+A	docs/phase7i/HANDOFF_FINAL_20250909-203726.md
+A	docs/phase7i/PR_CLOSEOUT_CHECKLIST.md
+A	docs/phase7i/RECEIPTS_INDEX.md
+A	docs/phase7i/RUNNERS_SETUP.txt
+A	docs/phase7i/SESSION_HANDOFF.md
+A	docs/phase7i/SPLITS_SNAPSHOT_20250909-184031.json
+```
+
+## phase7l_wip_20250910-222451
+- Remote: no (local-only)
+- Divergence vs origin/main: ahead 36, behind 0
+- Last commit: a496f60d 2025-09-10 rsleiberin — Phase 7L ready-for-handoff WIP 20250910-222451
+- Tags: phase7l-wip
+- Changed paths (up to 20):
+```
+A	.github/workflows/phase7i_ci.yml
+M	.gitmodules
+A	.pr/phase7l/PR_phase7l_safe_closeout_20250910-221612.md
+M	Makefile
+A	docs/agent/READY_FOR_NEXT_AGENT.md
+M	docs/agent/handoff_latest.md
+A	docs/phase7i/ACCEPTANCE_REPORT.md
+A	docs/phase7i/BRANCH_DISPOSITION.txt
+A	docs/phase7i/DATASETS.txt
+A	docs/phase7i/DATA_SOURCES.example.env
+A	docs/phase7i/EVAL_GUIDE.txt
+A	docs/phase7i/HANDOFF_FINAL_20250909-203726.md
+A	docs/phase7i/PR_CLOSEOUT_CHECKLIST.md
+A	docs/phase7i/RECEIPTS_INDEX.md
+A	docs/phase7i/RUNNERS_SETUP.txt
+A	docs/phase7i/SESSION_HANDOFF.md
+A	docs/phase7i/SPLITS_SNAPSHOT_20250909-184031.json
+A	docs/phase7i/STATUS.md
+M	docs/schemas/metrics_v1.json
+A	docs/scoreboards/phase7i/README.txt
+```
+
+## r
+- Remote: no (local-only)
+- Divergence vs origin/main: ahead 35, behind 0
+- Last commit: ac710c36 2025-09-10 rsleiberin — Phase 7L: integrate 7i work into chore/phase7l-safe-closeout (20250910-221420)
+- Tags: none
+- Changed paths (up to 20):
+```
+A	.github/workflows/phase7i_ci.yml
+M	.gitmodules
+M	Makefile
+A	docs/phase7i/ACCEPTANCE_REPORT.md
+A	docs/phase7i/BRANCH_DISPOSITION.txt
+A	docs/phase7i/DATASETS.txt
+A	docs/phase7i/DATA_SOURCES.example.env
+A	docs/phase7i/EVAL_GUIDE.txt
+A	docs/phase7i/HANDOFF_FINAL_20250909-203726.md
+A	docs/phase7i/PR_CLOSEOUT_CHECKLIST.md
+A	docs/phase7i/RECEIPTS_INDEX.md
+A	docs/phase7i/RUNNERS_SETUP.txt
+A	docs/phase7i/SESSION_HANDOFF.md
+A	docs/phase7i/SPLITS_SNAPSHOT_20250909-184031.json
+A	docs/phase7i/STATUS.md
+M	docs/schemas/metrics_v1.json
+A	docs/scoreboards/phase7i/README.txt
+A	docs/scoreboards/phase7i/comparison_20250909-182724.md
+A	docs/scoreboards/phase7i/literature_baselines.json
+A	docs/scoreboards/phase7i/scoreboard_20250909-175910.jsonl
+```
+

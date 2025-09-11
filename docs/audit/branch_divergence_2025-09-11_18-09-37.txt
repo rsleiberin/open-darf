@@ -1,0 +1,39 @@
+# Branch Divergence Report — 2025-09-11_18-09-37
+
+Base: origin/main
+
+## chore/phase7l-safe-closeout (local)
+- Divergence vs origin/main: ahead 0, behind 0
+- Last commit: 77acbd39 2025-09-08 Darf — Phase 7H: squash-merge closed-repo E2E receipts, docs, and scaffolding (accepted checkpoint) (#387)
+- Tags: chore phase7l-wip
+
+## feat/phase7h-e2e-receipts-acceptance (local)
+- Divergence vs origin/main: ahead 6, behind 1
+- Last commit: 83adfc84 2025-09-08 rsleiberin — Phase 8: add receipts-driven scoreboard builder and initial SUMMARY.md
+- Tags: feature phase7h-scaffold
+
+## feat/phase7i-benchmark-optimization (local)
+- Divergence vs origin/main: ahead 33, behind 0
+- Last commit: 729f34c2 2025-09-09 rsleiberin — Phase 7I: Harden PURE docker entrypoint (runtime legacy deps) and pass SPLIT via wrapper; rebuild and re-run
+- Tags: feature phase7i
+
+## phase7l_pre_safepoint_20250910-221420 (local)
+- Divergence vs origin/main: ahead 1, behind 0
+- Last commit: c01de767 2025-09-10 rsleiberin — Phase 7L pre-safepoint backup 20250910-221420
+- Tags: phase7l-wip
+
+## phase7l_wip_20250910-221121 (local)
+- Divergence vs origin/main: ahead 34, behind 0
+- Last commit: b16bd935 2025-09-10 rsleiberin — Phase 7L safe closeout WIP 20250910-221121
+- Tags: phase7l-wip
+
+## phase7l_wip_20250910-222451 (local)
+- Divergence vs origin/main: ahead 36, behind 0
+- Last commit: a496f60d 2025-09-10 rsleiberin — Phase 7L ready-for-handoff WIP 20250910-222451
+- Tags: phase7l-wip
+
+## r (local)
+- Divergence vs origin/main: ahead 35, behind 0
+- Last commit: ac710c36 2025-09-10 rsleiberin — Phase 7L: integrate 7i work into chore/phase7l-safe-closeout (20250910-221420)
+- Tags: none
+
