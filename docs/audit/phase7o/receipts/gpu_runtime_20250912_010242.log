@@ -1,0 +1,16 @@
+Using image: pytorch/pytorch:2.1.2-cuda12.1-cudnn8-runtime
+Requirements file: '(none; using minimal set)'
+== Torch CUDA smoke inside pytorch/pytorch:2.1.2-cuda12.1-cudnn8-runtime (same flags as inference) ==
+{
+  "torch_version": "2.1.2",
+  "cuda_available": false,
+  "device_count": 1,
+  "device_name": null,
+  "capability": null
+}
+== Installing deps and running quickcheck ==
+Python 3.10.13
+pip 23.3.1 from /opt/conda/lib/python3.10/site-packages/pip (python 3.10)
+torch.__version__: 2.1.2
+cuda_available: False
+device_count: 1

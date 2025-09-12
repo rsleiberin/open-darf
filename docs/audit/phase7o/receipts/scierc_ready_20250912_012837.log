@@ -1,0 +1,2 @@
+[prep] image: pytorch/pytorch:2.1.2-cuda12.1-cudnn8-runtime
+[prep] receipts: /home/tank/darf_receipts/scierc_ready_20250912_012837.log
