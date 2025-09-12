@@ -1,0 +1,6 @@
+[gate] Python & Git
+Python 3.8.10
+git version 2.48.1
+[gate] Torch CUDA visibility via container (no heavy load)
+[gate] PURE quickcheck dry-run plan ready (use previous mini test receipts for proof).
+Result: LIGHT_GATES_COMPLETE
