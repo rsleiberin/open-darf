@@ -84,6 +84,27 @@ if torch is None:
 
 # Torch present; check CUDA availability
 if not torch.cuda.is_available():
+    # Run a small CPU timing to aid diagnostics (non-submittable).
+    try:
+        import statistics, math
+        import time as _t
+        import torch as _tcpu
+        _tcpu.manual_seed(42)
+        iters = 500
+        x = _tcpu.randn((1024,1024))
+        y = _tcpu.randn((1024,1024))
+        times = []
+        for _ in range(iters):
+            t0=_t.perf_counter(); _=_tcpu.add(x, y, alpha=1.0); t1=_t.perf_counter()
+            times.append((t1 - t0) * 1000.0)
+        p50 = statistics.median(times)
+        p95 = sorted(times)[int(math.ceil(0.95*len(times))) - 1]
+    except Exception as _e:
+        p50 = None; p95 = None
+    reason = "torch.cuda.is_available()==False (CPU fallback timing only; non-submittable)" + (" (WSL environment; /dev/nvidia* absent)" if is_wsl else "")
+    passed = False
+
+if not torch.cuda.is_available():
     reason = "torch.cuda.is_available()==False"
     if is_wsl:
         reason += " (WSL environment; /dev/nvidia* absent)"
