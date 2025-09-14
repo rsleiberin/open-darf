@@ -2,7 +2,11 @@
 import os, sys, time, json, hashlib, statistics, math, subprocess
 
 TS = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
-OUTDIR = os.path.join("var", "receipts", TS)
+OUTDIR = os.environ.get("VALIDATOR_OUTDIR")
+if not OUTDIR:
+    TS = time.strftime("%Y%m%dT%H%M%SZ", time.gmtime())
+    OUTDIR = os.path.join("var","receipts", TS + "_validator")
+os.makedirs(OUTDIR, exist_ok=True)
 os.makedirs(OUTDIR, exist_ok=True)
 
 def artifact_hash(path: str) -> str:
