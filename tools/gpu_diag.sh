@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+
+## verbose trace injection (Phase 7R)
+if [ "${VERBOSE:-1}" = "1" ]; then
+  export PS4="+ $(date +%H:%M:%S).$RANDOM ${BASH_SOURCE##*/}:${LINENO}: "
+  set -x
+fi
 set -euo pipefail
 
 echo "[gpu_diag] BEGIN"
