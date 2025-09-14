@@ -23,3 +23,4 @@ models/cache/
 !var/receipts/phase6c/validation/
 !var/receipts/phase6c/validation/biored_scores_ml_test.json
 !var/receipts/phase6c/validation/scierc_scores_ml_test.json
+var/receipts/
