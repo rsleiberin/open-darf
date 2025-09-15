@@ -39,3 +39,9 @@ Branch: chore/phase7s-index
 ## Acceptance
 - Acceptance gate reports: var/reports/phase7s/acceptance_status_*.json
 - Acceptance gate reports: var/reports/phase7s/acceptance_status_*.md
+
+## Release pointers
+- Release notes: docs/phase7s/RELEASE_NOTES_7S.md
+- Evidence tag: v7s-evidence-20250915T031621Z
+- Latest bundle: var/reports/phase7s/phase7s_evidence_bundle_20250915T031621Z.tar.gz
+- Latest manifest: var/reports/phase7s/MANIFEST_20250915T031621Z.txt
