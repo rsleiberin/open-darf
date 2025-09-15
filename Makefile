@@ -86,3 +86,7 @@ help-provenance:  ## Show provenance quick help and common commands
 	echo " - make verify-provenance                 # hash+verify+CAS store default paths"
 	echo " - make verify-provenance paths=\\"<paths>\\"  # specify custom paths"
 	echo "Docs: docs/phase7t/PROVENANCE_README.md"
+
+.PHONY: qa-provenance
+qa-provenance:  ## Time hash+verify and emit a QA receipt (default: docs/phase7s)
+	scripts/phase7t/qa_perf_check.sh $(paths)
