@@ -10,35 +10,39 @@ TMPLIST="$(mktemp)"
 MANIFEST="$OUTDIR/MANIFEST_${TS}.txt"
 TOTLIST="$(mktemp)"
 
-# Helper to add paths if they exist
 add_glob() {
   local pattern="$1"
   shopt -s nullglob
   for f in $pattern; do
-    if [[ -f "$f" ]]; then
-      printf '%s\n' "$f" >> "$TMPLIST"
-    fi
+    [[ -f "$f" ]] && printf '%s\n' "$f" >> "$TMPLIST"
   done
   shopt -u nullglob
 }
 
-# Collect artifacts (idempotent; skip missing)
+# Reports & summaries
 add_glob "var/reports/phase7s/validation_summary.json"
 add_glob "var/reports/phase7s/validation_summary.md"
+add_glob "var/reports/phase7s/timing_summary.json"
+add_glob "var/reports/phase7s/timing_summary.md"
+
+# Receipts & evidence
 add_glob "open-darf/var/receipts/open-darf/oneclick_*.json"
 add_glob "open-darf/open-darf-report-*.tar.gz"
 add_glob "./open-darf-report-*.tar.gz"
 
-# Key docs for provenance
+# Provenance docs
 add_glob "docs/architecture/branch_consolidation_plan.md"
 add_glob "docs/architecture/post_grant_integration_roadmap.md"
 add_glob "docs/phase7s/G2_NATIVE_UBUNTU_GATE.md"
+add_glob "docs/phase7s/GRANT_SUBMISSION_README.md"
 add_glob "open-darf/docs/README.md"
 add_glob "open-darf/docs/TROUBLESHOOTING.md"
 
-# Scripts referenced in evidence path
+# Scripts referenced
 add_glob "scripts/phase7s/aggregate_evidence.py"
 add_glob "scripts/phase7s/aggregate_evidence.sh"
+add_glob "scripts/phase7s/extract_timing_from_tarballs.py"
+add_glob "scripts/phase7s/intake_evidence.sh"
 add_glob "open-darf/install.sh"
 add_glob "open-darf/scripts/oneclick.sh"
 add_glob "open-darf/scripts/quickstart.sh"
@@ -46,7 +50,7 @@ add_glob "open-darf/bin/doctor.sh"
 add_glob "open-darf/validate/generate_evidence.sh"
 add_glob "open-darf/validate/run_minimal.sh"
 
-# Build MANIFEST with sha256 and size
+# Manifest with sha256 + size
 {
   echo "# Phase 7S Evidence Manifest"
   echo "# Timestamp: ${TS}"
@@ -64,17 +68,14 @@ add_glob "open-darf/validate/run_minimal.sh"
   fi
 } > "$MANIFEST"
 
-# Combine filelist + manifest and package
+# Package
 cat "$TMPLIST" > "$TOTLIST"
 printf '%s\n' "$MANIFEST" >> "$TOTLIST"
-
 tar -czf "$BUNDLE" -T "$TOTLIST"
 
 echo "[bundle] created -> $BUNDLE"
 echo "[manifest]        $MANIFEST"
 sha256sum "$BUNDLE" || true
 
-# Cleanup temp files
 rm -f "$TMPLIST" "$TOTLIST"
-
 exit 0
