@@ -50,3 +50,7 @@ bench-test:
 .PHONY: aggregate-phase7s
 aggregate-phase7s:
 \t./scripts/phase7s/aggregate_evidence.sh
+
+.PHONY: intake-community
+intake-community:
+\tbash scripts/phase7s/intake_evidence.sh $(files)
