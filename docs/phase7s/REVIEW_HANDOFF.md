@@ -16,4 +16,4 @@
 
 ## Ready-made review packet
 - Packet: var/releases/phase7s/review_packet_20250915T033353Z.tar.gz
-- Checksum file: var/releases/phase7s/review_packet_20250915T033353Z.tar.gz.sha256
+- Checksum file: var/releases/phase7s/review_packet_20250915T033353Z.sha256
