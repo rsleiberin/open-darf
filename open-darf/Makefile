@@ -1,4 +1,6 @@
-.PHONY: oneclick doctor
+.PHONY: quickstart oneclick doctor
+quickstart:
+	./scripts/quickstart.sh
 oneclick:
 	./scripts/oneclick.sh
 doctor:

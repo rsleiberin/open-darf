@@ -1,10 +1,18 @@
 # Open-DARF (Minimal Extract)
 
-This is a simplified, grant-evidence oriented snapshot:
-- `install.sh` — minimal installer
-- `validate/run_minimal.sh` — quick pipeline probe
-- `validate/generate_evidence.sh` — bundles a system/evidence tarball
-- `scripts/quickstart.sh` — one-shot bootstrap (install → validate → evidence)
-- `bin/doctor.sh` — environment probe
+A simplified, grant-evidence oriented snapshot.
 
-> Native Ubuntu 22.04 + RTX 30/40 recommended for GPU validation.
+## Commands
+- `make quickstart` — installer → minimal validate → evidence tarball
+- `make oneclick`  — same as above, plus a **JSON receipt** in `var/receipts/open-darf/`
+
+## Files
+- `install.sh` — minimal installer with environment gate hints
+- `validate/run_minimal.sh` — quick pipeline probe (placeholder if full pipeline absent)
+- `validate/generate_evidence.sh` — bundles a system/evidence tarball
+- `scripts/quickstart.sh` — orchestration for quickstart
+- `scripts/oneclick.sh` — orchestration + JSON receipt
+- `bin/doctor.sh` — environment probe
+- `docs/TROUBLESHOOTING.md` — common issues
+
+> GPU validation requires **native Ubuntu 22.04 + RTX 30/40 (≥8GB VRAM)**.
