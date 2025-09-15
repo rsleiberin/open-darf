@@ -15,11 +15,23 @@ def wilson(successes, n, z=1.96):
 def read_member_json(tar_path, member_name):
     try:
         with tarfile.open(tar_path, "r:gz") as tf:
-            try:
-                m = tf.getmember(member_name)
-            except KeyError:
+            # Accept exact, './'-prefixed, or nested paths matching the basename
+            cand = None
+            base = member_name.rsplit('/', 1)[-1]
+            for m in tf.getmembers():
+                name = m.name
+                # Normalize leading './'
+                if name.startswith("./"):
+                    name_norm = name[2:]
+                else:
+                    name_norm = name
+                # Match basename or full exact
+                if name_norm == member_name or name_norm.endswith("/" + base) or name_norm == base:
+                    cand = m
+                    break
+            if cand is None:
                 return None
-            f = tf.extractfile(m)
+            f = tf.extractfile(cand)
             if f is None:
                 return None
             return json.loads(f.read().decode("utf-8"))
