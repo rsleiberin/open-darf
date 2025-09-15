@@ -71,3 +71,7 @@ finalize-phase7s:
 .PHONY: acceptance-phase7s
 acceptance-phase7s:
 	@bash scripts/phase7s/acceptance_status.sh
+
+.PHONY: review-packet
+review-packet:
+	@bash scripts/phase7s/build_review_packet.sh
