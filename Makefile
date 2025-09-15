@@ -1,68 +1,77 @@
-.PHONY: help lint fix test scan clean
+.PHONY: bench-all aggregate accept verify-splits bootstrap
 
-VENV = poetry run
+bench-all: preflight 
+	./scripts/phase7i/run_all.sh --split=test
 
-help:  ## Show available targets
-@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | \
-	awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-10s\033[0m %s\n", $$1, $$2}'
+aggregate:
+	./scripts/phase7i/aggregate_scoreboard.py
 
-lint: ## Run Ruff linter
-	$(VENV) ruff check .
+accept:
+	./scripts/phase7i/acceptance_check.py
 
-fix: ## Auto-fix Ruff issues
-	$(VENV) ruff check --fix .
+verify-splits:
+	./scripts/phase7i/verify_splits.py
 
-test: ## Run pytest suite
-	$(VENV) pytest -q
+bootstrap:
+	./scripts/phase7i/datasets_bootstrap.sh
 
-scan: ## Security scan (Bandit + Safety)
-	$(VENV) bandit -ll -r apps packages
-	$(VENV) safety check
+preflight:
+	./scripts/phase7i/preflight.sh
 
-clean: ## Remove Python cache files
-	find . -type f -name '*.py[co]' -delete
-	find . -type d -name __pycache__ -exec rm -r {} +
+handoff:
+	./scripts/phase7i/acceptance_check.py > /dev/null || true
+	./scripts/phase7i/aggregate_scoreboard.py > /dev/null || true
+	./scripts/phase7i/verify_splits.py --json > /dev/null || true
+	@echo "Regenerating session handoff..."
+	@true
 
-## Remove Zone.Identifier metadata from repo
-## Full docs cycle: ingest → ADR generation
-## Remove Zone.Identifier metadata from repo
-## Full docs cycle: ingest → ADR generation
-# ----------------------------
-# Documentation & Repo Hygiene
-# ----------------------------
+gate:
+	./scripts/phase7i/acceptance_gate.sh
 
-## Run document ingestion pipeline
-## Remove Zone.Identifier metadata from repo
-## Full docs cycle: ingest → ADR generation
+runners-verify:
+	./scripts/phase7i/verify_runners.sh
 
-# ----------------------------
-# Documentation & Repo Hygiene
-# ----------------------------
+doctor:
+	./scripts/phase7i/doctor.sh
 
-## Run document ingestion pipeline
-docs-ingest:
-	@bash tools/document-ingestion.sh
+archive-receipts:
+	./scripts/phase7i/receipts_archive.sh
 
-## Remove Zone.Identifier metadata from repo
-clean-zone:
-	@bash tools/remove-zone-identifiers.sh
+reset-for-real: archive-receipts
+	@echo "[RESET] Archived current receipts. Next:"
+	@echo "  1) Edit scripts/phase7i/runner_cmds.env to point to REAL models"
+	@echo "  2) make runners-verify"
+	@echo "  3) make bench-test && make aggregate && make accept && make gate"
 
-## Full docs cycle: ingest → ADR generation
-docs-full:
-	@bash tools/document-ingestion.sh
-	@bash tools/generate-adrs.sh
-# Dev DB helpers
-db-up:      ; @tools/dev/pg-dev.sh db-up
-db-psql:    ; @tools/dev/pg-dev.sh db-psql
-db-down:    ; @tools/dev/pg-dev.sh db-down
-db-logs:    ; @tools/dev/pg-dev.sh db-logs
-test-db:    ; @tools/dev/pg-dev.sh test-db
+## Phase 7I — quick loop on test split
+bench-test:
+	@./scripts/phase7i/run_all.sh --split=test
 
-.PHONY: rel-demo
-rel-demo:
-\t@mkdir -p var/receipts/phase6c/validation
-\t@echo '{"doc_id":"D1","entities":[{"id":"A","type":"Gene","sent":0},{"id":"B","type":"Disease","sent":0}],"relations":[{"head":"A","tail":"B","type":"assoc"}]}' > var/receipts/phase6c/validation/toy_biored.jsonl
-\t@PYTHONPATH=$(PWD)$(if $(PYTHONPATH),:$(PYTHONPATH),) \
-\tpython3 -m scripts.relation_extraction.emit_rel_metrics --input var/receipts/phase6c/validation/toy_biored.jsonl --out var/receipts/phase6c/validation/biored_relations_scores_heuristic.json --predictor heuristic
-\t@echo 'biored metrics:'
-\t@jq '.biored' var/receipts/phase6c/validation/biored_relations_scores_heuristic.json
+.PHONY: aggregate-phase7s
+aggregate-phase7s:
+	./scripts/phase7s/aggregate_evidence.sh
+
+.PHONY: intake-community
+intake-community:
+	bash scripts/phase7s/intake_evidence.sh $(files)
+
+.PHONY: clean-artifacts
+clean-artifacts:
+	@rm -rf community_intake/{queue,accepted,rejected}/* 2>/dev/null || true
+	@echo "[clean] removing evidence, receipts, bundles under var/ and open-darf/"
+	@rm -rf var/reports var/receipts var/releases
+	@rm -rf open-darf/var
+	@rm -f open-darf/open-darf-report-*.tar.gz ./open-darf-report-*.tar.gz
+	@echo "[clean] done"
+
+.PHONY: finalize-phase7s
+finalize-phase7s:
+	@bash scripts/phase7s/finalize.sh
+
+.PHONY: acceptance-phase7s
+acceptance-phase7s:
+	@bash scripts/phase7s/acceptance_status.sh
+
+.PHONY: review-packet
+review-packet:
+	@bash scripts/phase7s/build_review_packet.sh

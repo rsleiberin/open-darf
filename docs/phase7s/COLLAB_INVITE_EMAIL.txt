@@ -1,0 +1,18 @@
+Subject: Open-DARF mini-validation (Phase 7S) — 10–15 min run
+
+Hi,
+
+Could you run a quick validation on a native Ubuntu 22.04 + RTX 30/40 machine?
+
+Steps:
+1) Unpack the attached Open-DARF minimal archive.
+2) cd open-darf
+3) ./install.sh
+4) ./validate/run_minimal.sh
+5) ./validate/generate_evidence.sh
+   (or: make oneclick)
+
+Please send back the generated open-darf-report-<HOST>-<TS>.tar.gz and any JSON receipt.
+If anything fails, send console output; TROUBLESHOOTING.md is included.
+
+Thanks!

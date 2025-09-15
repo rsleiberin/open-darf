@@ -1,0 +1,156 @@
+# Phase 7P Receipts — 20250913T162342Z
+
+## Host Context
+### nvidia-smi (host)
+Sat Sep 13 11:23:42 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 565.75                 Driver Version: 566.24         CUDA Version: 12.7     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 3080        On  |   00000000:0B:00.0  On |                  N/A |
+| 30%   35C    P8             25W /  320W |    1010MiB /  10240MiB |     16%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A        23      G   /Xwayland                                   N/A      |
+|    0   N/A  N/A        28      G   /Xwayland                                   N/A      |
+|    0   N/A  N/A        34      G   /Xwayland                                   N/A      |
++-----------------------------------------------------------------------------------------+
+
+### Real driver directory (WSL)
+WSLDRV=/usr/lib/wsl/drivers/nvdd.inf_amd64_0759f801dbae033f
+-r-xr-xr-x 1 root root 19399272 Feb 26  2025 /usr/lib/wsl/drivers/nvdd.inf_amd64_0759f801dbae033f/libcuda.so.1.1
+-r-xr-xr-x 4 root root   162664 Feb 26  2025 /usr/lib/wsl/drivers/nvdd.inf_amd64_0759f801dbae033f/libcuda_loader.so
+-r-xr-xr-x 2 root root 10362952 Feb 26  2025 /usr/lib/wsl/drivers/nvdd.inf_amd64_0759f801dbae033f/libcudadebugger.so.1
+-r-xr-xr-x 3 root root   608872 Feb 26  2025 /usr/lib/wsl/drivers/nvdd.inf_amd64_0759f801dbae033f/libnvidia-encode.so.1
+-r-xr-xr-x 1 root root  1791912 Feb 26  2025 /usr/lib/wsl/drivers/nvdd.inf_amd64_0759f801dbae033f/libnvidia-ml.so.1
+-r-xr-xr-x 2 root root   249904 Feb 26  2025 /usr/lib/wsl/drivers/nvdd.inf_amd64_0759f801dbae033f/libnvidia-ml_loader.so
+-r-xr-xr-x 1 root root 24732240 Feb 26  2025 /usr/lib/wsl/drivers/nvdd.inf_amd64_0759f801dbae033f/libnvidia-nvvm.so.4
+-r-xr-xr-x 3 root root   387536 Feb 26  2025 /usr/lib/wsl/drivers/nvdd.inf_amd64_0759f801dbae033f/libnvidia-opticalflow.so.1
+-r-xr-xr-x 1 root root 36522648 Feb 26  2025 /usr/lib/wsl/drivers/nvdd.inf_amd64_0759f801dbae033f/libnvidia-ptxjitcompiler.so.1
+
+### Docker
+Docker version 20.10.17, build 100c701
+
+### Docker info (runtimes excerpt)
+ Runtimes: io.containerd.runc.v2 io.containerd.runtime.v1.linux runc
+ Default Runtime: runc
+ Init Binary: docker-init
+ containerd version: 9cd3357b7fd7218e4aec3eae239db1f68a5a6ec6
+ runc version: v1.1.4-0-g5fd4c4d
+ init version: de40ad0
+ Security Options:
+  seccomp
+   Profile: default
+ Kernel Version: 5.15.167.4-microsoft-standard-WSL2
+ Operating System: Docker Desktop
+ OSType: linux
+ Architecture: x86_64
+ CPUs: 16
+ Total Memory: 15.58GiB
+ Name: docker-desktop
+ ID: YLHC:YWRO:DQ3W:LQ3N:DZHF:MGQZ:VVLH:N5SL:YJBD:PUNW:VAUQ:FDQX
+ Docker Root Dir: /var/lib/docker
+ Debug Mode: false
+ HTTP Proxy: http.docker.internal:3128
+ HTTPS Proxy: http.docker.internal:3128
+ No Proxy: hubproxy.docker.internal
+ Registry: https://index.docker.io/v1/
+ Labels:
+ Experimental: false
+ Insecure Registries:
+  hubproxy.docker.internal:5000
+  127.0.0.0/8
+ Live Restore Enabled: false
+
+## CUDA Base Container (GPU check)
+
+==========
+== CUDA ==
+==========
+
+CUDA Version 12.1.1
+
+Container image Copyright (c) 2016-2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+
+This container image and its contents are governed by the NVIDIA Deep Learning Container License.
+By pulling and using the container, you accept the terms and conditions of this license:
+https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license
+
+A copy of this license is made available in this container at /NGC-DL-CONTAINER-LICENSE for your convenience.
+
+Sat Sep 13 16:23:45 2025       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 565.75                 Driver Version: 566.24         CUDA Version: 12.7     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GeForce RTX 3080        On  |   00000000:0B:00.0  On |                  N/A |
+| 30%   35C    P8             25W /  320W |    1000MiB /  10240MiB |     17%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI        PID   Type   Process name                              GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A        23      G   /Xwayland                                   N/A      |
+|    0   N/A  N/A        28      G   /Xwayland                                   N/A      |
+|    0   N/A  N/A        34      G   /Xwayland                                   N/A      |
++-----------------------------------------------------------------------------------------+
+
+## LD_DEBUG Single-Provider Check (container)
+
+==========
+== CUDA ==
+==========
+
+CUDA Version 12.1.1
+
+Container image Copyright (c) 2016-2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+
+This container image and its contents are governed by the NVIDIA Deep Learning Container License.
+By pulling and using the container, you accept the terms and conditions of this license:
+https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license
+
+A copy of this license is made available in this container at /NGC-DL-CONTAINER-LICENSE for your convenience.
+
+
+## Torch cu121 Availability Probe (container)
+
+==========
+== CUDA ==
+==========
+
+CUDA Version 12.1.1
+
+Container image Copyright (c) 2016-2023, NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+
+This container image and its contents are governed by the NVIDIA Deep Learning Container License.
+By pulling and using the container, you accept the terms and conditions of this license:
+https://developer.nvidia.com/ngc/nvidia-deep-learning-container-license
+
+A copy of this license is made available in this container at /NGC-DL-CONTAINER-LICENSE for your convenience.
+
+torch: 2.4.1+cu121 torch.cuda: 12.1
+cuda.is_available: False
+device_count: 1
+
+## Docker ps (ensuring nothing left dangling)
+CONTAINER ID   IMAGE                  STATUS                           NAMES
+52d8e9490d04   postgres:15            Up 3 days                        open-darf-postgres-1
+7db18a33bf20   redis:7                Up 3 days                        open-darf-redis-1
+dadbe4692048   minio/minio:latest     Up 3 days                        open-darf-minio-1
+1153e4eb1aa2   neo4j:5                Restarting (70) 52 seconds ago   open-darf-neo4j-1
+1c3d1ad7594c   qdrant/qdrant:latest   Up 3 days                        open-darf-qdrant-1

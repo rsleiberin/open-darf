@@ -1,0 +1,17 @@
+[ok] repo detected: https://github.com/rsleiberin/darf-source.git
+[sync] main -> ed536779
+[scan] remote branches (filtered):
+origin/chore/phase7l-safe-closeout
+origin/feat/phase7h-e2e-receipts-acceptance
+origin/feat/phase7i-benchmark-optimization
+[7L] using local chore/phase7l-safe-closeout
+[7L] scanning candidates to merge into chore/phase7l-safe-closeout (pattern: phase7l, excluding target)
+[7L] no candidates found; recording no-op.
+[7I] attempting rebase onto origin/main from feat/phase7i-benchmark-optimization
+Rebasing (1/33)Rebasing (2/33)Rebasing (3/33)Rebasing (4/33)Rebasing (5/33)Rebasing (6/33)Rebasing (7/33)Rebasing (8/33)Rebasing (9/33)Rebasing (10/33)Rebasing (11/33)Rebasing (12/33)Rebasing (13/33)Rebasing (14/33)Rebasing (15/33)Rebasing (16/33)Rebasing (17/33)Rebasing (18/33)Rebasing (19/33)Rebasing (20/33)Rebasing (21/33)Rebasing (22/33)Rebasing (23/33)Rebasing (24/33)Rebasing (25/33)Rebasing (26/33)Rebasing (27/33)Rebasing (28/33)Rebasing (29/33)Rebasing (30/33)Rebasing (31/33)Rebasing (32/33)Rebasing (33/33)Successfully rebased and updated refs/heads/feat/phase7i-benchmark-optimization.
+[7I] rebase CLEAN → 75468fd3
+=== SUMMARY ===
+main: ed536779
+7L: DRY-RUN recorded above; open /home/tank/darf_receipts/repo_prep_20250912_013151.log for per-branch results.
+7I: rebase result noted above.
+Receipts: /home/tank/darf_receipts/repo_prep_20250912_013151.log
