@@ -57,6 +57,7 @@ intake-community:
 
 .PHONY: clean-artifacts
 clean-artifacts:
+	@rm -rf community_intake/{queue,accepted,rejected}/* 2>/dev/null || true
 \t@echo "[clean] removing evidence, receipts, bundles under var/ and open-darf/"
 \t@rm -rf var/reports var/receipts var/releases
 \t@rm -rf open-darf/var

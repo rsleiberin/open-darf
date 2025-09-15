@@ -34,3 +34,4 @@ open-darf/*.sha256
 var/releases/
 var/reports/
 *.sha256
+community_intake/
