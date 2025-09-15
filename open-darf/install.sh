@@ -1,40 +1,43 @@
 #!/usr/bin/env bash
-
-## verbose trace injection (Phase 7R)
-if [ "${VERBOSE:-1}" = "1" ]; then
-  export PS4="+ $(date +%H:%M:%S).$RANDOM ${BASH_SOURCE##*/}:${LINENO}: "
-  set -x
-fi
 set -euo pipefail
 
-echo "==="
-echo "==="
-echo "==="
+echo "[install] probing environment…"
+DISTRO="$( (lsb_release -ds 2>/dev/null || grep -m1 PRETTY_NAME /etc/os-release | cut -d= -f2 | tr -d '"') || echo unknown )"
+UBU_VER="$( (lsb_release -rs 2>/dev/null) || echo "" )"
+KREL="$(uname -r || echo unknown)"
+IS_WSL=0
+if echo "$KREL" | grep -qi microsoft; then IS_WSL=1; fi
+if [[ -n "${WSL_INTEROP:-}" ]]; then IS_WSL=1; fi
+REQS_OK=1
 
-echo "[Phase 7R] BEGIN install umbrella (fail-fast)"
+echo "[install] distro: $DISTRO"
+echo "[install] kernel: $KREL"
+echo "[install] wsl   : $IS_WSL"
 
-run_stage () {
-  local name="$1" script="$2"
-  echo "[BEGIN] ${name}"
-  set +e
-  bash "${script}"
-  rc=$?
-  set -e
-  echo "[END]   ${name} rc=${rc}"
-  # rc 41 = environment gate (e.g., WSL)
-  if [ "${rc}" -eq 41 ]; then
-    echo "[gate] Stopping pipeline early due to environment gate (rc=41)."
-    exit 41
-  fi
-  if [ "${rc}" -ne 0 ]; then
-    echo "[error] Stage '${name}' failed (rc=${rc}); aborting."
-    exit "${rc}"
-  fi
-}
+if ! command -v python3 >/dev/null 2>&1; then
+  echo "[install:error] python3 missing"; REQS_OK=0
+fi
+if ! command -v git >/dev/null 2>&1; then
+  echo "[install:error] git missing"; REQS_OK=0
+fi
+if command -v nvidia-smi >/dev/null 2>&1; then
+  echo "[install] nvidia-smi present: $(nvidia-smi --query-gpu=name,driver_version --format=csv,noheader 2>/dev/null | tr '\n' ';')"
+else
+  echo "[install:warn] nvidia-smi not found; GPU validation will be skipped"
+fi
 
-run_stage "M1 bootstrap" "install/bootstrap.sh"
-run_stage "M2 python_cuda" "install/python_cuda.sh"
-run_stage "M3 validator" "validate/run_minimal.sh"
-run_stage "M4 make_report" "validate/make_report.sh"
+GPU_REQ_NOTE="native Ubuntu 22.04 LTS + RTX 30/40 recommended for GPU runs"
+if [[ "$UBU_VER" != "22.04" && "$DISTRO" != *"22.04"* ]]; then
+  echo "[install:warn] not Ubuntu 22.04; $GPU_REQ_NOTE"
+fi
+if [[ $IS_WSL -eq 1 ]]; then
+  echo "[install:warn] WSL detected; GPU validation may be blocked. $GPU_REQ_NOTE"
+fi
 
-echo "[Phase 7R] END install umbrella"
+if [[ $REQS_OK -ne 1 ]]; then
+  echo "[install] requirements NOT met"
+  exit 2
+fi
+
+echo "[install] ok"
+exit 0
