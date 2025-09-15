@@ -42,3 +42,6 @@ Branch: chore/phase7s-index
 
 ## Review Packet
 - Latest packet (path): var/releases/phase7s/review_packet_20250915T033222Z.tar.gz
+
+## Reviewer Handoff
+- Review guide: docs/phase7s/REVIEW_HANDOFF.md
