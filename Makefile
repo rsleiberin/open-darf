@@ -75,3 +75,7 @@ acceptance-phase7s:
 .PHONY: review-packet
 review-packet:
 	@bash scripts/phase7s/build_review_packet.sh
+
+.PHONY: verify-provenance
+verify-provenance:  ## Hash, verify, and CAS-store provenance for given PATHS (default: docs/phase7s)
+	scripts/phase7t/self_verify_provenance.sh $(paths)
