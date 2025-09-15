@@ -1,0 +1,26 @@
+{
+  "action": "qa_perf_verify",
+  "details": {
+    "elapsed_ms": {
+      "hash": 57,
+      "total": 81,
+      "verify": 23
+    },
+    "entries": 9
+  },
+  "host": {
+    "kernel": "5.15.167.4-microsoft-standard-WSL2",
+    "machine": "x86_64",
+    "system": "Linux"
+  },
+  "links": [
+    {
+      "path": "var/reports/phase7t/manifest_20250915T215734Z.json",
+      "rel": "manifest"
+    }
+  ],
+  "phase": "7T",
+  "schema_version": 1,
+  "status": "ok",
+  "timestamp_utc": "20250915T215734Z"
+}

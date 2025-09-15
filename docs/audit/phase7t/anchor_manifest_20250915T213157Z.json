@@ -1,0 +1,27 @@
+{
+  "action": "anchor_manifest",
+  "details": {
+    "entries": 9
+  },
+  "host": {
+    "kernel": "5.15.167.4-microsoft-standard-WSL2",
+    "machine": "x86_64",
+    "system": "Linux"
+  },
+  "links": [
+    {
+      "path": "var/reports/phase7t/manifest_20250915T213157Z.json",
+      "rel": "manifest"
+    }
+  ],
+  "phase": "7T",
+  "provenance": {
+    "algorithm": "sha256",
+    "canonicalization": "utf8+lf+trim-trailing",
+    "manifest_path": "var/reports/phase7t/manifest_20250915T213157Z.json",
+    "manifest_sha256": "3a39f88620949427b23fa24c654f17d7254e59294dc9f1d5f4aaa5f3415f4b6d"
+  },
+  "schema_version": 1,
+  "status": "ok",
+  "timestamp_utc": "20250915T213157Z"
+}

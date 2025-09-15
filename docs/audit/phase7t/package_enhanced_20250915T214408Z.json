@@ -1,0 +1,32 @@
+{
+  "action": "package_enhanced",
+  "details": {
+    "enhanced_bytes": 12442,
+    "legacy_bytes": 10232
+  },
+  "host": {
+    "kernel": "5.15.167.4-microsoft-standard-WSL2",
+    "machine": "x86_64",
+    "system": "Linux"
+  },
+  "links": [
+    {
+      "path": "var/releases/open-darf/open-darf_minimal_20250915T041716Z.tar.gz",
+      "rel": "legacy_bundle",
+      "sha256": "58d9261feee2e177143fa7fb8a0c1a9f68eb9ddd94a7919becd4d88baa257a19"
+    },
+    {
+      "path": "var/releases/open-darf/open-darf_minimal_20250915T041716Z_prov.tar.gz",
+      "rel": "enhanced_bundle",
+      "sha256": "f22bce0ab8c87049704b0ba3434a7baa84af5a29d99793b80663a1a40d99d5f6"
+    },
+    {
+      "path": "var/reports/phase7t/manifest_20250915T214408Z.json",
+      "rel": "manifest"
+    }
+  ],
+  "phase": "7T",
+  "schema_version": 1,
+  "status": "ok",
+  "timestamp_utc": "20250915T214408Z"
+}
