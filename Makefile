@@ -49,8 +49,25 @@ bench-test:
 
 .PHONY: aggregate-phase7s
 aggregate-phase7s:
-\t./scripts/phase7s/aggregate_evidence.sh
+	./scripts/phase7s/aggregate_evidence.sh
 
 .PHONY: intake-community
 intake-community:
-\tbash scripts/phase7s/intake_evidence.sh $(files)
+	bash scripts/phase7s/intake_evidence.sh $(files)
+
+.PHONY: clean-artifacts
+clean-artifacts:
+	@rm -rf community_intake/{queue,accepted,rejected}/* 2>/dev/null || true
+	@echo "[clean] removing evidence, receipts, bundles under var/ and open-darf/"
+	@rm -rf var/reports var/receipts var/releases
+	@rm -rf open-darf/var
+	@rm -f open-darf/open-darf-report-*.tar.gz ./open-darf-report-*.tar.gz
+	@echo "[clean] done"
+
+.PHONY: finalize-phase7s
+finalize-phase7s:
+	@bash scripts/phase7s/finalize.sh
+
+.PHONY: acceptance-phase7s
+acceptance-phase7s:
+	@bash scripts/phase7s/acceptance_status.sh

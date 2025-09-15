@@ -305,3 +305,16 @@ The runner writes receipts under `var/receipts/...` and timestamped scoreboards 
 - [x] **Docs**: label mapping + runner usage + example config
 - [ ] **BioRED real run** strict F1 matches golden within ±0.002 on dev/test (requires real paths)
 
+
+## Phase 7S — Start Here
+
+Central index: docs/phase7s/INDEX.md
+Grant submission overview: docs/phase7s/GRANT_SUBMISSION_README.md
+
+Common commands (copy/paste):
+- Aggregate evidence: ./scripts/phase7s/aggregate_evidence.sh
+- Timing summary: scripts/phase7s/extract_timing_from_tarballs.py
+- Package bundle: ./scripts/phase7s/package_evidence.sh
+- Open-DARF quickstart: (cd open-darf && make quickstart)
+- Open-DARF oneclick: (cd open-darf && make oneclick)
+- Native host checklist: bash scripts/phase7s/native_host_checklist.sh

@@ -35,3 +35,7 @@ Branch: chore/phase7s-index
 ## Notes
 - Native GPU validation requires Ubuntu 22.04 LTS on bare metal with RTX 30/40 (≥8GB VRAM).
 - Timing probe is embedded in evidence tarballs as timing_probe.json.
+
+## Acceptance
+- Acceptance gate reports: var/reports/phase7s/acceptance_status_*.json
+- Acceptance gate reports: var/reports/phase7s/acceptance_status_*.md
