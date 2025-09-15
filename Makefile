@@ -63,3 +63,11 @@ clean-artifacts:
 \t@rm -rf open-darf/var
 \t@rm -f open-darf/open-darf-report-*.tar.gz ./open-darf-report-*.tar.gz
 \t@echo "[clean] done"
+
+.PHONY: finalize-phase7s
+finalize-phase7s:
+	@bash scripts/phase7s/finalize.sh
+
+.PHONY: acceptance-phase7s
+acceptance-phase7s:
+	@bash scripts/phase7s/acceptance_status.sh
