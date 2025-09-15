@@ -39,3 +39,6 @@ Branch: chore/phase7s-index
 ## Acceptance
 - Acceptance gate reports: var/reports/phase7s/acceptance_status_*.json
 - Acceptance gate reports: var/reports/phase7s/acceptance_status_*.md
+
+## Review Packet
+- Latest packet (path): var/releases/phase7s/review_packet_20250915T033222Z.tar.gz
