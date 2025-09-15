@@ -54,3 +54,13 @@ aggregate-phase7s:
 .PHONY: intake-community
 intake-community:
 \tbash scripts/phase7s/intake_evidence.sh $(files)
+
+.PHONY: help
+help:
+	@echo "Phase 7S — Top-level targets:"
+	@echo "  make aggregate-phase7s   # build validation summaries"
+	@echo "  make intake-community files=\"<paths>\"  # ingest evidence"
+	@echo "  (cd open-darf && make quickstart)       # installer → validate → evidence"
+	@echo "  (cd open-darf && make oneclick)         # same + JSON receipt"
+	@echo "  bash scripts/phase7s/package_evidence.sh  # package grant bundle"
+	@echo "  bash scripts/phase7s/build_open_darf_release.sh  # build release kit"
