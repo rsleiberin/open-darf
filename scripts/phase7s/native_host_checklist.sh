@@ -6,7 +6,7 @@ HOST="$(hostname)"
 RECEIPT="var/receipts/phase7s/native_check_${HOST}_${TS}.json"
 mkdir -p "var/receipts/phase7s" "var/reports"
 
-echo "===\n===\n===\n"
+printf "===\n===\n===\n"
 echo "[native-check] gating environment for Ubuntu 22.04 + RTX 30/40"
 
 DISTRO="$( (lsb_release -ds 2>/dev/null || grep -m1 PRETTY_NAME /etc/os-release | cut -d= -f2 | tr -d '\"') || echo unknown )"
