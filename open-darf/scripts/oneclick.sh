@@ -5,7 +5,7 @@ TS="$(date -u +%Y%m%dT%H%M%SZ)"
 HOST="$(hostname)"
 RECEIPT_DIR="var/receipts/open-darf"
 RECEIPT="${RECEIPT_DIR}/oneclick_${HOST}_${TS}.json"
-mkdir -p "$RECEIPT_DIR"
+mkdir -p "$RECEIPT_DIR" "var/reports"
 
 status="ok"
 reason="completed"
@@ -50,7 +50,6 @@ IS_WSL=0
 if echo "$KREL" | grep -qi microsoft; then IS_WSL=1; fi
 if [[ -n "${WSL_INTEROP:-}" ]]; then IS_WSL=1; fi
 
-# Write receipt
 {
   echo "{"
   echo "  \"timestamp\": \"${TS}\","
