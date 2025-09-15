@@ -79,3 +79,10 @@ review-packet:
 .PHONY: verify-provenance
 verify-provenance:  ## Hash, verify, and CAS-store provenance for given PATHS (default: docs/phase7s)
 	scripts/phase7t/self_verify_provenance.sh $(paths)
+
+.PHONY: help-provenance
+help-provenance:  ## Show provenance quick help and common commands
+	echo "Provenance quick help:"
+	echo " - make verify-provenance                 # hash+verify+CAS store default paths"
+	echo " - make verify-provenance paths=\\"<paths>\\"  # specify custom paths"
+	echo "Docs: docs/phase7t/PROVENANCE_README.md"
