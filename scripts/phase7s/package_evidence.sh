@@ -22,6 +22,8 @@ add_glob() {
 # Reports & summaries
 add_glob "var/reports/phase7s/validation_summary.json"
 add_glob "var/reports/phase7s/validation_summary.md"
+add_glob "var/reports/phase7s/acceptance_status_*.json"
+add_glob "var/reports/phase7s/acceptance_status_*.md"
 add_glob "var/reports/phase7s/timing_summary.json"
 add_glob "var/reports/phase7s/timing_summary.md"
 
