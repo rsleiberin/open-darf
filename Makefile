@@ -78,15 +78,15 @@ review-packet:
 
 .PHONY: help-provenance
 help-provenance:  ## Show provenance-related commands
-\t@echo 'Provenance targets:'; \
-\t@echo '  make verify-provenance  # hash+manifest+audit receipts'; \
-\t@echo '  make qa-provenance      # timed hash/verify and QA receipt'
+	@echo 'Provenance targets:'; \
+	@echo '  make verify-provenance  # hash+manifest+audit receipts'; \
+	@echo '  make qa-provenance      # timed hash/verify and QA receipt'
 
 .PHONY: verify-provenance
 verify-provenance:  ## Hash docs/phase7s (default) and validate manifest; emit receipts
-\tscripts/phase7t/self_verify_provenance.sh $(paths)
+	scripts/phase7t/self_verify_provenance.sh $(paths)
 
 .PHONY: qa-provenance
 qa-provenance:  ## Time hash+verify and emit a QA receipt (default: docs/phase7s)
-\tscripts/phase7t/qa_perf_check.sh $(paths)
+	scripts/phase7t/qa_perf_check.sh $(paths)
 
