@@ -24,3 +24,13 @@ models/cache/
 !var/receipts/phase6c/validation/biored_scores_ml_test.json
 !var/receipts/phase6c/validation/scierc_scores_ml_test.json
 var/receipts/
+open-darf/var/
+open-darf/open-darf-report-*.tar.gz
+open-darf/var/receipts/open-darf/*.json
+open-darf/var/reports/*
+open-darf/var/releases/*
+open-darf/*.sha256
+/open-darf-report-*.tar.gz
+var/releases/
+var/reports/
+*.sha256

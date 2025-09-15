@@ -54,3 +54,11 @@ aggregate-phase7s:
 .PHONY: intake-community
 intake-community:
 \tbash scripts/phase7s/intake_evidence.sh $(files)
+
+.PHONY: clean-artifacts
+clean-artifacts:
+\t@echo "[clean] removing evidence, receipts, bundles under var/ and open-darf/"
+\t@rm -rf var/reports var/receipts var/releases
+\t@rm -rf open-darf/var
+\t@rm -f open-darf/open-darf-report-*.tar.gz ./open-darf-report-*.tar.gz
+\t@echo "[clean] done"
