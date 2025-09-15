@@ -38,7 +38,7 @@ def main():
         tarballs.extend(sorted(glob.glob(os.path.join(r, "open-darf-report-*.tar.gz"))))
 
     # Parse receipts
-    parsed = [load_json(p) | {"_path": p} for p in receipts]
+    parsed = [({**load_json(p), "_path": p}) for p in receipts]
     count = len(parsed)
     by_wsl = {"wsl": sum(1 for x in parsed if x.get("is_wsl")==1),
               "native": sum(1 for x in parsed if x.get("is_wsl")==0)}
