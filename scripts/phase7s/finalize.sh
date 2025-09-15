@@ -7,7 +7,7 @@ echo "[finalize] aggregate → timing → package → FINAL_REPORT.md"
 ./scripts/phase7s/aggregate_evidence.sh || true
 
 # 2) Extract timing summaries
-scripts/phase7s/extract_timing_from_tarballs.py || true
+./scripts/phase7s/extract_timing_from_tarballs.py || true
 
 # 3) Package evidence
 ./scripts/phase7s/package_evidence.sh || true
