@@ -46,3 +46,7 @@ reset-for-real: archive-receipts
 ## Phase 7I — quick loop on test split
 bench-test:
 	@./scripts/phase7i/run_all.sh --split=test
+
+.PHONY: aggregate-phase7s
+aggregate-phase7s:
+\t./scripts/phase7s/aggregate_evidence.sh
