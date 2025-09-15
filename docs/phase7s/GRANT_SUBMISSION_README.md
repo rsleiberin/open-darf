@@ -22,3 +22,7 @@ Suggested reviewer steps:
 Community intake:
   - We accept external evidence tarballs and JSON receipts
   - See docs/phase7s/COMMUNITY_VALIDATION.md for instructions
+
+Additional summaries:
+  - var/reports/phase7s/timing_summary.json
+  - var/reports/phase7s/timing_summary.md
