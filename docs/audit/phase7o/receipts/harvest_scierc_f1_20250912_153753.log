@@ -1,0 +1,4 @@
+[find] latest NER receipt: /home/tank/darf_receipts/scierc_ner_f1_20250912_152748.log
+[find] latest FULL receipt: /home/tank/darf_receipts/scierc_full_v6_20250912_151014.log
+[parse] F1_micro_candidate=<none> (source: /home/tank/darf_receipts/scierc_full_v6_20250912_151014.log)
+[gate] result=INCONCLUSIVE

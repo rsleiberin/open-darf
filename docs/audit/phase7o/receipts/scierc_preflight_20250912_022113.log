@@ -1,0 +1,16 @@
+[ok] repo: https://github.com/rsleiberin/darf-source.git
+[WARN] No SciERC entrypoint detected under external/PURE/code/. Preflight will only record this state.
+[gates] Running light 7I gates (no heavy GPU)...
+===
+===
+===
+=== DARF Phase 7O — 7I Benchmark Gates (light) ===
+[gate] Python & Git
+Python 3.8.10
+git version 2.48.1
+[gate] Torch CUDA visibility via container (no heavy load)
+[gate] PURE quickcheck dry-run plan ready (use previous mini test receipts for proof).
+Result: LIGHT_GATES_COMPLETE
+Receipt: /home/tank/darf_receipts/gates_7i_20250912_022114.log
+[gates] rc=0
+[receipts] host log: /home/tank/darf_receipts/scierc_preflight_20250912_022113.log
