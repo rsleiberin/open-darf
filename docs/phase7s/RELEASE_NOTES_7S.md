@@ -1,6 +1,6 @@
 # Phase 7S — Release Notes
 
-- Generated: 2025-09-15T03:18:59Z
+- Generated: 2025-09-15T03:30:36Z
 
 ## Summary
 - Evidence receipts: 4 (WSL:4 · Native:0)
@@ -18,29 +18,25 @@
 ## Acceptance Snapshot (top excerpt)
 # Phase 7S — Acceptance Status
 
-- - Generated: 20250915T031621Z
+- Generated: 20250915T031621Z
 
-- - C1_repo_consolidation_docs: ALLOW — branch_consolidation_plan.md & post_grant_integration_roadmap.md
-- - C2_validation_flow_operational: ALLOW — receipts=4, evidence_ok=4
-- - C3_timing_probe_integrated: ALLOW — samples_with_timing=2
-- - C4_evidence_bundle_ready: ALLOW — bundle=present
-- - C5_native_ubuntu_gpu_evidence: DENY — pass if native gate passed or non-WSL oneclick with run+evidence OK
+- C1_repo_consolidation_docs: ALLOW — branch_consolidation_plan.md & post_grant_integration_roadmap.md
+- C2_validation_flow_operational: ALLOW — receipts=4, evidence_ok=4
+- C3_timing_probe_integrated: ALLOW — samples_with_timing=2
+- C4_evidence_bundle_ready: ALLOW — bundle=present
+- C5_native_ubuntu_gpu_evidence: DENY — pass if native gate passed or non-WSL oneclick with run+evidence OK
 
 ## Artifacts
 
-- - validation_summary.json: var/reports/phase7s/validation_summary.json
-- - timing_summary.json: var/reports/phase7s/timing_summary.json
-- - bundle: var/reports/phase7s/phase7s_evidence_bundle_20250915T031621Z.tar.gz
-- - manifest: var/reports/phase7s/MANIFEST_20250915T031621Z.txt
-- - sample oneclick receipts:
--   - open-darf/var/receipts/open-darf/oneclick_DESKTOP-30KIIKV_20250915T000648Z.json
--   - open-darf/var/receipts/open-darf/oneclick_DESKTOP-30KIIKV_20250915T001644Z.json
--   - open-darf/var/receipts/open-darf/oneclick_DESKTOP-30KIIKV_20250915T002133Z.json
--   - open-darf/var/receipts/open-darf/oneclick_DESKTOP-30KIIKV_20250915T003731Z.json
-- - native gate receipts:
--   - var/receipts/phase7s/native_check_DESKTOP-30KIIKV_20250915T012112Z.json
--   - var/receipts/phase7s/native_check_DESKTOP-30KIIKV_20250915T012459Z.json
-
-## Next Actions
-- Run native validation on Ubuntu 22.04 + RTX 30/40 (≥8GB VRAM) to satisfy the native GPU criterion.
-- If satisfied, rerun `make acceptance-phase7s` and repackage: `make finalize-phase7s`.
+- validation_summary.json: var/reports/phase7s/validation_summary.json
+- timing_summary.json: var/reports/phase7s/timing_summary.json
+- bundle: var/reports/phase7s/phase7s_evidence_bundle_20250915T031621Z.tar.gz
+- manifest: var/reports/phase7s/MANIFEST_20250915T031621Z.txt
+- sample oneclick receipts:
+  - open-darf/var/receipts/open-darf/oneclick_DESKTOP-30KIIKV_20250915T000648Z.json
+  - open-darf/var/receipts/open-darf/oneclick_DESKTOP-30KIIKV_20250915T001644Z.json
+  - open-darf/var/receipts/open-darf/oneclick_DESKTOP-30KIIKV_20250915T002133Z.json
+  - open-darf/var/receipts/open-darf/oneclick_DESKTOP-30KIIKV_20250915T003731Z.json
+- native gate receipts:
+  - var/receipts/phase7s/native_check_DESKTOP-30KIIKV_20250915T012112Z.json
+  - var/receipts/phase7s/native_check_DESKTOP-30KIIKV_20250915T012459Z.json
