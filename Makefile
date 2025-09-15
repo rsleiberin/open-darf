@@ -78,9 +78,7 @@ review-packet:
 
 .PHONY: help-provenance
 help-provenance:  ## Show provenance-related commands
-	@echo 'Provenance targets:'; \
-	@echo '  make verify-provenance  # hash+manifest+audit receipts'; \
-	@echo '  make qa-provenance      # timed hash/verify and QA receipt'
+	printf 'Provenance targets:\n  make verify-provenance  # hash+manifest+audit receipts\n  make qa-provenance      # timed hash/verify and QA receipt\n'
 
 .PHONY: verify-provenance
 verify-provenance:  ## Hash docs/phase7s (default) and validate manifest; emit receipts
