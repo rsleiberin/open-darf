@@ -1,0 +1,16 @@
+# Open-DARF generated artifacts
+results/
+.cache/
+*.tar.gz
+*.zip
+
+# Node / Python / env
+node_modules/
+.env
+.env.*
+__pycache__/
+*.pyc
+
+# OS junk
+.DS_Store
+Thumbs.db
