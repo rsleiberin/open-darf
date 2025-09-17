@@ -35,3 +35,12 @@ var/releases/
 var/reports/
 *.sha256
 community_intake/
+docs/evidence/
+docs/evidence/blocked_gallery_phase7c_demo.md
+docs/evidence/evidence_20250916T231953Z.sha256
+docs/evidence/evidence_20250916T231953Z.tar.gz
+docs/evidence/phase7c_evidence_pack.md
+docs/evidence/phase7d
+docs/evidence/phase7e
+docs/evidence/phase7f
+docs/evidence/session_20250916T231953Z
