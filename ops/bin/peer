@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<USAGE
+peer — one-command lifecycle for Open-DARF peer stack
+usage: ops/bin/peer <up|down|status|logs|smoke>
+
+  up       : start stack (compose up -d) and bounded health check
+  down     : stop stack (compose down) + port hygiene
+  status   : docker compose ps + JSON probe
+  logs     : tail last 60 lines for core services
+  smoke    : lightweight HTTP/bolt checks (qdrant, neo4j), prints summary
+
+USAGE
+}
+
+mapfile -d '' CF < <(bash ops/bin/_compose_files.sh)
+
+case "${1:-}" in
+  up)
+    bash ops/bin/peer_up.sh
+    ;;
+  down)
+    bash ops/bin/peer_down.sh
+    ;;
+  status)
+    echo "[peer] compose ps:"
+    docker compose "${CF[@]}" ps
+    echo
+    echo "[peer] docker ps (ports):"
+    docker ps --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}' | sed -n '1p;/^darf-/p' || true
+    echo
+    echo "[peer] probe:"
+bash ops/bin/validate_readiness.sh || true
+    bash ops/bin/peer_probe_json.sh
+    ;;
+  logs)
+    for c in darf-postgres-1 darf-neo4j-1 darf-minio-1 darf-qdrant-1; do
+      echo "--- logs: $c (last 60) ---"
+      docker logs --tail=60 "$c" 2>&1 || true
+    done
+    ;;
+  smoke)
+    qd=$(curl -fsS http://127.0.0.1:6333/ | tr -d '\n' | head -c 120 || true)
+    bolt=$( (exec 3<>/dev/tcp/127.0.0.1/7787 && echo ok || echo down) 2>/dev/null )
+    echo "[smoke] qdrant http: $([[ -n "$qd" ]] && echo ok || echo fail)"
+    echo "[smoke] neo4j bolt(7787): $bolt"
+    ;;
+  ""|-h|--help)
+    usage;;
+  *)
+    echo "unknown subcommand: $1" >&2; usage; exit 2;;
+esac
