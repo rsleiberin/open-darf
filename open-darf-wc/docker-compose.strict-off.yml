@@ -1,0 +1,8 @@
+services:
+  neo4j:
+    environment:
+      # Correct v5 key: server.config.strict_validation.enabled → NEO4J_server__config__strict__validation__enabled
+      - NEO4J_server__config__strict__validation__enabled=false
+      - NEO4J_server__default__listen__address=0.0.0.0
+      - NEO4J_server__bolt__listen__address=:7687
+      - NEO4J_server__http__listen__address=:7474

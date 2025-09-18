@@ -1,0 +1,114 @@
+name: open-darf
+services:
+
+  minio:
+    image: minio/minio:latest
+    container_name: darf-minio
+    command: server /data --console-address ":${MINIO_CONSOLE_PORT}"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_ADDRESS: :${MINIO_PORT}
+      MINIO_CONSOLE_ADDRESS: :${MINIO_CONSOLE_PORT}
+    ports:
+      - "${MINIO_PORT}:${MINIO_PORT}"
+      - "${MINIO_CONSOLE_PORT}:${MINIO_CONSOLE_PORT}"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${MINIO_PORT}/minio/health/live"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  neo4j:
+    image: neo4j:5.15-community
+    container_name: darf-neo4j
+    environment:
+      NEO4J_AUTH: "${NEO4J_USERNAME}/${NEO4J_PASSWORD}"
+    ports:
+      - "${NEO4J_HTTP_PORT}:${NEO4J_HTTP_PORT}"
+      - "${NEO4J_BOLT_PORT}:${NEO4J_BOLT_PORT}"
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - ./infra/neo4j/init:/var/lib/neo4j/init
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -u ${NEO4J_USERNAME} -p ${NEO4J_PASSWORD} 'RETURN 1' || exit 1"]
+      interval: 30s
+      timeout: 15s
+      retries: 10
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: darf-qdrant
+    environment:
+      NEO4J_server_default__listen__address: 0.0.0.0
+      QDRANT__SERVICE__HTTP_PORT: ${QDRANT_HTTP_PORT}
+      QDRANT__SERVICE__GRPC_PORT: ${QDRANT_GRPC_PORT}
+    ports:
+      - "${QDRANT_HTTP_PORT}:${QDRANT_HTTP_PORT}"
+      - "${QDRANT_GRPC_PORT}:${QDRANT_GRPC_PORT}"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:${QDRANT_HTTP_PORT}/healthzzzz"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: darf-postgres
+    environment:
+      NEO4J_server_default__listen__address: 0.0.0.0
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./infra/postgres/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  # Placeholder for constitutional engine (image/build to be wired later)
+  darf-engine:
+    image: ghcr.io/darf-ai/darf-engine:latest
+    container_name: darf-constitutional-engine
+    environment:
+      NEO4J_server_default__listen__address: 0.0.0.0
+      MINIO_ENDPOINT: "minio:${MINIO_PORT}"
+      NEO4J_URI: "bolt://neo4j:${NEO4J_BOLT_PORT}"
+      QDRANT_URL: "http://qdrant:${QDRANT_HTTP_PORT}"
+      POSTGRES_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}"
+      CONSTITUTIONAL_MODE: ${CONSTITUTIONAL_MODE}
+      PERFORMANCE_MONITORING: ${PERFORMANCE_MONITORING}
+    depends_on:
+      minio:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+
+volumes:
+  minio_data:
+  neo4j_data:
+  neo4j_logs:
+  qdrant_data:
+  postgres_data:

@@ -1,0 +1,46 @@
+name: Open-DARF Peer Validator (Evidence)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/**'
+      - 'docker-compose.yml'
+      - 'docs/**'
+      - '.github/workflows/peer_validator.yml'
+
+jobs:
+  validate-linux:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Docker info
+        run: |
+          docker --version
+          docker compose version || docker-compose --version
+
+      - name: Bring up DBs + clean Neo4j + evidence (Linux one-liner)
+        run: |
+          chmod +x scripts/run.sh || true
+          bash ./scripts/run.sh
+
+      - name: Validator acceptance (bounded)
+        run: |
+          chmod +x scripts/validator_acceptance.sh || true
+          bash ./scripts/validator_acceptance.sh
+
+      - name: Publish latest evidence manifest
+        run: |
+          chmod +x scripts/ci_evidence.sh || true
+          bash ./scripts/ci_evidence.sh
+
+      - name: Upload results (artifacts)
+        uses: actions/upload-artifact@v4
+        with:
+          name: open-darf-results
+          path: |
+            results/**
+          if-no-files-found: ignore
