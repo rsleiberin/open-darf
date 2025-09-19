@@ -1,0 +1,19 @@
+{
+  "generated_at": 1757459898.208699,
+  "performance": {
+    "sample_size": 100,
+    "entity_f1": 0.54,
+    "relation_f1": 0.31,
+    "constitutional_compliance": 0.96,
+    "timestamp": 1757459898.1630628
+  },
+  "constitutional": {
+    "decisions": {
+      "sovereignty_preservation": 0.98,
+      "audit_trail_completeness": 0.99,
+      "edge_case_success": 0.95,
+      "consensus_time_ms": 150
+    },
+    "timestamp": 1757459898.1900015
+  }
+}

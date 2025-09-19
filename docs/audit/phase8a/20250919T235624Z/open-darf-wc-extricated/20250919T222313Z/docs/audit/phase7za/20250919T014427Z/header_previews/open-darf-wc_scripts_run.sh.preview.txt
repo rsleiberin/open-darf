@@ -1,0 +1,16 @@
+# === HEADER PREVIEW (DRY-RUN) ===
+# Header: Purpose
+#   One or two sentences about what this file does.
+# Header: Inputs
+#   - Environment vars / flags
+# Header: Outputs
+#   - Receipts / side-effects
+# Header: Data Flow
+#   Source -> Transform -> Sink
+# Header: Failure Modes & Recovery
+#   Common errors and quick fixes.
+# Header: Idempotence & Teardown
+#   Safe to re-run? Cleanup notes.
+# Header: Security & Privacy Notes
+#   Sensitive ops, local-only by default.
+# --- file begins ---

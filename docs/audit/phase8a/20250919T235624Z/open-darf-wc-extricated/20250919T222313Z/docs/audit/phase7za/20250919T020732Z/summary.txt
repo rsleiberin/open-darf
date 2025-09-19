@@ -1,0 +1,6 @@
+Open-DARF (scoped) — 7ZA header/guard refresh @ 20250919T020732Z
+Header candidates: 31
+Doc fences rc: 0  -> open-darf-wc/docs/audit/phase7za/20250919T020732Z/guard_doc_fences.out
+Header guard rc: 0 -> open-darf-wc/docs/audit/phase7za/20250919T020732Z/guard_comment_headers.out
+Redaction map: open-darf-wc/docs/audit/phase7za/20250919T020732Z/redaction_map.tsv
+Coverage:     open-darf-wc/docs/audit/phase7za/20250919T020732Z/comment_coverage.json

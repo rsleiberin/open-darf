@@ -1,0 +1,7 @@
+{
+  "ts": "2025-09-17T17:23:21-05:00",
+  "host": "DESKTOP-30KIIKV",
+  "os": "Linux DESKTOP-30KIIKV 5.15.167.4-microsoft-standard-WSL2 #1 SMP Tue Nov 5 00:21:55 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux",
+  "docker": "Docker version 20.10.17, build 100c701",
+  "neo4j_ms": 1997
+}

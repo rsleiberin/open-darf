@@ -1,0 +1,59 @@
+name: Community Validation Run
+description: Report a 15-minute validator run with system details and results
+labels: ["community", "validation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for running the Open-DARF validator! Please fill in the fields below.
+  - type: input
+    id: os
+    attributes:
+      label: OS
+      placeholder: Ubuntu 22.04 / Windows 11 + WSL / macOS 14
+    validations:
+      required: true
+  - type: input
+    id: cpu
+    attributes:
+      label: CPU
+      placeholder: Intel i7-12700K
+    validations:
+      required: true
+  - type: input
+    id: gpu
+    attributes:
+      label: GPU & VRAM
+      placeholder: RTX 3080 10GB
+    validations:
+      required: true
+  - type: input
+    id: python
+    attributes:
+      label: Python version
+      placeholder: 3.10.14
+    validations:
+      required: true
+  - type: input
+    id: docker
+    attributes:
+      label: Docker/Compose version (optional)
+      placeholder: Docker 27.x, Compose v2.x
+  - type: textarea
+    id: duration
+    attributes:
+      label: Approximate run duration
+      placeholder: e.g., 9 minutes on CPU-only
+  - type: textarea
+    id: results
+    attributes:
+      label: Results summary.json
+      description: Paste the contents of results/summary.json here.
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes / warnings / logs (optional)
+      description: Any warnings from the run, or extra context.

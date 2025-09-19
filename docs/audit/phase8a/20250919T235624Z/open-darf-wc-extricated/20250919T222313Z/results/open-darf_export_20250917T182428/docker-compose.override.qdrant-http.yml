@@ -1,0 +1,8 @@
+services:
+  minio:
+    ports:
+      - "9010:9000"
+      - "9110:9001"
+  qdrant:
+    ports:
+      - "6433:6333"

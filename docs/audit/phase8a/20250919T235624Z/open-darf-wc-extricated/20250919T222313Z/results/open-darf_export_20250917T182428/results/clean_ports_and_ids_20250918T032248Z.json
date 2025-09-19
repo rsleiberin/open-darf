@@ -1,0 +1,6 @@
+{
+  "minio": {"container": "open-darf_export_20250917t182428-minio-1", "api_port": "49162", "console_port": "49161"},
+  "postgres": {"container": "8d3ce5c2020e0677663b906087479aa38729ef5739e78990bd2a02a433aa8eef"},
+  "qdrant": {"container": "darf-qdrant-bare", "http_port": "49163"},
+  "neo4j": {"container": "darf-neo4j", "http_port": "49165", "bolt_port": "49164"}
+}
