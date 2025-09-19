@@ -1,0 +1,9 @@
+{
+  "A1_scripts_audit": "in_progress",
+  "A2_compose_env": "done",
+  "A3_docs_polish": "done",
+  "F1_release_sync": "in_progress",
+  "E1_security_gate": "run",
+  "E2_professional_gate": "run",
+  "notes": "Scope limited to open-darf-wc per architect handoff; vendor seeds excluded."
+}

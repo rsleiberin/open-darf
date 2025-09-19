@@ -1,0 +1,1 @@
+# Internal terminology (outside ignored/vendor)
