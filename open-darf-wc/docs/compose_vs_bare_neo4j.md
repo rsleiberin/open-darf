@@ -1,4 +1,4 @@
-# Open-DARF: Compose DBs + Bare-Run Neo4j (Phase 7Y)
+# Open-DARF: Compose DBs + Bare-Run Neo4j ()
 
 **Why this pattern now (Windows-first, peer validators):**
 - Docker Compose env-var mapping for Neo4j v5 often injects invalid keys.

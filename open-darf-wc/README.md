@@ -1,4 +1,4 @@
-# Open-DARF (Phase 7Y) — Windows-First Peer Validator
+# Open-DARF — Peer Validator
 
 Welcome! This repo is set up so anyone (yes, you) can run the **Open-DARF peer validator** on a Windows machine (PowerShell) or Ubuntu/WSL, learn what’s happening, and produce an evidence bundle.
 
