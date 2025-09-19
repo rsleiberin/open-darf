@@ -19,7 +19,7 @@ hb_start "docker run neo4j clean"
 docker run -d --name darf-neo4j --network open-darf_default --network-alias neo4j \
   -p 7474:7474 -p 7687:7687 \
   -v open-darf_neo4j_data:/data -v open-darf_neo4j_logs:/logs \
-  -e NEO4J_AUTH=neo4j/darf_graph_password neo4j:5.15-community >/dev/null
+  -e NEO4J_AUTH="${NEO4J_USERNAME:-neo4j}/${NEO4J_PASSWORD:-change_me_neo4j}" neo4j:5.15-community >/dev/null
 hb_stop
 
 # Quick bounded waits (no long block)
