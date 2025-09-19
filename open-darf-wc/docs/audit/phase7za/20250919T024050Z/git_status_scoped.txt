@@ -1,0 +1,8 @@
+ M open-darf-wc/.gitignore
+?? open-darf-wc/_header_applied_preview/
+?? open-darf-wc/docs/TECH_CARD.md
+?? open-darf-wc/docs/USER_CARD.md
+?? open-darf-wc/docs/agent/handoff_7ZA_to_architect.md
+?? open-darf-wc/docs/audit/
+?? open-darf-wc/scripts/ci/
+?? open-darf-wc/tools/

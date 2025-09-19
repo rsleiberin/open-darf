@@ -1,0 +1,33 @@
+path	type	size_bytes	git_tracked	status	source	notes
+path	type	size_bytes	git_tracked	status	source	notes
+open-darf-wc/_header_applied_preview/.github/workflows/peer_validator.yml	yaml	1907	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/START.ps1	powershell	973	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/docker-compose.strict-off.yml	yaml	1109	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/docker-compose.yml	yaml	4213	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/_hb.sh	bash	1223	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/build_peer_bundle.ps1	powershell	3307	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/build_peer_bundle.sh	bash	2845	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/check_ports.sh	bash	1105	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/ci_evidence.ps1	powershell	1750	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/ci_evidence.sh	bash	1628	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/evidence_pack.ps1	powershell	3847	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/evidence_pack.sh	bash	3783	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/health_wait.sh	bash	2392	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/install.ps1	powershell	2419	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/install.sh	bash	1784	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/install_and_run.ps1	powershell	969	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/install_and_run.sh	bash	918	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/kill_switch.ps1	powershell	2572	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/kill_switch.sh	bash	3622	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/learn.ps1	powershell	1310	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/learn.sh	bash	1174	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/lint_no_triple_backticks.sh	bash	1490	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/run.ps1	powershell	2279	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/run.sh	bash	1963	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/run_validator_suite.sh	bash	1292	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/sanitize_markdown_fences.sh	bash	1804	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/validate.ps1	powershell	2711	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/validate.sh	bash	2196	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/validator_acceptance.ps1	powershell	2765	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/scripts/validator_acceptance.sh	bash	2677	0	untracked	7ZA	
+open-darf-wc/_header_applied_preview/start.sh	bash	922	0	untracked	7ZA	

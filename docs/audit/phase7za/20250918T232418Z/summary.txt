@@ -1,0 +1,32 @@
+Phase 7ZA — Pass B resilient scan (20250919T010700Z)
+repo: /home/tank/darf-source
+
+[violations]
+- total: 851
+
+[top rules]
+internal_phase_refs	273
+triple_backticks_in_docs	180
+personal_identifiers	151
+agent_terms	95
+secrets_like	73
+multi_agent_exposure	52
+todo_fixme	27
+
+[top files]
+repo_analysis.txt	112
+docs/implementation/GIT_HISTORY_20250831-010730.md	93
+docs/audit/branch_divergence_2025-09-11_18-06-00.txt	34
+docs/agent/AGENT_TLA_GUIDE.md	26
+docs/agent/AGENT_OPERATING_CORE.md	24
+docs/agent/AGENT_OPERATING_GUIDE.md	24
+docs/reference/darf-mvp-theory-complete.md	24
+docs/process/adr-type-system.md	18
+README.md	16
+docs/audit/branch_divergence_2025-09-11_18-09-37.txt	13
+
+[artifacts]
+- docs/audit/phase7za/20250918T232418Z/violations.csv
+- docs/audit/phase7za/20250918T232418Z/violations_rule_histogram.tsv
+- docs/audit/phase7za/20250918T232418Z/violations_file_histogram.tsv
+- docs/audit/phase7za/20250918T232418Z/redaction_queue.tsv
