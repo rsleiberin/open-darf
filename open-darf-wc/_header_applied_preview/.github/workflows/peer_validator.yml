@@ -1,0 +1,70 @@
+# DO NOT COMMIT THIS FILE — PREVIEW OF PROPOSED HEADER
+# Header: Purpose
+# One or two plain sentences describing what this file does and who runs it.
+
+# Header: Inputs
+# - Environment variables / CLI flags
+# - External services called (if any)
+
+# Header: Outputs
+# - Files/receipts generated
+# - Network side effects (ports/endpoints touched)
+
+# Header: Data Flow
+# Source → Transform/Validation → Sink (mention receipts directory)
+
+# Header: Failure Modes & Recovery
+# Common errors, detection cues, and operator actions.
+
+# Header: Idempotence & Teardown
+# What is safe to re-run; cleanup behavior.
+
+# Header: Security & Privacy Notes
+# Sensitive ops (if any). Stays local unless explicit user consent for publishing evidence.
+
+name: Open-DARF Peer Validator (Evidence)
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/**'
+      - 'docker-compose.yml'
+      - 'docs/**'
+      - '.github/workflows/peer_validator.yml'
+
+jobs:
+  validate-linux:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Docker info
+        run: |
+          docker --version
+          docker compose version || docker-compose --version
+
+      - name: Bring up DBs + clean Neo4j + evidence (Linux one-liner)
+        run: |
+          chmod +x scripts/run.sh || true
+          bash ./scripts/run.sh
+
+      - name: Validator acceptance (bounded)
+        run: |
+          chmod +x scripts/validator_acceptance.sh || true
+          bash ./scripts/validator_acceptance.sh
+
+      - name: Publish latest evidence manifest
+        run: |
+          chmod +x scripts/ci_evidence.sh || true
+          bash ./scripts/ci_evidence.sh
+
+      - name: Upload results (artifacts)
+        uses: actions/upload-artifact@v4
+        with:
+          name: open-darf-results
+          path: |
+            results/**
+          if-no-files-found: ignore

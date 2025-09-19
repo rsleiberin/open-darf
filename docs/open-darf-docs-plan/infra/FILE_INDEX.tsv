@@ -1,0 +1,3 @@
+path	type	size_bytes	git_tracked	status	source	notes
+path	type	size_bytes	git_tracked	status	source	notes
+open-darf-wc/infra/postgres/init/001-audit-schema.sql	sql	282	1	clean	upstream	

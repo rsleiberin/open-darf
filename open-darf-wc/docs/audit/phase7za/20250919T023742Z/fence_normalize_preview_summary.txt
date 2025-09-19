@@ -1,0 +1,9 @@
+Open-DARF — Fence Normalization PREVIEW @ 20250919T023742Z
+Docs scanned: 8
+Docs changed (preview): 0
+Apply list: open-darf-wc/docs/audit/phase7za/20250919T023742Z/fence_normalize_apply_list.tsv
+Fence guard rc on preview: 0 (log: open-darf-wc/docs/audit/phase7za/20250919T023742Z/preview_guard_doc_fences.out)
+
+Next (on approval):
+  For each row in apply list, replace the real file with its preview counterpart.
+  Then re-run guards in open-darf-wc/scripts/ci/.

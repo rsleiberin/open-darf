@@ -1,0 +1,19 @@
+Phase 7ZA — Scoped to open-darf-wc (20250919T013923Z)
+root: /home/tank/darf-source
+subrepo: /home/tank/darf-source/open-darf-wc
+
+[counts]
+- tracked: 44
+- text_like: 44
+- violations: 0
+
+[top rules]
+
+[top files]
+
+[artifacts]
+- open-darf-wc/docs/audit/phase7za/20250919T013922Z/classification.tsv
+- open-darf-wc/docs/audit/phase7za/20250919T013922Z/violations.csv
+- open-darf-wc/docs/audit/phase7za/20250919T013922Z/violations_rule_histogram.tsv
+- open-darf-wc/docs/audit/phase7za/20250919T013922Z/violations_file_histogram.tsv
+- open-darf-wc/docs/audit/phase7za/20250919T013922Z/redaction_queue.tsv

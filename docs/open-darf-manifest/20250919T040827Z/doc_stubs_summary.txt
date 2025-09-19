@@ -1,0 +1,2 @@
+Per-directory stubs generated: 11
+Docs plan: docs/open-darf-docs-plan/INDEX.md
