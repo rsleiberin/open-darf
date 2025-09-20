@@ -1,0 +1,9 @@
+{
+  "A1_scripts_audit": "done",
+  "A2_compose_env": "done",
+  "A3_docs_polish": "done",
+  "F1_release_sync": "done",
+  "E1_security_gate": "pass",
+  "E2_professional_gate": "pass",
+  "notes": "E1 ignores env-referenced RHS (\${...}) and .env* files; only literal assignments count as violations."
+}

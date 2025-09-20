@@ -1,0 +1,25 @@
+services:
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: darf_minio
+      MINIO_ROOT_PASSWORD: darf_minio_password
+    ports:
+      - "9010:9000"
+      - "9110:9001"
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: darf_user
+      POSTGRES_PASSWORD: darf_password
+      POSTGRES_DB: darf_audit
+    # no host port mapping needed; we exec into the container for readiness
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U 15162POSTGRES_USER -d 15162POSTGRES_DB"]
+      interval: 3s
+      timeout: 2s
+      retries: 20
+    restart: unless-stopped

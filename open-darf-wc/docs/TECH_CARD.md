@@ -1,22 +1,28 @@
-# Open-DARF — Technical Card
+# Tech Card — Open-DARF
 
-## Assumptions & Invariants
-- Docker 24+, Compose V2; host can resolve `localhost`.
-- Default ports (5432, 6379, 6333/6334, 7474/7687, 9000/9001) available.
+## Topology
+- Local Docker Compose stack
+- Graph database service
+- Object storage or filesystem evidence sink
+- Scripted health checks and validation routines
 
-## Interfaces
-- Postgres: `5432`, Neo4j: `7474/7687`, Redis: `6379`, Qdrant: `6333/6334`, MinIO: `9000/9001`.
+## Configuration
+- All secrets via environment variables in `.env`
+- Compose references variables only (no inline credentials)
+- Example placeholders live in `.env.sample`
 
-## Receipts
-- Run artifacts collected under `docs/audit/<phase>/<timestamp>` (text, tsv, json).
+## Operational Scripts
+- `install.*` and `install_and_run.*` — bootstrap flows
+- `run.*` — bring services up in the right order
+- `health_wait.*` — wait for service readiness
+- `validate.*` and `validator_acceptance.*` — smoke and acceptance checks
 
-## Error Model
-- Non-zero exit status on compose/service failure.
-- Healthchecks where supported; otherwise scripts poll HTTP/TCP.
+## Security Notes
+- No hardcoded credentials in scripts
+- Ignore lists prevent committing local artifacts and audit previews
+- Infra seed content may be vendor-managed and excluded from public syncs
 
-## Security
-- Secrets via `.env` only; `.env.sample` ships with placeholders.
-- No network egress required for normal operation (image pulls excepted).
-
-## Teardown
-- `docker compose down -v` removes containers and volumes.
+## Maintenance
+- Keep Docker images updated
+- Periodically rotate credentials in `.env`
+- Re-run validation after dependency upgrades

@@ -20,7 +20,7 @@ Start-Heartbeat "docker run neo4j clean"
 docker run -d --name darf-neo4j --network open-darf_default --network-alias neo4j `
   -p 7474:7474 -p 7687:7687 `
   -v open-darf_neo4j_data:/data -v open-darf_neo4j_logs:/logs `
-  -e NEO4J_AUTH=neo4j/darf_graph_password neo4j:5.15-community | Out-Null
+  -e NEO4J_AUTH=$( $env:NEO4J_USERNAME + '/' + $env:NEO4J_PASSWORD ) neo4j:5.15-community | Out-Null
 Stop-Heartbeat
 
 # Bounded probe

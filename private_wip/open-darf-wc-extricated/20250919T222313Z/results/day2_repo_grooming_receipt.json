@@ -1,0 +1,10 @@
+{
+  "ts": "2025-09-17T18:03:01-05:00",
+  "artifacts": {
+    "readme": "/home/tank/darf-source/open-darf-wc/README.md",
+    "kill_switch_linux": "/home/tank/darf-source/open-darf-wc/scripts/kill_switch.sh",
+    "kill_switch_windows": "/home/tank/darf-source/open-darf-wc/scripts/kill_switch.ps1",
+    "port_inspector": "/home/tank/darf-source/open-darf-wc/scripts/check_ports.sh",
+    "validator_linux": "/home/tank/darf-source/open-darf-wc/scripts/validator_acceptance.sh"
+  }
+}

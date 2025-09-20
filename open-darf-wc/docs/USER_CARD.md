@@ -1,20 +1,27 @@
-# Open-DARF Peer Validator — Quick Start (90-Second Card)
+# User Card — Open-DARF
 
-**What you’ll do**
-- Ensure Docker Desktop (Windows) / Docker Engine (Linux) is running.
-- Copy `.env.sample` to `.env` and set your local passwords (they stay on your machine).
-- Start databases (Postgres/Redis/Qdrant/Neo4j/MinIO) with a single command.
+## Who This Is For
+Operators who want a clean local environment to validate data/graph workflows with security-conscious defaults.
 
-**What you’ll see**
-- Docker pulls images (first run), then shows healthy containers.
-- A local evidence/receipts folder appears under `docs/audit/…`.
+## Prerequisites
+- Docker and Docker Compose
+- Bash (Linux/macOS) or PowerShell (Windows)
+- Ability to set environment variables in a local `.env` file
 
-**If something fails**
-- Re-run the start command.
-- Check `docs/audit/…/summary.txt` for hints.
-- If a port conflict occurs, stop other apps using those ports.
+## Install (Linux)
+1. Review `.env.sample`, then create `.env` with your values.
+2. Run `./start.sh`.
+3. Verify services with `./scripts/health_wait.sh`.
 
-**Stop / Clean up**
-- Use the provided stop script or `docker compose down` in this folder.
+## Install (Windows PowerShell)
+1. Review `.env.sample`, then create `.env` with your values.
+2. Run `./START.ps1`.
+3. Verify services with `./scripts/health_wait.ps1`.
 
-> Privacy note: This project runs locally. Nothing is uploaded unless you explicitly choose to publish evidence.
+## Common Tasks
+- Start services: run script for your platform.
+- Validate suite: `./scripts/validate.sh` or `./scripts/validate.ps1`.
+- Stop services: `./scripts/kill_switch.sh` or `./scripts/kill_switch.ps1`.
+
+## Support
+If something fails to start, check Docker logs and ensure all required environment variables in `.env` are set.

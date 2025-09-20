@@ -1,0 +1,16 @@
+Open-DARF — PR Plan (Preview Header Insertion) @ 20250919T021006Z
+
+Scope: Insert standardized comment headers into 31 files (mirror preview created under:
+  open-darf-wc/_header_applied_preview)
+
+Steps (when approved):
+1) For each 'added_preview' entry in /home/tank/darf-source/open-darf-wc/docs/audit/phase7za/20250919T021006Z/header_apply_list.tsv, prepend the header block to the real file.
+2) Re-run local guards:
+   - open-darf-wc/scripts/ci/guard_comment_headers.sh
+   - open-darf-wc/scripts/ci/guard_doc_fences.sh
+3) Commit with: chore(open-darf-wc): add standard headers to scripts/yaml (7ZA)
+4) Link receipts: open-darf-wc/docs/audit/phase7za/20250919T021006Z/header_apply_list.tsv, open-darf-wc/docs/audit/phase7za/20250919T021006Z/preview_header_check.tsv
+
+Notes:
+- This PR contains ONLY header comments; no logic changes.
+- No network checks are run to respect low-activity constraints.

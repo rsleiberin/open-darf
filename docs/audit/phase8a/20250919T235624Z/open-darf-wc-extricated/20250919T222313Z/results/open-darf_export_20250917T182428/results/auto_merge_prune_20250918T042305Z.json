@@ -1,0 +1,12 @@
+{
+  "timestamp":"20250918T042305Z",
+  "repo":"rsleiberin/open-darf",
+  "merged_or_deleted":[
+  ],
+  "left_for_manual":[
+    "phase7y/public-peer-ready (manual merge likely required)",
+    "polish/final-pass (manual merge likely required)",
+    "polish/quickstart-ports (manual merge likely required)",
+    "merge/main/public-peer-ready-20250917T184636 (manual merge likely required)"
+  ]
+}

@@ -1,0 +1,6 @@
+Open-DARF (scoped) — 7ZA DRY-RUN Summary @ 20250919T015953Z
+Tracked text files: 44
+Header candidates:  0
+Coverage JSON:      open-darf-wc/docs/audit/phase7za/20250919T015953Z/comment_coverage.json
+Redaction map:      open-darf-wc/docs/audit/phase7za/20250919T015953Z/redaction_map.tsv
+CI guards path:     open-darf-wc/scripts/ci

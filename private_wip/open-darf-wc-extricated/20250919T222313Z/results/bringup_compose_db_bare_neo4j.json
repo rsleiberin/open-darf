@@ -1,0 +1,5 @@
+{
+  "ts": "2025-09-17T17:18:42-05:00",
+  "bringup_all_good": true,
+  "mode": "compose-db + bare-neo4j"
+}

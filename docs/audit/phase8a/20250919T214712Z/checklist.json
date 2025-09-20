@@ -1,0 +1,9 @@
+{
+  "A1_scripts_audit": "in_progress",
+  "A2_compose_env": "done",
+  "A3_docs_polish": "done",
+  "F1_release_sync": "in_progress",
+  "E1_security_gate": "pass",
+  "E2_professional_gate": "pass",
+  "notes": "Local .env treated as allowed; samples present only in .env.sample/.env.example"
+}

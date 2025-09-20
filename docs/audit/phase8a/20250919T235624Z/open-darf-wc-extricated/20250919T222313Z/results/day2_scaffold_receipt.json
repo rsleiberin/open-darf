@@ -1,0 +1,12 @@
+{
+  "ts": "2025-09-17T18:00:18-05:00",
+  "day2_docs": [
+    "docs/compose_vs_bare_neo4j.md",
+    "docs/peer_validator_onboarding.md"
+  ],
+  "suite": [
+    "scripts/validator_acceptance.sh",
+    "scripts/validator_acceptance.ps1",
+    "scripts/run_validator_suite.sh"
+  ]
+}

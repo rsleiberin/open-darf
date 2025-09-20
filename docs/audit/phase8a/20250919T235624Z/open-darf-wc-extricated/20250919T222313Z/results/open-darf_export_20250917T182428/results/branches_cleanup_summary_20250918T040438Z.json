@@ -1,0 +1,8 @@
+{
+  "timestamp": "20250918T040438Z",
+  "repos": {
+    "darf_source": "rsleiberin/darf-source",
+    "open_darf": "rsleiberin/open-darf"
+  },
+  "notes": "Attempted auto-merge of PR branches; deleted branches already contained in main; created PRs where needed."
+}

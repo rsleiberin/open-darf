@@ -16,3 +16,10 @@ __pycache__/
 Thumbs.db
 .env.local
 /var/
+_header_applied_preview/
+_fence_normalized_preview/
+docs/audit/
+docs/handoff/
+scripts/ci/
+infra/neo4j/init/
+private_wip/

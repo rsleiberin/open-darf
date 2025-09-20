@@ -1,0 +1,23 @@
+# Header: Purpose
+# One or two plain sentences: what this file does and who runs it.
+
+# Header: Inputs
+# - Environment variables
+# - CLI flags / parameters
+# - External services called
+
+# Header: Outputs
+# - Files/receipts generated
+# - Network side effects (ports, endpoints touched)
+
+# Header: Data Flow
+# Source → Transform/Validation → Sink (mention receipts)
+
+# Header: Failure Modes & Recovery
+# Common errors, detection, and quick remediation tips.
+
+# Header: Idempotence & Teardown
+# What’s safe to re-run; cleanup behavior.
+
+# Header: Security & Privacy Notes
+# Sensitive ops (if any). Stays local unless explicit consent to push evidence.
