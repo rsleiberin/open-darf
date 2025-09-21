@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+issues=0
+while IFS= read -r -d '' f; do
+  in_fence=0
+  lineno=0
+  while IFS= read -r line || [ -n "$line" ]; do
+    lineno=$((lineno+1))
+    if [[ "$line" =~ ^\`\`\` ]]; then
+      in_fence=$((1-in_fence))
+      continue
+    fi
+    if (( in_fence == 1 )) && [[ "$line" == *'```'* ]]; then
+      echo "[lint] Nested fence in $f:$lineno"
+      issues=1
+    fi
+  done < "$f"
+done < <(find . -type f -name "*.md" -print0)
+[ "$issues" -eq 0 ] && echo "[lint] Markdown fence policy OK." || { echo "[lint] Violations found."; exit 2; }

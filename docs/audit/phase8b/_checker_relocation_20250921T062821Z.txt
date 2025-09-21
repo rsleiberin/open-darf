@@ -1,0 +1,3 @@
+Checker relocated from: /home/tank/open-darf-wc/scripts/internal/contamination_check.sh
+To private path       : /home/tank/darf-source/tools/public_checks/contamination_check.sh
+Timestamp (UTC)       : 20250921T062821Z
