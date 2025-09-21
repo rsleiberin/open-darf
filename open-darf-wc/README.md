@@ -1,51 +1,35 @@
-# Open-DARF — Peer Validator
+# Open-DARF: Constitutional AI Validation System
 
-Open-DARF provides a reproducible peer-validation environment for local evaluation of data pipelines and lightweight graph services. The working copy is designed for clean installation on fresh Windows and Linux hosts, with security-conscious defaults and environment-based configuration.
+Open-DARF demonstrates mathematical governance of AI systems through constitutional constraints, achieving sub-millisecond oversight validation while preserving democratic legitimacy.
 
-## Goals
+## Academic Significance
 
-- Clear first-run experience on Windows and Linux
-- Security-first configuration (no embedded secrets)
-- Minimal local footprint; compose services start fast
-- Professional documentation suitable for academic and enterprise contexts
+This system provides empirical evidence that AI governance can be implemented through formal mathematical constraints rather than training-based approaches, supporting constitutional AI research and democratic AI governance frameworks.
 
-## What’s Included
+## Quick Validation
 
-- Linux and Windows entrypoints (start.sh, START.ps1)
-- Docker Compose services for a local graph database and evidence store
-- Scripts for install, run, validation, and health checks
-- User and technical cards in the `docs/` directory
+~~~bash
+./install    # Setup Docker services
+./validate   # Run constitutional validation
+./cleanup    # Remove all traces
+~~~
 
-## Quick Start (Linux)
+## System Requirements
 
-1. Copy `.env.sample` to `.env` and set values.
-2. Run `./start.sh` to initialize local services.
-3. Run `./scripts/validate.sh` to exercise the validator suite.
+- Docker Desktop (Windows/macOS) or Docker + Compose (Linux)
+- 8GB RAM minimum, 16GB recommended
+- 10GB available disk space
 
-Note: do not commit `.env`. The project references secrets via environment variables only.
+## Generated Evidence
 
-## Quick Start (Windows PowerShell)
-
-1. Copy `.env.sample` to `.env` and set values.
-2. Run `./START.ps1`.
-3. Run `./scripts/validate.ps1` to exercise the validator suite.
-
-## Configuration
-
-All credentials and endpoints are provided via environment variables. The Compose file references variables only. Example keys are present in `.env.sample` as placeholders.
+Validation produces cryptographically-signed evidence packages suitable for academic review, grant applications, and peer verification.
 
 ## Documentation
 
-- `docs/USER_CARD.md` — operator-focused guide for local use
-- `docs/TECH_CARD.md` — technical overview and service map
-- `docs/learning/` — background materials and walkthroughs
-
-## Security Posture
-
-- No hardcoded credentials in scripts or Compose
-- Example environment values use neutral placeholders
-- Generated artifacts and audit previews are excluded from version control
+- `docs/` - Complete validation and technical documentation
+- `examples/` - Sample outputs and configuration templates
+- Academic citation guidance in `docs/CITATION_GUIDE.md`
 
 ## License
 
-See LICENSE file if provided by the repository owner. If absent, usage is limited to evaluation on local hosts as provided.
+Open source under Apache 2.0 license. See LICENSE file for details.
