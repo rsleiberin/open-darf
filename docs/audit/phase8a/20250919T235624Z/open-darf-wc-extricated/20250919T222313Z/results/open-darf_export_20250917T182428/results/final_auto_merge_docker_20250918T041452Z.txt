@@ -1,5 +1,0 @@
-NAMES                                         STATUS                    PORTS
-darf-neo4j                                    Up 52 minutes             7473/tcp, 0.0.0.0:49165->7474/tcp, 0.0.0.0:49164->7687/tcp
-darf-qdrant-bare                              Up 52 minutes             6334/tcp, 0.0.0.0:49163->6333/tcp
-open-darf_export_20250917t182428-minio-1      Up 52 minutes             0.0.0.0:49162->9000/tcp, 0.0.0.0:49161->9001/tcp
-open-darf_export_20250917t182428-postgres-1   Up 52 minutes (healthy)   5432/tcp

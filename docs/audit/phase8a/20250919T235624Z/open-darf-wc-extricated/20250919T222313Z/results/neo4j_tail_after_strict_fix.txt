@@ -1,2 +1,0 @@
-Failed to read config: Unrecognized setting. No declared setting with name: server_config_strict.validation_enabled. Cleanup the config or disable 'server.config.strict_validation.enabled' to continue.
-Run with '--verbose' for a more detailed error message.

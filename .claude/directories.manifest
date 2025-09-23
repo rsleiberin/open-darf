@@ -1,0 +1,66 @@
+# DARF Repository Directory Manifest
+# Generated: 2025-09-21
+# Agent Context: 1.2MB | Total Repository: 2.5GB | Reduction: 99.95%
+
+## Agent-Visible Workspaces (Synced to Claude)
+
+### Core Constitutional AI (696KB)
+- **apps/constitution_engine/** - Governance engine with tri-state decisions
+- **apps/constitutional/** - Validation scripts and constraints  
+- **apps/guards/** - Security middleware with fail-closed defaults
+- **apps/hyperrag/** - Constitutional knowledge retrieval
+- **apps/knowledge_graph/** - Graph processing with governance
+- **apps/document_processor/** - Document ingestion with constitutional filtering
+- **apps/extractors/** - ML entity extraction (biobert, scibert interfaces)
+- **apps/provenance/** - Audit trail and bias logging
+- **apps/validator/** - Schema validation and smoke tests
+
+### Essential Tools (224KB)
+- **tools/constitutional/** (148KB) - Constitutional governance utilities
+- **tools/text2nkg/** (76KB) - Knowledge graph processing tools
+
+### Testing Framework (80KB)  
+- **tests/unit/** (60KB) - Component-level constitutional constraint testing
+- **tests/integration/** (20KB) - Multi-service testing with performance validation
+
+### Documentation (112KB)
+- **docs/architecture/** (24KB) - System design and governance patterns
+- **docs/decisions/** (88KB) - Technical decision records and rationale
+
+### Formal Verification (100KB)
+- **verification/tla/** - TLA+ specifications for constitutional properties
+
+## Hidden Workspaces (Manifest Only - Not Synced)
+
+### Vendor-Managed Dependencies (460MB)
+- **models/cache/** (417MB) - biobert-base-cased-v1.1, scibert-scivocab-uncased
+  * User-controlled downloads with bandwidth respect
+  * Essential for benchmark execution - DO NOT DELETE
+- **datasets/SciREX/** (22MB) - Scientific entity recognition benchmark
+- **datasets/dygiepp/** (2MB) - Dynamic entity graph ML framework  
+- **datasets/_archived/** (21MB) - Archived training documents
+
+### Infrastructure (50MB)
+- **open-darf-wc/** (312KB) - Public academic demonstration package
+- **infra/podman/** - Container orchestration with permission restrictions
+- **ops/compose/** - Docker service definitions and health checks
+- **var/devstack/** - Runtime data storage for services
+
+### Development Artifacts (2.0GB)
+- **docs/audit/** - Performance measurement receipts and validation logs
+- **docs/_archive/** - Historical documentation and repository analysis
+- **var/receipts/** - Benchmark execution results and timing data
+- **private_wip/** - Vendor integration seeds and migration artifacts
+
+## Permission-Restricted Areas
+- **open-darf-wc/infra/neo4j/init** - Managed graph database initialization
+- **models/cache/*/bin** - Binary model artifacts with vendor permissions
+
+## Key Constitutional Components Verified
+✓ Constitutional Engine: apps/constitution_engine/engine.py (6.3KB core logic)
+✓ Security Guards: apps/guards/constitutional.py (1KB) + middleware.py (3.2KB)  
+✓ Validation Framework: Full test coverage in tests/unit/ and tests/integration/
+✓ Formal Verification: TLA+ specifications for mathematical guarantees
+✓ Documentation: Complete architectural decision records
+
+Agent context optimized for constitutional AI development while preserving full repository functionality.

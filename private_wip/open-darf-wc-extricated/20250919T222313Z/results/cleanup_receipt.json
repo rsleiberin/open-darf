@@ -1,5 +1,0 @@
-{
-  "ts": "2025-09-17T17:15:50-05:00",
-  "action": "kill_switch_cleanup",
-  "notes": "containers removed; networks cleaned; volumes preserved unless PRUNE_VOLUMES=1"
-}

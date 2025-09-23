@@ -31,4 +31,4 @@ jobs:
           mkdir -p configs
           cp configs/.env.sample configs/.env.local
       - name: Run config validation
-        run: python scripts/config_validate.py
+        run: PYTHONPATH=. python scripts/config_validate.py

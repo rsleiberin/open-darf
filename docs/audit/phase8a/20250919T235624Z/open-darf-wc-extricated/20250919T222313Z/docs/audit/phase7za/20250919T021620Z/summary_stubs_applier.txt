@@ -1,6 +1,0 @@
-Open-DARF 7ZA — stubs & applier @ 20250919T021620Z
-- User card: open-darf-wc/docs/USER_CARD.md
-- Tech card: open-darf-wc/docs/TECH_CARD.md
-- Applier:   open-darf-wc/tools/apply_headers.sh
-- Preview:   open-darf-wc/_header_applied_preview
-- Apply list:open-darf-wc/docs/audit/phase7za/20250919T021006Z/header_apply_list.tsv

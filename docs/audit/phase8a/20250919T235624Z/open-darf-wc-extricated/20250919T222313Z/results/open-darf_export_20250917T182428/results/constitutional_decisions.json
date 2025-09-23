@@ -1,9 +1,0 @@
-{
-  "decisions": {
-    "sovereignty_preservation": 0.98,
-    "audit_trail_completeness": 0.99,
-    "edge_case_success": 0.95,
-    "consensus_time_ms": 150
-  },
-  "timestamp": 1757459898.1900015
-}

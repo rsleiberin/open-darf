@@ -1,3 +1,0 @@
-A3 dataset wiring complete @ 20250916T231524Z
-Datasets registered: scierc, biored
-MinIO port: 9010 | Qdrant port: 6333 | Neo4j bolt: 7787 | Postgres: 5540

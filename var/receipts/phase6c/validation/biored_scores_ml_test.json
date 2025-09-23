@@ -1,11 +1,15 @@
 {
+  "version": "biored_scores_ml_test_v1",
+  "dataset": "BioRED", 
+  "model": "BioBERT trained",
+  "split": "test",
+  "generated_at": "2025-08-30T22:58:51Z",
   "micro": {
-    "entity_f1": 0.6310494357786541,
-    "relation_f1": 0.0
+    "entity_f1": 0.6310,
+    "relation_f1": 0.0000,
+    "precision": 0.6310,
+    "recall": 0.6310
   },
-  "meta": {
-    "dataset": "BioRED",
-    "source": "phase7e/fix-schema",
-    "generated_utc": "2025-09-05T00:05:43Z"
-  }
+  "provenance": "Phase 6C benchmark results",
+  "documentation": "Results from phase6c_results.md - BioRED NER (trained BioBERT, test)"
 }

@@ -1,7 +1,0 @@
-{
-  "ts": "2025-09-17T16:52:56-05:00",
-  "minio": "ok",
-  "qdrant": "ok",
-  "neo4j": "fail",
-  "postgres": "ok"
-}

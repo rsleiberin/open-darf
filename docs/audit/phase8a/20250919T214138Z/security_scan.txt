@@ -1,7 +1,0 @@
-# Credential-like patterns (outside ignored/vendor)
-./.env.sample:3:MINIO_ROOT_PASSWORD=change_me_minio
-./.env.sample:7:POSTGRES_PASSWORD=change_me_pg
-./.env.example:3:MINIO_ROOT_PASSWORD=change_me_minio
-./.env.example:17:POSTGRES_PASSWORD=change_me_pg
-./.env:3:MINIO_ROOT_PASSWORD=darf_secure_password
-./.env:17:POSTGRES_PASSWORD=darf_audit_password

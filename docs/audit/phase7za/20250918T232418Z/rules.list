@@ -1,7 +1,0 @@
-internal_phase_refs:::Phase 7[A-Z]
-agent_terms:::(Implementation Agent|Architect handoff|architect handoff|handoff)
-personal_identifiers:::rsleiberin
-triple_backticks_in_docs:::^```
-todo_fixme:::(TODO|FIXME)
-secrets_like:::(AWS_(ACCESS|SECRET)_KEY|SECRET_KEY|PASSWORD=|MINIO_ROOT_PASSWORD|NEO4J_AUTH|POSTGRES_PASSWORD)
-multi_agent_exposure:::(multi-?agent|agentic framework|context contamination|degradation)

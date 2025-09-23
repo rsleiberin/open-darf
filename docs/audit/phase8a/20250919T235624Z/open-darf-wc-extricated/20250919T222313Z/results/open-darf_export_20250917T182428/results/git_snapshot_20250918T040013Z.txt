@@ -1,4 +1,0 @@
-darf-source @ f862fcd (main)
-open-darf  @ 6630b6a (main)
-tags: v7Y-day1_3-20250918T040013Z | v7Y-open-darf-peer-ready-20250918T040013Z
-polish PR: https://github.com/rsleiberin/open-darf/compare/main...polish/final-pass?expand=1

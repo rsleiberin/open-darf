@@ -1,7 +1,0 @@
-DARF Phase 7W — A2 Rule-Eval v1
-timestamp_utc: 2025-09-16T21:09:03+00:00
-neo4j_bolt: 7787
-postgres: 5540
-qdrant: 6333
-minio: 9010
-engine: /home/tank/darf-source/apps/constitutional/engine_v1.sh

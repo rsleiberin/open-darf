@@ -1,5 +1,0 @@
-To apply headers (on approval):
-  bash open-darf-wc/tools/apply_headers.sh open-darf-wc/_header_applied_preview header_apply_list.tsv
-
-Latest apply list:
-  /home/tank/darf-source/open-darf-wc/docs/audit/phase7za/20250919T021006Z/header_apply_list.tsv

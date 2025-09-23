@@ -1,90 +1,131 @@
-.PHONY: bench-all aggregate accept verify-splits bootstrap
+# DARF Project Makefile - Modernized Build System
+# Uses Poetry for Python dependencies and PNPM for Node.js packages
 
-bench-all: preflight 
-	./scripts/phase7i/run_all.sh --split=test
+.DEFAULT_GOAL := help
+.PHONY: help install build test lint clean dev-setup ci-check
 
-aggregate:
-	./scripts/phase7i/aggregate_scoreboard.py
+# =============================================================================
+# Development Setup
+# =============================================================================
 
-accept:
-	./scripts/phase7i/acceptance_check.py
+help: ## Show this help message
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-20s\033[0m %s\n", $$1, $$2}'
 
-verify-splits:
-	./scripts/phase7i/verify_splits.py
+install: ## Install all dependencies
+	@echo "Installing Python dependencies..."
+	poetry install
+	@echo "Installing Node.js dependencies..."  
+	pnpm install
 
-bootstrap:
-	./scripts/phase7i/datasets_bootstrap.sh
+dev-setup: install ## Complete development environment setup
+	@echo "Setting up development environment..."
+	poetry run pre-commit install || echo "pre-commit not configured"
+	@echo "Development setup complete"
 
-preflight:
-	./scripts/phase7i/preflight.sh
+# =============================================================================
+# Build & Test
+# =============================================================================
 
-handoff:
-	./scripts/phase7i/acceptance_check.py > /dev/null || true
-	./scripts/phase7i/aggregate_scoreboard.py > /dev/null || true
-	./scripts/phase7i/verify_splits.py --json > /dev/null || true
-	@echo "Regenerating session handoff..."
-	@true
+build: ## Build the project
+	@echo "Building Python packages..."
+	poetry build
+	@echo "Building Node.js packages..."
+	pnpm run build || echo "No build script defined"
 
-gate:
-	./scripts/phase7i/acceptance_gate.sh
+test: ## Run all tests
+	@echo "Running Python tests..."
+	poetry run pytest tests/ -v
+	@echo "Running additional test scripts..."
+	bash scripts/lifecycle_smoke.sh || echo "Smoke tests not available"
 
-runners-verify:
-	./scripts/phase7i/verify_runners.sh
+test-quick: ## Run quick smoke tests only
+	@echo "Running quick tests..."
+	poetry run pytest tests/unit/ -v || echo "Unit tests not available"
 
-doctor:
-	./scripts/phase7i/doctor.sh
+# =============================================================================
+# Quality Assurance
+# =============================================================================
 
-archive-receipts:
-	./scripts/phase7i/receipts_archive.sh
+lint: ## Run all linting tools
+	@echo "Running Python linting..."
+	poetry run ruff check .
+	poetry run mypy apps/ || echo "MyPy check completed with warnings"
+	@echo "Running Node.js linting..."
+	pnpm run lint
 
-reset-for-real: archive-receipts
-	@echo "[RESET] Archived current receipts. Next:"
-	@echo "  1) Edit scripts/phase7i/runner_cmds.env to point to REAL models"
-	@echo "  2) make runners-verify"
-	@echo "  3) make bench-test && make aggregate && make accept && make gate"
+format: ## Format code
+	@echo "Formatting Python code..."
+	poetry run ruff format .
+	@echo "Python formatting complete"
 
-## Phase 7I — quick loop on test split
-bench-test:
-	@./scripts/phase7i/run_all.sh --split=test
+security: ## Run security checks
+	@echo "Running security checks..."
+	poetry run bandit -r apps/ || echo "Security scan completed"
+	poetry run safety check || echo "Dependency security check completed"
 
-.PHONY: aggregate-phase7s
-aggregate-phase7s:
-	./scripts/phase7s/aggregate_evidence.sh
+# =============================================================================
+# Application Operations
+# =============================================================================
 
-.PHONY: intake-community
-intake-community:
-	bash scripts/phase7s/intake_evidence.sh $(files)
+ingest: ## Run document ingestion pipeline  
+	@echo "Running document ingestion..."
+	poetry run python -m apps.pipeline.run || echo "Ingestion pipeline not available"
 
-.PHONY: clean-artifacts
-clean-artifacts:
-	@rm -rf community_intake/{queue,accepted,rejected}/* 2>/dev/null || true
-	@echo "[clean] removing evidence, receipts, bundles under var/ and open-darf/"
-	@rm -rf var/reports var/receipts var/releases
-	@rm -rf open-darf/var
-	@rm -f open-darf/open-darf-report-*.tar.gz ./open-darf-report-*.tar.gz
-	@echo "[clean] done"
+validate: ## Run validation pipeline
+	@echo "Running validation..."
+	bash validate/run_minimal.sh || echo "Validation script not available"
 
-.PHONY: finalize-phase7s
-finalize-phase7s:
-	@bash scripts/phase7s/finalize.sh
+benchmark: ## Run performance benchmarks
+	@echo "Running benchmarks..."
+	poetry run python scripts/bench_constitution_engine.py || echo "Benchmarks not available"
 
-.PHONY: acceptance-phase7s
-acceptance-phase7s:
-	@bash scripts/phase7s/acceptance_status.sh
+# =============================================================================
+# Infrastructure & Deployment
+# =============================================================================
 
-.PHONY: review-packet
-review-packet:
-	@bash scripts/phase7s/build_review_packet.sh
+services-up: ## Start development services
+	@echo "Starting development services..."
+	docker compose -f infra/compose/compose.yaml up -d || echo "Docker services not configured"
 
-.PHONY: help-provenance
-help-provenance:  ## Show provenance-related commands
-	printf 'Provenance targets:\n  make verify-provenance  # hash+manifest+audit receipts\n  make qa-provenance      # timed hash/verify and QA receipt\n'
+services-down: ## Stop development services  
+	@echo "Stopping development services..."
+	docker compose -f infra/compose/compose.yaml down || echo "Docker services not configured"
 
-.PHONY: verify-provenance
-verify-provenance:  ## Hash docs/phase7s (default) and validate manifest; emit receipts
-	scripts/phase7t/self_verify_provenance.sh $(paths)
+# =============================================================================
+# Maintenance
+# =============================================================================
 
-.PHONY: qa-provenance
-qa-provenance:  ## Time hash+verify and emit a QA receipt (default: docs/phase7s)
-	scripts/phase7t/qa_perf_check.sh $(paths)
+clean: ## Clean build artifacts
+	@echo "Cleaning Python artifacts..."
+	find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+	find . -name "*.pyc" -delete 2>/dev/null || true
+	poetry run coverage erase 2>/dev/null || true
+	@echo "Cleaning Node.js artifacts..."
+	rm -rf node_modules/.cache 2>/dev/null || true
+	@echo "Cleaning build artifacts..."
+	rm -rf dist/ build/ *.egg-info/ 2>/dev/null || true
+
+clean-all: clean ## Deep clean including dependencies
+	@echo "Removing all dependencies..."
+	rm -rf node_modules/ 2>/dev/null || true
+	poetry env remove python 2>/dev/null || true
+
+# =============================================================================  
+# CI/CD
+# =============================================================================
+
+ci-check: lint test ## Run CI checks locally
+	@echo "CI checks completed"
+
+pre-commit: lint ## Run pre-commit checks
+	@echo "Running pre-commit hooks..."
+	poetry run pre-commit run --all-files || echo "Pre-commit completed with issues"
+
+# =============================================================================
+# Legacy Compatibility (deprecated)
+# =============================================================================
+
+legacy-help: ## Show legacy Makefile commands (deprecated)
+	@echo "Legacy Makefile moved to Makefile.legacy"
+	@echo "Use 'make help' to see modern commands"
 

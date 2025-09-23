@@ -1,4 +1,4 @@
-from constitution_engine.prod_posture_guard import (
+from apps.constitution_engine.prod_posture_guard import (
     enforce as _enforce_prod_posture,
 )  # prod fail-closed
 

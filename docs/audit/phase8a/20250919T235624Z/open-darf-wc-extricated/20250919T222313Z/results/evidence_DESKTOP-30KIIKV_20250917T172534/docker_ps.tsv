@@ -1,4 +1,0 @@
-f741478f2bc7	neo4j:5.15-community	darf-neo4j	Up 7 minutes	0.0.0.0:7474->7474/tcp, 7473/tcp, 0.0.0.0:7687->7687/tcp
-941f3e1e0661	postgres:15-alpine	darf-postgres	Up 7 minutes (healthy)	0.0.0.0:5432->5432/tcp
-d36bd127b49a	qdrant/qdrant:latest	darf-qdrant	Up 7 minutes (unhealthy)	0.0.0.0:6333-6334->6333-6334/tcp
-3bfbe2e04a5b	minio/minio:latest	darf-minio	Up 7 minutes (healthy)	0.0.0.0:9000-9001->9000-9001/tcp

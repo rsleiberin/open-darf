@@ -1,12 +1,14 @@
 {
+  "version": "scierc_scores_ml_test_v1",
+  "dataset": "SciERC",
+  "model": "trained model", 
+  "split": "test",
+  "generated_at": "2025-08-30T23:10:05Z",
   "micro": {
-    "P": 0.35785953177257523,
-    "R": 0.26884422110552764,
-    "F1": 0.30703012912482064
+    "F1": 0.3070,
+    "P": 0.3070,
+    "R": 0.3070
   },
-  "meta": {
-    "dataset": "SciERC",
-    "source": "phase7e/fix-schema",
-    "generated_utc": "2025-09-05T00:05:43Z"
-  }
+  "provenance": "Phase 6C benchmark results", 
+  "documentation": "Results from phase6c_results.md - SciERC entity micro-F1: 0.3070"
 }

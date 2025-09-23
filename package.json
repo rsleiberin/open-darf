@@ -3,7 +3,11 @@
     "turbo": "^2.5.5"
   },
   "scripts": {
-    "lint": "echo lint-pass"
+    "lint": "echo 'Node.js lint placeholder'",
+    "build": "echo 'Node.js build placeholder'",
+    "test": "echo 'Node.js test placeholder'",
+    "dev": "make dev-setup",
+    "clean": "make clean"
   },
   "packageManager": "pnpm@8.15.9"
 }

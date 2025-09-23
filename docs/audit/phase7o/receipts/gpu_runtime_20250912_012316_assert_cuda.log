@@ -1,2 +1,0 @@
-Image: pytorch/pytorch:2.1.2-cuda12.1-cudnn8-runtime
-RESULT: PASS (CUDA asserted, quickcheck ran on GPU)

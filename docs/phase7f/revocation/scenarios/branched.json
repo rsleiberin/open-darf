@@ -1,6 +1,0 @@
-{
-  "name": "branched",
-  "edges":[["A","B"],["A","C"],["C","D"],["B","E"]],
-  "starts":["A"],
-  "expected_scope":["A","B","C","D","E"]
-}

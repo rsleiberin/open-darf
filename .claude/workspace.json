@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0.0",
+  "name": "DARF Constitutional AI",
+  "description": "Constitutional AI with sub-millisecond governance overhead",
+  "sync_strategy": "selective_workspace",
+  "agent_context_size_mb": 1.2,
+  "total_repository_size_gb": 2.5,
+  "context_reduction_percent": 99.95,
+  "workspaces": {
+    "core": {
+      "sync": true,
+      "paths": ["apps/"],
+      "size_kb": 696,
+      "description": "Core constitutional AI system - 27 modules"
+    },
+    "tools": {
+      "sync": true,
+      "paths": ["tools/constitutional/", "tools/text2nkg/"],
+      "size_kb": 224,
+      "description": "Constitutional governance and knowledge graph utilities"
+    },
+    "tests": {
+      "sync": true,
+      "paths": ["tests/unit/", "tests/integration/"],
+      "size_kb": 80,
+      "description": "Core testing framework"
+    },
+    "docs": {
+      "sync": true,
+      "paths": ["docs/architecture/", "docs/decisions/"],
+      "size_kb": 112,
+      "description": "System design and technical decisions"
+    },
+    "verification": {
+      "sync": true,
+      "paths": ["verification/tla/"],
+      "size_kb": 100,
+      "description": "Formal TLA+ specifications"
+    },
+    "vendors": {
+      "sync": false,
+      "paths": ["models/cache/", "datasets/"],
+      "size_mb": 460,
+      "description": "ML models (biobert, scibert) and research datasets - managed externally"
+    },
+    "infrastructure": {
+      "sync": false,
+      "paths": ["infra/", "ops/", "open-darf-wc/"],
+      "size_mb": 50,
+      "description": "Docker infrastructure and public demo package"
+    },
+    "artifacts": {
+      "sync": false,
+      "paths": ["docs/audit/", "var/", "private_wip/"],
+      "size_gb": 2.0,
+      "description": "Development artifacts, runtime data, and vendor seeds"
+    }
+  }
+}

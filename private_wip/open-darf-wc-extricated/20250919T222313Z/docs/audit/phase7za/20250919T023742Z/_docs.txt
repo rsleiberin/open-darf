@@ -1,8 +1,0 @@
-open-darf-wc/README.md
-open-darf-wc/docs/compose_vs_bare_neo4j.md
-open-darf-wc/docs/handoff/phase7y_handoff_impl_agent_7Y.md
-open-darf-wc/docs/learning/lesson_01_introduction.md
-open-darf-wc/docs/learning/lesson_02_docker_stack.md
-open-darf-wc/docs/learning/lesson_03_constitutional_ai.md
-open-darf-wc/docs/markdown_fences_policy.md
-open-darf-wc/docs/peer_validator_onboarding.md

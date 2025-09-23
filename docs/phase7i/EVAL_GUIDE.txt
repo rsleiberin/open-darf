@@ -1,6 +1,0 @@
-Phase 7I evaluation guide
-
-- Runner should write predictions to:
-  var/receipts/phase7i/<model>/<timestamp>/preds.json  (or preds.filtered.json)
-- Gold files are expected under data/<dataset>/<split>.jsonl or .json
-- Harness auto-evaluates and writes strict metrics.json when both are present.

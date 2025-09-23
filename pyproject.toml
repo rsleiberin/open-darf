@@ -26,12 +26,15 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
+line-length = 100
+target-version = "py312"
 select = ["E", "F", "W", "B", "I", "C90", "UP"]
 ignore = ["E501"]
-target-version = "py312"
 
 [tool.mypy]
 python_version = "3.12"
+strict = true
+ignore_missing_imports = true
 warn_return_any = true
 warn_unused_configs = true
 disallow_untyped_defs = true
@@ -40,3 +43,17 @@ disallow_untyped_defs = true
 minversion = "8.0"
 addopts = "-ra -q"
 testpaths = ["tests"]
+
+[project]
+name = "darf-source"
+version = "0.1.0"
+description = "DARF Constitutional AI Framework"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi",
+    "pydantic>=2.0",
+    "requests",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff", "mypy"]

@@ -3,10 +3,10 @@
 	url = https://github.com/rsleiberin/biored_ncbi.git
 [submodule "datasets/SciREX"]
 	path = datasets/SciREX
-	url = <submodule_url>
+	url = https://github.com/placeholder/private-dataset.git
 [submodule "datasets/dygiepp"]
 	path = datasets/dygiepp
-	url = <submodule_url>
+	url = https://github.com/placeholder/private-dataset.git
 [submodule "tools/biored_ncbi/src"]
 	path = tools/biored_ncbi/src
 	url = https://github.com/rsleiberin/biored_ncbi.git

@@ -1,7 +1,0 @@
-{
-  "sample_size": 100,
-  "entity_f1": 0.54,
-  "relation_f1": 0.31,
-  "constitutional_compliance": 0.96,
-  "timestamp": 1757459898.1630628
-}

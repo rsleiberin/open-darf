@@ -1,9 +1,0 @@
-__pycache__/
-*.pyc
-.env
-.DS_Store
-.vscode/
-.idea/
-# Intentionally keeping results/, demo_data/, and models/ tracked for validator convenience
-docker-compose.override.yml
-docker-compose.yml.bak

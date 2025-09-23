@@ -45,3 +45,27 @@ docs/evidence/phase7e
 docs/evidence/phase7f
 docs/evidence/session_20250916T231953Z
 private_wip/
+
+# Large ML models (keep local, exclude from repo)
+models/cache/
+*.bin
+*.safetensors
+*.pt
+*.pth
+
+# Dataset blobs (keep local, exclude from repo)  
+datasets/*/train_docs/
+datasets/*/test_docs/
+datasets/*/*.jsonl
+datasets/*/*.json.gz
+
+# Generated artifacts (exclude from sync)
+var/
+results/
+*.tar.gz
+*_report_*.tar.gz
+
+# Claude Agent Context Optimization
+.claude/sync_cache/
+.claude/context_logs/
+.claude/temp/
