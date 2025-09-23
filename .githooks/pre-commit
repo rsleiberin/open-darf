@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-if git diff --cached --name-only | grep -E '^(?:\.venv/|venv/|var/)'; then
-  echo "❌ Abort: refusing to commit files from .venv/, venv/, or var/." >&2
-  exit 1
-fi

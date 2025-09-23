@@ -1,6 +1,0 @@
-[branch]
-    autoSetupRebase = always
-[pull]
-    rebase = true
-[rebase]
-    autoStash = true

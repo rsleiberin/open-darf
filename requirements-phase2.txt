@@ -1,7 +1,0 @@
-# Phase 2 Engine dependencies
-pytest>=8.0
-fastapi
-pydantic>=2.0
-requests
-uvicorn
-httpx

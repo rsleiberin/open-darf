@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "DARF System Cleanup"
+echo "=================="
+
+# Stop and remove containers
+echo "Stopping Docker services..."
+docker-compose down --volumes --remove-orphans
+
+# Remove Docker images (optional, commented out by default)
+# echo "Removing Docker images..."
+# docker-compose down --rmi all
+
+# Clean up generated files
+echo "Cleaning up generated files..."
+rm -rf var/receipts/open-darf/* 2>/dev/null || true
+rm -rf var/reports/* 2>/dev/null || true
+
+# Clean up any temporary files
+find . -name "*.tmp" -delete 2>/dev/null || true
+find . -name "*.log" -delete 2>/dev/null || true
+
+echo "Cleanup complete!"
+echo "Infrastructure stopped and temporary files removed"

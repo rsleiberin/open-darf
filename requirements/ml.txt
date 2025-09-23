@@ -1,5 +1,0 @@
-# Optional ML deps (install locally only when integrating models)
-# CPU baseline (adjust for CUDA manually if desired)
-transformers==4.41.2
-tokenizers==0.19.1
-torch==2.3.1

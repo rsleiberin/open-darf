@@ -1,4 +1,0 @@
-# Optional ML deps for local dev (NOT required in CI)
-transformers>=4.44.0
-# To install CPU-only torch (optional):
-# pip install --index-url https://download.pytorch.org/whl/cpu torch==2.3.1+cpu

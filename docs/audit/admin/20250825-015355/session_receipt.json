@@ -1,9 +1,0 @@
-{
-  "timestamp_utc": "20250825-015355",
-  "branch": "feat/phase2-deny-precedence-20250825-013137",
-  "head_sha_short": "3d72561",
-  "safepoint_tag": "safepoint-20250825-015355",
-  "phase": "Phase-2",
-  "focus_issues": [240, 241, 242, 243],
-  "notes": "deny precedence adapter + tests added; wiring into main validation path next"
-}

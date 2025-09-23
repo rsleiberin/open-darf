@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-set -e
-if [[ -x "./.venv/bin/python" ]]; then exec "./.venv/bin/python" "$@"; fi
-if command -v python3 >/dev/null 2>&1; then exec python3 "$@"; fi
-echo "ERROR: python interpreter not found (expected ./.venv/bin/python or python3)" >&2
-exit 127
