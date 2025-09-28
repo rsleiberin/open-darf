@@ -1,0 +1,25 @@
+TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)
+Running breadth-first search Model-Checking with fp 19 and seed 3573347535542239631 with 12 workers on 16 cores with 9102MB heap and 64MB offheap memory [pid: 1511] (Linux 5.15.167.4-microsoft-standard-WSL2 amd64, Ubuntu 17.0.15 x86_64, MSBDiskFPSet, DiskStateQueue).
+Parsing file /home/tank/darf-source/open-darf/verification/tla/classA_specs/CA_DenyPrecedence.tla
+Parsing file /tmp/Integers.tla
+Parsing file /tmp/FiniteSets.tla
+Parsing file /tmp/TLC.tla
+Parsing file /tmp/Naturals.tla
+Parsing file /tmp/Sequences.tla
+Semantic processing of module Naturals
+Semantic processing of module Integers
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module TLC
+Semantic processing of module CA_DenyPrecedence
+Starting... (2025-09-28 17:22:46)
+Computing initial states...
+Finished computing initial states: 1 distinct state generated at 2025-09-28 17:22:46.
+Model checking completed. No error has been found.
+  Estimates of the probability that TLC did not check all reachable states
+  because two distinct states had the same fingerprint:
+  calculated (optimistic):  val = 2.2E-14
+1520 states generated, 343 distinct states found, 0 states left on queue.
+The depth of the complete state graph search is 7.
+The average outdegree of the complete state graph is 1 (minimum is 0, the maximum 12 and the 95th percentile is 5).
+Finished in 00s at (2025-09-28 17:22:46)

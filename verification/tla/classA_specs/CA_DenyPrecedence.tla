@@ -1,15 +1,8 @@
 ---- MODULE CA_DenyPrecedence ----
-...DS Integers, FiniteSets, TLC
+EXTENDS Integers, FiniteSets, TLC
 
 CONSTANTS Resources, Participants
-
 VARIABLES state
-
-(* --algorithm DenyPrecedence
-variables state \in [Participants -> [Resources -> {"ALLOW","DENY","INDETERMINATE"}]];
-begin
-  Skip;
-end algorithm; *)
 
 PrecedenceInvariant ==
   \A p \in Participants:
@@ -19,15 +12,22 @@ PrecedenceInvariant ==
 TypeInvariant ==
   state \in [Participants -> [Resources -> {"ALLOW","DENY","INDETERMINATE"}]]
 
+\* Start with all INDETERMINATE to satisfy precedence invariant
 Init ==
-  /\ TypeInvariant
+  state = [p \in Participants |-> [r \in Resources |-> "INDETERMINATE"]]
 
+\* Allow transitions that maintain DENY precedence in both directions
 Next ==
-  UNCHANGED state
+  \/ UNCHANGED state
+  \/ \E p \in Participants, r \in Resources :
+       /\ state[p][r] = "INDETERMINATE"
+       /\ \/ /\ \A q \in Participants : state[q][r] # "ALLOW"  \* No one has ALLOW yet
+             /\ state' = [state EXCEPT ![p][r] = "DENY"]
+          \/ /\ \A q \in Participants : state[q][r] # "DENY"   \* No one has DENY yet
+             /\ state' = [state EXCEPT ![p][r] = "ALLOW"]
 
 Spec == Init /\ [][Next]_state
 
 THEOREM TypeOk == Spec => []TypeInvariant
 THEOREM DenyDominates == Spec => []PrecedenceInvariant
-
 ====
