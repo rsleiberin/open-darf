@@ -1,0 +1,5 @@
+module=CA_ProvenanceChainValidity
+cfg=CA_ProvenanceChainValidity
+label=neg
+exit_code=1
+[time] wall=0:00.08 cpu=203% mem=53084KB

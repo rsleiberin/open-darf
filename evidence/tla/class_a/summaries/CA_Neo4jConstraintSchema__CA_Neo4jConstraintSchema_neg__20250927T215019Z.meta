@@ -1,0 +1,5 @@
+module=CA_Neo4jConstraintSchema
+cfg=CA_Neo4jConstraintSchema_neg
+label=neg
+exit_code=1
+[time] wall=0:00.07 cpu=177% mem=53412KB

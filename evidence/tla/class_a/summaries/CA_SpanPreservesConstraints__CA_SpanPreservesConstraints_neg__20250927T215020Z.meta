@@ -1,0 +1,5 @@
+module=CA_SpanPreservesConstraints
+cfg=CA_SpanPreservesConstraints_neg
+label=neg
+exit_code=1
+[time] wall=0:00.07 cpu=178% mem=52776KB

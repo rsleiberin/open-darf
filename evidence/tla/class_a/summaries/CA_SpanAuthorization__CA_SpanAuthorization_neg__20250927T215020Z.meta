@@ -1,0 +1,5 @@
+module=CA_SpanAuthorization
+cfg=CA_SpanAuthorization_neg
+label=neg
+exit_code=255
+[time] wall=0:00.22 cpu=244% mem=72956KB

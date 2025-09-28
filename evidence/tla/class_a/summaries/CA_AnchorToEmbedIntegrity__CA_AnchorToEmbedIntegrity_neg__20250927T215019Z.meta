@@ -1,0 +1,5 @@
+module=CA_AnchorToEmbedIntegrity
+cfg=CA_AnchorToEmbedIntegrity_neg
+label=neg
+exit_code=255
+[time] wall=0:00.24 cpu=234% mem=74512KB

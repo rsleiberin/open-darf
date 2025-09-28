@@ -1,0 +1,5 @@
+module=CA_Smoke
+cfg=CA_Smoke_neg
+label=neg
+exit_code=1
+[time] wall=0:00.07 cpu=183% mem=53428KB

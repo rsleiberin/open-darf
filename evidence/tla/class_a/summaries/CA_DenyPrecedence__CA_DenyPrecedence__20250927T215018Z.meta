@@ -1,0 +1,5 @@
+module=CA_DenyPrecedence
+cfg=CA_DenyPrecedence
+label=pos
+exit_code=1
+[time] wall=0:00.07 cpu=181% mem=53316KB

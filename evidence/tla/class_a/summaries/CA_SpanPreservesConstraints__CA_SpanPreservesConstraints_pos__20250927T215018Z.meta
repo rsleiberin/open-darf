@@ -1,0 +1,5 @@
+module=CA_SpanPreservesConstraints
+cfg=CA_SpanPreservesConstraints_pos
+label=pos
+exit_code=1
+[time] wall=0:00.07 cpu=180% mem=52896KB

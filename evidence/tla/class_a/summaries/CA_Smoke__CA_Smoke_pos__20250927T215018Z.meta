@@ -1,0 +1,5 @@
+module=CA_Smoke
+cfg=CA_Smoke_pos
+label=pos
+exit_code=255
+[time] wall=0:00.22 cpu=241% mem=74272KB
