@@ -1,0 +1,58 @@
+TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)
+Running breadth-first search Model-Checking with fp 46 and seed 4217699192384919924 with 14 workers on 16 cores with 10923MB heap and 64MB offheap memory [pid: 9942] (Linux 5.15.167.4-microsoft-standard-WSL2 amd64, Ubuntu 17.0.15 x86_64, MSBDiskFPSet, DiskStateQueue).
+Parsing file /home/tank/darf-source/open-darf/verification/tla/classA_specs/CA_SpanAuthorization.tla
+Parsing file /tmp/Naturals.tla
+Parsing file /tmp/FiniteSets.tla
+Parsing file /tmp/Sequences.tla
+Semantic processing of module Naturals
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module CA_SpanAuthorization
+Starting... (2025-09-29 14:45:19)
+Computing initial states...
+Finished computing initial states: 1 distinct state generated at 2025-09-29 14:45:19.
+Progress(655739) at 2025-09-29 14:45:22: 1,967,205 states generated (1,967,205 s/min), 655,665 distinct states found (655,665 ds/min), 0 states left on queue.
+Progress(14413858) at 2025-09-29 14:46:22: 43,241,566 states generated (41,274,361 s/min), 14,413,848 distinct states found (13,758,183 ds/min), 0 states left on queue.
+Progress(28700837) at 2025-09-29 14:47:22: 86,102,506 states generated (42,860,940 s/min), 28,700,830 distinct states found (14,286,982 ds/min), 1 states left on queue.
+Progress(43193582) at 2025-09-29 14:48:22: 129,580,740 states generated (43,478,234 s/min), 43,193,572 distinct states found (14,492,742 ds/min), 0 states left on queue.
+Progress(55960943) at 2025-09-29 14:49:22: 167,882,824 states generated (38,302,084 s/min), 55,960,936 distinct states found (12,767,364 ds/min), 1 states left on queue.
+Progress(69353130) at 2025-09-29 14:50:22: 208,059,386 states generated (40,176,562 s/min), 69,353,122 distinct states found (13,392,186 ds/min), 0 states left on queue.
+Progress(82972468) at 2025-09-29 14:51:22: 248,917,400 states generated (40,858,014 s/min), 82,972,462 distinct states found (13,619,340 ds/min), 0 states left on queue.
+Progress(96184212) at 2025-09-29 14:52:22: 288,552,632 states generated (39,635,232 s/min), 96,184,212 distinct states found (13,211,750 ds/min), 1 states left on queue.
+Progress(109414061) at 2025-09-29 14:53:22: 328,242,177 states generated (39,689,545 s/min), 109,414,048 distinct states found (13,229,836 ds/min), 0 states left on queue.
+Progress(122612014) at 2025-09-29 14:54:22: 367,836,040 states generated (39,593,863 s/min), 122,612,012 distinct states found (13,197,964 ds/min), 0 states left on queue.
+Progress(134334150) at 2025-09-29 14:55:22: 403,002,448 states generated (35,166,408 s/min), 134,334,146 distinct states found (11,722,134 ds/min), 0 states left on queue.
+Progress(141988865) at 2025-09-29 14:56:22: 425,966,591 states generated (22,964,143 s/min), 141,988,862 distinct states found (7,654,716 ds/min), 0 states left on queue.
+Progress(149525879) at 2025-09-29 14:57:22: 448,577,633 states generated (22,611,042 s/min), 149,525,877 distinct states found (7,537,015 ds/min), 1 states left on queue.
+Progress(157105184) at 2025-09-29 14:58:22: 471,315,548 states generated (22,737,915 s/min), 157,105,180 distinct states found (7,579,303 ds/min), 1 states left on queue.
+Progress(164819621) at 2025-09-29 14:59:22: 494,458,861 states generated (23,143,313 s/min), 164,819,620 distinct states found (7,714,440 ds/min), 0 states left on queue.
+Progress(172376027) at 2025-09-29 15:00:22: 517,128,077 states generated (22,669,216 s/min), 172,376,022 distinct states found (7,556,402 ds/min), 0 states left on queue.
+Progress(179913990) at 2025-09-29 15:01:22: 539,741,967 states generated (22,613,890 s/min), 179,913,986 distinct states found (7,537,964 ds/min), 0 states left on queue.
+Progress(187538386) at 2025-09-29 15:02:22: 562,615,154 states generated (22,873,187 s/min), 187,538,383 distinct states found (7,624,397 ds/min), 0 states left on queue.
+Progress(195192952) at 2025-09-29 15:03:22: 585,578,852 states generated (22,963,698 s/min), 195,192,948 distinct states found (7,654,565 ds/min), 0 states left on queue.
+Progress(202687319) at 2025-09-29 15:04:22: 608,061,953 states generated (22,483,101 s/min), 202,687,316 distinct states found (7,494,368 ds/min), 0 states left on queue.
+Progress(209842322) at 2025-09-29 15:05:22: 629,526,963 states generated (21,465,010 s/min), 209,842,318 distinct states found (7,155,002 ds/min), 1 states left on queue.
+Progress(217132028) at 2025-09-29 15:06:22: 651,396,077 states generated (21,869,114 s/min), 217,132,021 distinct states found (7,289,703 ds/min), 0 states left on queue.
+Progress(224253512) at 2025-09-29 15:07:22: 672,760,532 states generated (21,364,455 s/min), 224,253,506 distinct states found (7,121,485 ds/min), 0 states left on queue.
+Progress(231773847) at 2025-09-29 15:08:22: 695,321,536 states generated (22,561,004 s/min), 231,773,842 distinct states found (7,520,336 ds/min), 1 states left on queue.
+Progress(239216937) at 2025-09-29 15:09:22: 717,650,810 states generated (22,329,274 s/min), 239,216,937 distinct states found (7,443,095 ds/min), 0 states left on queue.
+Progress(246703561) at 2025-09-29 15:10:22: 740,110,679 states generated (22,459,869 s/min), 246,703,556 distinct states found (7,486,619 ds/min), 0 states left on queue.
+Progress(254196931) at 2025-09-29 15:11:22: 762,590,789 states generated (22,480,110 s/min), 254,196,924 distinct states found (7,493,368 ds/min), 0 states left on queue.
+Progress(261353671) at 2025-09-29 15:12:22: 784,061,009 states generated (21,470,220 s/min), 261,353,664 distinct states found (7,156,740 ds/min), 0 states left on queue.
+Progress(268435453) at 2025-09-29 15:13:22: 805,306,358 states generated (21,245,349 s/min), 268,435,454 distinct states found (7,081,790 ds/min), 0 states left on queue.
+Progress(274713208) at 2025-09-29 15:14:22: 824,139,620 states generated (18,833,262 s/min), 274,713,206 distinct states found (6,277,752 ds/min), 0 states left on queue.
+Checkpointing of run states/25-09-29-14-45-19
+Error: TLC threw an unexpected exception.
+This was probably caused by an error in the spec or model.
+See the User Output or TLC Console for clues to what happened.
+The exception was a java.lang.RuntimeException
+: The specification contains one or more behaviors with 65536 or more states,
+but TLC can only handle behaviors of length up to 65535 states. The last
+state in the behavior is:
+/\ revoked = (u :> {})
+/\ epoch = 282050274
+/\ auth = (u :> (op :> {s0, s1}))
+/\ affects = (op :> {s0, s1})
+
+846150823 states generated, 282050275 distinct states found, 1 states left on queue.
+Finished in 30min 03s at (2025-09-29 15:15:22)
