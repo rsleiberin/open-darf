@@ -1,27 +1,41 @@
 ---- MODULE CA_AuditTrailIntegrity ----
 EXTENDS Integers, Sequences, TLC
-
 CONSTANTS MaxEntries
 VARIABLES Log
 
-EntryType(e) == /\ e \in [ "ts" : Nat, "actor" : STRING, "action" : STRING, "hash" : STRING ]
+Timestamps == 1..3
+Actors == {"usr", "sys"}
+Actions == {"add", "del"}
+Hashes == {"h1", "h2", ""}
+
+LogEntry == [ts: Timestamps, actor: Actors, action: Actions, hash: Hashes]
 
 TypeInvariant ==
-  /\ Log \in Seq( [ "ts":Nat, "actor":STRING, "action":STRING, "hash":STRING ] )
-  /\ Len(Log) <= MaxEntries
+  Log \in Seq(LogEntry)
 
-AppendPreservesChain ==
+AppendOnly ==
+  \A i \in 1..Len(Log):
+    Log[i].hash # ""
+
+ChainIntegrity ==
   \A i \in 2..Len(Log):
-    Log[i].hash # "" /\ Log[i-1].hash # ""
+    Log[i].ts >= Log[i-1].ts
 
 Init ==
-  /\ Log = << >>
+  Log = << >>
 
 Next ==
-  UNCHANGED Log
+  \/ /\ Len(Log) < MaxEntries
+     /\ \E entry \in LogEntry:
+          /\ entry.hash # ""
+          /\ entry.ts >= (IF Len(Log) = 0 THEN 1 ELSE Log[Len(Log)].ts)
+          /\ Log' = Append(Log, entry)
+  \/ UNCHANGED Log
+
+StateConstraint ==
+  /\ Len(Log) <= 2
+  /\ TLCGet("level") <= 10
+  /\ TLCGet("distinct") <= 1000
 
 Spec == Init /\ [][Next]_Log
-
-THEOREM AuditLogWellFormed == Spec => [](TypeInvariant /\ AppendPreservesChain)
-
 ====

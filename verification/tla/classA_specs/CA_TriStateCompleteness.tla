@@ -1,29 +1,32 @@
 ---- MODULE CA_TriStateCompleteness ----
 EXTENDS Integers, TLC
-
 CONSTANTS Requests
-VARIABLES state, decision
+VARIABLES decision
 
-States == {"ALLOW","DENY","INDETERMINATE"}
+States == {"ALLOW", "DENY", "INDETERMINATE"}
 
 TypeInvariant ==
-  /\ state \in [Requests -> BOOLEAN]
-  /\ decision \in [Requests -> States]
+  decision \in [Requests -> States]
 
 Completeness ==
   \A r \in Requests: decision[r] \in States
 
 NoIllegalState ==
-  \A r \in Requests: ~(decision[r] \notin States)
+  \A r \in Requests: decision[r] \in States
 
 Init ==
-  /\ TypeInvariant
+  decision \in [Requests -> States]
 
 Next ==
-  UNCHANGED <<state, decision>>
+  \E r \in Requests:
+    \E s \in States:
+      decision' = [decision EXCEPT ![r] = s]
 
-Spec == Init /\ [][Next]_<<state,decision>>
+StateConstraint ==
+  /\ TLCGet("level") <= 50
+  /\ TLCGet("distinct") <= 5000
 
-THEOREM TriStateOnly == Spec => [](Completeness /\ NoIllegalState)
+Spec == Init /\ [][Next]_<<decision>>
 
+THEOREM TriStateCompleteness == Spec => [](Completeness /\ NoIllegalState)
 ====
