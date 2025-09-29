@@ -1,0 +1,14 @@
+TLC2 Version 2.19 of 08 August 2024 (rev: 5a47802)
+Running breadth-first search Model-Checking with fp 91 and seed 4281074716722855522 with 14 workers on 16 cores with 10923MB heap and 64MB offheap memory [pid: 17408] (Linux 5.15.167.4-microsoft-standard-WSL2 amd64, Ubuntu 17.0.15 x86_64, MSBDiskFPSet, DiskStateQueue).
+Parsing file /home/tank/darf-source/open-darf/verification/tla/classA_specs/CA_SpanAuthorization.tla
+Parsing file /tmp/Naturals.tla
+Parsing file /tmp/FiniteSets.tla
+Parsing file /tmp/Sequences.tla
+Semantic processing of module Naturals
+Semantic processing of module Sequences
+Semantic processing of module FiniteSets
+Semantic processing of module CA_SpanAuthorization
+Starting... (2025-09-29 15:19:15)
+Error: The constraint StateConstraint specified in the configuration file
+is not defined in the specification.
+Finished in 00s at (2025-09-29 15:19:15)
