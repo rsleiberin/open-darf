@@ -37,8 +37,9 @@ ExplicitAuthorizationInv ==
 BadEAInv == ~ExplicitAuthorizationInv
 
 Spec == Init /\ [][Next]_<<affects,auth,revoked,epoch>>
-=============================================================================
 
 \* State constraint for bounded model checking
 StateConstraint ==
   /\ epoch < 100
+
+=============================================================================
