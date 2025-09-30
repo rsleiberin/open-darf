@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 # Constitutional validation engine for open-darf
-# Adapted from darf-source/apps/constitutional/engine_v2.sh
 set -euo pipefail
 
 # Load environment variables
@@ -10,38 +9,29 @@ if [ -f .env ]; then
     set +a
 fi
 
-# Timing functions
 stamp() { date -u +%Y-%m-%dT%H:%M:%SZ; }
 tms() { date +%s%3N; }
 
-# Validation context (simulated for peer validators)
+# Validation context
 CTX_IRREVERSIBLE=${CTX_IRREVERSIBLE:-true}
 CTX_HAS_REVIEW=${CTX_HAS_REVIEW:-false}
 CTX_ACTOR=${CTX_ACTOR:-"peer_validator"}
 CTX_ACTION=${CTX_ACTION:-"validation_run"}
 
 # Generate validation ID
-if command -v uuidgen &> /dev/null; then
-    VALIDATION_ID=$(uuidgen)
-elif [ -f /proc/sys/kernel/random/uuid ]; then
-    VALIDATION_ID=$(cat /proc/sys/kernel/random/uuid)
-else
-    VALIDATION_ID="$(date +%s)-$$-$RANDOM"
-fi
-
+VALIDATION_ID=$(uuidgen 2>/dev/null || cat /proc/sys/kernel/random/uuid 2>/dev/null || echo "$(date +%s)-$$-$RANDOM")
 TIMESTAMP=$(stamp)
 
 # Query Neo4j for rule R0
 neo_start=$(tms)
-RULE_DATA=$(docker compose exec -T neo4j cypher-shell \
-  -u neo4j -p "${NEO4J_PASSWORD}" \
-  "MATCH (r:Rule {id:'R0'}) RETURN r.requires_review_for_irreversible, r.priority" \
-  2>/dev/null | awk 'NR>1 {print $1" "$2}') || true
+RULE_OUTPUT=$(docker compose exec -T neo4j cypher-shell -u neo4j -p "${NEO4J_PASSWORD}" \
+  "MATCH (r:Rule {id:'R0'}) RETURN r.requires_review_for_irreversible, r.priority" 2>/dev/null || true)
 neo_ms=$(($(tms) - neo_start))
 
-# Parse rule data
-REQ=$(echo "$RULE_DATA" | awk '{print $1}')
-PRI=$(echo "$RULE_DATA" | awk '{print $2}' | tr -d '"')
+# Parse rule data (skip header, split by comma)
+DATA_LINE=$(echo "$RULE_OUTPUT" | awk 'NR==2 {print}')
+REQ=$(echo "$DATA_LINE" | awk -F, '{print $1}' | tr -d ' ' | tr '[:upper:]' '[:lower:]')
+PRI=$(echo "$DATA_LINE" | awk -F, '{print $2}' | tr -d ' "')
 
 # Apply tri-state logic with DENY precedence
 DECISION="INDETERMINATE"
@@ -57,32 +47,27 @@ fi
 
 # Store audit receipt in PostgreSQL
 postgres_start=$(tms)
-DETAILS_JSON=$(cat <<EJSON
-{"rule_id":"R0","reason":"$REASON","context":{"actor":"$CTX_ACTOR","action":"$CTX_ACTION","irreversible":$CTX_IRREVERSIBLE,"has_review":$CTX_HAS_REVIEW},"neo4j_ms":$neo_ms}
-EJSON
-)
+DETAILS_JSON="{\"rule_id\":\"R0\",\"reason\":\"$REASON\",\"context\":{\"actor\":\"$CTX_ACTOR\",\"action\":\"$CTX_ACTION\",\"irreversible\":$CTX_IRREVERSIBLE,\"has_review\":$CTX_HAS_REVIEW},\"neo4j_ms\":$neo_ms}"
 
 docker compose exec -T -e PGPASSWORD="${POSTGRES_PASSWORD}" postgres \
   psql -U "${POSTGRES_USER}" -d "${POSTGRES_DB}" -v ON_ERROR_STOP=1 \
   -c "INSERT INTO audit.receipts(component, action, status, details, duration_ms) VALUES ('constitutional_engine', '$CTX_ACTION', '$DECISION', '$DETAILS_JSON'::jsonb, $neo_ms)" \
   >/dev/null 2>&1 || true
 postgres_ms=$(($(tms) - postgres_start))
-
-# Calculate total overhead
 total_ms=$((neo_ms + postgres_ms))
 
-# Collect system fingerprint
+# System fingerprint
 OS=$(uname -s)
 CPU_CORES=$(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo "unknown")
 RAM_GB=$(free -g 2>/dev/null | awk '/^Mem:/{print $2}' || echo "unknown")
 DOCKER_VERSION=$(docker --version | awk '{print $3}' | tr -d ',' || echo "unknown")
 
-# Generate evidence hash
+# Evidence hash
 EVIDENCE_STRING="${DECISION}${REASON}${total_ms}${TIMESTAMP}"
 EVIDENCE_HASH=$(echo -n "$EVIDENCE_STRING" | sha256sum 2>/dev/null | awk '{print $1}' || echo "unavailable")
 
-# Generate validation receipt JSON
-cat <<EJSON
+# Generate receipt JSON
+cat <<EOF
 {
   "receipt_version": "1.0",
   "validation_id": "$VALIDATION_ID",
@@ -113,4 +98,4 @@ cat <<EJSON
   },
   "evidence_hash": "sha256:$EVIDENCE_HASH"
 }
-EJSON
+EOF
