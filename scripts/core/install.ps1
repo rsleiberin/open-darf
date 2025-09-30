@@ -4,8 +4,6 @@
     Open-DARF Installation Script for Windows
 .DESCRIPTION
     Deploys Docker infrastructure for constitutional AI validation on Windows systems.
-.EXAMPLE
-    .\install.ps1
 #>
 
 [CmdletBinding()]
@@ -40,22 +38,26 @@ try {
     exit 1
 }
 
-# Check Docker Compose
+# Check Docker Compose - prioritize newer plugin version
 Write-Host ""
 Write-Host "[3/5] Checking Docker Compose..." -ForegroundColor Yellow
 $composeCmd = $null
-if (Get-Command docker-compose -ErrorAction SilentlyContinue) {
-    $composeCmd = "docker-compose"
-} elseif ((docker compose version 2>$null) -and ($LASTEXITCODE -eq 0)) {
+
+# Try docker compose (newer plugin - preferred)
+if ((docker compose version 2>$null) -and ($LASTEXITCODE -eq 0)) {
     $composeCmd = "docker compose"
+    Write-Host "Using Docker Compose plugin (recommended)" -ForegroundColor Green
+}
+# Fallback to docker-compose (older standalone)
+elseif (Get-Command docker-compose -ErrorAction SilentlyContinue) {
+    $composeCmd = "docker-compose"
+    Write-Host "Using legacy docker-compose (consider updating)" -ForegroundColor Yellow
 }
 
 if (-not $composeCmd) {
     Write-Host "ERROR: Docker Compose not available" -ForegroundColor Red
     exit 1
 }
-
-Write-Host "Docker Compose available" -ForegroundColor Green
 
 # Check system resources
 Write-Host ""
@@ -90,14 +92,11 @@ Write-Host "[5/5] Deploying infrastructure..." -ForegroundColor Yellow
 Write-Host "This may take several minutes on first run..." -ForegroundColor White
 
 try {
-    if ($composeCmd -eq "docker-compose") {
-        docker-compose up -d
-    } else {
-        docker compose up -d
-    }
-
+    # Use whichever compose command we determined works
+    & $composeCmd.Split() up -d
+    
     if ($LASTEXITCODE -ne 0) {
-        throw "Docker Compose failed"
+        throw "Docker Compose failed with exit code $LASTEXITCODE"
     }
 
     Write-Host ""
@@ -112,7 +111,7 @@ try {
     Write-Host "ERROR: Deployment failed" -ForegroundColor Red
     Write-Host $_.Exception.Message -ForegroundColor Red
     Write-Host ""
-    Write-Host "Check logs: docker compose logs" -ForegroundColor Yellow
+    Write-Host "Check logs: $composeCmd logs" -ForegroundColor Yellow
     exit 1
 }
 
