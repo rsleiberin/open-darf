@@ -2,6 +2,16 @@
 
 ## Prerequisites Check
 
+## Step 1: System Verification
+
+Run this PowerShell command to verify your system meets requirements:
+
+    $r = @{}; $r.os = [System.Environment]::OSVersion.Version; $r.ram = [Math]::Round((Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB, 2); $r.disk = [Math]::Round((Get-CimInstance Win32_LogicalDisk -Filter "DriveType=3" | Measure-Object -Property FreeSpace -Sum).Sum / 1GB, 2); $r.docker = if (Get-Command docker -ErrorAction SilentlyContinue) { (docker --version) } else { $null }; $r.podman = if (Get-Command podman -ErrorAction SilentlyContinue) { (podman --version) } else { $null }; Write-Host "`n=== OPEN-DARF SYSTEM CHECK ===" -ForegroundColor Cyan; $ready = $true; if ($r.os.Major -lt 10) { Write-Host "❌ Windows: $($r.os.Major).$($r.os.Minor) - Need Windows 10+" -ForegroundColor Red; $ready = $false } else { Write-Host "✅ Windows: $($r.os.Major).$($r.os.Minor)" -ForegroundColor Green }; if ($r.ram -lt 8) { Write-Host "❌ RAM: $($r.ram)GB - Need 8GB+" -ForegroundColor Red; $ready = $false } else { Write-Host "✅ RAM: $($r.ram)GB" -ForegroundColor Green }; if ($r.disk -lt 15) { Write-Host "❌ Disk: $($r.disk)GB free - Need 15GB+" -ForegroundColor Red; $ready = $false } else { Write-Host "✅ Disk: $($r.disk)GB free" -ForegroundColor Green }; if (!$r.docker -and !$r.podman) { Write-Host "❌ Container Platform: Not found - Install Docker or Podman" -ForegroundColor Red; Write-Host "  Docker: https://docs.docker.com/desktop/windows/" -ForegroundColor Yellow; Write-Host "  Podman: https://podman.io/getting-started/installation" -ForegroundColor Yellow; $ready = $false } else { if ($r.docker) { Write-Host "✅ Docker: $($r.docker)" -ForegroundColor Green }; if ($r.podman) { Write-Host "✅ Podman: $($r.podman)" -ForegroundColor Green } }; Write-Host "`n=== RESULT ===" -ForegroundColor Cyan; if ($ready) { Write-Host "✅ YOUR SYSTEM IS READY FOR OPEN-DARF!" -ForegroundColor Green -BackgroundColor Black; Write-Host "Next step: Proceed to installation" -ForegroundColor Yellow } else { Write-Host "❌ SYSTEM REQUIREMENTS NOT MET" -ForegroundColor Red -BackgroundColor Black; Write-Host "Please address the issues above before proceeding." -ForegroundColor Yellow }
+
+If you see "✅ YOUR SYSTEM IS READY", proceed to Step 2.
+
+## Step 2: Install Container Platform
+
 Run the system verification from the README first.
 
 If you don't have Docker or Podman, we recommend **Podman Desktop** because:
