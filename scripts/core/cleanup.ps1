@@ -92,7 +92,7 @@ try {
             Write-Host "  - $container" -ForegroundColor White
         }
         Write-Host "`nManually remove with:" -ForegroundColor Yellow
-        Write-Host "  docker rm -f <container-name>" -ForegroundColor Cyan
+        Write-Host "  docker rm -f CONTAINER_NAME" -ForegroundColor Cyan
     } else {
         Write-Host "✅ No DARF containers remaining" -ForegroundColor Green
     }
@@ -127,7 +127,7 @@ if (-not $KeepVolumes) {
                 Write-Host "  - $volume" -ForegroundColor White
             }
             Write-Host "`nManually remove with:" -ForegroundColor Yellow
-            Write-Host "  docker volume rm <volume-name>" -ForegroundColor Cyan
+            Write-Host "  docker volume rm VOLUME_NAME" -ForegroundColor Cyan
         } else {
             Write-Host "✅ No DARF volumes remaining" -ForegroundColor Green
         }
