@@ -1,5 +1,0 @@
-module=CA_TriStateCompleteness
-cfg=CA_TriStateCompleteness
-label=pos
-exit_code=1
-[time] wall=0:00.07 cpu=179% mem=53156KB

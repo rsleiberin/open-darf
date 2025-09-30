@@ -1,5 +1,0 @@
-module=CC_A_cc
-cfg=CC_A_cc.quick
-label=pos
-exit_code=75
-[time] wall=0:00.85 cpu=156% mem=153988KB

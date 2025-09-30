@@ -1,5 +1,0 @@
-module=CA_Neo4jConstraintSchema
-cfg=CA_Neo4jConstraintSchema_pos
-label=pos
-exit_code=1
-[time] wall=0:00.07 cpu=174% mem=53376KB

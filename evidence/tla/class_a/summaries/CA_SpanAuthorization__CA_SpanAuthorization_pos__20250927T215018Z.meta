@@ -1,5 +1,0 @@
-module=CA_SpanAuthorization
-cfg=CA_SpanAuthorization_pos
-label=pos
-exit_code=1
-[time] wall=0:00.07 cpu=180% mem=53300KB

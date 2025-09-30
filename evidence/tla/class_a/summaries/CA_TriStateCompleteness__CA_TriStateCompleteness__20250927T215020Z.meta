@@ -1,5 +1,0 @@
-module=CA_TriStateCompleteness
-cfg=CA_TriStateCompleteness
-label=neg
-exit_code=1
-[time] wall=0:00.07 cpu=182% mem=53376KB

@@ -1,5 +1,0 @@
-module=CA_AuditTrailIntegrity
-cfg=CA_AuditTrailIntegrity
-label=neg
-exit_code=1
-[time] wall=0:00.07 cpu=178% mem=53080KB

@@ -1,5 +1,0 @@
-module=CA_AuditTrailIntegrity
-cfg=CA_AuditTrailIntegrity
-label=pos
-exit_code=1
-[time] wall=0:00.07 cpu=182% mem=53200KB

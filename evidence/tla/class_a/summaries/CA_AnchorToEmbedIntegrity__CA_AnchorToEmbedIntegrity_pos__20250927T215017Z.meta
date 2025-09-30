@@ -1,5 +1,0 @@
-module=CA_AnchorToEmbedIntegrity
-cfg=CA_AnchorToEmbedIntegrity_pos
-label=pos
-exit_code=255
-[time] wall=0:00.21 cpu=249% mem=73436KB
