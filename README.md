@@ -462,17 +462,23 @@ $r = @{}; $r.os = [System.Environment]::OSVersion.Version; $r.ram = [Math]::Roun
 
 ## Installation Guide
 
-```powershell
-# Clone repository
-git clone https://github.com/rsleiberin/open-darf.git
-cd open-darf
+Choose your platform for detailed setup instructions:
 
-# Create configuration
-Copy-Item .env.sample .env
+### Windows Users
+**[Complete Windows Installation Guide →](docs/INSTALL-WINDOWS.md)**
 
-# Run validation
-.\install.ps1
-```
+**Quick start:**
+1. Run system check (PowerShell section above)
+2. Install Podman Desktop (recommended) or Docker Desktop
+3. Clone and run: .\install.ps1
+
+### Linux/macOS Users
+**[Complete Linux/macOS Installation Guide →](docs/INSTALL-LINUX.md)**
+
+**Quick start:**
+1. Run system check (bash section above)
+2. Install Podman (recommended) or Docker
+3. Clone and run: ./install
 
 ---
 
