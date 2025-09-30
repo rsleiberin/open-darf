@@ -35,55 +35,32 @@
 
 ## Repository Structure
 
-```
-open-darf/
-├── README.md                    # This document
-├── LICENSE                      # MIT License
-├── SECURITY.md                  # Security vulnerability reporting
-├── CONTRIBUTING.md              # Contribution guidelines
-├── CODE_OF_CONDUCT.md           # Community standards
-├── .env.sample                  # Environment configuration template
-├── docker-compose.yml           # Service orchestration (Docker/Podman)
-├── install.ps1                  # Windows PowerShell installation
-├── install.sh                   # Unix installation script
-├── validate.ps1                 # Windows validation runner
-├── validate.sh                  # Unix validation runner
-├── cleanup.ps1                  # Windows cleanup script
-├── cleanup.sh                   # Unix cleanup script
-│
-├── scripts/                     # Automation and utilities
-│   ├── core/                    # Core validation workflows
-│   │   ├── infrastructure.*     # Service deployment
-│   │   ├── constitutional.*     # Engine validation
-│   │   └── evidence.*           # Receipt generation
-│   ├── platform/                # Platform-specific scripts
-│   │   ├── windows/            # PowerShell implementations
-│   │   └── linux/              # Bash implementations
-│   └── internal/               # Development utilities
-│
-├── verification/                # TLA+ formal specifications
-│   └── tla/                    # Mathematical proofs
-│       ├── ConstitutionCore.tla
-│       ├── System.tla
-│       └── models/             # Model configurations
-│
-├── docs/                       # Documentation
-│   ├── INSTALLATION.md         # Setup guide
-│   ├── VALIDATION_GUIDE.md     # Running validation
-│   ├── ARCHITECTURE.md         # System design
-│   └── TLA_CATALOG.md          # Full verification catalog
-│
-├── examples/                   # Sample outputs
-│   ├── validation_receipt.json # Example evidence
-│   └── performance_report.md   # Benchmark results
-│
-├── evidence/                   # Community validation (gitignored)
-│   └── community/              # User-submitted receipts
-│
-└── .github/                    # GitHub automation
-    ├── workflows/              # CI/CD pipelines
-    └── ISSUE_TEMPLATE/         # Bug reports
-```
+    open-darf/
+    ├── README.md                    # This document
+    ├── LICENSE                      # MIT License
+    ├── SECURITY.md                  # Security vulnerability reporting
+    ├── CONTRIBUTING.md              # Contribution guidelines
+    ├── CODE_OF_CONDUCT.md           # Community standards
+    ├── .env.sample                  # Environment configuration template
+    ├── docker-compose.yml           # Service orchestration (Docker/Podman)
+    ├── install / install.ps1        # Installation scripts
+    ├── validate / validate.ps1      # Validation scripts
+    ├── cleanup / cleanup.ps1        # Cleanup scripts
+    │
+    ├── assets/                      # Logo and vendor images
+    ├── docs/                        # Platform-specific guides
+    │   ├── INSTALL-WINDOWS.md       # Windows setup guide
+    │   └── INSTALL-LINUX.md         # Linux/macOS setup guide
+    ├── scripts/                     # Automation and utilities
+    │   ├── core/                    # Core validation workflows
+    │   └── internal/                # Support utilities
+    ├── infra/                       # Infrastructure initialization
+    │   ├── neo4j/init/              # Neo4j schema
+    │   └── postgres/init/           # PostgreSQL schema
+    ├── evidence/                    # Verification evidence
+    │   └── tla/class_a/             # TLA+ verification logs
+    └── verification/                # TLA+ specifications
+        └── tla/                     # Formal specifications
 
 ## Executive Summary
 
@@ -92,6 +69,7 @@ Open-DARF (Delegated Architectural Reasoning Framework) implements mathematical 
 **Key Achievement:** Constitutional constraint validation in 0.000173 seconds - approximately 289 times faster than database queries.
 
 ---
+
 
 ## Academic Research Context
 
@@ -447,7 +425,14 @@ Once verified, these mathematical proofs become portable artifacts that any proj
 
 ---
 
-## Quick Start
+
+Choose your platform to begin validation:
+
+- **Windows**: See [INSTALL-WINDOWS.md](docs/INSTALL-WINDOWS.md) for complete setup
+- **Linux/macOS**: See [INSTALL-LINUX.md](docs/INSTALL-LINUX.md) for complete setup
+
+Each guide includes system verification, container platform installation, and validation steps.
+
 
 ### System Requirements Check
 
