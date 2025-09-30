@@ -1,7 +1,5 @@
 # Windows Installation Guide
 
-## Prerequisites Check
-
 ## Step 1: System Verification
 
 Run this PowerShell command to verify your system meets requirements:
@@ -11,8 +9,6 @@ Run this PowerShell command to verify your system meets requirements:
 If you see "✅ YOUR SYSTEM IS READY", proceed to Step 2.
 
 ## Step 2: Install Container Platform
-
-Run the system verification from the README first.
 
 If you don't have Docker or Podman, we recommend **Podman Desktop** because:
 - Rootless operation (better security)
@@ -34,14 +30,38 @@ If you don't have Docker or Podman, we recommend **Podman Desktop** because:
 3. Restart terminal  
 4. Verify: docker --version
 
-## Installation Steps
+## Step 3: Clone or Update Repository
 
-### 1. Clone Repository
+    # Handle existing directory
+    if (Test-Path "open-darf") {
+        Write-Host "Repository directory exists. Updating..." -ForegroundColor Yellow
+        cd open-darf
+        if (Test-Path ".git") {
+            git fetch origin
+            git reset --hard origin/main
+            git pull origin main
+            Write-Host "Repository updated successfully" -ForegroundColor Green
+        } else {
+            Write-Host "ERROR: 'open-darf' exists but is not a git repository" -ForegroundColor Red
+            Write-Host "Please manually delete or rename the directory" -ForegroundColor Yellow
+            exit
+        }
+    } else {
+        Write-Host "Cloning repository..." -ForegroundColor Cyan
+        git clone https://github.com/rsleiberin/open-darf.git
+        cd open-darf
+        Write-Host "Repository cloned successfully" -ForegroundColor Green
+    }
 
-    git clone https://github.com/rsleiberin/open-darf.git
-    cd open-darf
+## Step 4: Enable Script Execution
 
-### 2. Run Installation
+Windows security prevents running scripts by default. Enable for this session:
+
+    Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+This only affects your current PowerShell window and resets when you close it.
+
+## Step 5: Run Installation
 
     .\install.ps1
 
@@ -51,27 +71,50 @@ This will:
 - Verify service health
 - Create necessary directories
 
-### 3. Run Validation
+Expected runtime: 2-5 minutes
+
+## Step 6: Run Validation
 
     .\validate.ps1
 
 This generates your validation receipt in var/receipts/open-darf/
 
-### 4. Submit Evidence (Optional)
+Expected runtime: 3-7 minutes
+
+## Step 7: Submit Evidence (Optional)
+
+To contribute your validation evidence to the research:
 
     .\scripts\Validate-OpenDARF.ps1 -GitHubToken "your_token"
 
-### 5. Cleanup
+Get a token at: https://github.com/settings/tokens (requires 'repo' scope)
+
+## Step 8: Cleanup
 
     .\cleanup.ps1
 
+Removes all containers, networks, and generated data.
+
 ## Troubleshooting
 
-**Podman not found**: Restart terminal after installation
-**Port conflicts**: Stop other containers or use docker/podman ps to check
-**Permission errors**: Run PowerShell as Administrator
-**WSL issues**: Ensure WSL 2 is installed and updated
+**Script execution error**: Run Set-ExecutionPolicy command from Step 4
+
+**Podman not found**: Restart PowerShell after installation
+
+**Port conflicts**: Stop other containers with docker/podman ps, then docker/podman stop [id]
+
+**Permission errors**: Run PowerShell as Administrator (right-click, "Run as administrator")
+
+**Docker not starting**: Ensure Docker Desktop is running (check system tray)
+
+**WSL issues**: Update WSL with: wsl --update
 
 ## Next Steps
 
-See VALIDATION-GUIDE.md for understanding your results.
+Your validation receipt contains evidence of:
+- Infrastructure deployment success
+- Constitutional constraint performance
+- Formal verification correspondence
+- Cross-platform feasibility
+
+This contributes to demonstrating that mathematical AI governance works on consumer hardware.
