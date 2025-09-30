@@ -18,8 +18,8 @@
 ## Table of Contents
 
 - [Executive Summary](#executive-summary)
-- [Academic Research Context](#academic-research-context)
 - [Quick Start](#quick-start)
+- [Academic Research Context](#academic-research-context)
 - [Understanding DARF](#understanding-darf)
 - [Core Technology Concepts](#core-technology-concepts)
 - [Implementation Architecture](#implementation-architecture)
@@ -64,12 +64,26 @@
 
 ## Executive Summary
 
-Open-DARF (Delegated Architectural Reasoning Framework) implements mathematical safety constraints for AI systems, achieving sub-millisecond performance overhead while providing complete decision transparency. This solo developer research project demonstrates that constitutional AI governance is practically feasible on consumer hardware.
+Open-DARF (Delegated Architectural Reasoning Framework) implements mathematical safety constraints for AI systems. This repository exists to generate peer-validation evidence for grant research demonstrating that constitutional AI governance is practically feasible on consumer hardware.
 
-**Key Achievement:** Constitutional constraint validation in 0.000173 seconds - approximately 289 times faster than database queries.
+**Your Role in This Research**: By running the validation process on your system, you contribute independent verification that constitutional constraint validation works across diverse hardware configurations. Each validation receipt becomes part of the evidence package supporting democratic AI governance research.
+
+**What You'll Validate**: Infrastructure deployment, constitutional constraint performance, formal verification correspondence, and cross-platform feasibility.
 
 ---
 
+## Quick Start
+
+**Ready to help us validate?** Your system can generate evidence demonstrating constitutional AI governance works on consumer hardware.
+
+Choose your platform:
+
+- **Windows**: [INSTALL-WINDOWS.md](docs/INSTALL-WINDOWS.md)
+- **Linux/macOS**: [INSTALL-LINUX.md](docs/INSTALL-LINUX.md)
+
+Each guide includes system verification, container setup, validation, and cleanup. Your validation receipt contributes to the research evidence base.
+
+---
 
 ## Academic Research Context
 
@@ -88,10 +102,6 @@ This leaves us with a critical realization: **the RAG layer represents our only 
 Open-DARF focuses on RAG systems first because academic fraud and data corruption would fundamentally undermine any AI safety system. Even if we prevent AI hallucination through constitutional constraints, corrupted source data would still produce harmful outputs. This is why **provenance** - tracking where information comes from and how it's been processed - becomes the foundation of trustworthy AI.
 
 Provenance enables "knowledge graph surgery" - the ability to identify and surgically remove corrupted information even after it's been incorporated into the system. If fraudulent research or malicious content is discovered, we can trace its influence through the knowledge graph and excise not just the source but all derived conclusions that depended on it.
-
----
-
-**If you don't need to understand the technical details and just want to help validate the system, jump directly to the [Quick Start](#quick-start) section.**
 
 ---
 
@@ -251,58 +261,27 @@ The constitutional engine emerges from the audit system. Once you have complete 
 
 ### Current Implementation: The Decision Framework
 
-The system currently implements the **constitutional decision engine** - the framework that enables rules, not specific rules themselves. Here's the actual data flow:
+The system currently implements the constitutional decision engine - the framework that enables rules to be applied, not specific rules themselves.
 
-1. **Graph Query Stage**: Neo4j returns constitutional path existence
-   ```python
-   result = neo4j.query("MATCH path=(request)-[:ALLOW|DENY]->(resource) RETURN path")
-   allow_exists = has_allow_path(result)
-   deny_exists = has_deny_path(result)
-   ```
+**Decision Flow:**
 
-2. **Precedence Resolution**: Mathematical DENY precedence logic
-   ```python
-   def decide_precedence(allow_exists, deny_exists):
-       if deny_exists:
-           return "DENY", "Constitutional constraint violation"
-       elif allow_exists:
-           return "ALLOW", "Constitutional constraint satisfied"
-       else:
-           return "INDETERMINATE", "Insufficient data for decision"
-   ```
+**Stage 1 - Graph Query:** Neo4j checks for constitutional paths between requests and resources
+- Query: `MATCH path=(request)-[:ALLOW|DENY]->(resource) RETURN path`
+- Result: Boolean flags for ALLOW path existence and DENY path existence
 
-3. **Validation Propagation**: Decision flows through the system with full context
-   ```python
-   ValidationResult = {
-       "state": decision_state,
-       "reason": reason_code,
-       "latency_ms": 0.173,
-       "graph_nodes_traversed": 47,
-       "timestamp": nanosecond_precision
-   }
-   ```
+**Stage 2 - Precedence Resolution:** Mathematical DENY precedence logic determines the decision
+- If DENY path exists → Decision: DENY with reason "Constitutional constraint violation"
+- Else if ALLOW path exists → Decision: ALLOW with reason "Constitutional constraint satisfied"  
+- Else → Decision: INDETERMINATE with reason "Insufficient data for decision"
 
-### Future Rule Implementation Examples
+**Stage 3 - Validation Propagation:** Decision flows through system with full context
+- Includes: decision state, reason code, latency measurement, graph traversal metrics, nanosecond-precision timestamp
 
-The framework is designed to support custom rules that users could implement:
-
-```python
-# Example: Academic citation requirement (not yet implemented)
-def require_citations(content, context):
-    # This would query the graph for citation requirements
-    if graph.has_constraint("REQUIRE_CITATION", content.type):
-        if not context.has_peer_reviewed_source():
-            return "DENY", "Academic claims require citations"
-    return "ALLOW", "Citation requirements satisfied"
-```
-
-**Performance Characteristics of Potential Rules:**
+**Performance Characteristics:**
 - Graph traversal operations: 0.1-2ms (measured)
 - Boolean constraint checks: <0.01ms (projected)
 - Semantic similarity search: 1-10ms (measured in Qdrant)
 - External API validation: 100-500ms (network dependent)
-
-The sub-millisecond base overhead (0.173ms) ensures the framework can support sophisticated rule sets while maintaining practical response times.
 
 ### The Tri-State Decision Framework
 
@@ -328,63 +307,33 @@ TLA+ (Temporal Logic of Actions) provides formal specifications of system behavi
 
 Our approach: First use TLC to gain bounded confidence quickly, then pursue TLAPS proofs for the most critical properties where unbounded verification justifies the investment.
 
-### Formal Verification Catalog
+### Formal Verification Status
 
-Open-DARF releases 12 core safety specifications from our comprehensive 127-property validation framework. These public specifications focus on essential safety properties that any constitutional AI system needs, while the remaining specifications address implementation-specific optimizations and advanced theoretical properties.
+Open-DARF uses TLA+ formal verification to provide mathematical confidence in system properties. The project has developed 127 specifications covering constitutional AI properties, with a subset publicly released for peer validation.
 
-**Public Release Strategy:**
-| Category | Public | Total | Rationale |
-|----------|--------|-------|-----------|
-| Core Safety | 12 | 12 | Universal properties every system needs |
-| Implementation-Specific | 0 | 45 | PostgreSQL schemas, MinIO integration details |
-| Advanced Theoretical | 0 | 35 | Complex democratic mechanisms, social choice theory |
-| Performance Optimizations | 0 | 35 | Hardware-specific, GPU acceleration properties |
+**Current Public Release:** 5 verified specifications with complete evidence generation
 
 **Verification Classes:**
-| Class | Hardware | Time | Count | Purpose |
-|-------|----------|------|-------|---------|
-| **Class A** | 8 cores, 8-32GB RAM | ~10 min | 10 | Rapid development iteration |
-| **Class B** | 32 cores, 128GB RAM | ~8 hours | 2 | Thorough verification (funding needed) |
+| Class | Hardware | Time | Purpose |
+|-------|----------|------|---------|
+| **Class A** | 8 cores, 8-32GB RAM | ~10 min | Consumer hardware verifiable |
+| **Class B** | 32 cores, 128GB RAM | ~8 hours | Requires grant funding |
 
-### Key Specifications Available
+### Verified Specifications
 
-All specifications are publicly available in `verification/tla/`:
+All specifications available in `verification/tla/` with evidence in `evidence/tla/class_a/`:
 
-**Core System Specifications:**
-- `ConstitutionCore.tla` - Core constitutional invariants and system properties
-- `System.tla` - Distributed system consistency guarantees
-- `CC_A_cc.tla` - Constitutional constraint checker specification
+| Specification | States Generated | Distinct States | Invariants | Evidence |
+|---------------|-----------------|-----------------|------------|----------|
+| [ConstitutionCore.tla](verification/tla/ConstitutionCore.tla) | 9,612,789 | 97,781 | 7/7 passed | [Log](evidence/tla/class_a/logs/ConstitutionCore_pos_20250929_143002.log) |
+| [CC_A_cc.tla](verification/tla/CC_A_cc.tla) | 14,425 | 601 | 5/5 passed | [Log](evidence/tla/class_a/logs/CC_A_cc_pos_20250929_143817.log) |
+| [CA_SpanPreservesConstraints.tla](verification/tla/classA_specs/CA_SpanPreservesConstraints.tla) | 81 | 25 | 2/2 passed | [Log](evidence/tla/class_a/logs/CA_SpanPreservesConstraints_pos_20250929_144135.log) |
+| [CA_SpanAuthorization.tla](verification/tla/classA_specs/CA_SpanAuthorization.tla) | 301 | 100 | 2/2 passed | [Log](evidence/tla/class_a/logs/CA_SpanAuthorization_pos_20250929_151953.log) |
+| [CA_Neo4jConstraintSchema.tla](verification/tla/classA_specs/CA_Neo4jConstraintSchema.tla) | 128 | 64 | 4/4 passed | [Log](evidence/tla/class_a/logs/CA_Neo4jConstraintSchema_pos_20250929_190449.log) |
 
-**Class A Specifications** (Consumer Hardware Verifiable):
-Located in `verification/tla/classA_specs/`:
-- `CA_Smoke.tla` - Basic system invariants and smoke tests
-- `CA_SpanAuthorization.tla` - Authorization span preservation  
-- `CA_SpanPreservesConstraints.tla` - Constraint preservation across spans
-- `CA_Neo4jConstraintSchema.tla` - Graph database schema integrity
-- `CA_AnchorToEmbedIntegrity.tla` - Anchor to embedding consistency
+**Total State Space Verified:** 9,627,724 states generated, 98,571 distinct states explored
 
-**Model Configurations:**
-Located in `verification/tla/classA_cfgs/`:
-- Positive test configs (`*_pos.cfg`) - Verify correct behavior
-- Negative test configs (`*_neg.cfg`) - Verify counterexample detection
-- Quick validation (`CC_A_cc.quick.cfg`) - Rapid smoke test
-
-### Current Verification Status
-
-| ID | Specification | Description | Status | Hardware Needed |
-|----|---------------|-------------|---------|-----------------|
-| 1 | **ConstitutionalConsistency** | Constitutional rules remain consistent | Specification complete | Class A (consumer) |
-| 2 | **ConstitutionalPreservation** | Constraints preserved through operations | Specification complete | Class A (consumer) |
-| 3 | **DenyPrecedence** | DENY always takes precedence | Specification complete | Class A (consumer) |
-| 4 | **TriStateCompleteness** | All states reachable and valid | Specification complete | Class A (consumer) |
-| 5 | **ByzantineAgreement** | Consensus despite faulty nodes | Specification complete | Class B (128GB+ RAM) |
-| 6 | **AuditTrailIntegrity** | Provenance chain unbreakable | Specification written | Class A (consumer) |
-| 7 | **SpanAuthorization** | Authorization spans preserved | Specification complete | Class A (consumer) |
-| 8 | **Neo4jConstraintSchema** | Graph schema integrity | Specification complete | Class A (consumer) |
-| 9 | **AnchorToEmbedIntegrity** | Anchor-embedding consistency | Specification complete | Class A (consumer) |
-| 10 | **ConstraintCaching** | Cache correctness | Planned | Class A (consumer) |
-| 11 | **PerformanceBounds** | Sub-170ms validation | Planned | Class A (consumer) |
-| 12 | **ProvenanceChainValidity** | W3C PROV-O compliance | Planned | Class A (consumer) |
+**Additional Specifications:** 10 additional Class A specifications are written and awaiting verification evidence generation. The remaining 112 specifications address implementation-specific optimizations, advanced theoretical properties, and Class B verifications requiring grant funding.
 
 ### Evidence Generation Strategy
 
@@ -425,48 +374,6 @@ Once verified, these mathematical proofs become portable artifacts that any proj
 
 ---
 
-
-Choose your platform to begin validation:
-
-- **Windows**: See [INSTALL-WINDOWS.md](docs/INSTALL-WINDOWS.md) for complete setup
-- **Linux/macOS**: See [INSTALL-LINUX.md](docs/INSTALL-LINUX.md) for complete setup
-
-Each guide includes system verification, container platform installation, and validation steps.
-
-
-### System Requirements Check
-
-Run this single PowerShell command to verify your system:
-
-```powershell
-# Complete system validation for Open-DARF
-$r = @{}; $r.os = [System.Environment]::OSVersion.Version; $r.ram = [Math]::Round((Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB, 2); $r.disk = [Math]::Round((Get-CimInstance Win32_LogicalDisk -Filter "DriveType=3" | Measure-Object -Property FreeSpace -Sum).Sum / 1GB, 2); $r.docker = if (Get-Command docker -ErrorAction SilentlyContinue) { (docker --version) } else { $null }; $r.podman = if (Get-Command podman -ErrorAction SilentlyContinue) { (podman --version) } else { $null }; Write-Host "`n=== OPEN-DARF SYSTEM CHECK ===" -ForegroundColor Cyan; $ready = $true; if ($r.os.Major -lt 10) { Write-Host "❌ Windows: $($r.os.Major).$($r.os.Minor) - Need Windows 10+" -ForegroundColor Red; $ready = $false } else { Write-Host "✅ Windows: $($r.os.Major).$($r.os.Minor)" -ForegroundColor Green }; if ($r.ram -lt 8) { Write-Host "❌ RAM: $($r.ram)GB - Need 8GB+" -ForegroundColor Red; $ready = $false } else { Write-Host "✅ RAM: $($r.ram)GB" -ForegroundColor Green }; if ($r.disk -lt 15) { Write-Host "❌ Disk: $($r.disk)GB free - Need 15GB+" -ForegroundColor Red; $ready = $false } else { Write-Host "✅ Disk: $($r.disk)GB free" -ForegroundColor Green }; if (!$r.docker -and !$r.podman) { Write-Host "❌ Container Platform: Not found - Install Docker or Podman" -ForegroundColor Red; Write-Host "  Docker: https://docs.docker.com/desktop/windows/" -ForegroundColor Yellow; Write-Host "  Podman: https://podman.io/getting-started/installation" -ForegroundColor Yellow; $ready = $false } else { if ($r.docker) { Write-Host "✅ Docker: $($r.docker)" -ForegroundColor Green }; if ($r.podman) { Write-Host "✅ Podman: $($r.podman)" -ForegroundColor Green } }; Write-Host "`n=== RESULT ===" -ForegroundColor Cyan; if ($ready) { Write-Host "✅ YOUR SYSTEM IS READY FOR OPEN-DARF!" -ForegroundColor Green -BackgroundColor Black; Write-Host "Next step: Clone repository and run validation" -ForegroundColor Yellow } else { Write-Host "❌ SYSTEM REQUIREMENTS NOT MET" -ForegroundColor Red -BackgroundColor Black; Write-Host "Please address the issues above before proceeding." -ForegroundColor Yellow }
-```
-
----
-
-## Installation Guide
-
-Choose your platform for detailed setup instructions:
-
-### Windows Users
-**[Complete Windows Installation Guide →](docs/INSTALL-WINDOWS.md)**
-
-**Quick start:**
-1. Run system check (PowerShell section above)
-2. Install Podman Desktop (recommended) or Docker Desktop
-3. Clone and run: .\install.ps1
-
-### Linux/macOS Users
-**[Complete Linux/macOS Installation Guide →](docs/INSTALL-LINUX.md)**
-
-**Quick start:**
-1. Run system check (bash section above)
-2. Install Podman (recommended) or Docker
-3. Clone and run: ./install
-
----
-
 ## Validation Process
 
 ### What We Measure
@@ -482,29 +389,27 @@ The validation process generates evidence of:
 
 ### Your Validation Receipt
 
-```json
-{
-  "validation_id": "open-darf_anonymous_20250923_143022",
-  "constitutional_performance": {
-    "median_overhead_ms": 0.173,
-    "p95_overhead_ms": 0.284,
-    "faster_than_database": 289,
-    "faster_than_network": 115
-  },
-  "provenance_demonstration": {
-    "graph_surgery_performed": true,
-    "nodes_removed": 47,
-    "edges_removed": 132,
-    "integrity_maintained": true
-  },
-  "tla_verification": {
-    "specifications_available": 12,
-    "class_a_ready": 8,
-    "class_b_pending_funding": 4,
-    "evidence_regeneration": "in_progress"
-  }
-}
-```
+    {
+      "validation_id": "open-darf_anonymous_20250923_143022",
+      "constitutional_performance": {
+        "median_overhead_ms": 0.173,
+        "p95_overhead_ms": 0.284,
+        "faster_than_database": 289,
+        "faster_than_network": 115
+      },
+      "provenance_demonstration": {
+        "graph_surgery_performed": true,
+        "nodes_removed": 47,
+        "edges_removed": 132,
+        "integrity_maintained": true
+      },
+      "tla_verification": {
+        "specifications_available": 12,
+        "class_a_ready": 8,
+        "class_b_pending_funding": 4,
+        "evidence_regeneration": "in_progress"
+      }
+    }
 
 ### Contributing Evidence
 
@@ -515,15 +420,7 @@ The validation process generates evidence of:
 
 ### System Cleanup
 
-```powershell
-# Remove all Open-DARF containers and data
-.\cleanup.ps1
-
-# Verify removal
-docker ps -a | Select-String "darf"  # Should be empty
-# OR
-podman ps -a | Select-String "darf"  # Should be empty
-```
+See your platform guide for cleanup instructions.
 
 ---
 
@@ -583,15 +480,13 @@ The path from current capabilities to this vision is incremental and achievable.
 
 If you use Open-DARF in your research, please cite:
 
-```bibtex
-@software{open_darf_2025,
-  title = {Open-DARF: Delegated Architectural Reasoning Framework for Constitutional AI},
-  author = {Solo Developer},
-  year = {2025},
-  url = {https://github.com/rsleiberin/open-darf},
-  note = {Mathematical constraint validation for AI systems with sub-millisecond overhead}
-}
-```
+    @software{open_darf_2025,
+      title = {Open-DARF: Delegated Architectural Reasoning Framework for Constitutional AI},
+      author = {Solo Developer},
+      year = {2025},
+      url = {https://github.com/rsleiberin/open-darf},
+      note = {Mathematical constraint validation for AI systems with sub-millisecond overhead}
+    }
 
 ## Code of Conduct
 
@@ -627,4 +522,4 @@ For security vulnerabilities, please see our [Security Policy](SECURITY.md). We 
 
 ---
 
-**Ready to validate?** If your system check passed, proceed with installation to generate evidence that mathematical AI governance works on consumer hardware.
+**Ready to validate?** Choose your platform guide above to begin generating evidence that mathematical AI governance works on consumer hardware.
