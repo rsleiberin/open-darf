@@ -109,7 +109,7 @@ try {
             Write-Host "  - $network" -ForegroundColor White
         }
         Write-Host "`nManually remove with:" -ForegroundColor Yellow
-        Write-Host "  docker network rm <network-name>" -ForegroundColor Cyan
+        Write-Host "  docker network rm NETWORK_NAME" -ForegroundColor Cyan
     } else {
         Write-Host "✅ No DARF networks remaining" -ForegroundColor Green
     }
