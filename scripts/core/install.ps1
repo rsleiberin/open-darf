@@ -41,22 +41,25 @@ try {
 # Check Docker Compose - prioritize newer plugin version
 Write-Host ""
 Write-Host "[3/5] Checking Docker Compose..." -ForegroundColor Yellow
-$composeCmd = $null
+$usePlugin = $false
 
 # Try docker compose (newer plugin - preferred)
-if ((docker compose version 2>$null) -and ($LASTEXITCODE -eq 0)) {
-    $composeCmd = "docker compose"
-    Write-Host "Using Docker Compose plugin (recommended)" -ForegroundColor Green
-}
-# Fallback to docker-compose (older standalone)
-elseif (Get-Command docker-compose -ErrorAction SilentlyContinue) {
-    $composeCmd = "docker-compose"
-    Write-Host "Using legacy docker-compose (consider updating)" -ForegroundColor Yellow
-}
+try {
+    docker compose version | Out-Null
+    if ($LASTEXITCODE -eq 0) {
+        $usePlugin = $true
+        Write-Host "Using Docker Compose plugin (recommended)" -ForegroundColor Green
+    }
+} catch {}
 
-if (-not $composeCmd) {
-    Write-Host "ERROR: Docker Compose not available" -ForegroundColor Red
-    exit 1
+# Fallback to docker-compose (older standalone)
+if (-not $usePlugin) {
+    if (Get-Command docker-compose -ErrorAction SilentlyContinue) {
+        Write-Host "Using legacy docker-compose" -ForegroundColor Yellow
+    } else {
+        Write-Host "ERROR: Docker Compose not available" -ForegroundColor Red
+        exit 1
+    }
 }
 
 # Check system resources
@@ -92,8 +95,12 @@ Write-Host "[5/5] Deploying infrastructure..." -ForegroundColor Yellow
 Write-Host "This may take several minutes on first run..." -ForegroundColor White
 
 try {
-    # Use whichever compose command we determined works
-    & $composeCmd.Split() up -d
+    # Execute appropriate compose command
+    if ($usePlugin) {
+        docker compose up -d
+    } else {
+        docker-compose up -d
+    }
     
     if ($LASTEXITCODE -ne 0) {
         throw "Docker Compose failed with exit code $LASTEXITCODE"
@@ -111,7 +118,11 @@ try {
     Write-Host "ERROR: Deployment failed" -ForegroundColor Red
     Write-Host $_.Exception.Message -ForegroundColor Red
     Write-Host ""
-    Write-Host "Check logs: $composeCmd logs" -ForegroundColor Yellow
+    if ($usePlugin) {
+        Write-Host "Check logs: docker compose logs" -ForegroundColor Yellow
+    } else {
+        Write-Host "Check logs: docker-compose logs" -ForegroundColor Yellow
+    }
     exit 1
 }
 
