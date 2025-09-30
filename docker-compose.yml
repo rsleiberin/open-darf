@@ -106,9 +106,9 @@ services:
 #      timeout: 10s
 #      retries: 10
 #
-#volumes:
-#  minio_data:
+volumes:
   neo4j_data:
   neo4j_logs:
   qdrant_data:
   postgres_data:
+  minio_data:
