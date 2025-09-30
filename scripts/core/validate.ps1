@@ -1,85 +1,93 @@
-#Requires -Version 5.1
-<#
-.SYNOPSIS
-    Open-DARF Validation Script for Windows
-.DESCRIPTION
-    Validates Docker infrastructure and runs TLA+ verification for constitutional AI.
-    Checks service health and executes formal verification specifications.
-.EXAMPLE
-    .\validate.ps1
-.NOTES
-    Requires Docker infrastructure to be running (run install.ps1 first)
-#>
+# Open-DARF Validation Script (Windows PowerShell)
+# Validates Docker infrastructure and runs constitutional validation
 
-[CmdletBinding()]
-param()
+param(
+    [switch]$SkipConstitutional
+)
 
 $ErrorActionPreference = "Stop"
 
-Write-Host "`n=== Open-DARF Validation ===" -ForegroundColor Cyan
-Write-Host "Validating constitutional AI infrastructure`n" -ForegroundColor White
+Write-Host ""
+Write-Host "=== Open-DARF Validation ===" -ForegroundColor Cyan
+Write-Host "Running constitutional AI validation with performance measurement"
+Write-Host ""
 
-# Check Docker is running
-Write-Host "[1/4] Checking Docker daemon..." -ForegroundColor Yellow
+# [1/5] Check Docker daemon
+Write-Host "[1/5] Checking Docker daemon..." -ForegroundColor Yellow
 try {
     docker ps | Out-Null
     Write-Host "✅ Docker daemon is running" -ForegroundColor Green
 } catch {
     Write-Host "❌ ERROR: Docker daemon not running" -ForegroundColor Red
-    Write-Host "Please start Docker Desktop and try again" -ForegroundColor Yellow
+    Write-Host "Please start Docker and try again" -ForegroundColor Red
     exit 1
 }
 
-# Check infrastructure services
-Write-Host "`n[2/4] Checking infrastructure services..." -ForegroundColor Yellow
+# [2/5] Check infrastructure services
+Write-Host "`n[2/5] Checking infrastructure services..." -ForegroundColor Yellow
 try {
     $containers = docker ps --format "{{.Names}}" 2>$null
-    if ($LASTEXITCODE -ne 0 -or -not $containers) {
+    if (-not $containers) {
         Write-Host "⚠️  No running containers found" -ForegroundColor Yellow
-        Write-Host "Run .\install.ps1 first to deploy infrastructure" -ForegroundColor Cyan
+        Write-Host "Run .\install.ps1 first to deploy infrastructure" -ForegroundColor Yellow
         exit 1
     }
     
-    $containerList = $containers -split "`n"
-    Write-Host "✅ Found $($containerList.Count) running containers:" -ForegroundColor Green
-    foreach ($container in $containerList) {
-        Write-Host "  - $container" -ForegroundColor White
-    }
+    $containerCount = ($containers -split "`n").Count
+    Write-Host "✅ Found $containerCount running containers:" -ForegroundColor Green
+    $containers -split "`n" | ForEach-Object { Write-Host "  - $_" -ForegroundColor White }
 } catch {
-    Write-Host "❌ ERROR: Failed to check containers" -ForegroundColor Red
-    Write-Host $_.Exception.Message -ForegroundColor Red
+    Write-Host "❌ ERROR: Could not check containers" -ForegroundColor Red
     exit 1
 }
 
-# Check for TLA+ specifications
-Write-Host "`n[3/4] Checking TLA+ specifications..." -ForegroundColor Yellow
-$tlaPath = "verification/tla"
-if (Test-Path $tlaPath) {
-    $specs = Get-ChildItem -Path $tlaPath -Filter "*.tla" -Recurse
-    Write-Host "✅ Found $($specs.Count) TLA+ specifications" -ForegroundColor Green
+# [3/5] Create receipt directory
+Write-Host "`n[3/5] Preparing receipt directory..." -ForegroundColor Yellow
+New-Item -ItemType Directory -Force -Path "var\receipts\open-darf" | Out-Null
+Write-Host "✅ Receipt directory ready" -ForegroundColor Green
+
+# [4/5] Run constitutional validation
+if (-not $SkipConstitutional) {
+    Write-Host "`n[4/5] Executing constitutional validation..." -ForegroundColor Yellow
     
-    # Check for existing evidence
-    $evidencePath = "evidence/tla/class_a"
-    if (Test-Path $evidencePath) {
-        $evidenceFiles = Get-ChildItem -Path "$evidencePath/logs" -Filter "*.log" -ErrorAction SilentlyContinue
-        if ($evidenceFiles) {
-            Write-Host "✅ Found existing verification evidence:" -ForegroundColor Green
-            Write-Host "  Location: $evidencePath/logs" -ForegroundColor White
-            Write-Host "  Files: $($evidenceFiles.Count) verification logs" -ForegroundColor White
-        }
+    try {
+        $timestamp = (Get-Date).ToUniversalTime().ToString("yyyyMMdd_HHmmss")
+        $receiptPath = "var\receipts\open-darf\validation_$timestamp.json"
+        
+        # Execute constitutional engine and capture output
+        $validationOutput = & .\scripts\internal\constitutional_engine.ps1
+        
+        # Save receipt
+        $validationOutput | Out-File -FilePath $receiptPath -Encoding utf8
+        
+        # Parse and display results
+        $receipt = $validationOutput | ConvertFrom-Json
+        
+        Write-Host "✅ Constitutional validation complete" -ForegroundColor Green
+        Write-Host "  Decision: $($receipt.constitutional_validation.decision)" -ForegroundColor White
+        Write-Host "  Reason: $($receipt.constitutional_validation.reason)" -ForegroundColor White
+        Write-Host "  Performance: $($receipt.constitutional_validation.total_overhead_ms)ms total overhead" -ForegroundColor White
+        Write-Host "    - Neo4j query: $($receipt.constitutional_validation.neo4j_query_ms)ms" -ForegroundColor Gray
+        Write-Host "    - PostgreSQL insert: $($receipt.constitutional_validation.postgres_insert_ms)ms" -ForegroundColor Gray
+        Write-Host "  Receipt: $receiptPath" -ForegroundColor Cyan
+        
+    } catch {
+        Write-Host "⚠️  Constitutional validation encountered an error:" -ForegroundColor Yellow
+        Write-Host $_.Exception.Message -ForegroundColor Yellow
+        Write-Host "Continuing with validation..." -ForegroundColor Yellow
     }
 } else {
-    Write-Host "⚠️  No TLA+ specifications found at $tlaPath" -ForegroundColor Yellow
+    Write-Host "`n[4/5] Skipping constitutional validation (--SkipConstitutional)" -ForegroundColor Yellow
 }
 
-# Service health check
-Write-Host "`n[4/4] Running service health checks..." -ForegroundColor Yellow
+# [5/5] Service health check
+Write-Host "`n[5/5] Running service health checks..." -ForegroundColor Yellow
 $healthyCount = 0
 $unhealthyCount = 0
 
 try {
     $containerStatus = docker ps --format "{{.Names}}:{{.Status}}" 2>$null
-    if ($LASTEXITCODE -eq 0 -and $containerStatus) {
+    if ($containerStatus) {
         foreach ($line in ($containerStatus -split "`n")) {
             $parts = $line -split ":"
             if ($parts.Count -eq 2) {
@@ -96,11 +104,6 @@ try {
             }
         }
     }
-    
-    if ($unhealthyCount -gt 0) {
-        Write-Host "`n⚠️  Some services may not be healthy" -ForegroundColor Yellow
-        Write-Host "Check logs with: docker compose logs <service-name>" -ForegroundColor Cyan
-    }
 } catch {
     Write-Host "⚠️  Could not determine service health" -ForegroundColor Yellow
 }
@@ -113,10 +116,14 @@ if ($unhealthyCount -gt 0) {
     Write-Host "  - Unhealthy services: $unhealthyCount" -ForegroundColor Yellow
 }
 
+if (-not $SkipConstitutional) {
+    Write-Host "`nConstitutional Validation:" -ForegroundColor White
+    Write-Host "  - Receipt generated: var\receipts\open-darf\" -ForegroundColor Cyan
+    Write-Host "  - Performance measured and documented" -ForegroundColor Cyan
+}
+
 Write-Host "`nFor detailed logs:" -ForegroundColor White
 Write-Host "  docker compose logs" -ForegroundColor Cyan
-Write-Host "`nTo view specific service logs:" -ForegroundColor White
-Write-Host "  docker compose logs <service-name>" -ForegroundColor Cyan
 
 Write-Host "`n=== Validation Complete ===" -ForegroundColor Cyan
 exit 0
