@@ -389,100 +389,65 @@ The validation process generates evidence of:
 
 ### Your Validation Receipt
 
-    {
+```json
+{
   "receipt_version": "1.0",
   "validation_id": "open-darf_validator_20251002_163241",
   "timestamp": "2025-10-02T16:32:41Z",
   "test_scenario": "document_ingestion_with_constitutional_validation",
   "document_ingestion": {
-    "test_document": "test_doc.txt",
-    "file_size_bytes": 54,
-    "sha256_hash": "edd76787a12ce3bd...",
-    "minio_storage": {
-      "accessible": false,
-      "content_addressed": true,
-      "storage_time_ms": 174
-    }
+"test_document": "test_doc.txt",
+"file_size_bytes": 54,
+"sha256_hash": "edd76787a12ce3bd...",
+"minio_storage": {
+  "accessible": false,
+  "content_addressed": true,
+  "storage_time_ms": 174
+}
   },
   "constitutional_validations": [
-    {
-      "rule_id": "R0",
-      "context": "document_upload",
-      "decision": "ACCEPT",
-      "reason": "reversible_action_permitted",
-      "neo4j_query_ms": 1753,
-      "decision_logic_us": 89
-    },
-    {
-      "rule_id": "R0",
-      "context": "publish_document",
-      "decision": "DENY",
-      "reason": "irreversible_action_without_required_review",
-      "neo4j_query_ms": 1767,
-      "decision_logic_us": 173
-    }
+{
+  "rule_id": "R0",
+  "context": "document_upload",
+  "decision": "ACCEPT",
+  "reason": "reversible_action_permitted",
+  "neo4j_query_ms": 1753,
+  "decision_logic_us": 89
+},
+{
+  "rule_id": "R0",
+  "context": "publish_document",
+  "decision": "DENY",
+  "reason": "irreversible_action_without_required_review",
+  "neo4j_query_ms": 1767,
+  "decision_logic_us": 173
+}
   ],
   "pipeline_performance": {
-    "total_end_to_end_ms": 3827,
-    "breakdown": {
-      "document_processing_ms": 174,
-      "constitutional_checks_ms": 3520,
-      "database_writes_ms": 133
-    },
-    "percentage_breakdown": {
-      "database_io": 95.45,
-      "decision_logic": 0.01
-    }
+"total_end_to_end_ms": 3827,
+"breakdown": {
+  "document_processing_ms": 174,
+  "constitutional_checks_ms": 3520,
+  "database_writes_ms": 133
+},
+"percentage_breakdown": {
+  "database_io": 95.45,
+  "decision_logic": 0.01
+}
   },
   "audit_trail": {
-    "postgres_receipts_written": 2,
-    "complete_provenance_chain": true
+"postgres_receipts_written": 2,
+"complete_provenance_chain": true
   },
   "system_verification": {
-    "minio_accessible": false,
-    "neo4j_rules_loaded": true,
-    "postgres_audit_working": true,
-    "content_addressing_verified": true
+"minio_accessible": false,
+"neo4j_rules_loaded": true,
+"postgres_audit_working": true,
+"content_addressing_verified": true
   }
 }
+```
 
-  "constitutional_validation": {
-    "rule_id": "R0",
-    "decision": "DENY",
-    "reason": "irreversible_action_without_required_review",
-    "neo4j_query_ms": 3236,
-    "postgres_insert_ms": 138,
-    "total_overhead_ms": 3374
-  },
-  "infrastructure_health": {
-    "neo4j": "healthy",
-    "postgres": "healthy",
-    "qdrant": "healthy",
-    "minio": "healthy"
-  },
-  "tla_verification": {
-    "specs_available": 12,
-    "logs_found": 5
-  }
-        "specifications_available": 12,
-        "class_a_ready": 8,
-        "class_b_pending_funding": 4,
-        "evidence_regeneration": "in_progress"
-      }
-    }
-
-### Contributing Evidence
-
-1. Fork the repository
-2. Run validation on your hardware
-3. Submit your receipt via pull request
-4. Help demonstrate cross-platform feasibility
-
-### System Cleanup
-
-See your platform guide for cleanup instructions.
-
----
 
 ## Current Results and Implications
 
