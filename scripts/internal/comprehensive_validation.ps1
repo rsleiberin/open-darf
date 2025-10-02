@@ -3,8 +3,12 @@ param()
 
 $ErrorActionPreference = "Stop"
 
-function Get-Timestamp { Get-Date -Format "yyyy-MM-ddTHH:mm:ssZ" -AsUTC }
-function Get-Milliseconds { [int64](([datetime]::UtcNow - [datetime]::UnixEpoch).TotalMilliseconds) }
+function Get-Timestamp { 
+    [DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")
+}
+function Get-Milliseconds { 
+    [int64](([DateTime]::UtcNow - [DateTime]::UnixEpoch).TotalMilliseconds) 
+}
 
 # Load environment variables
 if (Test-Path .env) {
