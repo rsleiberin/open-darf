@@ -1,0 +1,64 @@
+{
+  "receipt_version": "1.0",
+  "validation_id": "cab711fc-bd4b-45c3-ba1a-0fa82324eecd",
+  "timestamp": "2025-10-02T21:08:27Z",
+  "test_scenario": "document_ingestion_with_constitutional_validation",
+  "document_ingestion": {
+    "test_document": "test_doc.txt",
+    "file_size_bytes": 54,
+    "sha256_hash": "edd76787a12ce3bd0b9226e915f467c16cfe6212c43ca7cb3f0ccdddc59121c2",
+    "minio_storage": {
+      "accessible": false,
+      "content_addressed": true,
+      "storage_time_ms": 240
+    },
+    "manifest_created": {
+      "success": true,
+      "provenance_tracked": true
+    }
+  },
+  "constitutional_validations": [
+    {
+      "rule_id": "R0",
+      "context": "document_upload",
+      "decision": "ACCEPT",
+      "reason": "reversible_action_permitted",
+      "neo4j_query_ms": 1685,
+      "decision_logic_us": 89
+    },
+    {
+      "rule_id": "R0",
+      "context": "publish_document",
+      "decision": "DENY",
+      "reason": "irreversible_action_without_required_review",
+      "neo4j_query_ms": 1704,
+      "decision_logic_us": 173
+    }
+  ],
+  "pipeline_performance": {
+    "total_end_to_end_ms": 3763,
+    "breakdown": {
+      "document_processing_ms": 240,
+      "constitutional_checks_ms": 3389,
+      "database_writes_ms": 134
+    },
+    "percentage_breakdown": {
+      "database_io": 93.62,
+      "decision_logic": 0.01
+    }
+  },
+  "audit_trail": {
+    "postgres_receipts_written": 2,
+    "complete_provenance_chain": true
+  },
+  "system_verification": {
+    "minio_accessible": false,
+    "neo4j_rules_loaded": true,
+    "postgres_audit_working": true,
+    "content_addressing_verified": true
+  },
+  "system_context": {
+    "platform": "Linux",
+    "docker_version": "20.10.17"
+  }
+}
