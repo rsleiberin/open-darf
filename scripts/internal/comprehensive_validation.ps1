@@ -6,8 +6,10 @@ $ErrorActionPreference = "Stop"
 function Get-Timestamp { 
     [DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")
 }
+
 function Get-Milliseconds { 
-    [int64](([DateTime]::UtcNow - [DateTime]::UnixEpoch).TotalMilliseconds) 
+    $epoch = New-Object DateTime(1970, 1, 1, 0, 0, 0, [DateTimeKind]::Utc)
+    [int64](([DateTime]::UtcNow - $epoch).TotalMilliseconds) 
 }
 
 # Load environment variables
@@ -45,13 +47,15 @@ try {
     docker compose exec -T minio mc ls local/ 2>$null | Out-Null
     $MinioAccessible = $true
 } catch {}
-$IngestMs = Get-Milliseconds - $IngestStart
+$IngestEnd = Get-Milliseconds
+$IngestMs = [int]($IngestEnd - $IngestStart)
 
 # Test 2: Constitutional validation - ACCEPT case
 Write-Host "[2/4] Testing constitutional validation - reversible action..." -ForegroundColor Yellow
 $Neo4jStart = Get-Milliseconds
 $RuleOutput1 = docker compose exec -T neo4j cypher-shell -u neo4j -p $env:NEO4J_PASSWORD "MATCH (r:Rule {id:'R0'}) RETURN r.requires_review_for_irreversible" 2>$null
-$Neo4jMs1 = Get-Milliseconds - $Neo4jStart
+$Neo4jEnd = Get-Milliseconds
+$Neo4jMs1 = [int]($Neo4jEnd - $Neo4jStart)
 
 $Decision1 = "ACCEPT"
 $Reason1 = "reversible_action_permitted"
@@ -61,7 +65,8 @@ $LogicUs1 = 89
 Write-Host "[3/4] Testing constitutional validation - irreversible action..." -ForegroundColor Yellow
 $Neo4jStart2 = Get-Milliseconds
 $RuleOutput2 = docker compose exec -T neo4j cypher-shell -u neo4j -p $env:NEO4J_PASSWORD "MATCH (r:Rule {id:'R0'}) RETURN r.requires_review_for_irreversible, r.priority" 2>$null
-$Neo4jMs2 = Get-Milliseconds - $Neo4jStart2
+$Neo4jEnd2 = Get-Milliseconds
+$Neo4jMs2 = [int]($Neo4jEnd2 - $Neo4jStart2)
 
 $Decision2 = "DENY"
 $Reason2 = "irreversible_action_without_required_review"
@@ -71,11 +76,12 @@ $LogicUs2 = 173
 Write-Host "[4/4] Writing audit receipts..." -ForegroundColor Yellow
 $PgStart = Get-Milliseconds
 docker compose exec -T -e PGPASSWORD=$env:POSTGRES_PASSWORD postgres psql -U $env:POSTGRES_USER -d $env:POSTGRES_DB -v ON_ERROR_STOP=1 -c "INSERT INTO audit.receipts(component, action, status, details, duration_ms) VALUES ('validation_test', 'document_ingestion', 'ACCEPT', '{}'::jsonb, $IngestMs)" 2>$null | Out-Null
-$PgMs = Get-Milliseconds - $PgStart
+$PgEnd = Get-Milliseconds
+$PgMs = [int]($PgEnd - $PgStart)
 
 $TotalMs = $IngestMs + $Neo4jMs1 + $Neo4jMs2 + $PgMs
 $DbPercentage = [math]::Round((($Neo4jMs1 + $Neo4jMs2 + $PgMs) / $TotalMs) * 100, 2)
-$LogicPercentage = [math]::Round((($LogicUs1 + $LogicUs2) / 1000 / $TotalMs) * 100, 2)
+$LogicPercentage = [math]::Round((($LogicUs1 + $LogicUs2) / 1000.0 / $TotalMs) * 100, 2)
 
 $Os = "Windows"
 $DockerVersion = (docker --version).Split()[2].TrimEnd(',')
