@@ -1,0 +1,27 @@
+{
+  "aggregation_timestamp": "2025-10-02T21:08:51Z",
+  "total_validations": 1,
+  "platforms": [
+    {
+      "platform": "Linux",
+      "count": 1
+    }
+  ],
+  "performance_stats": {
+    "avg_total_ms": 3763,
+    "min_total_ms": 3763,
+    "max_total_ms": 3763,
+    "avg_db_percentage": 93.62,
+    "avg_decision_logic_percentage": 0.01
+  },
+  "validation_results": {
+    "total_constitutional_checks": 2,
+    "accept_decisions": 1,
+    "deny_decisions": 1
+  },
+  "system_health": {
+    "neo4j_accessible": true,
+    "postgres_accessible": true,
+    "content_addressing_working": true
+  }
+}
