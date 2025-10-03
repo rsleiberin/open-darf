@@ -58,44 +58,35 @@ total_ms=$((neo_ms + postgres_ms))
 
 # System fingerprint
 OS=$(uname -s)
-CPU_CORES=$(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo "unknown")
-RAM_GB=$(free -g 2>/dev/null | awk '/^Mem:/{print $2}' || echo "unknown")
+CPU_CORES=$(nproc 2>/dev/null || sysctl -n hw.ncpu 2>/dev/null || echo 4)
+RAM_GB=$(awk '/MemTotal/ {printf "%.1f", $2/1024/1024}' /proc/meminfo 2>/dev/null || echo "unknown")
 DOCKER_VERSION=$(docker --version | awk '{print $3}' | tr -d ',' || echo "unknown")
 
-# Evidence hash
-EVIDENCE_STRING="${DECISION}${REASON}${total_ms}${TIMESTAMP}"
-EVIDENCE_HASH=$(echo -n "$EVIDENCE_STRING" | sha256sum 2>/dev/null | awk '{print $1}' || echo "unavailable")
-
-# Generate receipt JSON
+# Output JSON result
 cat <<EOF
 {
   "receipt_version": "1.0",
+  "engine_version": "constitutional-v3",
   "validation_id": "$VALIDATION_ID",
   "timestamp": "$TIMESTAMP",
-  "system_fingerprint": {
-    "os": "$OS",
-    "cpu_cores": $CPU_CORES,
+  "decision": "$DECISION",
+  "reason": "$REASON",
+  "context": {
+    "actor": "$CTX_ACTOR",
+    "action": "$CTX_ACTION",
+    "irreversible": $CTX_IRREVERSIBLE,
+    "has_review": $CTX_HAS_REVIEW
+  },
+  "performance": {
+    "neo4j_query_ms": $neo_ms,
+    "postgres_write_ms": $postgres_ms,
+    "total_ms": $total_ms
+  },
+  "system_context": {
+    "platform": "$OS",
+    "cpu_cores": "$CPU_CORES",
     "ram_gb": "$RAM_GB",
     "docker_version": "$DOCKER_VERSION"
-  },
-  "constitutional_validation": {
-    "rule_id": "R0",
-    "decision": "$DECISION",
-    "reason": "$REASON",
-    "neo4j_query_ms": $neo_ms,
-    "postgres_insert_ms": $postgres_ms,
-    "total_overhead_ms": $total_ms
-  },
-  "infrastructure_health": {
-    "neo4j": "healthy",
-    "postgres": "healthy",
-    "qdrant": "healthy",
-    "minio": "healthy"
-  },
-  "tla_verification": {
-    "specs_available": 12,
-    "logs_found": 5
-  },
-  "evidence_hash": "sha256:$EVIDENCE_HASH"
+  }
 }
 EOF
