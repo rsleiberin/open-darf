@@ -1,0 +1,26 @@
+{
+  "measurement_layer": "pure_logic",
+  "iterations": 30000,
+  "warmup_iterations": 3000,
+  "nanoseconds": {
+    "p50": 170,
+    "p95": 191,
+    "p99": 251,
+    "mean": 174,
+    "min": 140,
+    "max": 44081
+  },
+  "microseconds": {
+    "p50": 0.170000,
+    "p95": 0.191000,
+    "p99": 0.251000
+  },
+  "milliseconds": {
+    "p50": 0.000170000,
+    "p95": 0.000191000,
+    "p99": 0.000251000
+  },
+  "methodology": "In-memory decision logic with pre-loaded rules",
+  "excludes": ["file_io", "database_queries", "network_calls", "docker_overhead"],
+  "claim": "Pure computational overhead of constitutional decision logic"
+}

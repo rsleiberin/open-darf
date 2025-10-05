@@ -1,0 +1,22 @@
+{
+  "measurement_layer": "infrastructure_comparison",
+  "iterations": 30,
+  "baseline_rag_query": {
+    "query_type": "document_retrieval",
+    "query": "MATCH (d:Document)-[:RELATES_TO]->(c:Concept) RETURN d.content",
+    "p50_ms": 1687, "p95_ms": 1780,
+    "complexity": "O(1) indexed lookup + relationship traversal"
+  },
+  "constitutional_query": {
+    "query_type": "rule_retrieval",
+    "query": "MATCH (r:Rule {{id: "R0"}}) RETURN r.requires_review_for_irreversible",
+    "p50_ms": 1727, "p95_ms": 1993,
+    "complexity": "O(1) indexed lookup"
+  },
+  "delta": {
+    "p50_ms": 40, "p95_ms": 213,
+    "percentage": 2.37
+  },
+  "interpretation": "Constitutional queries use same infrastructure as baseline RAG",
+  "claim": "No additional infrastructure overhead for constitutional validation"
+}
