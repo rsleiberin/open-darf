@@ -1,0 +1,16 @@
+[
+{
+  "path": "open-darf/evidence/validation_receipts/_DEPRECATED/validation_95647e90621d_linux_20251002_210831.json",
+  "receipt_version": "1.0",
+  "size_bytes": 1706,
+  "mtime_iso": "2025-10-05T02:58:18Z"
+}
+,
+{
+  "path": "open-darf/var/receipts/open-darf/validation_20251008_012936.json",
+  "receipt_version": "0.1.0",
+  "size_bytes": 2914,
+  "mtime_iso": "2025-10-08T01:29:42Z"
+}
+
+]
