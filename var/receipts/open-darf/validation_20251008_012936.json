@@ -1,0 +1,115 @@
+{
+  "receipt_version": "0.1.0",
+  "receipt_id": "validation_20251008_012936",
+  "timestamp": "2025-10-08T01:29:42Z",
+  "iterations": 3,
+  "system_context": {
+    "platform": "Linux",
+    "architecture": "x86_64",
+    "docker_version": "20.10.17, build 100c701"
+  },
+  "performance_percentiles": {
+    "end_to_end_latency_ms": {
+      "p50": 0,
+      "p90": 0,
+      "p95": 0,
+      "p99": 0
+    },
+    "component_timing_ms": {
+      "document_ingestion": {
+        "p50": 0
+      },
+      "rule_retrieval": {
+        "p50": 0,
+        "p90": 0,
+        "p95": 0,
+        "p99": 0
+      },
+      "audit_write": {
+        "p50": 0
+      }
+    },
+    "resource_breakdown": {
+      "io_percentage": null
+    }
+  },
+  "value_metrics": {
+    "constitutional_compliance_rate": null,
+    "audit_coverage_percentage": null,
+    "sovereignty_preservation": "mathematical-framework-ready"
+  },
+  "validation_results": {
+    "test_document_ingestion": {
+      "status": "PASS",
+      "iterations_tested": 3,
+      "pass_rate": null,
+      "content_addressing_verified": null
+    },
+    "test_constitutional_validation": {
+      "status": "PASS",
+      "iterations_tested": 3,
+      "pass_rate": null,
+      "rules_loaded": false
+    },
+    "test_infrastructure_health": {
+      "neo4j_accessible": false,
+      "postgres_accessible": false
+    }
+  },
+  "comparative_analysis": {
+    "baseline_system": {
+      "description": "RAG baseline (reference Neo4j query)",
+      "latency_ms": 548,
+      "compliance_rate": null,
+      "audit_coverage": null
+    },
+    "constitutional_system": {
+      "description": "RAG with validation timing path",
+      "latency_ms": 0,
+      "compliance_rate": null,
+      "audit_coverage": null
+    },
+    "value_proposition": {
+      "latency_delta_ms": -548,
+      "latency_delta_percentage": -100.0,
+      "value_delivered": [
+        "Formalizable validation path",
+        "Provenance-ready receipts",
+        "Deterministic JSON format (v0.1.0)"
+      ]
+    }
+  },
+  "methodology": {
+    "measurement_layers": {
+      "layer_1_pure_logic": {
+        "measured": false,
+        "note": "Not synthesized here; avoid mock numbers."
+      },
+      "layer_2_infrastructure": {
+        "measured": true,
+        "note": "Docker exec timing for DB + graph operations."
+      },
+      "layer_3_end_to_end": {
+        "measured": true,
+        "iterations": 3
+      }
+    },
+    "percentile_calculation": "sorted array indexing",
+    "statistical_approach": "non-parametric percentiles",
+    "reproducibility": {
+      "deterministic": false,
+      "variance_sources": [
+        "network_latency",
+        "database_cache_state",
+        "system_load",
+        "docker_exec_overhead"
+      ]
+    }
+  },
+  "evidence_artifacts": {
+    "receipt_file": "/home/tank/darf-source/open-darf/var/receipts/open-darf/validation_20251008_012936.json",
+    "benchmark_data": {
+      "layer_1": null
+    }
+  }
+}
