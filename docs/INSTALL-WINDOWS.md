@@ -118,3 +118,36 @@ Your validation receipt contains evidence of:
 - Cross-platform feasibility
 
 This contributes to demonstrating that mathematical AI governance works on consumer hardware.
+
+---
+
+## v0.1.0 Validation How-To (Windows, PowerShell)
+
+Goal: Generate a canonical v0.1.0 validation receipt on Windows and verify its schema locally.
+
+Prereqs: Windows 10/11, PowerShell (pwsh recommended), git, and internet access.
+
+1) Clone the public repository
+
+    git clone https://github.com/rsleiberin/open-darf.git
+    cd open-darf
+
+2) Run the PowerShell v0.1.0 validator (3 iterations)
+
+    pwsh -File .\scripts\internal\comprehensive_validation_v010.ps1 -Iterations 3
+
+This writes a new receipt to:
+
+    .\var\receipts\open-darf\validation_YYYYMMDD_HHMMSS.json
+
+3) (Optional) Verify schema order locally (requires jq on Windows)
+
+    $r = Get-ChildItem .\var\receipts\open-darf\validation_*.json | Sort-Object LastWriteTime -Descending | Select-Object -First 1
+    Write-Host "Newest:" $r.FullName
+    jq -c 'keys_unsorted' $r.FullName
+
+Notes:
+- The receipt is canonical if it contains 11 top-level keys in the v0.1.0 order, with "receipt_version": "0.1.0".
+- Do not hand-edit receipts; they are generated from real measurements.
+- For Linux users, use: bash ./scripts/internal/comprehensive_validation_v010.sh 3 (in WSL or Linux).
+
