@@ -548,3 +548,15 @@ For security vulnerabilities, please see our [Security Policy](SECURITY.md). We 
 ---
 
 **Ready to validate?** Choose your platform guide above to begin generating evidence that mathematical AI governance works on consumer hardware.
+---
+
+## Validation Receipts (v0.1.0)
+
+- **Canonical schema:** 11 ordered top-level keys with `"receipt_version": "0.1.0"`.
+- **Linux generator:** `scripts/internal/comprehensive_validation_v010.sh`  
+- **Windows generator:** `scripts/internal/comprehensive_validation_v010.ps1`  
+- **Order-aware validator (non-fatal):** `scripts/evidence/validate_receipt_v010.sh` (uses `jq keys_unsorted`)
+- **Output location:** `var/receipts/open-darf/validation_YYYYMMDD_HHMMSS.json`
+- **Deprecated receipts:** quarantined in `evidence/validation_receipts/_DEPRECATED/` (provenance only).
+
+CI enforces a PASS by running the non-fatal validator and checking for a canonical v0.1.0 result.
