@@ -1,22 +1,36 @@
-name: Cross-Platform Validation
+name: OpenDARF v0.1.0 Receipt Validation
 
 on:
   push:
-    branches: [ main ]
+    paths:
+      - 'scripts/**'
+      - 'var/receipts/**'
+      - '.github/workflows/validation.yml'
+      - 'scripts/evidence/**'
+      - 'scripts/internal/**'
   pull_request:
-    branches: [ main ]
+    paths:
+      - 'scripts/**'
+      - 'var/receipts/**'
+      - '.github/workflows/validation.yml'
+      - 'scripts/evidence/**'
+      - 'scripts/internal/**'
 
 jobs:
-  validate:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    
+  validate-v010:
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Run validation
-      run: |
-        ./install
-        ./validate
-        ./cleanup
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Ensure jq present
+        run: jq --version || sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Run non-fatal validator (order-aware)
+        run: |
+          bash scripts/evidence/validate_receipt_v010.sh || true
+
+      - name: Enforce PASS (fail CI if non-canonical)
+        run: |
+          bash scripts/evidence/validate_receipt_v010.sh | tee /tmp/vres.txt || true
+          grep -q "\[PASS\] Canonical v0.1.0 receipt." /tmp/vres.txt
