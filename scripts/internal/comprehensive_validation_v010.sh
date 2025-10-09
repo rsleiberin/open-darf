@@ -29,14 +29,12 @@ run_timed() {
 }
 
 percentile_from_list() {
-  # usage: percentile_from_list "space_separated_values" PCT
   local arr="$1"; local p="$2"
-  python3 - "$p" <<< "$arr" << 'PY'
-import sys,statistics
-vals=[float(x) for x in sys.stdin.read().split() if x.strip()]
+  python3 - "$p" "$arr" << 'PY'
+import sys
 p=int(sys.argv[1])
-if not vals:
-    print(0); sys.exit(0)
+vals=[float(x) for x in sys.argv[2].split() if x.strip()]
+if not vals: print(0); sys.exit(0)
 vals=sorted(vals)
 idx=int(len(vals)*p/100)
 if idx>=len(vals): idx=len(vals)-1
@@ -73,7 +71,7 @@ POSTGRES_OK=false
 if docker compose exec -T neo4j cypher-shell -u neo4j -p "${NEO4J_PASSWORD:-neo4j}" "RETURN 1" >/dev/null 2>&1; then
   NEO4J_OK=true
 fi
-if docker compose exec -T postgres psql -U darf_user -d appdb -t -c "SELECT 1" >/dev/null 2>&1; then
+if docker compose exec -T postgres psql -U darf_user -d darf_db -t -c "SELECT 1" >/dev/null 2>&1; then
   POSTGRES_OK=true
 fi
 
@@ -97,7 +95,7 @@ for i in $(seq 1 "$ITERATIONS"); do
   RULE_LIST+="${r_ms} "
 
   # Audit write (INSERT)
-  a_ms="$(run_timed "docker compose exec -T postgres psql -U darf_user -d appdb -t -c \"INSERT INTO audit_log (event) VALUES ('sh_test_$i') RETURNING id\"")"
+  a_ms="$(run_timed "docker compose exec -T postgres psql -U darf_user -d darf_db -t -c \"INSERT INTO audit_log (event) VALUES ('sh_test_$i') RETURNING id\"")"
   AUDIT_LIST+="${a_ms} "
 
   iter_end="$(timestamp_ms)"
